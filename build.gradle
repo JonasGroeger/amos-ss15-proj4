@@ -11,11 +11,19 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 jar {
     baseName = 'gs-serving-web-content'
     version =  '0.1.0'
 }
+
+war {
+    baseName = jar.baseName
+    version = jar.version
+}
+
+configurations { providedRuntime }
 
 repositories {
     mavenCentral()
@@ -26,6 +34,7 @@ targetCompatibility = 1.7
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testCompile("junit:junit")
 }
 
