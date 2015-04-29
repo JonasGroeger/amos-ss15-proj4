@@ -1,5 +1,10 @@
 package hello;
 
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,4 +19,19 @@ public class GreetingController
         model.addAttribute("name", name);
         return "greeting";
     }
+    
+    // Example for text file download (http://localhost:8080/file)
+	@RequestMapping("/file")
+	public void export(HttpServletResponse response) throws IOException {
+
+		String fileContent = "Hello";
+
+		response.setContentType("text/plain");
+		response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
+		ServletOutputStream out = response.getOutputStream();
+		out.println(fileContent);
+		out.flush();
+		out.close();
+	}
+
 }
