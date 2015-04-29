@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="'Hello, ' + ${Name} + '!'" />
+    <p>
+    Please fill the form!
+    </p>
+    <form action="#" th:action="@{/form}" method="post">
+    <input name='Name'/>
+    <input type="submit" value = "Send Data"/>
+    </form> 
+</body>
+</html>
