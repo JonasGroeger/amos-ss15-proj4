@@ -9,7 +9,8 @@ public class Employee {
     String MaidenName = "";
     Date BirthDate;
     String PlaceOfBirth = "";
-    String Street = "";
+    String CountryOfBirth = "";
+	String Street = "";
     String ZIPCode = ""; 
     String HouseNumber = "";
     String City = "";
@@ -23,6 +24,10 @@ public class Employee {
     String IBAN = "";
     String BIC = "";
     
+    public Employee()
+    {
+    	
+    }
     
     public int getId() {
 		return Id;
@@ -59,6 +64,13 @@ public class Employee {
 	}
 	public void setPlaceOfBirth(String placeOfBirth) {
 		PlaceOfBirth = placeOfBirth;
+	}
+    public String getCountryOfBirth() {
+		return CountryOfBirth;
+	}
+
+	public void setCountryOfBirth(String countryOfBirth) {
+		CountryOfBirth = countryOfBirth;
 	}
 	public String getStreet() {
 		return Street;
@@ -119,5 +131,15 @@ public class Employee {
 	}
 	public void setBIC(String bIC) {
 		BIC = bIC;
+	}
+	
+	public String getText()
+	{
+		// TO DO: Implement full export.
+		return String.format(("Employee Name: %s %s\n" + 
+	                         "Employee citizenship %s"),
+				             this.FirstName,
+				             this.FamilyName,
+				             this.Citizenship);
 	}
 }

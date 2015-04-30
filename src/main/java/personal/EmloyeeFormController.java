@@ -8,8 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,30 +20,24 @@ import org.springframework.web.servlet.ModelAndView;
 public class EmloyeeFormController {
 	// Employee data form - Enter Employee data
 	@RequestMapping("/EmployeeForm")
-	public String EmloyeeForm(){
+	public String EmloyeeForm(Model model){
+		Employee employee = new Employee();
+		model.addAttribute("employee", employee);
 		return "EmployeeForm";
 	}
 	
 	// Employee data review - Review Employee data
-	@RequestMapping("/EmployeeReview")
-	public String EmloyeeReview(Model model, HttpServletRequest request){
-		java.util.Enumeration<String> reqEnum = request.getParameterNames();		
-		while (reqEnum.hasMoreElements()) {
-			String paramName = reqEnum.nextElement();
-			String paramValue = request.getParameter(paramName).toString();
-			System.out.println(paramName + "==" + paramValue); // TO DO: Add debug logging instead of println
-			model.addAttribute(paramName, paramValue);
-		}
- 
+	@RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
+	public String EmloyeeReview(@ModelAttribute("employee") Employee employee,
+	 		   BindingResult result, Model model){
+		
 		return "EmployeeReview";
 	}
 	
 	// Employee data submit - Submit Employee data
 	@RequestMapping("/EmployeeSubmit")
-	public String EmloyeeSubmit(Model model, HttpServletRequest request){
-		Employee employee = new Employee();
-		employee.setFamilyName(request.getParameter("lastname"));
-		employee.setFirstName(request.getParameter("firstname"));
+	public String EmloyeeSubmit(@ModelAttribute("employee") Employee employee,
+ 		   BindingResult result, Model model){
 		EmployeeManager employeeManager = EmployeeManager.getInstance();
 		int EmployeeId = employeeManager.PersistEmployee(employee);
 		
@@ -67,7 +64,7 @@ public class EmloyeeFormController {
 		// TO DO: fill the file Content to make sure it contains actual Employee personal data.
 		Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
 		
-		String fileContent = "[EMPLOYEE DATA] ID: " + employee.Id + " Name:" + employee.FirstName + " " + employee.FamilyName;
+		String fileContent = employee.getText();
 
 		response.setContentType("text/plain");
 		response.setHeader("Content-Disposition",
