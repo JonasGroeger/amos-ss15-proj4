@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,5 +51,31 @@ public class GreetingController {
 		model.addAttribute("Name", Name);
 		return "form";
 	}
+
+	// Example for object mapping (http://localhost:8080/PersonEditor)
+	@RequestMapping(value = "/PersonEditor", method = RequestMethod.GET)
+	public String newPerson(Model model) {
+		Person person = new Person();
+		model.addAttribute("person", person);
+		return "PersonEditor";
+	}
+		
+	@RequestMapping(value = "/PersonEditor", method = RequestMethod.POST)
+    public String editPerson(@ModelAttribute("person") Person person,
+    		   BindingResult result) {
+		  if(result.hasErrors())
+		  {
+			  System.out.println("Something went wrong.");			  
+		  }
+		  else
+		  {
+			  System.out.println("Person data loaded.");
+			  System.out.println("Person name: " + person.Name);
+			  System.out.println("Person age:" + person.Age);
+		  }
+		  
+		  return "PersonEditor";
+	}
+	
 
 }
