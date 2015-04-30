@@ -39,9 +39,8 @@ public class EmloyeeFormController {
 	@RequestMapping("/EmployeeSubmit")
 	public String EmloyeeSubmit(Model model, HttpServletRequest request){
 		Employee employee = new Employee();
-		String FamilyName = request.getParameter("lastname");
-		String FirstName = request.getParameter("firstname");
-		employee.Name = FirstName  + " " + FamilyName;
+		employee.setFamilyName(request.getParameter("lastname"));
+		employee.setFirstName(request.getParameter("firstname"));
 		EmployeeManager employeeManager = EmployeeManager.getInstance();
 		int EmployeeId = employeeManager.PersistEmployee(employee);
 		
@@ -68,7 +67,7 @@ public class EmloyeeFormController {
 		// TO DO: fill the file Content to make sure it contains actual Employee personal data.
 		Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
 		
-		String fileContent = "[EMPLOYEE DATA] ID: " + employee.Id + " Name:" + employee.Name;
+		String fileContent = "[EMPLOYEE DATA] ID: " + employee.Id + " Name:" + employee.FirstName + " " + employee.FamilyName;
 
 		response.setContentType("text/plain");
 		response.setHeader("Content-Disposition",
