@@ -61,11 +61,11 @@ public class EmloyeeFormController {
 	// Employee file download - Download text file with Employee data
 	@RequestMapping("/EmployeeTextFileDownload")
 	public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException {
-		// TO DO: fill the file Content to make sure it contains actual Employee personal data.
-		Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
-		
+		//Prepare textfile contents
+		Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);		
 		String fileContent = employee.getText();
 
+		// Send file contents
 		response.setContentType("text/plain");
 		response.setHeader("Content-Disposition",
 				"attachment;filename=myFile.txt");

@@ -137,9 +137,9 @@ public class Employee {
 	{
 		// TO DO: Implement full export.
 		return String.format(("Employee Name: %s %s\n" + 
-	                         "Employee citizenship %s"),
-				             this.FirstName,
-				             this.FamilyName,
-				             this.Citizenship);
+	                          "Employee citizenship %s"),
+				              this.FirstName,
+				              this.FamilyName,
+				              this.Citizenship);
 	}
 }
