@@ -133,10 +133,19 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <button type="submit" class="btn btn-block btn-lg btn-info"><span class="glyphicon glyphicon-ok"></span> Senden</button>
+                   <table width="100%" style='border-collapse: separate;border-spacing: 10px;'>
+                   <tr>
+                   <td>
+                    <button type="button" class="btn btn-block btn-lg btn-warning" onClick="history.go(-1);return true;"><span class="glyphicon glyphicon-pencil "/> Zurück</button>
+                   </td>
+                   <td>
+                    <button type="submit" class="btn btn-block btn-lg btn-primary"><span class="glyphicon glyphicon-ok"></span> Senden</button>
+                   </td>
+                   </tr>
+                   </table>                    
                 </div>
             </div>
-        </form>
+        </form>        
         <hr />
         <footer>
             <p>&copy; AMOS GROUP 4 2015</p>
