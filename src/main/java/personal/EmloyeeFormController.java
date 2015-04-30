@@ -1,6 +1,10 @@
 package personal;
 
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +36,10 @@ public class EmloyeeFormController {
 	
 	// Employee data submit - Submit Employee data
 	@RequestMapping("/EmployeeSubmit")
-	public String EmloyeeSubmit(Model model){ 
+	public String EmloyeeSubmit(Model model){
+		// TO DO: persist Employee dat
+		// TO DO: provide a way to get the personal data for the text file generation
+		
 		return "EmployeeSubmit";
 	}
 	
@@ -47,4 +54,19 @@ public class EmloyeeFormController {
 	    
 	    return mav;
 	  }
+	
+	// Employee file download - Download text file with Employee data
+	@RequestMapping("/EmployeeTextFileDownload")
+	public void EmployeeTextFileDownload(HttpServletResponse response) throws IOException {
+		// TO DO: fill the file Content to make sure it contains actual Employee personal data.
+		String fileContent = "[EMPLOYEE DATA]";
+
+		response.setContentType("text/plain");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=myFile.txt");
+		ServletOutputStream out = response.getOutputStream();
+		out.println(fileContent);
+		out.flush();
+		out.close();
+	}
 }
