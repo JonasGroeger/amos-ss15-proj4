@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -36,9 +37,15 @@ public class EmloyeeFormController {
 	
 	// Employee data submit - Submit Employee data
 	@RequestMapping("/EmployeeSubmit")
-	public String EmloyeeSubmit(Model model){
-		// TO DO: persist Employee dat
-		// TO DO: provide a way to get the personal data for the text file generation
+	public String EmloyeeSubmit(Model model, HttpServletRequest request){
+		Employee employee = new Employee();
+		String FamilyName = request.getParameter("lastname");
+		String FirstName = request.getParameter("firstname");
+		employee.Name = FirstName  + " " + FamilyName;
+		EmployeeManager employeeManager = EmployeeManager.getInstance();
+		int EmployeeId = employeeManager.PersistEmployee(employee);
+		
+		model.addAttribute("EmployeeId", EmployeeId + "");
 		
 		return "EmployeeSubmit";
 	}
@@ -57,9 +64,11 @@ public class EmloyeeFormController {
 	
 	// Employee file download - Download text file with Employee data
 	@RequestMapping("/EmployeeTextFileDownload")
-	public void EmployeeTextFileDownload(HttpServletResponse response) throws IOException {
+	public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException {
 		// TO DO: fill the file Content to make sure it contains actual Employee personal data.
-		String fileContent = "[EMPLOYEE DATA]";
+		Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
+		
+		String fileContent = "[EMPLOYEE DATA] ID: " + employee.Id + " Name:" + employee.Name;
 
 		response.setContentType("text/plain");
 		response.setHeader("Content-Disposition",
