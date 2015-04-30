@@ -16,11 +16,12 @@ public class EmployeeManager {
 	int PersistEmployee(Employee employee)
 	{		
 		// TODO: Add exception when already in stored
-		
-		int nextKey = storage.size() + 1;
+		int nextKey = 0;
+	    synchronized(this) {
+		nextKey = storage.size() + 1;
 		storage.put(nextKey, employee);
 		employee.setId(nextKey);
-		
+	    }
 		return nextKey;
 	}
 	
