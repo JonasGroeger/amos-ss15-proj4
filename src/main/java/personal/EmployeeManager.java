@@ -1,11 +1,16 @@
 package personal;
 
+import hello.Person;
+import hibernate.HibernateUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 public class EmployeeManager {
 	
-	// TODO: implement persistance using Hibernate
 	private Map<Integer, Employee> storage = new HashMap<Integer, Employee>();
 	
 	private static EmployeeManager instance = new EmployeeManager();  
@@ -14,19 +19,21 @@ public class EmployeeManager {
 	}
 	
 	int PersistEmployee(Employee employee)
-	{		
-		// TODO: Add exception when already in stored
-		int nextKey = 0;
-	    synchronized(this) {
-		nextKey = storage.size() + 1;
-		storage.put(nextKey, employee);
-		employee.setId(nextKey);
-	    }
-		return nextKey;
+	{	
+		// persist employee
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		session.save(employee);
+		transaction.commit();
+				
+		// return id (primary key)
+		return employee.getId();
 	}
 	
 	Employee getEmployee(int id)
 	{
-	    return storage.get(id);	
+		Session session = HibernateUtil.getSession();
+		Employee loadedEmployee = (Employee) session.get(Employee.class, id);
+		return loadedEmployee;
 	}
 }

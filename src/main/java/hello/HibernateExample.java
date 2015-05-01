@@ -1,5 +1,7 @@
 package hello;
 
+import hibernate.HibernateUtil;
+
 import org.hibernate.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 
