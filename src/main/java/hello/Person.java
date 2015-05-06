@@ -16,10 +16,10 @@ public class Person {
 
     public int getId() {
         return id;
-    } 
+    }
     public void setId(int id) {
         this.id = id;
-    }    
+    }
 	public String getName() {
 		return Name;
 	}
@@ -32,9 +32,9 @@ public class Person {
 	public void setAge(int age) {
 		Age = age;
 	}
-	
+
 	public Person()
 	{
-		
+
 	}
 }

@@ -14,10 +14,7 @@ private static final SessionFactory sessionFactory;
     static {
         try {
         	sessionFactory = new AnnotationConfiguration()
-            .addPackage("hello") //the fully qualified package name
-            .addAnnotatedClass(Person.class)            
-            .addAnnotatedClass(Employee.class)            
-            //.addResource("test/animals/orm.xml")
+            .addAnnotatedClass(Employee.class)
             .configure()
             .buildSessionFactory();
         } catch (Throwable ex) {
