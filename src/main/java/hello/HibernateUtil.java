@@ -1,9 +1,9 @@
-package hibernate;
+package hello;
+
+import hello.Person;
 
 import org.hibernate.*;
 import org.hibernate.cfg.*;
-
-import personal.Employee;
 
 @SuppressWarnings("deprecation")
 public class HibernateUtil {
@@ -12,7 +12,7 @@ private static final SessionFactory sessionFactory;
     static {
         try {
         	sessionFactory = new AnnotationConfiguration()
-            .addAnnotatedClass(Employee.class)
+            .addAnnotatedClass(Person.class)
             .configure()
             .buildSessionFactory();
         } catch (Throwable ex) {
