@@ -5,6 +5,10 @@ import personal.fields.MartialStatus;
 import personal.fields.Sex;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Entity
@@ -29,6 +33,7 @@ public class Employee
     String familyName;
 
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     Date birthDate;
 

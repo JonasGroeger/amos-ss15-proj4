@@ -1,10 +1,13 @@
 package personal;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import personal.fields.Disabled;
 import personal.fields.MartialStatus;
 import personal.fields.Sex;
@@ -12,7 +15,10 @@ import personal.fields.Sex;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class EmloyeeFormController
@@ -28,6 +34,12 @@ public class EmloyeeFormController
         return "EmployeeForm";
     }
 
+    @InitBinder     
+    public void initBinder(WebDataBinder binder){
+         binder.registerCustomEditor(       Date.class,     
+                             new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));   
+    }
+    
     // Employee data review - Review Employee data
     @RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
     public String EmloyeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
@@ -74,11 +86,9 @@ public class EmloyeeFormController
 
         // Send file contents
         response.setContentType("text/plain");
-        response.setHeader("Content-Disposition",
-                "attachment;filename=myFile.txt");
+        response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
         ServletOutputStream out = response.getOutputStream();
         out.println(fileContent);
-        out.flush();
         out.close();
     }
 }
