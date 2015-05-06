@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.Date;
+
 import hibernate.HibernateUtil;
 
 import org.hibernate.*;
@@ -16,6 +18,7 @@ public class HibernateExample {
 		Person person = new Person();
 		person.Age = 18;
 		person.Name = "John Small";
+		person.Created = new Date();
 
 		// Persist object
 		Session session = HibernateUtil.getSession();

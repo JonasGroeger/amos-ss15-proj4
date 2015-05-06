@@ -15,6 +15,7 @@ private static final SessionFactory sessionFactory;
         try {
         	sessionFactory = new AnnotationConfiguration()
             .addAnnotatedClass(Employee.class)
+            .addAnnotatedClass(Person.class)
             .configure()
             .buildSessionFactory();
         } catch (Throwable ex) {
