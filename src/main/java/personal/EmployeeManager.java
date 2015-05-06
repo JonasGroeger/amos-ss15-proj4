@@ -1,5 +1,8 @@
 package personal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hibernate.HibernateUtil;
 
 import org.hibernate.Session;
@@ -30,5 +33,12 @@ public class EmployeeManager {
 		Session session = HibernateUtil.getSession();
 		Employee loadedEmployee = (Employee) session.get(Employee.class, id);
 		return loadedEmployee;
+	}
+	
+	public List<Employee> getAllEmployees()
+	{
+		Session session = HibernateUtil.getSession();
+		List<Employee> list = session.createCriteria(Employee.class).list();
+		return list;
 	}
 }
