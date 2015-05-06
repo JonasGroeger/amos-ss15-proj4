@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class EmloyeeFormController
@@ -90,5 +91,17 @@ public class EmloyeeFormController
         ServletOutputStream out = response.getOutputStream();
         out.println(fileContent);
         out.close();
+    }
+
+    @RequestMapping("/EmployeeList")
+    public ModelAndView EmployeeList()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("EmployeeList");
+        
+        List<Employee> AllEmployees = EmployeeManager.getInstance().getAllEmployees();
+        mav.addObject("Employees", AllEmployees);
+        
+    	return mav;
     }
 }
