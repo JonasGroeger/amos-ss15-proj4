@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 
@@ -12,14 +14,16 @@ public class Person {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
 	String Name;
-	int Age;
+	int Age;	
+	@Temporal(TemporalType.DATE) 
+	Date Created;
 
     public int getId() {
         return id;
-    } 
+    }
     public void setId(int id) {
         this.id = id;
-    }    
+    }
 	public String getName() {
 		return Name;
 	}
@@ -32,9 +36,9 @@ public class Person {
 	public void setAge(int age) {
 		Age = age;
 	}
-	
+
 	public Person()
 	{
-		
+
 	}
 }

@@ -1,157 +1,337 @@
 package personal;
 
+import personal.fields.Disabled;
+import personal.fields.MartialStatus;
+import personal.fields.Sex;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 @Entity
-@Table(name="Employees")
-public class Employee {
+@Table
+public class Employee
+{
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	int Id = 0;
-    String FamilyName = "";
-	String FirstName = "";
-    String MaidenName = "";
-    Date BirthDate;
-    String PlaceOfBirth = "";
-    String CountryOfBirth = "";
-	String Street = "";
-    String ZIPCode = ""; 
-    String HouseNumber = "";
-    String City = "";
-    String Title ="";
-    String SocialInsuranceNumber = "";
-    // TODO: Implement Sex enum
-    // TODO: Implement MaritalStatus enum
-    // TODO: Implement DisabledStatus enum
-    String Citizenship = "";
-    String EmployerSocialSavingsId = "";
-    String IBAN = "";
-    String BIC = "";
-    
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+
+    @Column
+    String firstName;
+
+    @Column
+    String lastName;
+
+    @Column
+    String maidenName;
+
+    @Column
+    String familyName;
+
+    @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    Date birthDate;
+
+    @Column
+    String placeOfBirth;
+
+    @Column
+    String countryOfBirth;
+
+    @Column
+    String street;
+
+    @Column
+    String zipCode;
+
+    @Column
+    String houseNumber;
+
+    @Column
+    String city;
+
+    @Column
+    String socialInsuranceNumber;
+
+    @Enumerated(EnumType.STRING)
+    Sex sex;
+
+    @Enumerated(EnumType.STRING)
+    MartialStatus martialStatus;
+
+    @Enumerated(EnumType.STRING)
+    Disabled disabled;
+
+    @Column
+    String citizenship;
+
+    @Column
+    String employerSocialSavingsNumber;
+
+    @Column
+    String iban;
+
+    @Column
+    String bic;
+
+    @Column
+    String additionToAddress;
+
     public Employee()
     {
-    	
     }
-    
-    public int getId() {
-		return Id;
-	}
-	public void setId(int id) {
-		Id = id;
-	}
-	public String getFamilyName() {
-		return FamilyName;
-	}
-	public void setFamilyName(String familyName) {
-		FamilyName = familyName;
-	}
-	public String getFirstName() {
-		return FirstName;
-	}
-	public void setFirstName(String firstNAme) {
-		FirstName = firstNAme;
-	}
-	public String getMaidenName() {
-		return MaidenName;
-	}
-	public void setMaidenName(String maidenName) {
-		MaidenName = maidenName;
-	}
-	public Date getBirthDate() {
-		return BirthDate;
-	}
-	public void setBirthDate(Date birthDate) {
-		BirthDate = birthDate;
-	}
-	public String getPlaceOfBirth() {
-		return PlaceOfBirth;
-	}
-	public void setPlaceOfBirth(String placeOfBirth) {
-		PlaceOfBirth = placeOfBirth;
-	}
-    public String getCountryOfBirth() {
-		return CountryOfBirth;
-	}
 
-	public void setCountryOfBirth(String countryOfBirth) {
-		CountryOfBirth = countryOfBirth;
-	}
-	public String getStreet() {
-		return Street;
-	}
-	public void setStreet(String street) {
-		Street = street;
-	}
-	public String getZIPCode() {
-		return ZIPCode;
-	}
-	public void setZIPCode(String zIPCode) {
-		ZIPCode = zIPCode;
-	}
-	public String getHouseNumber() {
-		return HouseNumber;
-	}
-	public void setHouseNumber(String houseNumber) {
-		HouseNumber = houseNumber;
-	}
-	public String getCity() {
-		return City;
-	}
-	public void setCity(String city) {
-		City = city;
-	}
-	public String getTitle() {
-		return Title;
-	}
-	public void setTitle(String title) {
-		Title = title;
-	}
-	public String getSocialInsuranceNumber() {
-		return SocialInsuranceNumber;
-	}
-	public void setSocialInsuranceNumber(String socialInsuranceNumber) {
-		SocialInsuranceNumber = socialInsuranceNumber;
-	}
-	public String getCitizenship() {
-		return Citizenship;
-	}
-	public void setCitizenship(String citizenship) {
-		Citizenship = citizenship;
-	}
-	public String getEmployerSocialSavingsId() {
-		return EmployerSocialSavingsId;
-	}
-	public void setEmployerSocialSavingsId(String employerSocialSavingsId) {
-		EmployerSocialSavingsId = employerSocialSavingsId;
-	}
-	public String getIBAN() {
-		return IBAN;
-	}
-	public void setIBAN(String iBAN) {
-		IBAN = iBAN;
-	}
-	public String getBIC() {
-		return BIC;
-	}
-	public void setBIC(String bIC) {
-		BIC = bIC;
-	}
-	
-	public String getText()
-	{
-		// TO DO: Implement full export.
-		return String.format(("Employee Name: %s %s\n" + 
-	                          "Employee citizenship %s"),
-				              this.FirstName,
-				              this.FamilyName,
-				              this.Citizenship);
-	}
+    public String getAdditionToAddress()
+    {
+        return additionToAddress;
+    }
+
+    public void setAdditionToAddress(String additionToAddress)
+    {
+        this.additionToAddress = additionToAddress;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    public String getMaidenName()
+    {
+        return maidenName;
+    }
+
+    public void setMaidenName(String maidenName)
+    {
+        this.maidenName = maidenName;
+    }
+
+    public String getFamilyName()
+    {
+        return familyName;
+    }
+
+    public void setFamilyName(String familyName)
+    {
+        this.familyName = familyName;
+    }
+
+    public Date getBirthDate()
+    {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate)
+    {
+        this.birthDate = birthDate;
+    }
+
+    public String getPlaceOfBirth()
+    {
+        return placeOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth)
+    {
+        this.placeOfBirth = placeOfBirth;
+    }
+
+    public String getCountryOfBirth()
+    {
+        return countryOfBirth;
+    }
+
+    public void setCountryOfBirth(String countryOfBirth)
+    {
+        this.countryOfBirth = countryOfBirth;
+    }
+
+    public String getStreet()
+    {
+        return street;
+    }
+
+    public void setStreet(String street)
+    {
+        this.street = street;
+    }
+
+    public String getZipCode()
+    {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode)
+    {
+        this.zipCode = zipCode;
+    }
+
+    public String getHouseNumber()
+    {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(String houseNumber)
+    {
+        this.houseNumber = houseNumber;
+    }
+
+    public String getCity()
+    {
+        return city;
+    }
+
+    public void setCity(String city)
+    {
+        this.city = city;
+    }
+
+    public String getSocialInsuranceNumber()
+    {
+        return socialInsuranceNumber;
+    }
+
+    public void setSocialInsuranceNumber(String socialInsuranceNumber)
+    {
+        this.socialInsuranceNumber = socialInsuranceNumber;
+    }
+
+    public Sex getSex()
+    {
+        return sex;
+    }
+
+    public void setSex(Sex sex)
+    {
+        this.sex = sex;
+    }
+
+    public MartialStatus getMartialStatus()
+    {
+        return martialStatus;
+    }
+
+    public void setMartialStatus(MartialStatus martialStatus)
+    {
+        this.martialStatus = martialStatus;
+    }
+
+    public Disabled getDisabled()
+    {
+        return disabled;
+    }
+
+    public void setDisabled(Disabled disabled)
+    {
+        this.disabled = disabled;
+    }
+
+    public String getCitizenship()
+    {
+        return citizenship;
+    }
+
+    public void setCitizenship(String citizenship)
+    {
+        this.citizenship = citizenship;
+    }
+
+    public String getEmployerSocialSavingsNumber()
+    {
+        return employerSocialSavingsNumber;
+    }
+
+    public void setEmployerSocialSavingsNumber(String employerSocialSavingsNumber)
+    {
+        this.employerSocialSavingsNumber = employerSocialSavingsNumber;
+    }
+
+    public String getIban()
+    {
+        return iban;
+    }
+
+    public void setIban(String iban)
+    {
+        this.iban = iban;
+    }
+
+    public String getBic()
+    {
+        return bic;
+    }
+
+    public void setBic(String bic)
+    {
+        this.bic = bic;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", city='" + city + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
+    }
+
+    public String dump()
+    {
+        return "Employee{" + '\n' +
+                "id=" + id + '\n' +
+                ", firstName='" + firstName + '\'' + '\n' +
+                ", lastName='" + lastName + '\'' + '\n' +
+                ", maidenName='" + maidenName + '\'' + '\n' +
+                ", familyName='" + familyName + '\'' + '\n' +
+                ", birthDate=" + birthDate + '\n' +
+                ", placeOfBirth='" + placeOfBirth + '\'' + '\n' +
+                ", countryOfBirth='" + countryOfBirth + '\'' + '\n' +
+                ", street='" + street + '\'' + '\n' +
+                ", zipCode='" + zipCode + '\'' + '\n' +
+                ", houseNumber='" + houseNumber + '\'' + '\n' +
+                ", city='" + city + '\'' + '\n' +
+                ", socialInsuranceNumber='" + socialInsuranceNumber + '\'' + '\n' +
+                ", sex=" + sex + '\n' +
+                ", martialStatus=" + martialStatus + '\n' +
+                ", disabled=" + disabled + '\n' +
+                ", citizenship='" + citizenship + '\'' + '\n' +
+                ", employerSocialSavingsNumber='" + employerSocialSavingsNumber + '\'' + '\n' +
+                ", iban='" + iban + '\'' + '\n' +
+                ", bic='" + bic + '\'' + '\n' +
+                '}';
+    }
 }

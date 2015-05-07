@@ -18,7 +18,7 @@ springBoot {
 }
 
 jar {
-    baseName = 'gs-serving-web-content'
+    baseName = 'PFB'
     version =  '0.1.0'
 }
 

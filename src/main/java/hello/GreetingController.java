@@ -59,13 +59,13 @@ public class GreetingController {
 		model.addAttribute("person", person);
 		return "PersonEditor";
 	}
-		
+
 	@RequestMapping(value = "/PersonEditor", method = RequestMethod.POST)
     public String editPerson(@ModelAttribute("person") Person person,
     		   BindingResult result) {
 		  if(result.hasErrors())
 		  {
-			  System.out.println("Something went wrong.");			  
+			  System.out.println("Something went wrong.");
 		  }
 		  else
 		  {
@@ -73,9 +73,9 @@ public class GreetingController {
 			  System.out.println("Person name: " + person.Name);
 			  System.out.println("Person age:" + person.Age);
 		  }
-		  
+
 		  return "PersonEditor";
 	}
-	
+
 
 }
