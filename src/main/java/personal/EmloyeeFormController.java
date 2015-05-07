@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Controller
 public class EmloyeeFormController
@@ -91,6 +93,31 @@ public class EmloyeeFormController
         ServletOutputStream out = response.getOutputStream();
         out.println(fileContent);
         out.close();
+    }
+    
+    // Employee zip file download - Download zip file containing a text with Employee data
+    @RequestMapping("/EmployeeZipFileDownload")
+    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException
+    {
+        //Prepare textfile contents
+        Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
+        String fileContent = employee.dump();
+
+        response.setContentType("application/zip");
+        response.setHeader("Content-Disposition", "attachment;filename=test.zip");
+        ServletOutputStream out = response.getOutputStream();
+        
+        final StringBuilder sb = new StringBuilder(fileContent);
+        final ZipOutputStream zout = new ZipOutputStream(out);
+        
+        ZipEntry e = new ZipEntry("mytext.txt");
+        zout.putNextEntry(e);
+        byte[] data = sb.toString().getBytes();
+        zout.write(data, 0, data.length);
+        zout.closeEntry();
+        zout.close();
+        
+
     }
 
     @RequestMapping("/EmployeeList")

@@ -25,7 +25,8 @@
     <div class="container">
         Thank you for the submitted data.
         <p th:text="'Employee id:' + ${EmployeeId}" />
-        To download data click here: <a th:href="'/EmployeeTextFileDownload?id=' + ${EmployeeId}">Download text file with Employee data.</a>                
+        To download data click here: <a th:href="'/EmployeeTextFileDownload?id=' + ${EmployeeId}">Download text file with Employee data.</a> <br />
+        To download zip file click here: <a th:href="'/EmployeeZipFileDownload?id=' + ${EmployeeId}">Download zip file with Employee data.</a>               
         <footer>
             <p>&copy; AMOS GROUP 4 2015</p>
         </footer>
