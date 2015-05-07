@@ -22,6 +22,7 @@ import java.net.URL;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -44,18 +45,30 @@ public class ClientControllerTest
     @Before
     public void setUp() throws MalformedURLException
     {
-        this.base = new URL("http://localhost:" + this.port + "/");
+        this.base = new URL("http://localhost:" + this.port);
         this.template = new TestRestTemplate();
     }
 
     @Test
     public void testThatMainPageHasLogin() throws Exception
     {
-        String path = this.base.toString() + "?lang=de";
+        String path = this.base.toString() + "/?lang=de";
         ResponseEntity<String> resp = template.getForEntity(path, String.class);
 
+        assertTrue(resp.getStatusCode().is2xxSuccessful());
         assertThat(resp.getBody(), containsString("Anmelden"));
         assertThat(resp.getBody(), containsString("Passwort"));
         assertThat(resp.getBody(), containsString("Remember me"));
+    }
+
+    @Test
+    public void testThatRegistrationPageIsAvailable()
+    {
+        String path = this.base.toString() + "/client/register?lang=de";
+        ResponseEntity<String> resp = template.getForEntity(path, String.class);
+
+        assertTrue(resp.getStatusCode().is2xxSuccessful());
+        assertThat(resp.getBody(), containsString("Registrieren"));
+        assertThat(resp.getBody(), containsString("Passwort"));
     }
 }
