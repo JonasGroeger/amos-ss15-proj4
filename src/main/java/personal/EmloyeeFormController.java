@@ -1,5 +1,9 @@
 package personal;
 
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.io.ZipOutputStream;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import personal.fields.Disabled;
 import personal.fields.MartialStatus;
 import personal.fields.Sex;
@@ -15,13 +18,13 @@ import personal.fields.Sex;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 @Controller
 public class EmloyeeFormController
@@ -37,12 +40,12 @@ public class EmloyeeFormController
         return "EmployeeForm";
     }
 
-    @InitBinder     
-    public void initBinder(WebDataBinder binder){
-         binder.registerCustomEditor(       Date.class,     
-                             new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));   
+    @InitBinder
+    public void initBinder(WebDataBinder binder)
+    {
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));
     }
-    
+
     // Employee data review - Review Employee data
     @RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
     public String EmloyeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
@@ -94,7 +97,7 @@ public class EmloyeeFormController
         out.println(fileContent);
         out.close();
     }
-    
+
     // Employee zip file download - Download zip file containing a text with Employee data
     @RequestMapping("/EmployeeZipFileDownload")
     public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException
@@ -104,20 +107,37 @@ public class EmloyeeFormController
         String fileContent = employee.dump();
 
         response.setContentType("application/zip");
-        response.setHeader("Content-Disposition", "attachment;filename=test.zip");
-        ServletOutputStream out = response.getOutputStream();
-        
-        final StringBuilder sb = new StringBuilder(fileContent);
-        final ZipOutputStream zout = new ZipOutputStream(out);
-        
-        ZipEntry e = new ZipEntry("mytext.txt");
-        zout.putNextEntry(e);
-        byte[] data = sb.toString().getBytes();
-        zout.write(data, 0, data.length);
-        zout.closeEntry();
-        zout.close();
-        
+        response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
 
+        final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
+
+        try {
+            ZipParameters params = new ZipParameters();
+            params.setFileNameInZip("employee.txt");
+            params.setCompressionLevel(Zip4jConstants.COMP_DEFLATE);
+            params.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_ULTRA);
+            params.setEncryptFiles(true);
+            params.setReadHiddenFiles(false);
+            params.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
+            params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
+            params.setPassword("AMOS");
+
+            // Create temporary file for shitty API
+            File temp = File.createTempFile("employee", ".txt");
+            FileOutputStream fOut = new FileOutputStream(temp);
+            fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
+            fOut.flush();
+
+            // Write the zip to client
+            zout.putNextEntry(temp, params); // Why do you need a File, Mister API?
+            zout.write(fileContent.getBytes(StandardCharsets.UTF_8));
+            zout.closeEntry();
+            zout.finish();
+            zout.flush();
+            zout.close();
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/EmployeeList")
@@ -125,10 +145,10 @@ public class EmloyeeFormController
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeList");
-        
+
         List<Employee> AllEmployees = EmployeeManager.getInstance().getAllEmployees();
         mav.addObject("Employees", AllEmployees);
-        
-    	return mav;
+
+        return mav;
     }
 }
