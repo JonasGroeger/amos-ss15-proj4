@@ -1,6 +1,5 @@
 package personal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import hibernate.HibernateUtil;
