@@ -24,7 +24,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Controller
-public class EmloyeeFormController
+public class EmployeeFormController
 {
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
