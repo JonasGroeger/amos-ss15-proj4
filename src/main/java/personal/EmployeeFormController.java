@@ -16,15 +16,18 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.io.ZipOutputStream;
+import net.lingala.zip4j.model.ZipParameters;
 
 @Controller
-public class EmloyeeFormController
+public class EmployeeFormController
 {
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
@@ -97,9 +100,9 @@ public class EmloyeeFormController
     
     // Employee zip file download - Download zip file containing a text with Employee data
     @RequestMapping("/EmployeeZipFileDownload")
-    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException
+    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException, ZipException
     {
-        //Prepare textfile contents
+        //Prepare text file contents
         Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
         String fileContent = employee.dump();
 
@@ -110,14 +113,39 @@ public class EmloyeeFormController
         final StringBuilder sb = new StringBuilder(fileContent);
         final ZipOutputStream zout = new ZipOutputStream(out);
         
-        ZipEntry e = new ZipEntry("mytext.txt");
-        zout.putNextEntry(e);
+        File e = new File("mytext.txt");
+        zout.putNextEntry(e, null);
         byte[] data = sb.toString().getBytes();
         zout.write(data, 0, data.length);
         zout.closeEntry();
         zout.close();
-        
+    }
+    
+    // Employee encrypted zip file download - Download encrypted zip file using Zip4j containing a text with Employee data
+    @RequestMapping("/EmployeeEncryptedZipFileDownload")
+    public void EmployeeEncyrptedZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException, ZipException
+    {
+        //Prepare text file contents
+        Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
+        String fileContent = employee.dump();
 
+        //response.setContentType("application/zip");
+        //response.setHeader("Content-Disposition", "attachment;filename=test.zip");
+        
+        ZipParameters parameters = new ZipParameters();
+        parameters.setEncryptFiles(true);
+        parameters.setPassword("AMOS");
+
+        final StringBuilder sb = new StringBuilder(fileContent);
+        final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
+        
+        File file = new File("mytext.txt");
+        zout.putNextEntry(file, parameters);
+        byte[] data = sb.toString().getBytes();
+        zout.write(data, 0, data.length);
+        
+        zout.closeEntry();
+        zout.close();
     }
 
     @RequestMapping("/EmployeeList")
