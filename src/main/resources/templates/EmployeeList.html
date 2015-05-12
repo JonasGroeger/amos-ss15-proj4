@@ -24,7 +24,21 @@
 <body>
 
 <div class="container">
-         <h1>DATEV Personalfragebogen 2.0</h1>
+	<span style="float: right">
+		<a href="?lang=en">
+			<button type="button"  th:with="lang=${en}"  > 
+		    	<img th:src="@{/images/uk.gif}"
+		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+		    </button >
+		</a>
+		<a href="?lang=de">
+			<button  th:with="lang=${de}">      
+		    	<img th:src="@{/images/deutschlandflagge.jpg}"
+		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/> 
+			</button>
+		</a>
+	</span>
+         <h1 th:text="#{EmployeeForm.header}"></h1>
          <h1>Employee List</h1>
          <table class="table table-striped">
           <tr>
