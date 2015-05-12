@@ -8,8 +8,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+
+
 import personal.fields.Disabled;
-import personal.fields.MartialStatus;
+import personal.fields.MaritalStatus;
 import personal.fields.Sex;
 
 import javax.servlet.ServletOutputStream;
@@ -22,16 +24,29 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-public class EmloyeeFormController
+public class EmloyeeFormController 
 {
+	
+
+	
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
-    public String EmloyeeForm(Model model)
+    public String EmloyeeForm(
+    		 Model model) throws Exception
     {
+    	//LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+    	//localeResolver.setLocale(request, response, StringUtils.parseLocaleString("de"));
+    	
+        //WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        //ctx.setVariable("today", Calendar.getInstance());
+        
+
+    	
         model.addAttribute("employee", new Employee());
         model.addAttribute("allDisabled", Disabled.values());
-        model.addAttribute("allMartial", MartialStatus.values());
+        model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
+        System.out.println("EmployeeForm");
         return "EmployeeForm";
     }
 
@@ -42,11 +57,12 @@ public class EmloyeeFormController
     }
     
     // Employee data review - Review Employee data
+
     @RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
     public String EmloyeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
-        model.addAttribute("allMartial", MartialStatus.values());
+        model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
         return "EmployeeReview";
     }
@@ -63,7 +79,7 @@ public class EmloyeeFormController
 
         return "EmployeeSubmit";
     }
-
+    
     // Exception handling - Display exception information
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception exception)
@@ -104,4 +120,6 @@ public class EmloyeeFormController
         
     	return mav;
     }
+
+
 }

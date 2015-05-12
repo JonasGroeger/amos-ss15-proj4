@@ -1,7 +1,7 @@
 package personal;
 
 import personal.fields.Disabled;
-import personal.fields.MartialStatus;
+import personal.fields.MaritalStatus;
 import personal.fields.Sex;
 
 import javax.persistence.*;
@@ -62,7 +62,7 @@ public class Employee
     Sex sex;
 
     @Enumerated(EnumType.STRING)
-    MartialStatus martialStatus;
+    MaritalStatus maritalStatus;
 
     @Enumerated(EnumType.STRING)
     Disabled disabled;
@@ -236,14 +236,14 @@ public class Employee
         this.sex = sex;
     }
 
-    public MartialStatus getMartialStatus()
+    public MaritalStatus getMaritalStatus()
     {
-        return martialStatus;
+        return maritalStatus;
     }
 
-    public void setMartialStatus(MartialStatus martialStatus)
+    public void setMaritalStatus(MaritalStatus maritalStatus)
     {
-        this.martialStatus = martialStatus;
+        this.maritalStatus = maritalStatus;
     }
 
     public Disabled getDisabled()
@@ -326,7 +326,7 @@ public class Employee
                 ", city='" + city + '\'' + '\n' +
                 ", socialInsuranceNumber='" + socialInsuranceNumber + '\'' + '\n' +
                 ", sex=" + sex + '\n' +
-                ", martialStatus=" + martialStatus + '\n' +
+                ", maritalStatus=" + maritalStatus + '\n' +
                 ", disabled=" + disabled + '\n' +
                 ", citizenship='" + citizenship + '\'' + '\n' +
                 ", employerSocialSavingsNumber='" + employerSocialSavingsNumber + '\'' + '\n' +
