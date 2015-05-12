@@ -56,23 +56,10 @@ public class Application extends SpringBootServletInitializer
 */
 
 	public static void main(String[] args) {
-		
-		String lang;
-		
-		ApplicationContext context 
-		= new ClassPathXmlApplicationContext("locale.xml");
-
-	String name = context.getMessage("EmployeeForm.header", 
-			null, Locale.UK);
-
-	System.out.println("Customer name (English) : " + name);
-
-	String namechinese = context.getMessage("EmployeeForm.header", 
-			null, 
-                                    Locale.SIMPLIFIED_CHINESE);
-	System.out.println("Customer name (Chinese) : " + namechinese);
+	
 		SpringApplication.run(Application.class, args);
 	}
+	
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
