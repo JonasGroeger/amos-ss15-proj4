@@ -1,11 +1,10 @@
 package hello;
 
+import hello.HibernateUtil;
+
 import java.util.Date;
 
-import hibernate.HibernateUtil;
-
 import org.hibernate.*;
-import org.hibernate.cfg.AnnotationConfiguration;
 
 public class HibernateExample {
 
