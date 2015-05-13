@@ -6,7 +6,6 @@ import personal.fields.Sex;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

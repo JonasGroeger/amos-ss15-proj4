@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-public class EmloyeeFormController 
+public class EmployeeFormController
 {
 
     public static List<String> splitEqually(String text, int size)
@@ -55,7 +55,7 @@ public class EmloyeeFormController
 
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
-    public String EmloyeeForm(
+    public String EmployeeForm(
     		 Model model) throws Exception
     {
     	//LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
@@ -83,7 +83,7 @@ public class EmloyeeFormController
     // Employee data review - Review Employee data
 
     @RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
-    public String EmloyeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
+    public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
@@ -93,7 +93,7 @@ public class EmloyeeFormController
 
     // Employee data submit - Submit Employee data
     @RequestMapping("/EmployeeSubmit")
-    public String EmloyeeSubmit(@ModelAttribute("employee") Employee employee,
+    public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
                                 BindingResult result, Model model)
     {
         EmployeeManager employeeManager = EmployeeManager.getInstance();
