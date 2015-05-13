@@ -4,6 +4,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -26,6 +27,7 @@ import personal.fields.Sex;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -93,7 +95,7 @@ public class EmployeeFormController
     // Employee data submit - Submit Employee data
     @RequestMapping("/EmployeeSubmit")
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
-                                BindingResult result, Model model)
+                                BindingResult result, Model model) throws Exception
     {
     	// Persist Employee
         EmployeeManager employeeManager = EmployeeManager.getInstance();
@@ -165,6 +167,7 @@ public class EmployeeFormController
             FileOutputStream fOut = new FileOutputStream(temp);
             fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
             fOut.flush();
+
 
             try {
                 File t = File.createTempFile("employee", ".pdf");
