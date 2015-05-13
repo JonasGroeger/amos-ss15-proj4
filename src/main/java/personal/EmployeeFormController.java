@@ -81,7 +81,6 @@ public class EmployeeFormController
     }
 
     // Employee data review - Review Employee data
-
     @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST,RequestMethod.GET})
     public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
@@ -96,11 +95,15 @@ public class EmployeeFormController
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
                                 BindingResult result, Model model)
     {
+    	// Persist Employee
         EmployeeManager employeeManager = EmployeeManager.getInstance();
         int EmployeeId = employeeManager.PersistEmployee(employee);
-
+        
+        // Generate Token
+        EmployeeManager.getInstance().GenerateToken(employee);
+        
+        // Setup modell and return view
         model.addAttribute("EmployeeId", EmployeeId + "");
-
         return "EmployeeSubmit";
     }
     
@@ -163,7 +166,6 @@ public class EmployeeFormController
             fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
             fOut.flush();
 
-
             try {
                 File t = File.createTempFile("employee", ".pdf");
 
@@ -206,7 +208,6 @@ public class EmployeeFormController
             } catch (CloneNotSupportedException | COSVisitorException e) {
                 e.printStackTrace();
             }
-
 
             // Write the zip to client
             zout.putNextEntry(temp, params); // Why do you need a File, Mister API?
