@@ -51,7 +51,7 @@
             <td th:text="${Employee.firstName}">Jack</td>
             <td th:text="${Employee.lastName}">Smith</td>
             <td th:text="${Employee.birthDate}">25/01/1934</td>
-            <td><button th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'">View token</button></td>
+            <td><button th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'" th:text="#{EmployeeSubmit.ViewToken}">View token</button></td>
           </tr>
          </table>
     <hr/>
