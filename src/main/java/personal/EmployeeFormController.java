@@ -82,7 +82,7 @@ public class EmployeeFormController
 
     // Employee data review - Review Employee data
 
-    @RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
+    @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST,RequestMethod.GET})
     public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
