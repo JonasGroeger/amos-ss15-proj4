@@ -17,26 +17,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class Application extends WebMvcConfigurerAdapter {
-	
-	@Bean
-	public LocaleResolver localeResolver() {
-	    SessionLocaleResolver slr = new SessionLocaleResolver();
-	    slr.setDefaultLocale(Locale.GERMANY);
-	    return slr;
-	}
-	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
-	    LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-	    lci.setParamName("lang");
-	    return lci;
-	}
-
-/*
-@SpringBootApplication
 public class Application extends SpringBootServletInitializer
 {
-*/
+
+
 	/**
 	 * Configure the application. Normally all you would need to do it add sources (e.g.
 	 * config classes) because other settings have sensible defaults. You might choose
@@ -47,22 +31,19 @@ public class Application extends SpringBootServletInitializer
 	 * @return the application builder
 	 * @see org.springframework.boot.builder.SpringApplicationBuilder
 	 */
-	/*
+	
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
 	{
 		return builder.sources(Application.class);
 	}
-*/
+
 
 	public static void main(String[] args) {
 	
 		SpringApplication.run(Application.class, args);
 	}
 	
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-    }
+
 
 }
