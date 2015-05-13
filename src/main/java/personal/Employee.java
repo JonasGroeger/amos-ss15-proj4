@@ -81,6 +81,9 @@ public class Employee
     @Column
     String additionToAddress;
 
+    @Column
+    String token;
+
     public Employee()
     {
     }
@@ -294,6 +297,14 @@ public class Employee
     {
         this.bic = bic;
     }
+
+    public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
     @Override
     public String toString()

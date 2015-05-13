@@ -4,6 +4,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -26,6 +27,7 @@ import personal.fields.Sex;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -81,7 +83,6 @@ public class EmployeeFormController
     }
 
     // Employee data review - Review Employee data
-
     @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST,RequestMethod.GET})
     public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
@@ -94,13 +95,17 @@ public class EmployeeFormController
     // Employee data submit - Submit Employee data
     @RequestMapping("/EmployeeSubmit")
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
-                                BindingResult result, Model model)
+                                BindingResult result, Model model) throws Exception
     {
+    	// Persist Employee
         EmployeeManager employeeManager = EmployeeManager.getInstance();
         int EmployeeId = employeeManager.PersistEmployee(employee);
-
+        
+        // Generate Token
+        EmployeeManager.getInstance().GenerateToken(employee);
+        
+        // Setup modell and return view
         model.addAttribute("EmployeeId", EmployeeId + "");
-
         return "EmployeeSubmit";
     }
     
@@ -206,7 +211,6 @@ public class EmployeeFormController
             } catch (CloneNotSupportedException | COSVisitorException e) {
                 e.printStackTrace();
             }
-
 
             // Write the zip to client
             zout.putNextEntry(temp, params); // Why do you need a File, Mister API?
