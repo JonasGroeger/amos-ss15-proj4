@@ -51,20 +51,11 @@ public class EmployeeFormController
         return ret;
     }
 
-
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
     public String EmployeeForm(
-    		 Model model) throws Exception
+            Model model) throws Exception
     {
-    	//LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-    	//localeResolver.setLocale(request, response, StringUtils.parseLocaleString("de"));
-    	
-        //WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        //ctx.setVariable("today", Calendar.getInstance());
-        
-
-    	
         model.addAttribute("employee", new Employee());
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
@@ -80,7 +71,7 @@ public class EmployeeFormController
     }
 
     // Employee data review - Review Employee data
-    @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST, RequestMethod.GET})
     public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
@@ -92,20 +83,20 @@ public class EmployeeFormController
     // Employee data submit - Submit Employee data
     @RequestMapping("/EmployeeSubmit")
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
-                                BindingResult result, Model model) throws Exception
+                                 BindingResult result, Model model) throws Exception
     {
-    	// Persist Employee
+        // Persist Employee
         EmployeeManager employeeManager = EmployeeManager.getInstance();
         int EmployeeId = employeeManager.PersistEmployee(employee);
-        
+
         // Generate Token
         EmployeeManager.getInstance().GenerateToken(employee);
-        
+
         // Setup modell and return view
         model.addAttribute("EmployeeId", EmployeeId + "");
         return "EmployeeSubmit";
     }
-    
+
     // Exception handling - Display exception information
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception exception)

@@ -14,11 +14,6 @@ public enum MaritalStatus
         this.text = text;
     }
 
-    public String getText()
-    {
-        return text;
-    }
-
     public static Map<String, String> asMap()
     {
         Map<String, String> map = new HashMap<>();
@@ -26,5 +21,10 @@ public enum MaritalStatus
             map.put(m.name(), m.getText());
         }
         return map;
+    }
+
+    public String getText()
+    {
+        return text;
     }
 }

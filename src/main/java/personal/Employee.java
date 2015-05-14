@@ -296,13 +296,15 @@ public class Employee
         this.bic = bic;
     }
 
-    public String getToken() {
-		return token;
-	}
+    public String getToken()
+    {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token)
+    {
+        this.token = token;
+    }
 
     @Override
     public String toString()
