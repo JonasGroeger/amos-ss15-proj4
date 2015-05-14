@@ -10,7 +10,10 @@ public class Application extends SpringBootServletInitializer
 {
     public static void main(String[] args)
     {
-        SpringApplication.run(Application.class, args);
+        new SpringApplicationBuilder()
+                .showBanner(false)
+                .sources(Application.class)
+                .run(args);
     }
 
     /**
@@ -23,7 +26,6 @@ public class Application extends SpringBootServletInitializer
      * @return the application builder
      * @see org.springframework.boot.builder.SpringApplicationBuilder
      */
-
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
     {
