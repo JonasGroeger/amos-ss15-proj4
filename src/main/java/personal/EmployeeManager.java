@@ -1,12 +1,11 @@
 package personal;
 
-import java.util.List;
-import java.security.SecureRandom;
-
 import hibernate.HibernateUtil;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.security.SecureRandom;
+import java.util.List;
 
 public class EmployeeManager {
 	private static EmployeeManager instance = new EmployeeManager();

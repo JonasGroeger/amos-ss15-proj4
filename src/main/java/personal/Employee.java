@@ -1,13 +1,11 @@
 package personal;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import personal.fields.Disabled;
 import personal.fields.MaritalStatus;
 import personal.fields.Sex;
 
 import javax.persistence.*;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 @Entity

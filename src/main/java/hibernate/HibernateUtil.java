@@ -1,8 +1,9 @@
 package hibernate;
 
-import org.hibernate.*;
-import org.hibernate.cfg.*;
-
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import personal.Employee;
 
 public class HibernateUtil {
