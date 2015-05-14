@@ -1,4 +1,4 @@
-package personal.fields;
+package de.fau.amos4.domain.fields;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,15 +1,15 @@
-package personal.fields;
+package de.fau.amos4.domain.fields;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Sex
+public enum Disabled
 {
-    MALE("Male"), FEMALE("Female"), UNKNOWN("Unknown");
+    YES("Yes"), NO("No");
 
     private String text;
 
-    Sex(String text)
+    Disabled(String text)
     {
         this.text = text;
     }
@@ -17,7 +17,7 @@ public enum Sex
     public static Map<String, String> asMap()
     {
         Map<String, String> map = new HashMap<>();
-        for (Sex m : Sex.values()) {
+        for (Disabled m : Disabled.values()) {
             map.put(m.name(), m.getText());
         }
         return map;
