@@ -1,6 +1,6 @@
-package personal;
+package de.fau.amos4.domain;
 
-import hibernate.HibernateUtil;
+import de.fau.amos4.persistance.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

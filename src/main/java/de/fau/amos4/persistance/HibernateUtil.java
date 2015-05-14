@@ -1,10 +1,10 @@
-package hibernate;
+package de.fau.amos4.persistance;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
-import personal.Employee;
+import de.fau.amos4.domain.Employee;
 
 public class HibernateUtil
 {

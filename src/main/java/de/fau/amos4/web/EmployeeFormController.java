@@ -1,5 +1,6 @@
-package personal;
+package de.fau.amos4.web;
 
+import de.fau.amos4.domain.Employee;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
@@ -18,9 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import personal.fields.Disabled;
-import personal.fields.MaritalStatus;
-import personal.fields.Sex;
+import de.fau.amos4.domain.EmployeeManager;
+import de.fau.amos4.domain.fields.Disabled;
+import de.fau.amos4.domain.fields.MaritalStatus;
+import de.fau.amos4.domain.fields.Sex;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;

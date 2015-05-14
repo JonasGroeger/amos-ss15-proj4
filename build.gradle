@@ -14,7 +14,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'war'
 
 springBoot {
-    mainClass = "personal.Application"
+    mainClass = "de.fau.amos4.Application"
 }
 
 jar {

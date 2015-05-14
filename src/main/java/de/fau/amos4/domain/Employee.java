@@ -1,9 +1,9 @@
-package personal;
+package de.fau.amos4.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import personal.fields.Disabled;
-import personal.fields.MaritalStatus;
-import personal.fields.Sex;
+import de.fau.amos4.domain.fields.Disabled;
+import de.fau.amos4.domain.fields.MaritalStatus;
+import de.fau.amos4.domain.fields.Sex;
 
 import javax.persistence.*;
 import java.util.Date;

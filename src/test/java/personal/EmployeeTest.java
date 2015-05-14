@@ -1,5 +1,7 @@
 package personal;
 
+import de.fau.amos4.domain.Employee;
+import de.fau.amos4.domain.EmployeeManager;
 import org.junit.Assert;
 import org.junit.Test;
 
