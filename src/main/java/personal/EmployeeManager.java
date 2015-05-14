@@ -11,7 +11,7 @@ public class EmployeeManager
 {
     private static EmployeeManager instance = new EmployeeManager();
     private static char[] TOKEN_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
-    private static Object TokenGeneratorLock = new Object();
+    private static final Object TokenGeneratorLock = new Object();
     private SecureRandom random = new SecureRandom();
 
     public static EmployeeManager getInstance()
@@ -36,15 +36,13 @@ public class EmployeeManager
     public Employee getEmployee(int id)
     {
         Session session = HibernateUtil.getSession();
-        Employee loadedEmployee = (Employee) session.get(Employee.class, id);
-        return loadedEmployee;
+        return (Employee) session.get(Employee.class, id);
     }
 
     public List<Employee> getAllEmployees()
     {
         Session session = HibernateUtil.getSession();
-        List<Employee> list = session.createCriteria(Employee.class).list();
-        return list;
+        return session.createCriteria(Employee.class).list();
     }
 
     public void GenerateToken(Employee employee) throws Exception
@@ -84,7 +82,7 @@ public class EmployeeManager
 
             // Make sure that it is unique
             for (Employee employee : this.getAllEmployees()) {
-                if (employee.token == TokenCandidate) {
+                if (employee.token.equals(TokenCandidate)) {
                     IsTokenUnique = false;
                 }
 
