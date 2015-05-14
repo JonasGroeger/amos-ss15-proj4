@@ -5,7 +5,6 @@ import org.hibernate.cfg.*;
 
 import personal.Employee;
 
-@SuppressWarnings("deprecation")
 public class HibernateUtil {
 
 private static final SessionFactory sessionFactory;
