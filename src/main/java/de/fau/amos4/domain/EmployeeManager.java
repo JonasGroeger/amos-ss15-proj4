@@ -82,7 +82,7 @@ public class EmployeeManager
 
             // Make sure that it is unique
             for (Employee employee : this.getAllEmployees()) {
-                if (employee.token.equals(TokenCandidate)) {
+                if (employee.token == TokenCandidate) {
                     IsTokenUnique = false;
                 }
 
