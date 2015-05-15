@@ -44,12 +44,17 @@
           <tr>
             <th> First Name </th>
             <th> Last Name </th>
-            <th> Birthdate </th>        
+            <th> Birthdate </th>
+            <th> Download </th>
           </tr>  
           <tr th:each="Employee : ${Employees}">
             <td th:text="${Employee.firstName}">Jack</td>
             <td th:text="${Employee.lastName}">Smith</td>
             <td th:text="${Employee.birthDate}">25/01/1934</td>
+            <td>
+            	<p th:text="#{EmployeeSubmit.downloadLabel}"/>    <a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">   </a> <br />
+       			<p th:text="#{EmployeeSubmit.zipDownloadLabel}"/> <a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}"  th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
+            </td>
           </tr>
          </table>
     <hr/>
