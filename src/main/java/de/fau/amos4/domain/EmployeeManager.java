@@ -10,7 +10,7 @@ import java.util.List;
 public class EmployeeManager
 {
     private static EmployeeManager instance = new EmployeeManager();
-    private static char[] TOKEN_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+    private static char[] TOKEN_CHARSET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".toCharArray();
     private static final Object TokenGeneratorLock = new Object();
     private SecureRandom random = new SecureRandom();
 
