@@ -14,3 +14,17 @@ Personalfragebogen 2.0 @ DATEV
 # Gradle
 To get a list of available commands, use `./gradlew tasks`.
 
+# Configuration
+
+Configuration is held in [YAML](http://yaml.org/) files. We have a main configuration with application wide
+configuration. Then, there is a developer specific configuration file which overrides any configuration that a developer
+might have locally. To enable this, just rename the file:
+
+    # Linux
+    mv config/application-developer.yml{.sample,}
+
+    # Windows
+    rename-item -path config/application-developer.yml.sample -newname application-developer.yml
+
+This developer specific configuration file is ignored in our .gitignore and should not be committed to version control,
+since most probably it contains sensitive information.
