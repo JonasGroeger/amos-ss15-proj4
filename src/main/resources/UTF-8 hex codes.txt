@@ -1,0 +1,9 @@
+Use \u + <hex code down below>
+
+ß: 00df
+ä: 00e4
+ö: 00f6
+ü: 00fc
+Ä: 004c
+Ü: 00dc
+Ö: 00d6

@@ -21,9 +21,6 @@ public class Employee
     String firstName;
 
     @Column
-    String lastName;
-
-    @Column
     String maidenName;
 
     @Column
@@ -114,16 +111,6 @@ public class Employee
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
     }
 
     public String getMaidenName()
@@ -312,7 +299,7 @@ public class Employee
         return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", familyName='" + familyName + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", city='" + city + '\'' +
                 ", birthDate=" + birthDate +
@@ -324,7 +311,6 @@ public class Employee
         return "Employee{" + '\n' +
                 "id=" + id + '\n' +
                 ", firstName='" + firstName + '\'' + '\n' +
-                ", lastName='" + lastName + '\'' + '\n' +
                 ", maidenName='" + maidenName + '\'' + '\n' +
                 ", familyName='" + familyName + '\'' + '\n' +
                 ", birthDate=" + birthDate + '\n' +

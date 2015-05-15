@@ -47,9 +47,9 @@
              <h1  th:text="#{EmployeeForm.header}"></h1>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="lastName" th:text="#{employee.lastName}"></label>
-                    <input th:field="*{lastName}" required="true" type="text" class="form-control"
-                           placeholder="Please enter your last name."/>
+                    <label for="familyName" th:text="#{employee.familyName}"></label>
+                    <input th:field="*{familyName}" required="true" type="text" class="form-control"
+                           th:placeholder="#{placeholder.familyName}"/>
                 </div>
                 <div class="form-group">
                     <label for="maidenName" th:text="#{employee.maidenName}"></label>
