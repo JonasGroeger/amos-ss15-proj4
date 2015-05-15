@@ -1,8 +1,14 @@
 # This is a sample file.
 # Please remove the .sample file extension when configured properly.
 
-spring:
-  profiles: developer
-
 application:
   name: Personalfragebogen 2.0 @ My Machine
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/<dbname>
+    username: <username>
+    password: <password>
+
+

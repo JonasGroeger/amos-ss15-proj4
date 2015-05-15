@@ -8,11 +8,20 @@ spring:
 
 spring:
   profiles: default
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: update
+  thymeleaf:
+    cache: false
 
 application:
   name: Personalfragebogen 2.0
 
 server:
+  display-name: Personalfragebogen 2.0
   address: localhost
   port: 8080
   sessionTimeout: 3600 # in seconds. 3600 = 60 minutes
@@ -21,6 +30,21 @@ server:
 
 spring:
    profiles: unit-test
+
+   datasource:
+     driverClassName: org.hsqldb.jdbc.JDBCDriver
+     url: jdbc:hsqldb:mem:pfb
+     username: admin
+     password: password
+   thymeleaf:
+     cache: false
+
+   jpa:
+     open-in-view: true
+     show-sql: true
+     hibernate:
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+       ddl-auto: create-drop
 
 application:
   name: Personalfragebogen 2.0 @ unit-test

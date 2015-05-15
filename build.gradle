@@ -39,10 +39,11 @@ targetCompatibility = 1.7
 dependencies {
     // Framework
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Persistance
 	compile("org.hibernate:hibernate-core:4.3.9.Final")
-	compile("postgresql:postgresql:9.0-801.jdbc4")
+	compile("'org.postgresql:postgresql:9.4-1201-jdbc41'")
 
     // Zip
     compile('net.lingala.zip4j:zip4j:1.3.2')
@@ -55,6 +56,7 @@ dependencies {
 
     // Test
     testCompile("junit:junit")
+    runtime("org.hsqldb:hsqldb:2.3.2")
 
     // Deployment
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
