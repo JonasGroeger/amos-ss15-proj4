@@ -1,4 +1,4 @@
-package personal.fields;
+package de.fau.amos4.domain.fields;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,11 +14,6 @@ public enum Disabled
         this.text = text;
     }
 
-    public String getText()
-    {
-        return text;
-    }
-
     public static Map<String, String> asMap()
     {
         Map<String, String> map = new HashMap<>();
@@ -26,5 +21,10 @@ public enum Disabled
             map.put(m.name(), m.getText());
         }
         return map;
+    }
+
+    public String getText()
+    {
+        return text;
     }
 }

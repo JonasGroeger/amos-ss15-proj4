@@ -1,13 +1,11 @@
-package personal;
-
-import personal.fields.Disabled;
-import personal.fields.MaritalStatus;
-import personal.fields.Sex;
-
-import javax.persistence.*;
+package de.fau.amos4.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import de.fau.amos4.domain.fields.Disabled;
+import de.fau.amos4.domain.fields.MaritalStatus;
+import de.fau.amos4.domain.fields.Sex;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -80,6 +78,9 @@ public class Employee
 
     @Column
     String additionToAddress;
+
+    @Column
+    String token;
 
     public Employee()
     {
@@ -293,6 +294,16 @@ public class Employee
     public void setBic(String bic)
     {
         this.bic = bic;
+    }
+
+    public String getToken()
+    {
+        return token;
+    }
+
+    public void setToken(String token)
+    {
+        this.token = token;
     }
 
     @Override

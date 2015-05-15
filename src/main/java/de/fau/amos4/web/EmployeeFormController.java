@@ -1,5 +1,6 @@
-package personal;
+package de.fau.amos4.web;
 
+import de.fau.amos4.domain.Employee;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
@@ -18,10 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import personal.fields.Disabled;
-import personal.fields.MaritalStatus;
-import personal.fields.Sex;
+import de.fau.amos4.domain.EmployeeManager;
+import de.fau.amos4.domain.fields.Disabled;
+import de.fau.amos4.domain.fields.MaritalStatus;
+import de.fau.amos4.domain.fields.Sex;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class EmployeeFormController
     {
         // Give the list the right capacity to start with. You could use an array
         // instead if you wanted.
-        List<String> ret = new ArrayList<String>((text.length() + size - 1) / size);
+        List<String> ret = new ArrayList<>((text.length() + size - 1) / size);
 
         for (int start = 0; start < text.length(); start += size) {
             ret.add(text.substring(start, Math.min(text.length(), start + size)));
@@ -52,20 +53,11 @@ public class EmployeeFormController
         return ret;
     }
 
-
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
     public String EmployeeForm(
-    		 Model model) throws Exception
+            Model model) throws Exception
     {
-    	//LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
-    	//localeResolver.setLocale(request, response, StringUtils.parseLocaleString("de"));
-    	
-        //WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        //ctx.setVariable("today", Calendar.getInstance());
-        
-
-    	
         model.addAttribute("employee", new Employee());
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
@@ -81,8 +73,7 @@ public class EmployeeFormController
     }
 
     // Employee data review - Review Employee data
-
-    @RequestMapping(value = "/EmployeePreview", method = RequestMethod.POST)
+    @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST, RequestMethod.GET})
     public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
@@ -94,16 +85,20 @@ public class EmployeeFormController
     // Employee data submit - Submit Employee data
     @RequestMapping("/EmployeeSubmit")
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
-                                BindingResult result, Model model)
+                                 BindingResult result, Model model) throws Exception
     {
+        // Persist Employee
         EmployeeManager employeeManager = EmployeeManager.getInstance();
         int EmployeeId = employeeManager.PersistEmployee(employee);
 
-        model.addAttribute("EmployeeId", EmployeeId + "");
+        // Generate Token
+        EmployeeManager.getInstance().GenerateToken(employee);
 
+        // Setup modell and return view
+        model.addAttribute("EmployeeId", EmployeeId + "");
         return "EmployeeSubmit";
     }
-    
+
     // Exception handling - Display exception information
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest req, Exception exception)
@@ -206,7 +201,6 @@ public class EmployeeFormController
             } catch (CloneNotSupportedException | COSVisitorException e) {
                 e.printStackTrace();
             }
-
 
             // Write the zip to client
             zout.putNextEntry(temp, params); // Why do you need a File, Mister API?
