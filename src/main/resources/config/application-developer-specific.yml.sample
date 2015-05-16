@@ -10,5 +10,3 @@ spring:
     url: jdbc:postgresql://localhost/<dbname>
     username: <username>
     password: <password>
-
-

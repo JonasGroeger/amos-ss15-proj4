@@ -2,49 +2,35 @@
 # spring.profiles.active=default,<another> (no space between them!)
 
 spring:
-  profiles.active: default,developer
+  application.name: Personalfragebogen 2.0
+  profiles.active: development,developer-specific # For production, just: production
 
 ---
 
 spring:
-  profiles: default
+  profiles: development
+
   jpa:
-    open-in-view: true
-    show-sql: true
+    database: POSTGRESQL
     hibernate:
       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
       ddl-auto: update
   thymeleaf:
-    cache: false
-
-application:
-  name: Personalfragebogen 2.0
-
-server:
-  display-name: Personalfragebogen 2.0
-  address: localhost
-  port: 8080
-  sessionTimeout: 3600 # in seconds. 3600 = 60 minutes
+    cache: false # Enable HOT refresh
 
 ---
 
 spring:
-   profiles: unit-test
+   profiles: test
 
    datasource:
      driverClassName: org.hsqldb.jdbc.JDBCDriver
      url: jdbc:hsqldb:mem:pfb
-     username: admin
+     username: username
      password: password
-   thymeleaf:
-     cache: false
 
    jpa:
-     open-in-view: true
-     show-sql: true
+     database: HSQL
      hibernate:
-      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
        ddl-auto: create-drop
-
-application:
-  name: Personalfragebogen 2.0 @ unit-test
