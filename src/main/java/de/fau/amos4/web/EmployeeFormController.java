@@ -54,7 +54,7 @@ public class EmployeeFormController
     }
 
     // Employee data form - Enter Employee data
-    @RequestMapping({"/", "/EmployeeForm"})
+    @RequestMapping({"/EmployeeForm"})
     public String EmployeeForm(
             Model model) throws Exception
     {
@@ -79,7 +79,7 @@ public class EmployeeFormController
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        return "EmployeeReview";
+        return "EmployeePreview";
     }
 
     // Employee data submit - Submit Employee data
@@ -226,5 +226,9 @@ public class EmployeeFormController
         return mav;
     }
 
-
+    @RequestMapping({"/", "/Frontpage"})
+    public String Frontpage()
+    {
+        return "Frontpage";
+    }
 }
