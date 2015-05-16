@@ -24,20 +24,6 @@
 <body>
 
 <div class="container">
-	<span style="float: right">
-		<a href="?lang=en">
-			<button type="button"  th:with="lang=${en}"  > 
-		    	<img th:src="@{/images/uk.gif}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
-		    </button >
-		</a>
-		<a href="?lang=de">
-			<button  th:with="lang=${de}">      
-		    	<img th:src="@{/images/deutschlandflagge.jpg}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/> 
-			</button>
-		</a>
-	</span>
     <form th:action="@{/EmployeeSubmit}" th:object="${employee}" method="POST">
         <div class="row">
             <h1 th:text="#{EmployeeForm.header}"></h1>
