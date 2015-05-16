@@ -52,8 +52,8 @@
             <td th:text="${Employee.lastName}">Smith</td>
             <td th:text="${Employee.birthDate}">25/01/1934</td>
             <td>
-            	<p th:text="#{EmployeeSubmit.downloadLabel}"/>    <a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">   </a> <br />
-       			<p th:text="#{EmployeeSubmit.zipDownloadLabel}"/> <a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}"  th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
+            	<a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
+            	<a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
             </td>
           </tr>
          </table>
