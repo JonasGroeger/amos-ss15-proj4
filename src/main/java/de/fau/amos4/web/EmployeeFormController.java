@@ -54,7 +54,7 @@ public class EmployeeFormController
     }
 
     // Employee data form - Enter Employee data
-    @RequestMapping({"/EmployeeForm"})
+    @RequestMapping("/EmployeeForm")
     public String EmployeeForm(
             Model model) throws Exception
     {
