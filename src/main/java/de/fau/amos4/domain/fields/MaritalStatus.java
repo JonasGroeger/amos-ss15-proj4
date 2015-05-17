@@ -1,11 +1,14 @@
 package de.fau.amos4.domain.fields;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 
 public enum MaritalStatus
 {
-    SINGLE("Single"), MARRIED("Married"), SEPARATED("Separated"), OTHER("Other");
+    SINGLE("employee.marital.single"), MARRIED("employee.marital.married"), SEPARATED("employee.marital.separated"), OTHER("employee.marital.other");
 
     private String text;
 
@@ -25,6 +28,7 @@ public enum MaritalStatus
 
     public String getText()
     {
-        return text;
+    	Locale locale = LocaleContextHolder.getLocale();
+    	return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 }

@@ -55,9 +55,9 @@ public class EmployeeFormController
 
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
-    public String EmployeeForm(
-            Model model) throws Exception
+    public String EmployeeForm(Model model) throws Exception
     {
+    	
         model.addAttribute("employee", new Employee());
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());

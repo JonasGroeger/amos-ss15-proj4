@@ -3,18 +3,23 @@ package de.fau.amos4;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer
 {
     public static void main(String[] args)
     {
+
         new SpringApplicationBuilder()
                 .showBanner(false)
                 .sources(Application.class)
                 .run(args);
-    }
 
+    	
+        //SpringApplication.run(Application.class, args);
+
+    }
     /**
      * Configure the application. Normally all you would need to do it add sources (e.g.
      * config classes) because other settings have sensible defaults. You might choose

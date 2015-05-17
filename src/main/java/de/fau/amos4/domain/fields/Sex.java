@@ -1,11 +1,14 @@
 package de.fau.amos4.domain.fields;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 
 public enum Sex
 {
-    MALE("Male"), FEMALE("Female"), UNKNOWN("Unknown");
+    MALE("employee.sex.male"), FEMALE("employee.sex.female"), UNKNOWN("employee.sex.unknown");
 
     private String text;
 
@@ -25,6 +28,7 @@ public enum Sex
 
     public String getText()
     {
-        return text;
+    	Locale locale = LocaleContextHolder.getLocale();
+    	return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 }

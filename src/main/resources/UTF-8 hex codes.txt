@@ -1,9 +1,12 @@
-Use \u + <hex code down below>
+Use native2ascii native.properties messages.properties to convert from native German
 
-ß: 00df
-ä: 00e4
-ö: 00f6
-ü: 00fc
-Ä: 004c
-Ü: 00dc
-Ö: 00d6
+
+or use <hex code down below>
+
+ß: \u00df
+ä: \u00e4
+ö: \u00f6
+ü: \u00fc
+Ä: \u004c
+Ü: \u00dc
+Ö: \u00d6

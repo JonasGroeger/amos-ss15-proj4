@@ -1,11 +1,14 @@
 package de.fau.amos4.domain.fields;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 
 public enum Disabled
 {
-    YES("Yes"), NO("No");
+    YES("employee.disabled.yes"), NO("employee.disabled.no");
 
     private String text;
 
@@ -25,6 +28,11 @@ public enum Disabled
 
     public String getText()
     {
-        return text;
+    	Locale locale = LocaleContextHolder.getLocale();
+    	return AppContext.getApplicationContext().getMessage(text, null, locale);
+    }
+    
+    public String toString() {
+    	return getText();
     }
 }
