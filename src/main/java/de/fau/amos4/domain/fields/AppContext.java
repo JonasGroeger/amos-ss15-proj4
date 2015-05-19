@@ -1,7 +1,10 @@
 package de.fau.amos4.domain.fields;
 
 import org.springframework.context.ApplicationContext;
-
+/*
+ * This class is needed so that the drop down classes Disabled, Sex, MaritalStatus...have access to the locale.
+ * 
+ */
 public class AppContext { 
 
     private static ApplicationContext ctx; 

@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 public enum Sex
 {
+	//From .properties files
     MALE("employee.sex.male"), FEMALE("employee.sex.female"), UNKNOWN("employee.sex.unknown");
 
     private String text;

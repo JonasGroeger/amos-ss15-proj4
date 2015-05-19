@@ -8,7 +8,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 public enum Disabled
 {
-    YES("employee.disabled.yes"), NO("employee.disabled.no");
+    //From .properties files
+	YES("employee.disabled.yes"), NO("employee.disabled.no");
 
     private String text;
 

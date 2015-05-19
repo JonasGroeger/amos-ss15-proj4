@@ -15,6 +15,11 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+/*
+ * Needed for changing the locale using buttons on the web page.
+ * Functions messageSource and stringHttpMessageConverter most likely not necessary.
+ * 
+ */
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter
 {

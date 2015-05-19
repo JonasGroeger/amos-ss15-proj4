@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 public enum MaritalStatus
 {
+	//From .properties files
     SINGLE("employee.marital.single"), MARRIED("employee.marital.married"), SEPARATED("employee.marital.separated"), OTHER("employee.marital.other");
 
     private String text;
