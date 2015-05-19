@@ -113,12 +113,16 @@ public class EmployeeFormController
         final StringBuilder sb = new StringBuilder(fileContent);
         final ZipOutputStream zout = new ZipOutputStream(out);
         
-        File e = new File("mytext.txt");
-        zout.putNextEntry(e, null);
+        ZipParameters parameters = new ZipParameters();
+        parameters.setSourceExternalStream(true);
+        parameters.setFileNameInZip("employee.txt");
+        
+        zout.putNextEntry(null, parameters);
         byte[] data = sb.toString().getBytes();
         zout.write(data, 0, data.length);
+        
         zout.closeEntry();
-        zout.close();
+        zout.finish();
     }
     
     // Employee encrypted zip file download - Download encrypted zip file using Zip4j containing a text with Employee data
@@ -129,23 +133,25 @@ public class EmployeeFormController
         Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
         String fileContent = employee.dump();
 
-        //response.setContentType("application/zip");
-        //response.setHeader("Content-Disposition", "attachment;filename=test.zip");
+        response.setContentType("application/zip");
+        response.setHeader("Content-Disposition", "attachment;filename=test.zip");
+        ServletOutputStream out = response.getOutputStream();
+        
+        final StringBuilder sb = new StringBuilder(fileContent);
+        final ZipOutputStream zout = new ZipOutputStream(out);
         
         ZipParameters parameters = new ZipParameters();
+        parameters.setSourceExternalStream(true);
+        parameters.setFileNameInZip("employee.txt");
         parameters.setEncryptFiles(true);
         parameters.setPassword("AMOS");
-
-        final StringBuilder sb = new StringBuilder(fileContent);
-        final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
         
-        File file = new File("mytext.txt");
-        zout.putNextEntry(file, parameters);
+        zout.putNextEntry(null, parameters);
         byte[] data = sb.toString().getBytes();
         zout.write(data, 0, data.length);
         
         zout.closeEntry();
-        zout.close();
+        zout.finish();
     }
 
     @RequestMapping("/EmployeeList")
