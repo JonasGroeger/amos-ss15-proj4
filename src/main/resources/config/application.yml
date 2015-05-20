@@ -1,9 +1,14 @@
 # This is the default profile. You can override it on the command line using by setting
-# spring.profiles.active=default,<another> (no space between them!)
+# spring.profiles.active=<one>,<another> (no space between them!)
 
 spring:
   application.name: Personalfragebogen 2.0
-  profiles.active: development,developer-specific # For production, just: production
+
+  #                  Profile                             File that will be loaded
+  # For production:  'production'                     -> application-production.yml
+  # For test:        'test'                           -> application.yml
+  # For development: 'development,developer-specific' -> application.yml + application-developer-specific.yml
+  profiles.active: test
 
 ---
 
