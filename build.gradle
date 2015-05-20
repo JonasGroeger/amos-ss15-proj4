@@ -33,8 +33,17 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+def javaVersion = "1.7"
+
+compileJava {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+}
+compileTestJava {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+}
+
 
 dependencies {
     // Framework
