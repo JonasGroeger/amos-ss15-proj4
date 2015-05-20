@@ -1,0 +1,26 @@
+# This is the default profile. You can override it on the command line using by setting
+# spring.profiles.active=default,<another> (no space between them!)
+
+spring:
+  profiles.active: default,developer
+
+---
+
+spring:
+  profiles: default
+
+application:
+  name: Personalfragebogen 2.0
+
+server:
+  address: localhost
+  port: 8080
+  sessionTimeout: 3600 # in seconds. 3600 = 60 minutes
+
+---
+
+spring:
+   profiles: unit-test
+
+application:
+  name: Personalfragebogen 2.0 @ unit-test

@@ -21,21 +21,74 @@
     </style>
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
 
+<body>
 <div class="container">
-         <h1>DATEV Personalfragebogen 2.0</h1>
-         <h1>Employee List</h1>
+	<span style="float: right">
+		<a href="?lang=en">
+			<button type="button"  th:with="lang=${en}"  > 
+		    	<img th:src="@{/images/uk.gif}"
+		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+		    </button >
+		</a>
+		<a href="?lang=de">
+			<button  th:with="lang=${de}">      
+		    	<img th:src="@{/images/deutschlandflagge.jpg}"
+		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/> 
+			</button>
+		</a>
+	</span>
+         <h1 th:text="#{EmployeeForm.header}"></h1>
+         <h2 th:text="#{EmployeeList.header}"></h2>
          <table class="table table-striped">
           <tr>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Birthdate </th>        
+            <th th:text="#{employee.familyName}"> </th>
+            <th th:text="#{employee.firstName}"> </th>
+            <th th:text="#{employee.maidenName}"> </th>  
+            <th th:text="#{employee.birthDate}"> </th>
+            <th th:text="#{employee.street}"> </th>
+            <th th:text="#{employee.houseNumber}"> </th>
+            <th th:text="#{employee.additionToAddress}"> </th>
+            <th th:text="#{employee.zipCode}"> </th>
+            <th th:text="#{employee.city}"> </th>
+            <th th:text="#{employee.placeOfBirth}"> </th>
+            <th th:text="#{employee.countryOfBirth}"> </th>
+            <th th:text="#{employee.sex}"> </th>
+            <th th:text="#{employee.maritalStatus}"> </th>
+            <th th:text="#{employee.disabled}"> </th>
+            <th th:text="#{employee.citizenship}"> </th>
+            <th th:text="#{employee.socialInsuranceNumber}"> </th>
+            <th th:text="#{employee.employerSocialSavingsNumber}"> </th>
+            <th th:text="#{employee.iban}"> </th>
+            <th th:text="#{employee.bic}"> </th>   
+            <th th:text="#{EmployeeList.token}"> </th>        
+            <th th:text="#{EmployeeList.download}"> </th>
           </tr>  
           <tr th:each="Employee : ${Employees}">
-            <td th:text="${Employee.firstName}">Jack</td>
-            <td th:text="${Employee.lastName}">Smith</td>
-            <td th:text="${Employee.birthDate}">25/01/1934</td>
+            <td th:text="${Employee.familyName}">Mustermann</td>
+            <td th:text="${Employee.firstName}">Max</td>
+            <td th:text="${Employee.maidenName}"></td>
+            <td th:text="${Employee.birthDate}">20/11/2011</td>
+            <td th:text="${Employee.street}">Musterstraße</td>
+            <td th:text="${Employee.houseNumber}">42</td>
+            <td th:text="${Employee.additionToAddress}"></td>
+            <td th:text="${Employee.zipCode}">0815</td>
+            <td th:text="${Employee.city}">Musterstadt</td>
+            <td th:text="${Employee.placeOfBirth}"></td>
+            <td th:text="${Employee.countryOfBirth}">Österreich</td>
+            <td th:text="${Employee.sex}">männlich</td>
+            <td th:text="${Employee.maritalStatus}">ledig</td>
+            <td th:text="${Employee.disabled}">Nein</td>
+            <td th:text="${Employee.citizenship}">Österreich</td>
+            <td th:text="${Employee.socialInsuranceNumber}"></td>
+            <td th:text="${Employee.employerSocialSavingsNumber}"></td>
+            <td th:text="${Employee.iban}"></td>
+            <td th:text="${Employee.bic}"></td>
+            <td><button th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'" th:text="#{EmployeeList.ViewToken}">View token</button></td>
+            <td>
+            	<a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
+            	<a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
+            </td>
           </tr>
          </table>
     <hr/>

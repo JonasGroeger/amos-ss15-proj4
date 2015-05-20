@@ -1,13 +1,11 @@
-package personal;
-
-import personal.fields.Disabled;
-import personal.fields.MartialStatus;
-import personal.fields.Sex;
-
-import javax.persistence.*;
+package de.fau.amos4.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import de.fau.amos4.domain.fields.Disabled;
+import de.fau.amos4.domain.fields.MaritalStatus;
+import de.fau.amos4.domain.fields.Sex;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -21,9 +19,6 @@ public class Employee
 
     @Column
     String firstName;
-
-    @Column
-    String lastName;
 
     @Column
     String maidenName;
@@ -61,7 +56,7 @@ public class Employee
     Sex sex;
 
     @Enumerated(EnumType.STRING)
-    MartialStatus martialStatus;
+    MaritalStatus maritalStatus;
 
     @Enumerated(EnumType.STRING)
     Disabled disabled;
@@ -80,6 +75,9 @@ public class Employee
 
     @Column
     String additionToAddress;
+
+    @Column
+    String token;
 
     public Employee()
     {
@@ -113,16 +111,6 @@ public class Employee
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
     }
 
     public String getMaidenName()
@@ -235,14 +223,14 @@ public class Employee
         this.sex = sex;
     }
 
-    public MartialStatus getMartialStatus()
+    public MaritalStatus getMaritalStatus()
     {
-        return martialStatus;
+        return maritalStatus;
     }
 
-    public void setMartialStatus(MartialStatus martialStatus)
+    public void setMaritalStatus(MaritalStatus maritalStatus)
     {
-        this.martialStatus = martialStatus;
+        this.maritalStatus = maritalStatus;
     }
 
     public Disabled getDisabled()
@@ -295,13 +283,23 @@ public class Employee
         this.bic = bic;
     }
 
+    public String getToken()
+    {
+        return token;
+    }
+
+    public void setToken(String token)
+    {
+        this.token = token;
+    }
+
     @Override
     public String toString()
     {
         return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", familyName='" + familyName + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", city='" + city + '\'' +
                 ", birthDate=" + birthDate +
@@ -313,7 +311,6 @@ public class Employee
         return "Employee{" + '\n' +
                 "id=" + id + '\n' +
                 ", firstName='" + firstName + '\'' + '\n' +
-                ", lastName='" + lastName + '\'' + '\n' +
                 ", maidenName='" + maidenName + '\'' + '\n' +
                 ", familyName='" + familyName + '\'' + '\n' +
                 ", birthDate=" + birthDate + '\n' +
@@ -325,7 +322,7 @@ public class Employee
                 ", city='" + city + '\'' + '\n' +
                 ", socialInsuranceNumber='" + socialInsuranceNumber + '\'' + '\n' +
                 ", sex=" + sex + '\n' +
-                ", martialStatus=" + martialStatus + '\n' +
+                ", maritalStatus=" + maritalStatus + '\n' +
                 ", disabled=" + disabled + '\n' +
                 ", citizenship='" + citizenship + '\'' + '\n' +
                 ", employerSocialSavingsNumber='" + employerSocialSavingsNumber + '\'' + '\n' +
