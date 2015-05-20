@@ -9,6 +9,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -138,7 +141,8 @@ public class EmployeeFormController
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
-
+        
+        final StringBuilder sb = new StringBuilder(fileContent);
         final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
 
         try {
@@ -151,17 +155,21 @@ public class EmployeeFormController
             params.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
             params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
             params.setPassword("AMOS");
+            params.setSourceExternalStream(true);
+            
+            zout.putNextEntry(null, params);
+            byte[] data = sb.toString().getBytes();
+            zout.write(data, 0, data.length);
+            zout.closeEntry();
 
             // Create temporary file for shitty API
-            File temp = File.createTempFile("employee", ".txt");
-            FileOutputStream fOut = new FileOutputStream(temp);
-            fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
-            fOut.flush();
+            //File temp = File.createTempFile("employee", ".txt");
+            //FileOutputStream fOut = new FileOutputStream(temp);
+            //fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
+            //fOut.flush();
 
 
             try {
-                File t = File.createTempFile("employee", ".pdf");
-
                 // Create a document and add a page to it
                 PDDocument document = new PDDocument();
                 PDPage page = new PDPage();
@@ -189,23 +197,22 @@ public class EmployeeFormController
                 contentStream.close();
 
                 // Save the results and ensure that the document is properly closed:
-                document.save(t);
+                ByteArrayOutputStream pdfout = new ByteArrayOutputStream();
+                document.save(pdfout);
                 document.close();
+
 
                 ZipParameters params2 = (ZipParameters) params.clone();
                 params2.setFileNameInZip("employee.pdf");
 
-                zout.putNextEntry(t, params2);
-                zout.write(IOUtils.toByteArray(new FileInputStream(t)));
+                zout.putNextEntry(null, params2);
+                zout.write(pdfout.toByteArray());
                 zout.closeEntry();
             } catch (CloneNotSupportedException | COSVisitorException e) {
                 e.printStackTrace();
             }
 
             // Write the zip to client
-            zout.putNextEntry(temp, params); // Why do you need a File, Mister API?
-            zout.write(fileContent.getBytes(StandardCharsets.UTF_8));
-            zout.closeEntry();
             zout.finish();
             zout.flush();
             zout.close();
