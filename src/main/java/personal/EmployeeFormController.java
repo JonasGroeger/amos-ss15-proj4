@@ -25,6 +25,7 @@ import java.util.List;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
 
 @Controller
 public class EmployeeFormController
@@ -145,6 +146,7 @@ public class EmployeeFormController
         parameters.setFileNameInZip("employee.txt");
         parameters.setEncryptFiles(true);
         parameters.setPassword("AMOS");
+        parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD);
         
         zout.putNextEntry(null, parameters);
         byte[] data = sb.toString().getBytes();
