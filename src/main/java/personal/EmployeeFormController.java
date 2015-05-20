@@ -146,7 +146,7 @@ public class EmployeeFormController
         parameters.setFileNameInZip("employee.txt");
         parameters.setEncryptFiles(true);
         parameters.setPassword("AMOS");
-        parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD);
+        parameters.setEncryptionMethod(Zip4jConstants.COMP_AES_ENC);
         
         zout.putNextEntry(null, parameters);
         byte[] data = sb.toString().getBytes();
