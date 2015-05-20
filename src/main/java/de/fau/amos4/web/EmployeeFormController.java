@@ -2,6 +2,7 @@ package de.fau.amos4.web;
 
 import de.fau.amos4.domain.Employee;
 import de.fau.amos4.domain.EmployeeManager;
+import de.fau.amos4.domain.EmployeeRepository;
 import de.fau.amos4.domain.fields.Disabled;
 import de.fau.amos4.domain.fields.MaritalStatus;
 import de.fau.amos4.domain.fields.Sex;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +42,8 @@ import java.util.List;
 @Controller
 public class EmployeeFormController
 {
+	@Resource
+	EmployeeRepository employeeRepository;
 
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
