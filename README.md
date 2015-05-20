@@ -29,4 +29,23 @@ might have locally. To enable this, just rename the file:
     rename-item -path config/application-developer.yml.sample -newname application-developer.yml
 
 This developer specific configuration file is ignored in our .gitignore and should not be committed to version control,
-since most probably it contains sensitive information.
+since most probably it contains sensitive information. Further comments on what is loaded in which profile can be found
+in the file `src/main/resources/config/application.yml`.
+
+To not confuse the terms *Configuration* and *Profile*: a configuration can contain multiple profiles. For example, we
+could have a configuration `use-in-memory-db` and a configuration `load-sql-from-file-on-startup`. These could be
+combined (and will be resolved hierarchically),
+[as seen in the Spring Boot documentation](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html).
+
+# Localization
+
+When working on the l18n, just use [the online tool native2ascii](http://native2ascii.net/) to convert. If you dont want
+to do that for some reason, use the provided table below:
+
+    ä -> \u00e4
+    ö -> \u00f6
+    ü -> \u00fc
+    Ä -> \u00c4
+    Ö -> \u00d6
+    Ü -> \u00dc
+    ß -> \u00df
