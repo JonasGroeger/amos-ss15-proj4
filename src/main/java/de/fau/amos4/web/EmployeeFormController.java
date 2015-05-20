@@ -5,6 +5,7 @@ import de.fau.amos4.domain.EmployeeManager;
 import de.fau.amos4.domain.fields.Disabled;
 import de.fau.amos4.domain.fields.MaritalStatus;
 import de.fau.amos4.domain.fields.Sex;
+import de.fau.amos4.util.StringUtils;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
@@ -33,25 +34,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 public class EmployeeFormController
 {
-
-    public static List<String> splitEqually(String text, int size)
-    {
-        // Give the list the right capacity to start with. You could use an array
-        // instead if you wanted.
-        List<String> ret = new ArrayList<>((text.length() + size - 1) / size);
-
-        for (int start = 0; start < text.length(); start += size) {
-            ret.add(text.substring(start, Math.min(text.length(), start + size)));
-        }
-        return ret;
-    }
 
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
@@ -178,7 +166,7 @@ public class EmployeeFormController
                 contentStream.setFont(font, 10);
                 contentStream.moveTextPositionByAmount(10, 700);
 
-                List<String> list = splitEqually(fileContent, 90);
+                List<String> list = StringUtils.splitEqually(fileContent, 90);
                 for (String e : list) {
                     contentStream.moveTextPositionByAmount(0, -15);
                     contentStream.drawString(e);
