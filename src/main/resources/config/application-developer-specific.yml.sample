@@ -1,9 +1,6 @@
 # This is a sample file.
 # Please remove the .sample file extension when configured properly.
 
-application:
-  name: Personalfragebogen 2.0 @ My Machine
-
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
