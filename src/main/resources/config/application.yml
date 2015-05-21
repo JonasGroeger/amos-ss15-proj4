@@ -8,7 +8,7 @@ spring:
   # For production:  'production'                     -> application-production.yml
   # For test:        'test'                           -> application.yml
   # For development: 'development,developer-specific' -> application.yml + application-developer-specific.yml
-  profiles.active: test
+  profiles.active: development,developer-specific
 
 ---
 
