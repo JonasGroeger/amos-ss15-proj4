@@ -1,0 +1,9 @@
+# This is a sample file.
+# Please remove the .sample file extension when configured properly.
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/<dbname>
+    username: <username>
+    password: <password>

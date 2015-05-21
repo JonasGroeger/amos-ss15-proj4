@@ -23,10 +23,10 @@ configuration. Then, there is a developer specific configuration file which over
 might have locally. To enable this, just rename the file:
 
     # Linux
-    mv config/application-developer.yml{.sample,}
+    mv config/application-developer-specific.yml{.sample,}
 
     # Windows
-    rename-item -path config/application-developer.yml.sample -newname application-developer.yml
+    rename-item -path config/application-developer-specific.yml.sample -newname application-developer-specific.yml
 
 This developer specific configuration file is ignored in our .gitignore and should not be committed to version control,
 since most probably it contains sensitive information. Further comments on what is loaded in which profile can be found

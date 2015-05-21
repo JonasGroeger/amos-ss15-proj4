@@ -117,4 +117,5 @@ gradle-app.setting
 ### Project specific ###
 
 # Ignore developer specific configuration
-application-developer.yml
+application-developer-specific.yml
+application-production.yml
