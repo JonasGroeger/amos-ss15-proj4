@@ -119,3 +119,4 @@ gradle-app.setting
 # Ignore developer specific configuration
 application-developer-specific.yml
 application-production.yml
+*.sample
