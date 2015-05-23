@@ -17,6 +17,10 @@ public class Employee
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @ManyToOne
+    @JoinColumn(name="client_id")
+    Client client;
+
     @Column
     String firstName;
 

@@ -1,6 +1,7 @@
 package de.fau.amos4.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -13,6 +14,9 @@ public class Client
 
     @Column
     String companyName;
+
+    @OneToMany(mappedBy="client")
+    private List<Employee> employees;
 
     public long getId()
     {
