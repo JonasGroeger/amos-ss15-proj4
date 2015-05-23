@@ -1,4 +1,4 @@
-package de.fau.amos4.domain.fields;
+package de.fau.amos4.configuration;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

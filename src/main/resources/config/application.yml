@@ -6,8 +6,8 @@ spring:
 
   #                Profile                             File that will be loaded
   #profiles.active: production                          # application-production.yml
-  #profiles.active: test                                # application.yml
-  profiles.active: development,developer-specific      # application.yml + application-developer-specific.yml
+  profiles.active: test                                # application.yml
+  #profiles.active: development,developer-specific      # application.yml + application-developer-specific.yml
 
 ---
 

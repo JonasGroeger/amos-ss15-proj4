@@ -1,6 +1,8 @@
 package de.fau.amos4.web;
 
-import de.fau.amos4.domain.EmployeeRepository;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.util.TokenGenerator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +16,14 @@ public class TestController
     @Resource
     EmployeeRepository employeeRepository;
 
+    @Resource
+    ClientRepository clientRepository;
+
     @RequestMapping("/test")
     public String message()
     {
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
+        Iterable<Client> allClients = clientRepository.findAll();
         return String.valueOf(token);
     }
 }

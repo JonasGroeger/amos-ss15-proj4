@@ -1,8 +1,8 @@
 package de.fau.amos4.test;
 
 import de.fau.amos4.test.configuration.TestConfiguration;
-import de.fau.amos4.domain.Employee;
-import de.fau.amos4.domain.EmployeeRepository;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.TokenGenerator;
 import org.junit.Assert;
 import org.junit.Test;

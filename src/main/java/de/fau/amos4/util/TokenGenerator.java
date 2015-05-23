@@ -1,12 +1,10 @@
 package de.fau.amos4.util;
 
-import de.fau.amos4.domain.Employee;
-import de.fau.amos4.domain.EmployeeRepository;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.EmployeeRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayDeque;
 import java.util.Deque;
 

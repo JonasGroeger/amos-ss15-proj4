@@ -1,10 +1,10 @@
 package de.fau.amos4.web;
 
-import de.fau.amos4.domain.Employee;
-import de.fau.amos4.domain.EmployeeRepository;
-import de.fau.amos4.domain.fields.Disabled;
-import de.fau.amos4.domain.fields.MaritalStatus;
-import de.fau.amos4.domain.fields.Sex;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.model.fields.Disabled;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.Sex;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.TokenGenerator;
 import net.lingala.zip4j.exception.ZipException;
