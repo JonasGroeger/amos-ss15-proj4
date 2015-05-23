@@ -1,11 +1,14 @@
 package de.fau.amos4;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan
 public class Application extends SpringBootServletInitializer
 {
     public static void main(String[] args)
@@ -15,10 +18,6 @@ public class Application extends SpringBootServletInitializer
                 .showBanner(false)
                 .sources(Application.class)
                 .run(args);
-
-    	
-        //SpringApplication.run(Application.class, args);
-
     }
     /**
      * Configure the application. Normally all you would need to do it add sources (e.g.
