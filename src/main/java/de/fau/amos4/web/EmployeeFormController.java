@@ -1,19 +1,18 @@
 package de.fau.amos4.web;
 
 import de.fau.amos4.domain.Employee;
-import de.fau.amos4.domain.EmployeeManager;
 import de.fau.amos4.domain.EmployeeRepository;
 import de.fau.amos4.domain.fields.Disabled;
 import de.fau.amos4.domain.fields.MaritalStatus;
 import de.fau.amos4.domain.fields.Sex;
 import de.fau.amos4.util.StringUtils;
+import de.fau.amos4.util.TokenGenerator;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
@@ -33,11 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +47,6 @@ public class EmployeeFormController
     @RequestMapping({"/", "/EmployeeForm"})
     public String EmployeeForm(Model model) throws Exception
     {
-    	
         model.addAttribute("employee", new Employee());
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
@@ -82,15 +76,16 @@ public class EmployeeFormController
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
-        // Persist Employee
-        EmployeeManager employeeManager = EmployeeManager.getInstance();
-        int EmployeeId = employeeManager.PersistEmployee(employee);
+        // TODO: Move this to a service layer later.
+        String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
+        employee.setToken(token);
 
-        // Generate Token
-        EmployeeManager.getInstance().GenerateToken(employee);
+        // If the employee is new: Create
+        // If the employee already has a primary key: Update
+        Employee newOrUpdatedEmployee = employeeRepository.save(employee);
 
         // Setup modell and return view
-        model.addAttribute("EmployeeId", EmployeeId + "");
+        model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
         return "EmployeeSubmit";
     }
 
@@ -109,10 +104,9 @@ public class EmployeeFormController
 
     // Employee file download - Download text file with Employee data
     @RequestMapping("/EmployeeTextFileDownload")
-    public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException
+    public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
-        //Prepare textfile contents
-        Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
+        Employee employee = employeeRepository.findOne(employeeId);
         String fileContent = employee.dump();
 
         // Send file contents
@@ -125,10 +119,10 @@ public class EmployeeFormController
 
     // Employee zip file download - Download zip file containing a text with Employee data
     @RequestMapping("/EmployeeZipFileDownload")
-    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) int employeeId) throws IOException
+    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         //Prepare textfile contents
-        Employee employee = EmployeeManager.getInstance().getEmployee(employeeId);
+        Employee employee = employeeRepository.findOne(employeeId);
         String fileContent = employee.dump();
 
         response.setContentType("application/zip");
@@ -219,11 +213,9 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeList");
 
-        List<Employee> AllEmployees = EmployeeManager.getInstance().getAllEmployees();
-        mav.addObject("Employees", AllEmployees);
+        Iterable<Employee> allEmployees = employeeRepository.findAll();
+        mav.addObject("Employees", allEmployees);
 
         return mav;
     }
-
-
 }
