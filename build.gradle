@@ -52,6 +52,7 @@ dependencies {
 
     // Persistance
 	compile("org.postgresql:postgresql:9.4-1201-jdbc41")
+    runtime("org.hsqldb:hsqldb:2.3.2")
 
     // Zip
     compile('net.lingala.zip4j:zip4j:1.3.2')
@@ -61,10 +62,11 @@ dependencies {
 
     // Utility
     compile('org.apache.commons:commons-lang3:3.4')
+    compile('org.apache.commons:commons-collections4:4.0')
 
     // Test
     testCompile("junit:junit")
-    runtime("org.hsqldb:hsqldb:2.3.2")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 
     // Deployment
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
