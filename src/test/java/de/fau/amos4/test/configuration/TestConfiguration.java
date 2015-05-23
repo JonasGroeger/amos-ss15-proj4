@@ -1,4 +1,4 @@
-package de.fau.amos4.configuration;
+package de.fau.amos4.test.configuration;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;

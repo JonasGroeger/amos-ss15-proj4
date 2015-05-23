@@ -1,6 +1,6 @@
-package personal;
+package de.fau.amos4.test;
 
-import de.fau.amos4.configuration.TestConfiguration;
+import de.fau.amos4.test.configuration.TestConfiguration;
 import de.fau.amos4.domain.Employee;
 import de.fau.amos4.domain.EmployeeRepository;
 import de.fau.amos4.util.TokenGenerator;
