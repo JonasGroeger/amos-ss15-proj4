@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public enum MaritalStatus
 {
-	//From .properties files
+    //From .properties files
     SINGLE("employee.marital.single"), MARRIED("employee.marital.married"), SEPARATED("employee.marital.separated"), OTHER("employee.marital.other");
 
     private String text;
@@ -19,8 +19,8 @@ public enum MaritalStatus
 
     public String getText()
     {
-    	Locale locale = LocaleContextHolder.getLocale();
-    	return AppContext.getApplicationContext().getMessage(text, null, locale);
+        Locale locale = LocaleContextHolder.getLocale();
+        return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 
     public String toString()

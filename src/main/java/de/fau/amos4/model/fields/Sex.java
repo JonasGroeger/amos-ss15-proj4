@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public enum Sex
 {
-	//From .properties files
+    //From .properties files
     MALE("employee.sex.male"), FEMALE("employee.sex.female"), UNKNOWN("employee.sex.unknown");
 
     private String text;
@@ -19,8 +19,8 @@ public enum Sex
 
     public String getText()
     {
-    	Locale locale = LocaleContextHolder.getLocale();
-    	return AppContext.getApplicationContext().getMessage(text, null, locale);
+        Locale locale = LocaleContextHolder.getLocale();
+        return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 
     public String toString()

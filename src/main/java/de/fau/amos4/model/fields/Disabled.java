@@ -8,7 +8,7 @@ import java.util.Locale;
 public enum Disabled
 {
     //From .properties files
-	YES("employee.disabled.yes"), NO("employee.disabled.no");
+    YES("employee.disabled.yes"), NO("employee.disabled.no");
 
     private String text;
 
@@ -19,12 +19,12 @@ public enum Disabled
 
     public String getText()
     {
-    	Locale locale = LocaleContextHolder.getLocale();
-    	return AppContext.getApplicationContext().getMessage(text, null, locale);
+        Locale locale = LocaleContextHolder.getLocale();
+        return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 
     public String toString()
     {
-    	return getText();
+        return getText();
     }
 }

@@ -40,8 +40,8 @@ import java.util.List;
 @Controller
 public class EmployeeFormController
 {
-	@Resource
-	EmployeeRepository employeeRepository;
+    @Resource
+    EmployeeRepository employeeRepository;
 
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})

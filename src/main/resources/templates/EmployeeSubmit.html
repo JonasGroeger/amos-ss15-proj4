@@ -24,24 +24,24 @@
 <body>
     <div class="container">
     <span style="float: right">
-    	<a href="?lang=en">
-			<button type="button"  th:with="lang=${en}"  > 
-		    	<img th:src="@{/images/uk.gif}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
-		    </button >
-		</a>
-		<a href="?lang=de">
-			<button  th:with="lang=${de}">      
-		    	<img th:src="@{/images/deutschlandflagge.jpg}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/> 
-			</button>
-		</a>
-	</span>
+        <a href="?lang=en">
+            <button type="button"  th:with="lang=${en}"  >
+                <img th:src="@{/images/uk.gif}"
+                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+            </button >
+        </a>
+        <a href="?lang=de">
+            <button  th:with="lang=${de}">
+                <img th:src="@{/images/deutschlandflagge.jpg}"
+                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+            </button>
+        </a>
+    </span>
        <p th:text="#{EmployeeSubmit.submitMessage}" />
         <p th:text="'Employee id:' + ${EmployeeId}" />
 
         <p th:text="#{EmployeeSubmit.downloadLabel}"/> <a th:href="'/EmployeeTextFileDownload?id=' + ${EmployeeId}" th:text="#{EmployeeSubmit.downloadLink}"></a> <br />
-       	<p th:text="#{EmployeeSubmit.zipDownloadLabel}"/> <a th:href="'/EmployeeZipFileDownload?id=' + ${EmployeeId}" th:text="#{EmployeeSubmit.zipDownloadLink}"></a>               
+           <p th:text="#{EmployeeSubmit.zipDownloadLabel}"/> <a th:href="'/EmployeeZipFileDownload?id=' + ${EmployeeId}" th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
 
         <footer>
             <p>&copy; AMOS GROUP 4 2015</p>

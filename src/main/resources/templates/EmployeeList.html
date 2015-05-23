@@ -24,20 +24,20 @@
 
 <body>
 <div class="container">
-	<span style="float: right">
-		<a href="?lang=en">
-			<button type="button"  th:with="lang=${en}"  > 
-		    	<img th:src="@{/images/uk.gif}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
-		    </button >
-		</a>
-		<a href="?lang=de">
-			<button  th:with="lang=${de}">      
-		    	<img th:src="@{/images/deutschlandflagge.jpg}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/> 
-			</button>
-		</a>
-	</span>
+    <span style="float: right">
+        <a href="?lang=en">
+            <button type="button"  th:with="lang=${en}"  >
+                <img th:src="@{/images/uk.gif}"
+                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+            </button >
+        </a>
+        <a href="?lang=de">
+            <button  th:with="lang=${de}">
+                <img th:src="@{/images/deutschlandflagge.jpg}"
+                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+            </button>
+        </a>
+    </span>
          <h1 th:text="#{EmployeeForm.header}"></h1>
          <h2 th:text="#{EmployeeList.header}"></h2>
          <table class="table table-striped">
@@ -86,8 +86,8 @@
             <td th:text="${Employee.bic}"></td>
             <td><button th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'" th:text="#{EmployeeList.ViewToken}">View token</button></td>
             <td>
-            	<a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
-            	<a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
+                <a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
+                <a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
             </td>
           </tr>
          </table>
