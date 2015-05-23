@@ -15,7 +15,7 @@ public class Employee
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    long id;
 
     @Column
     String firstName;
@@ -93,12 +93,12 @@ public class Employee
         this.additionToAddress = additionToAddress;
     }
 
-    public int getId()
+    public long getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(long id)
     {
         this.id = id;
     }
