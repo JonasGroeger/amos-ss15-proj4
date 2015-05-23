@@ -4,17 +4,15 @@
 spring:
   application.name: Personalfragebogen 2.0
 
-  #                  Profile                             File that will be loaded
-  # For production:  'production'                     -> application-production.yml
-  # For test:        'test'                           -> application.yml
-  # For development: 'development,developer-specific' -> application.yml + application-developer-specific.yml
-  profiles.active: development,developer-specific
+  #                Profile                             File that will be loaded
+  #profiles.active: production                          # application-production.yml
+  #profiles.active: test                                # application.yml
+  profiles.active: development,developer-specific      # application.yml + application-developer-specific.yml
 
 ---
 
 spring:
   profiles: development
-
   jpa:
     database: POSTGRESQL
     hibernate:
@@ -27,13 +25,11 @@ spring:
 
 spring:
    profiles: test
-
    datasource:
      driverClassName: org.hsqldb.jdbc.JDBCDriver
      url: jdbc:hsqldb:mem:pfb
      username: username
      password: password
-
    jpa:
      database: HSQL
      hibernate:
