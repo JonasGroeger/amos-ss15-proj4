@@ -70,6 +70,10 @@ dependencies {
 
     // Deployment
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+
+    // Production grade services.
+    // See: http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-endpoints
+    compile("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 idea {
