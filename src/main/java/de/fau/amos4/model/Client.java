@@ -12,11 +12,11 @@ public class Client
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column
-    String companyName;
-
     @OneToMany(mappedBy="client")
     private List<Employee> employees;
+
+    @Column
+    String companyName;
 
     public long getId()
     {
@@ -26,6 +26,16 @@ public class Client
     public void setId(long id)
     {
         this.id = id;
+    }
+
+    public List<Employee> getEmployees()
+    {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees)
+    {
+        this.employees = employees;
     }
 
     public String getCompanyName()
