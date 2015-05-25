@@ -216,6 +216,19 @@ public class EmployeeFormController
          // Redirect to EmployeeList page
          return "redirect:/EmployeeList";
     }
+
+    @RequestMapping("/NewEmployee")
+    public String NewEmployee()
+    {
+    	// Create a new employee with default name
+    	Employee employee = new Employee();
+    	employee.setFamilyName("New Employee");
+    	
+    	employeeRepository.save(employee);
+    	
+         // Redirect to EmployeeList page
+         return "redirect:/EmployeeList";
+    }
     
     @RequestMapping("/EmployeeList")
     public ModelAndView EmployeeList()
