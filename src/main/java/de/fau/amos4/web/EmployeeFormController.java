@@ -207,6 +207,16 @@ public class EmployeeFormController
         }
     }
 
+    @RequestMapping("/EmployeeDelete")
+    public String EmployeeDelete(@RequestParam(value = "id", required = true) long employeeId)
+    {
+         // Remove employee with passed id
+         this.employeeRepository.delete(employeeId);
+     
+         // Redirect to EmployeeList page
+         return "redirect:/EmployeeList";
+    }
+    
     @RequestMapping("/EmployeeList")
     public ModelAndView EmployeeList()
     {
