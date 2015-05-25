@@ -34,7 +34,7 @@ public class LoginTest {
     	LoginFormController loginFormController = new LoginFormController();
     	
     	String userName = "Client15";
-    	String password = "Password16";
+    	String password = "Pass16";
     	
     	String result = loginFormController.Login(userName, password);
     	
@@ -43,12 +43,12 @@ public class LoginTest {
     }
     
     @Test
-    public void Login_ValidLogind() throws Exception
+    public void Login_ValidLogin() throws Exception
     {
     	LoginFormController loginFormController = new LoginFormController();
     	
     	String userName = "Client1932";
-    	String password = "Password1932";
+    	String password = "Pass1932";
     	
     	String result = loginFormController.Login(userName, password);
     	
