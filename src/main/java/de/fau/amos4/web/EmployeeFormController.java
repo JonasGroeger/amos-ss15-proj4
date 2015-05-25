@@ -228,4 +228,12 @@ public class EmployeeFormController
 
         return mav;
     }
+    @RequestMapping("/EmployeeLogin")
+    public ModelAndView EmployeeLogin()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("EmployeeLogin");
+        return mav;
+    }
+    
 }

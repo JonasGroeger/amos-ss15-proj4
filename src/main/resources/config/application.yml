@@ -6,8 +6,8 @@ spring:
 
   #                Profile                             File that will be loaded
   #profiles.active: production                          # application-production.yml
-  profiles.active: test                                # application.yml
-  #profiles.active: development,developer-specific      # application.yml + application-developer-specific.yml
+  #profiles.active: test                                # application.yml
+  profiles.active: development,developer-specific      # application.yml + application-developer-specific.yml
 
 ---
 
@@ -28,8 +28,8 @@ spring:
    datasource:
      driverClassName: org.hsqldb.jdbc.JDBCDriver
      url: jdbc:hsqldb:mem:pfb
-     username: username
-     password: password
+     username: postgres
+     password: postgres
    jpa:
      database: HSQL
      hibernate:
