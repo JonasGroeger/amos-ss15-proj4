@@ -61,8 +61,9 @@
             <th th:text="#{employee.employerSocialSavingsNumber}"> </th>
             <th th:text="#{employee.iban}"> </th>
             <th th:text="#{employee.bic}"> </th>   
-            <th th:text="#{EmployeeList.token}"> </th>        
+            <th th:text="#{EmployeeList.token}"> </th>
             <th th:text="#{EmployeeList.download}"> </th>
+            <th th:text="#{EmployeeList.delete}"> </th>
           </tr>  
           <tr th:each="Employee : ${Employees}">
             <td th:text="${Employee.familyName}">Mustermann</td>
@@ -88,6 +89,9 @@
             <td>
                 <a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
                 <a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
+            </td>
+            <td>
+                <a th:href="'/EmployeeDelete?id=' + ${Employee.id}" th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'" th:text="#{EmployeeList.delete}">Delete</a>
             </td>
           </tr>
          </table>
