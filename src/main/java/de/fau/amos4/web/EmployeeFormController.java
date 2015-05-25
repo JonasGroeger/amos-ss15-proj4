@@ -1,6 +1,8 @@
 package de.fau.amos4.web;
 
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
@@ -34,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +46,9 @@ public class EmployeeFormController
     @Resource
     EmployeeRepository employeeRepository;
 
+    @Resource
+    ClientRepository clientRepository;
+
     // Employee data form - Enter Employee data
     @RequestMapping({"/", "/EmployeeForm"})
     public String EmployeeForm(Model model) throws Exception
@@ -51,7 +57,6 @@ public class EmployeeFormController
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        System.out.println("EmployeeForm");
         return "EmployeeForm";
     }
 
@@ -107,7 +112,7 @@ public class EmployeeFormController
     public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.dump();
+        String fileContent = employee.toString();
 
         // Send file contents
         response.setContentType("text/plain");
@@ -123,7 +128,7 @@ public class EmployeeFormController
     {
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.dump();
+        String fileContent = employee.toString();
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
@@ -208,14 +213,27 @@ public class EmployeeFormController
     }
 
     @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList()
+    public ModelAndView EmployeeList(@RequestParam(value = "id", required = true) long clientId)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeList");
 
+        Client client = clientRepository.findOne(clientId);
         Iterable<Employee> allEmployees = employeeRepository.findAll();
-        mav.addObject("Employees", allEmployees);
 
+        // FIXME: Assumes that every employee has a client!
+        // TODO: Move this in a service layer (ClientService.findEmployeesForClient(long clientId)
+        // Only show the clients employees - not all of them
+        List<Employee> employeesFromClient = new ArrayList<>();
+        for(Employee emp: allEmployees)
+        {
+            if(emp.getClient().equals(client))
+            {
+                employeesFromClient.add(emp);
+            }
+        }
+
+        mav.addObject("Employees", employeesFromClient);
         return mav;
     }
 }
