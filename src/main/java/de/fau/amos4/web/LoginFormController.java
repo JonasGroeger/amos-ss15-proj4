@@ -5,8 +5,6 @@ import java.util.regex.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import sun.misc.Regexp;
-
 public class LoginFormController {
 
     @RequestMapping("/Login")
@@ -14,13 +12,14 @@ public class LoginFormController {
     {
     	boolean LoginValid = false;
     	
+    	// Check username & password: "ClientID", "PassID" format should be accepted. Eg.: "Client32" and "Pass32" are OK. 
         String patternString = "Client([1-9]*)";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(userName);
         boolean matches = matcher.matches();
         
         if(matches)
-        {        	
+        {
         	// UserName is in correct format -> check password.
         	String ClientNumber = matcher.group(1);
         	
@@ -39,12 +38,12 @@ public class LoginFormController {
         if(LoginValid)
         {
         	// Valid Login -> Redirect to EmployeeList
-    	    return "redirect:EmployeeList";
+    	    return "redirect:/EmployeeList";
         }
         else
         {
-        	// Valid Login -> Redirect to EmployeeList
-    	    return "redirect:/Login";        	
+        	// Valid Login -> Redirect to Login Page
+    	    return "redirect:/";
         }
     }
 }

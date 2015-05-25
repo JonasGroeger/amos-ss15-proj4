@@ -17,6 +17,7 @@ public class LoginTest {
     @Test
     public void Login_InvalidLoginAndPassword() throws Exception
     {
+    	// Invalid username and password. Should be rejected.
     	LoginFormController loginFormController = new LoginFormController();
     	
     	String userName = "WrongUser";
@@ -31,6 +32,7 @@ public class LoginTest {
     @Test
     public void Login_ValidUserAndInvalidPassword() throws Exception
     {
+    	// Valid username with invalid password. Should be rejected.
     	LoginFormController loginFormController = new LoginFormController();
     	
     	String userName = "Client15";
@@ -45,6 +47,7 @@ public class LoginTest {
     @Test
     public void Login_ValidLogin() throws Exception
     {
+    	// Valid credentials. Should be accepted -> redirected to EmployeeList
     	LoginFormController loginFormController = new LoginFormController();
     	
     	String userName = "Client1932";
