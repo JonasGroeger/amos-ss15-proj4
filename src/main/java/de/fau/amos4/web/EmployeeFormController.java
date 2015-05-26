@@ -1,19 +1,19 @@
 package de.fau.amos4.web;
 
-
 import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.TokenGenerator;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
-
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -33,7 +33,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -47,13 +46,16 @@ public class EmployeeFormController
     @Resource
     EmployeeRepository employeeRepository;
 
+    @Resource
+    ClientRepository clientRepository;
+
     // Login form
     @RequestMapping("/")
     public String LoginForm(Model model) throws Exception
     {
         return "EmployeeLogin";
     }
-    
+
     // Employee data form - Enter Employee data
     @RequestMapping("/EmployeeForm")
     public String EmployeeForm(Model model) throws Exception
@@ -62,7 +64,6 @@ public class EmployeeFormController
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        System.out.println("EmployeeForm");
         return "EmployeeForm";
     }
     @RequestMapping("/EmployeeEdit")
@@ -142,7 +143,7 @@ public class EmployeeFormController
     public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.dump();
+        String fileContent = employee.toString();
 
         // Send file contents
         response.setContentType("text/plain");
@@ -158,7 +159,7 @@ public class EmployeeFormController
     {
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.dump();
+        String fileContent = employee.toString();
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
@@ -269,14 +270,15 @@ public class EmployeeFormController
     }
     
     @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList()
+    public ModelAndView EmployeeList(@RequestParam(value = "id", required = true) long clientId)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeList");
 
-        Iterable<Employee> allEmployees = employeeRepository.findAll();
-        mav.addObject("Employees", allEmployees);
+        Client client = clientRepository.findOne(clientId);
+        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
 
+        mav.addObject("Employees", clientsEmployees);
         return mav;
     }
     @RequestMapping("/EmployeeLogin")
