@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginFormController {
 
-    @RequestMapping(value = "/Login", method = RequestMethod.POST)    
+    @RequestMapping(value = "/Login", method = RequestMethod.POST)
     public String Login(@RequestParam(value = "username", required = true) String userName, @RequestParam(value = "password", required = true) String password)
     {
     	boolean LoginValid = false;
@@ -47,7 +48,15 @@ public class LoginFormController {
         else
         {
         	// Valid Login -> Redirect to Login Page
-    	    return "redirect:/";
+    	    return "redirect:/WrongPassword";
         }
+    }
+    
+    @RequestMapping("/WrongPassword")
+    public ModelAndView EmployeeLogin()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("WrongPassword");
+        return mav;
     }
 }
