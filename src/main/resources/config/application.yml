@@ -1,0 +1,37 @@
+# This is the default profile. You can override it on the command line using by setting
+# spring.profiles.active=<one>,<another> (no space between them!)
+
+spring:
+  application.name: Personalfragebogen 2.0
+
+  #                Profile                             File that will be loaded
+  #profiles.active: production                          # application-production.yml
+  #profiles.active: test                                # application.yml
+  profiles.active: development,developer-specific      # application.yml + application-developer-specific.yml
+
+---
+
+spring:
+  profiles: development
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: update
+  thymeleaf:
+    cache: false # Enable HOT refresh
+
+---
+
+spring:
+   profiles: test
+   datasource:
+     driverClassName: org.hsqldb.jdbc.JDBCDriver
+     url: jdbc:hsqldb:mem:pfb
+     username: postgres
+     password: postgres
+   jpa:
+     database: HSQL
+     hibernate:
+       naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+       ddl-auto: create-drop

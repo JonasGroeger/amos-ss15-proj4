@@ -24,54 +24,54 @@
 <body>
 
 <div class="container">
-	<span style="float: right">
-		<a href="?lang=en">
-			<button type="button"  th:with="lang=${en}"  > 
-		    	<img th:src="@{/images/uk.gif}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
-		    </button >
-		</a>
-		<a href="?lang=de">
-			<button  th:with="lang=${de}">      
-		    	<img th:src="@{/images/deutschlandflagge.jpg}"
-		             src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/> 
-			</button>
-		</a>
-	</span>
+    <span style="float: right">
+        <a href="?lang=en">
+            <button type="button"  th:with="lang=${en}"  >
+                <img th:src="@{/images/uk.gif}"
+                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+            </button >
+        </a>
+        <a href="?lang=de">
+            <button  th:with="lang=${de}">
+                <img th:src="@{/images/deutschlandflagge.jpg}"
+                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
+            </button>
+        </a>
+    </span>
     <form th:action="@{/EmployeeSubmit}" th:object="${employee}" method="POST">
         <div class="row">
             <h1 th:text="#{EmployeeForm.header}"></h1>
 
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="lastName" th:text="#{employee.lastName}"></label>
-                    <input th:field="*{lastName}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your last name."/>
+                    <label for="familyName" th:text="#{employee.familyName}"></label>
+                    <input th:field="*{familyName}" readonly="true" required="true" type="text" class="form-control"
+                       />
                 </div>
                 <div class="form-group">
                     <label for="maidenName" th:text="#{employee.maidenName}"></label>
                     <input th:field="*{maidenName}" readonly="true" type="text" class="form-control"
-                           placeholder="Please enter your maiden name."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="street" th:text="#{employee.street}"></label>
                     <input th:field="*{street}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter the street you live in."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="houseNumber" th:text="#{employee.houseNumber}"></label>
                     <input th:field="*{houseNumber}" readonly="true" required="true" type="number" min="0" class="form-control"
-                           placeholder="Please enter your the house number."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="additionToAddress" th:text="#{employee.additionToAddress}"></label>
                     <input th:field="*{additionToAddress}" readonly="true" type="text" class="form-control"
-                           placeholder="Please enter additional address information."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="placeOfBirth" th:text="#{employee.placeOfBirth}"></label>
                     <input th:field="*{placeOfBirth}" readonly="true" type="text" class="form-control"
-                           placeholder="Please enter your place of birth."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="sex" th:text="#{employee.sex}"></label>
@@ -103,55 +103,55 @@
                 <div class="form-group">
                     <label for="iban" th:text="#{employee.iban}"></label>
                     <input th:field="*{iban}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your bank account IBAN."/>
+                           />
                 </div>
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label for="firstname" th:text="#{employee.firstName}"></label>
                     <input th:field="*{firstName}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your first name."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="birthDate" th:text="#{employee.birthDate}"></label>
                     <input th:field="*{birthDate}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your date of birth."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="postCode" th:text="#{employee.zipCode}"></label>
                     <input th:field="*{zipCode}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your post code."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="city" th:text="#{employee.city}"></label>
                     <input th:field="*{city}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your city name."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="socialInsuranceNumber" th:text="#{employee.socialInsuranceNumber}"></label>
                     <input th:field="*{socialInsuranceNumber}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your insurance number."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="countryOfBirth" th:text="#{employee.countryOfBirth}"></label>
                     <input th:field="*{countryOfBirth}" readonly="true" type="text" class="form-control"
-                           placeholder="Please enter your country of birth."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="citizenship" th:text="#{employee.citizenship}"></label>
                     <input th:field="*{citizenship}" readonly="true" required="true" type="text" class="form-control"
-                           placeholder="Please enter your citizenship."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="employerSocialSavingsNumber" th:text="#{employee.employerSocialSavingsNumber}"></label>
                     <input th:field="*{employerSocialSavingsNumber}" readonly="true" type="text" class="form-control"
-                           placeholder="Please enter your Arbeitnehmernummer (TODO?)."/>
+                           />
                 </div>
                 <div class="form-group">
                     <label for="bic" th:text="#{employee.bic}"></label>
                     <input th:field="*{bic}" required="true" readonly="true" type="text" class="form-control"
-                           placeholder="Please enter your bank account BIC."/>
+                           />
                 </div>
             </div>
         </div>

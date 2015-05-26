@@ -1,13 +1,11 @@
-package personal;
-
-import personal.fields.Disabled;
-import personal.fields.MaritalStatus;
-import personal.fields.Sex;
-
-import javax.persistence.*;
+package de.fau.amos4.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import de.fau.amos4.model.fields.Disabled;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.Sex;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -17,13 +15,10 @@ public class Employee
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    long id;
 
     @Column
     String firstName;
-
-    @Column
-    String lastName;
 
     @Column
     String maidenName;
@@ -98,12 +93,12 @@ public class Employee
         this.additionToAddress = additionToAddress;
     }
 
-    public int getId()
+    public long getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(long id)
     {
         this.id = id;
     }
@@ -116,16 +111,6 @@ public class Employee
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
-    }
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
     }
 
     public String getMaidenName()
@@ -298,13 +283,15 @@ public class Employee
         this.bic = bic;
     }
 
-    public String getToken() {
-		return token;
-	}
+    public String getToken()
+    {
+        return token;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public void setToken(String token)
+    {
+        this.token = token;
+    }
 
     @Override
     public String toString()
@@ -312,7 +299,7 @@ public class Employee
         return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", familyName='" + familyName + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", city='" + city + '\'' +
                 ", birthDate=" + birthDate +
@@ -324,7 +311,6 @@ public class Employee
         return "Employee{" + '\n' +
                 "id=" + id + '\n' +
                 ", firstName='" + firstName + '\'' + '\n' +
-                ", lastName='" + lastName + '\'' + '\n' +
                 ", maidenName='" + maidenName + '\'' + '\n' +
                 ", familyName='" + familyName + '\'' + '\n' +
                 ", birthDate=" + birthDate + '\n' +
