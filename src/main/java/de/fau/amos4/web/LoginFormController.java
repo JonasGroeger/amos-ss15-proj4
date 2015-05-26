@@ -2,12 +2,16 @@ package de.fau.amos4.web;
 
 import java.util.regex.*;
 
+import org.hibernate.annotations.Target;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class LoginFormController {
 
-    @RequestMapping("/Login")
+    @RequestMapping(value = "/Login", method = RequestMethod.POST)    
     public String Login(@RequestParam(value = "username", required = true) String userName, @RequestParam(value = "password", required = true) String password)
     {
     	boolean LoginValid = false;

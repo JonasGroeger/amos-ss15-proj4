@@ -43,8 +43,15 @@ public class EmployeeFormController
     @Resource
     EmployeeRepository employeeRepository;
 
+    // Login form
+    @RequestMapping("/")
+    public String LoginForm(Model model) throws Exception
+    {
+        return "EmployeeLogin";
+    }
+    
     // Employee data form - Enter Employee data
-    @RequestMapping({"/", "/EmployeeForm"})
+    @RequestMapping("/EmployeeForm")
     public String EmployeeForm(Model model) throws Exception
     {
         model.addAttribute("employee", new Employee());
