@@ -65,6 +65,7 @@
             <th th:text="#{EmployeeList.token}"> </th>
             <th th:text="#{EmployeeList.download}"> </th>
             <th th:text="#{EmployeeList.delete}"> </th>
+            <th th:text="#{EmployeeList.edit}"> </th>
           </tr>  
           <tr th:each="Employee : ${Employees}">
             <td th:text="${Employee.familyName}">Mustermann</td>
@@ -93,6 +94,9 @@
             </td>
             <td>
                 <a th:href="'/EmployeeDelete?id=' + ${Employee.id}" th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'" th:text="#{EmployeeList.delete}">Delete</a>
+            </td>
+            <td>
+                <a th:href="'/EmployeeEdit?id=' + ${Employee.id}" th:text="#{EmployeeList.edit}">Edit</a>
             </td>
           </tr>
          </table>
