@@ -22,6 +22,7 @@
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
+<form th:action="@{/EmployeeSubmit}" th:object="${employee}" method="POST">
     <div class="container">
     <span style="float: right">
         <a href="?lang=en">
@@ -42,7 +43,7 @@
 
         <p th:text="#{EmployeeSubmit.downloadLabel}"/> <a th:href="'/EmployeeTextFileDownload?id=' + ${EmployeeId}" th:text="#{EmployeeSubmit.downloadLink}"></a> <br />
            <p th:text="#{EmployeeSubmit.zipDownloadLabel}"/> <a th:href="'/EmployeeZipFileDownload?id=' + ${EmployeeId}" th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
-
+											
         <footer>
             <p>&copy; AMOS GROUP 4 2015</p>
         </footer>
@@ -52,5 +53,6 @@
     <script src="js/vendor/jquery-1.11.2.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    </form>
 </body>
 </html>

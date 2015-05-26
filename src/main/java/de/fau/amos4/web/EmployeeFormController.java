@@ -1,5 +1,7 @@
 package de.fau.amos4.web;
 
+
+import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.model.fields.Disabled;
@@ -19,6 +21,7 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +39,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class EmployeeFormController
@@ -54,7 +58,31 @@ public class EmployeeFormController
         System.out.println("EmployeeForm");
         return "EmployeeForm";
     }
+    @RequestMapping("/EmployeeEdit")
+    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("EmployeeEdit");
+    	Employee employee = employeeRepository.findOne(employeeId);
+    	mav.addObject("id", employeeId);
+    	mav.addObject("employee", employee);
+    	mav.addObject("allDisabled", Disabled.values());
+    	mav.addObject("allMarital", MaritalStatus.values());
+    	mav.addObject("allSex", Sex.values());
+    	//employeeRepository.save(employee);
+    	//model.addAttribute("EmployeeId", employeeId);
+    	return mav;
+    }
+    @RequestMapping("/EditSubmit")
+    public String EditSubmit(Employee employee, Model model)
+{
+    	
+    	System.out.println(employee.getId());
+     this.employeeRepository.save(employee);
 
+     // Redirect to EmployeeList page
+     return "redirect:/EmployeeList";
+}
+    
     @InitBinder
     public void initBinder(WebDataBinder binder)
     {
@@ -222,8 +250,11 @@ public class EmployeeFormController
     {
     	// Create a new employee with default name
     	Employee employee = new Employee();
-    	employee.setFamilyName("New Employee");
-    	
+
+    	Locale locale = LocaleContextHolder.getLocale();
+       String newEmployee = AppContext.getApplicationContext().getMessage("EmployeeFormController.newEmployee", null, locale);
+    	employee.setFamilyName(newEmployee);
+
     	employeeRepository.save(employee);
     	
          // Redirect to EmployeeList page
