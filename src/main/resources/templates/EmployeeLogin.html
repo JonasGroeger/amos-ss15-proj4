@@ -11,44 +11,42 @@
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <style>	
         body {
-            padding-top: 50px;
-            padding-bottom: 20px;
+            padding-top: 20px;
+            padding-bottom: 50px;
                               }  
     </style>
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-<form class="form-horizontal">
+ <form th:action="@{/EmployeeList}" th:object="${employee}" method="POST">
+    <form class="form-horizontal">
   <div class="form-group">
-    <label for="inputusername" class="col-sm-2 control-label">Username</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" id="inputusername" placeholder="Enter username">
-    </input>
+    <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputUsername" placeholder="Enter the username"></input>
     </div>
   </div>
   <div class="form-group">
-    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-    <div class="col-sm-4">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Enter password">
-    </input>
+    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Enter the Password"></input>
     </div>
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <div class="checkbox">
         <label>
-          <input type="checkbox"> Remember me
-        </input>
-       </label>
+          <input type="checkbox"> Remember me</input>
+        </label>
       </div>
     </div>
   </div>
-  
-      <div class="form-group">
+  <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-success">Login</button>
+      <button type="submit" class="btn btn-success">Sign in</button>
     </div>
   </div>
+</form>
 </form>
 <script src="js/vendor/jquery-1.11.2.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
