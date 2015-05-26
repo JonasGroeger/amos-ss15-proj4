@@ -52,7 +52,4 @@ to do that for some reason, use the provided table below:
 
 # Running the Tests
 
-If you want to run the tests using for example `./gradlew test`, you have to set the profile to `test` in the configuration
-file `src/main/resources/config/application.yml`. Disable all other `profiles.active` settings. Don't forget the change back
-for development!
-
+If you want to run the tests using for example `./gradlew test`.
