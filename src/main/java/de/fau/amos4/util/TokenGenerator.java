@@ -61,6 +61,7 @@ public class TokenGenerator
             // If we find an employee with this token -> try again
             for(Employee emp: allEmployees)
             {
+                if(emp.getToken() == null) continue;
                 if(emp.getToken().equals(potentialToken))
                 {
                     foundUniqueToken = false;

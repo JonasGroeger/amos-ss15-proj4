@@ -82,14 +82,18 @@ public class EmployeeFormController
     }
     @RequestMapping("/EditSubmit")
     public String EditSubmit(Employee employee, Model model)
-{
-    	
-    	System.out.println(employee.getId());
-     this.employeeRepository.save(employee);
+    {
+        System.out.println(employee.getId());
+        Client client = clientRepository.findOne(1l);
+        employee.setClient(client);
+        client.getEmployees().add(employee);
 
-     // Redirect to EmployeeList page
-     return "redirect:/EmployeeList";
-}
+        employeeRepository.save(employee);
+        clientRepository.save(client);
+
+        // Redirect to EmployeeList page
+        return "redirect:/EmployeeList";
+    }
     
     @InitBinder
     public void initBinder(WebDataBinder binder)
@@ -258,19 +262,26 @@ public class EmployeeFormController
     {
     	// Create a new employee with default name
     	Employee employee = new Employee();
+        Client client = clientRepository.findOne(1l);
 
-    	Locale locale = LocaleContextHolder.getLocale();
-       String newEmployee = AppContext.getApplicationContext().getMessage("EmployeeFormController.newEmployee", null, locale);
-    	employee.setFamilyName(newEmployee);
+        Locale locale = LocaleContextHolder.getLocale();
+        String newEmployee = AppContext.getApplicationContext().getMessage("EmployeeFormController.newEmployee", null, locale);
+        employee.setFamilyName(newEmployee);
+        employee.setClient(client);
+        String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
+        employee.setToken(token);
+        client.getEmployees().add(employee);
 
-    	employeeRepository.save(employee);
-    	
+        employeeRepository.save(employee);
+        clientRepository.save(client);
+
+
          // Redirect to EmployeeList page
          return "redirect:/EmployeeList";
     }
     
     @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList(@RequestParam(value = "id", required = true) long clientId)
+    public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeList");
