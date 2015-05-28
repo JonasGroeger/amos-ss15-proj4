@@ -23,10 +23,12 @@ public class LoginFormController {
         Matcher matcher = pattern.matcher(userName);
         boolean matches = matcher.matches();
         
+        String ClientNumber = "0";
+        
         if(matches)
         {
         	// UserName is in correct format -> check password.
-        	String ClientNumber = matcher.group(1);
+        	ClientNumber = matcher.group(1);
         	
         	// TODO: Implement real username and password handling
         	boolean PasswordIsValid = password.equals("Pass" + ClientNumber);
@@ -43,7 +45,7 @@ public class LoginFormController {
         if(LoginValid)
         {
         	// Valid Login -> Redirect to EmployeeList
-    	    return "redirect:/EmployeeList";
+    	    return "redirect:/EmployeeList?id=" + ClientNumber;
         }
         else
         {
