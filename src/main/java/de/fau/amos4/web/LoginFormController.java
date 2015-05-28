@@ -53,10 +53,8 @@ public class LoginFormController {
     }
     
     @RequestMapping("/WrongPassword")
-    public ModelAndView EmployeeLogin()
+    public String EmployeeLogin()
     {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("WrongPassword");
-        return mav;
+        return "WrongPassword";
     }
 }

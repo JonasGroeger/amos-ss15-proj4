@@ -50,10 +50,10 @@ public class EmployeeFormController
     ClientRepository clientRepository;
 
     // Login form
-    @RequestMapping("/")
-    public String LoginForm(Model model) throws Exception
+    @RequestMapping({"/", "/ClientLogin"})
+    public String ClientLogin(Model model) throws Exception
     {
-        return "EmployeeLogin";
+        return "ClientLogin";
     }
 
     // Employee data form - Enter Employee data
@@ -292,12 +292,4 @@ public class EmployeeFormController
         mav.addObject("Employees", clientsEmployees);
         return mav;
     }
-    @RequestMapping("/EmployeeLogin")
-    public ModelAndView EmployeeLogin()
-    {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeLogin");
-        return mav;
-    }
-    
 }
