@@ -1,28 +1,29 @@
 package de.fau.amos4.web;
 
-import java.util.regex.*;
-
-import org.hibernate.annotations.Target;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.util.EmailSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import javax.annotation.Resource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import de.fau.amos4.model.Client;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.util.EmailSender;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 @Controller
-public class LoginFormController {
+public class LoginFormController
+{
+    private final ClientRepository clientRepository;
 
-    @Resource
-    ClientRepository clientRepository;
-    
+    @Autowired
+    public LoginFormController(ClientRepository clientRepository)
+    {
+        this.clientRepository = clientRepository;
+    }
+
     @RequestMapping("/Login")
     public String Login(@RequestParam(value = "username", required = true) String userName, @RequestParam(value = "password", required = true) String password)
     {

@@ -20,6 +20,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,11 +43,15 @@ import java.util.Locale;
 @Controller
 public class EmployeeFormController
 {
-    @Resource
-    EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ClientRepository clientRepository;
 
-    @Resource
-    ClientRepository clientRepository;
+    @Autowired
+    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    {
+        this.employeeRepository = employeeRepository;
+        this.clientRepository = clientRepository;
+    }
 
     // Login form
     @RequestMapping({"/", "/ClientLogin"})
