@@ -1,17 +1,19 @@
 package de.fau.amos4.web;
 
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.TokenGenerator;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
-
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -19,6 +21,7 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,12 +33,12 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class EmployeeFormController
@@ -43,18 +46,55 @@ public class EmployeeFormController
     @Resource
     EmployeeRepository employeeRepository;
 
+    @Resource
+    ClientRepository clientRepository;
+
+    // Login form
+    @RequestMapping({"/", "/ClientLogin"})
+    public String ClientLogin(Model model) throws Exception
+    {
+        return "ClientLogin";
+    }
+
     // Employee data form - Enter Employee data
-    @RequestMapping({"/", "/EmployeeForm"})
+    @RequestMapping("/EmployeeForm")
     public String EmployeeForm(Model model) throws Exception
     {
         model.addAttribute("employee", new Employee());
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        System.out.println("EmployeeForm");
         return "EmployeeForm";
     }
+    @RequestMapping("/EmployeeEdit")
+    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("EmployeeEdit");
+    	Employee employee = employeeRepository.findOne(employeeId);
+    	mav.addObject("id", employeeId);
+    	mav.addObject("employee", employee);
+    	mav.addObject("allDisabled", Disabled.values());
+    	mav.addObject("allMarital", MaritalStatus.values());
+    	mav.addObject("allSex", Sex.values());
+    	//employeeRepository.save(employee);
+    	//model.addAttribute("EmployeeId", employeeId);
+    	return mav;
+    }
+    @RequestMapping("/EditSubmit")
+    public String EditSubmit(Employee employee, Model model)
+    {
+        System.out.println(employee.getId());
+        Client client = clientRepository.findOne(1l);
+        employee.setClient(client);
+        client.getEmployees().add(employee);
 
+        employeeRepository.save(employee);
+        clientRepository.save(client);
+
+        // Redirect to EmployeeList page
+        return "redirect:/EmployeeList";
+    }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder)
     {
@@ -107,7 +147,7 @@ public class EmployeeFormController
     public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.dump();
+        String fileContent = employee.toString();
 
         // Send file contents
         response.setContentType("text/plain");
@@ -123,7 +163,7 @@ public class EmployeeFormController
     {
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.dump();
+        String fileContent = employee.toString();
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
@@ -222,31 +262,34 @@ public class EmployeeFormController
     {
     	// Create a new employee with default name
     	Employee employee = new Employee();
-    	employee.setFamilyName("New Employee");
-    	
-    	employeeRepository.save(employee);
-    	
+        Client client = clientRepository.findOne(1l);
+
+        Locale locale = LocaleContextHolder.getLocale();
+        String newEmployee = AppContext.getApplicationContext().getMessage("EmployeeFormController.newEmployee", null, locale);
+        employee.setFamilyName(newEmployee);
+        employee.setClient(client);
+        String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
+        employee.setToken(token);
+        client.getEmployees().add(employee);
+
+        employeeRepository.save(employee);
+        clientRepository.save(client);
+
+
          // Redirect to EmployeeList page
          return "redirect:/EmployeeList";
     }
     
     @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList()
+    public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeList");
 
-        Iterable<Employee> allEmployees = employeeRepository.findAll();
-        mav.addObject("Employees", allEmployees);
+        Client client = clientRepository.findOne(clientId);
+        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
 
+        mav.addObject("Employees", clientsEmployees);
         return mav;
     }
-    @RequestMapping("/EmployeeLogin")
-    public ModelAndView EmployeeLogin()
-    {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeLogin");
-        return mav;
-    }
-    
 }

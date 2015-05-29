@@ -40,7 +40,7 @@
     </span>
          <h1 th:text="#{EmployeeForm.header}"></h1>
          <h2 th:text="#{EmployeeList.header}"></h2>
-         <a href="/NewEmployee" th:text="#{EmployeeList.newEmployee}">New Employee</a>
+         <a th:href="@{/NewEmployee}" th:text="#{EmployeeList.newEmployee}">New Employee</a>
          <table class="table table-striped">
           <tr>
             <th th:text="#{employee.familyName}"> </th>
@@ -65,6 +65,7 @@
             <th th:text="#{EmployeeList.token}"> </th>
             <th th:text="#{EmployeeList.download}"> </th>
             <th th:text="#{EmployeeList.delete}"> </th>
+            <th th:text="#{EmployeeList.edit}"> </th>
           </tr>  
           <tr th:each="Employee : ${Employees}">
             <td th:text="${Employee.familyName}">Mustermann</td>
@@ -88,11 +89,14 @@
             <td th:text="${Employee.bic}"></td>
             <td><button th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'" th:text="#{EmployeeList.ViewToken}">View token</button></td>
             <td>
-                <a th:href="'/EmployeeTextFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
-                <a th:href="'/EmployeeZipFileDownload?id=' + ${Employee.id}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
+                <a th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
+                <a th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
             </td>
             <td>
-                <a th:href="'/EmployeeDelete?id=' + ${Employee.id}" th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'" th:text="#{EmployeeList.delete}">Delete</a>
+                <a th:href="@{'/EmployeeDelete?id=' + ${Employee.id}}" th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'" th:text="#{EmployeeList.delete}">Delete</a>
+            </td>
+            <td>
+                <a th:href="@{'/EmployeeEdit?id=' + ${Employee.id}}" th:text="#{EmployeeList.edit}">Edit</a>
             </td>
           </tr>
          </table>

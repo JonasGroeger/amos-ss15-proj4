@@ -2,25 +2,29 @@ package de.fau.amos4.web;
 
 import java.util.regex.*;
 
+import org.hibernate.annotations.Target;
+import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import de.fau.amos4.model.Client;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.EmailSender;
-
+@Controller
 public class LoginFormController {
 
     @Resource
     ClientRepository clientRepository;
     
     @RequestMapping("/Login")
+    @RequestMapping(value = "/Login", method = RequestMethod.POST)
     public String Login(@RequestParam(value = "username", required = true) String userName, @RequestParam(value = "password", required = true) String password)
     {
     	boolean LoginValid = false;
@@ -31,10 +35,12 @@ public class LoginFormController {
         Matcher matcher = pattern.matcher(userName);
         boolean matches = matcher.matches();
         
+        String ClientNumber = "0";
+        
         if(matches)
         {
         	// UserName is in correct format -> check password.
-        	String ClientNumber = matcher.group(1);
+        	ClientNumber = matcher.group(1);
         	
         	// TODO: Implement real username and password handling
         	boolean PasswordIsValid = password.equals("Pass" + ClientNumber);
@@ -51,13 +57,19 @@ public class LoginFormController {
         if(LoginValid)
         {
         	// Valid Login -> Redirect to EmployeeList
-    	    return "redirect:/EmployeeList";
+    	    return "redirect:/EmployeeList?id=" + ClientNumber;
         }
         else
         {
         	// Valid Login -> Redirect to Login Page
-    	    return "redirect:/";
+    	    return "redirect:/WrongPassword";
         }
+    }
+    
+    @RequestMapping("/WrongPassword")
+    public String EmployeeLogin()
+    {
+        return "WrongPassword";
     }
     
 

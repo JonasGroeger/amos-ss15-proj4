@@ -1,5 +1,8 @@
 package de.fau.amos4.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
@@ -16,6 +19,10 @@ public class Employee
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
+
+    @ManyToOne
+    @JoinColumn(name="client_id")
+    Client client;
 
     @Column
     String firstName;
@@ -101,6 +108,16 @@ public class Employee
     public void setId(long id)
     {
         this.id = id;
+    }
+
+    public Client getClient()
+    {
+        return client;
+    }
+
+    public void setClient(Client client)
+    {
+        this.client = client;
     }
 
     public String getFirstName()
@@ -296,38 +313,93 @@ public class Employee
     @Override
     public String toString()
     {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", familyName='" + familyName + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", city='" + city + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("client", client)
+                .append("firstName", firstName)
+                .append("maidenName", maidenName)
+                .append("familyName", familyName)
+                .append("birthDate", birthDate)
+                .append("placeOfBirth", placeOfBirth)
+                .append("countryOfBirth", countryOfBirth)
+                .append("street", street)
+                .append("zipCode", zipCode)
+                .append("houseNumber", houseNumber)
+                .append("city", city)
+                .append("socialInsuranceNumber", socialInsuranceNumber)
+                .append("sex", sex)
+                .append("maritalStatus", maritalStatus)
+                .append("disabled", disabled)
+                .append("citizenship", citizenship)
+                .append("employerSocialSavingsNumber", employerSocialSavingsNumber)
+                .append("iban", iban)
+                .append("bic", bic)
+                .append("additionToAddress", additionToAddress)
+                .append("token", token)
+                .toString();
     }
 
-    public String dump()
+    @Override
+    public boolean equals(Object o)
     {
-        return "Employee{" + '\n' +
-                "id=" + id + '\n' +
-                ", firstName='" + firstName + '\'' + '\n' +
-                ", maidenName='" + maidenName + '\'' + '\n' +
-                ", familyName='" + familyName + '\'' + '\n' +
-                ", birthDate=" + birthDate + '\n' +
-                ", placeOfBirth='" + placeOfBirth + '\'' + '\n' +
-                ", countryOfBirth='" + countryOfBirth + '\'' + '\n' +
-                ", street='" + street + '\'' + '\n' +
-                ", zipCode='" + zipCode + '\'' + '\n' +
-                ", houseNumber='" + houseNumber + '\'' + '\n' +
-                ", city='" + city + '\'' + '\n' +
-                ", socialInsuranceNumber='" + socialInsuranceNumber + '\'' + '\n' +
-                ", sex=" + sex + '\n' +
-                ", maritalStatus=" + maritalStatus + '\n' +
-                ", disabled=" + disabled + '\n' +
-                ", citizenship='" + citizenship + '\'' + '\n' +
-                ", employerSocialSavingsNumber='" + employerSocialSavingsNumber + '\'' + '\n' +
-                ", iban='" + iban + '\'' + '\n' +
-                ", bic='" + bic + '\'' + '\n' +
-                '}';
+        if (this == o) return true;
+
+        if (!(o instanceof Employee)) return false;
+
+        Employee employee = (Employee) o;
+
+        return new EqualsBuilder()
+                .append(id, employee.id)
+                .append(client, employee.client)
+                .append(firstName, employee.firstName)
+                .append(maidenName, employee.maidenName)
+                .append(familyName, employee.familyName)
+                .append(birthDate, employee.birthDate)
+                .append(placeOfBirth, employee.placeOfBirth)
+                .append(countryOfBirth, employee.countryOfBirth)
+                .append(street, employee.street)
+                .append(zipCode, employee.zipCode)
+                .append(houseNumber, employee.houseNumber)
+                .append(city, employee.city)
+                .append(socialInsuranceNumber, employee.socialInsuranceNumber)
+                .append(sex, employee.sex)
+                .append(maritalStatus, employee.maritalStatus)
+                .append(disabled, employee.disabled)
+                .append(citizenship, employee.citizenship)
+                .append(employerSocialSavingsNumber, employee.employerSocialSavingsNumber)
+                .append(iban, employee.iban)
+                .append(bic, employee.bic)
+                .append(additionToAddress, employee.additionToAddress)
+                .append(token, employee.token)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(client)
+                .append(firstName)
+                .append(maidenName)
+                .append(familyName)
+                .append(birthDate)
+                .append(placeOfBirth)
+                .append(countryOfBirth)
+                .append(street)
+                .append(zipCode)
+                .append(houseNumber)
+                .append(city)
+                .append(socialInsuranceNumber)
+                .append(sex)
+                .append(maritalStatus)
+                .append(disabled)
+                .append(citizenship)
+                .append(employerSocialSavingsNumber)
+                .append(iban)
+                .append(bic)
+                .append(additionToAddress)
+                .append(token)
+                .toHashCode();
     }
 }

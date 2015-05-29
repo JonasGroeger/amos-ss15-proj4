@@ -1,13 +1,16 @@
 package de.fau.amos4.test;
 
-import de.fau.amos4.test.configuration.TestConfiguration;
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.test.configuration.TestConfiguration;
 import de.fau.amos4.util.TokenGenerator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
@@ -19,10 +22,14 @@ import java.util.regex.Pattern;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestConfiguration.class)
+@ActiveProfiles("test")
 public class EmployeeTest
 {
     @Resource
     EmployeeRepository employeeRepository;
+
+    @Resource
+    ClientRepository clientRepository;
 
     @Test
     public void generatedTokenIsInCorrectFormat() throws Exception
@@ -58,5 +65,14 @@ public class EmployeeTest
         if(tokenSet.size() < generatedTokens.size()){
             Assert.fail("There is at least a duplicate in the tokens.");
         }
+    }
+
+    @Test
+    public void testFindEmployeeByClient()
+    {
+        Client c = clientRepository.findOne(1l);
+        List<Employee> foundEmployees = employeeRepository.findByClient(c);
+
+        Assert.assertEquals("Inserting a employee inserted more than one.", foundEmployees.size(), 1);
     }
 }
