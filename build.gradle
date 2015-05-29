@@ -49,6 +49,7 @@ dependencies {
     // Framework
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("javax.mail:mail:1.4.1")
 
     // Persistance
 	compile("org.postgresql:postgresql:9.4-1201-jdbc41")
