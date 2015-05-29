@@ -27,7 +27,7 @@ public class Client
     private String email;
 
     @Column
-    private boolean activated;
+    private Boolean activated;
 
     @Column
     private String confirmationString;
