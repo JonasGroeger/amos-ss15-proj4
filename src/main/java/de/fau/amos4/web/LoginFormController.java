@@ -24,7 +24,6 @@ public class LoginFormController {
     ClientRepository clientRepository;
     
     @RequestMapping("/Login")
-    @RequestMapping(value = "/Login", method = RequestMethod.POST)
     public String Login(@RequestParam(value = "username", required = true) String userName, @RequestParam(value = "password", required = true) String password)
     {
     	boolean LoginValid = false;
