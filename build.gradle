@@ -27,28 +27,23 @@ war {
     version = jar.version
 }
 
-configurations { providedRuntime }
+configurations {
+    providedRuntime
+}
 
 repositories {
     mavenCentral()
 }
 
 def javaVersion = "1.7"
-
-compileJava {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-}
-compileTestJava {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-}
-
+compileJava     { sourceCompatibility = javaVersion; targetCompatibility = javaVersion }
+compileTestJava { sourceCompatibility = javaVersion; targetCompatibility = javaVersion }
 
 dependencies {
     // Framework
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-security")
     compile("javax.mail:mail:1.4.1")
 
     // Persistance
@@ -71,10 +66,6 @@ dependencies {
 
     // Deployment
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-
-    // Production grade services.
-    // See: http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-endpoints
-    compile("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 idea {
@@ -85,5 +76,5 @@ idea {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '2.4'
 }
