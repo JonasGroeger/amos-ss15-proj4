@@ -15,7 +15,6 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
-
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -35,7 +34,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -56,11 +54,6 @@ public class EmployeeFormController
         this.clientRepository = clientRepository;
     }
 
-	
-
-    // Login form
-    
-
     // Employee data form - Enter Employee data
     @RequestMapping("/EmployeeForm")
     public String EmployeeForm(Model model) throws Exception
@@ -71,6 +64,7 @@ public class EmployeeFormController
         model.addAttribute("allSex", Sex.values());
         return "EmployeeForm";
     }
+
     @RequestMapping("/EmployeeEdit")
     public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException {
         ModelAndView mav = new ModelAndView();
@@ -85,6 +79,7 @@ public class EmployeeFormController
     	//model.addAttribute("EmployeeId", employeeId);
     	return mav;
     }
+
     @RequestMapping("/EditSubmit")
     public String EditSubmit(Employee employee, Model model)
     {
@@ -193,13 +188,6 @@ public class EmployeeFormController
             zout.write(data, 0, data.length);
             zout.closeEntry();
 
-            // Create temporary file for shitty API
-            //File temp = File.createTempFile("employee", ".txt");
-            //FileOutputStream fOut = new FileOutputStream(temp);
-            //fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
-            //fOut.flush();
-
-
             try {
                 // Create a document and add a page to it
                 PDDocument document = new PDDocument();
@@ -297,6 +285,7 @@ public class EmployeeFormController
         mav.addObject("Employees", clientsEmployees);
         return mav;
     }
+    
     @RequestMapping("/ClientLogin")
     public ModelAndView ClientLogin(Model model) throws Exception
     {
@@ -304,12 +293,14 @@ public class EmployeeFormController
     	ModelAndView mav = new ModelAndView();
     	return mav;
     }
+    
     @RequestMapping("/FrontPage")
     public String FrontPage(Model model) throws Exception
     {
         
         return "FrontPage";
     }
+    
     @RequestMapping("/RegistrationPage")
     public ModelAndView RegistrationPage(Model model) throws Exception
     {
