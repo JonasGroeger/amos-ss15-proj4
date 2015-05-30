@@ -66,18 +66,19 @@ public class EmployeeFormController
     }
 
     @RequestMapping("/EmployeeEdit")
-    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException {
+    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
+    {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeEdit");
-    	Employee employee = employeeRepository.findOne(employeeId);
-    	mav.addObject("id", employeeId);
-    	mav.addObject("employee", employee);
-    	mav.addObject("allDisabled", Disabled.values());
-    	mav.addObject("allMarital", MaritalStatus.values());
-    	mav.addObject("allSex", Sex.values());
-    	//employeeRepository.save(employee);
-    	//model.addAttribute("EmployeeId", employeeId);
-    	return mav;
+        Employee employee = employeeRepository.findOne(employeeId);
+        mav.addObject("id", employeeId);
+        mav.addObject("employee", employee);
+        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allMarital", MaritalStatus.values());
+        mav.addObject("allSex", Sex.values());
+        //employeeRepository.save(employee);
+        //model.addAttribute("EmployeeId", employeeId);
+        return mav;
     }
 
     @RequestMapping("/EditSubmit")
@@ -94,7 +95,7 @@ public class EmployeeFormController
         // Redirect to EmployeeList page
         return "redirect:/EmployeeList";
     }
-    
+
     @InitBinder
     public void initBinder(WebDataBinder binder)
     {
@@ -167,7 +168,7 @@ public class EmployeeFormController
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
-        
+
         final StringBuilder sb = new StringBuilder(fileContent);
         final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
 
@@ -182,7 +183,7 @@ public class EmployeeFormController
             params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
             params.setPassword("AMOS");
             params.setSourceExternalStream(true);
-            
+
             zout.putNextEntry(null, params);
             byte[] data = sb.toString().getBytes();
             zout.write(data, 0, data.length);
@@ -243,18 +244,18 @@ public class EmployeeFormController
     @RequestMapping("/EmployeeDelete")
     public String EmployeeDelete(@RequestParam(value = "id", required = true) long employeeId)
     {
-         // Remove employee with passed id
-         this.employeeRepository.delete(employeeId);
-     
-         // Redirect to EmployeeList page
-         return "redirect:/EmployeeList";
+        // Remove employee with passed id
+        this.employeeRepository.delete(employeeId);
+
+        // Redirect to EmployeeList page
+        return "redirect:/EmployeeList";
     }
 
     @RequestMapping("/NewEmployee")
     public String NewEmployee()
     {
-    	// Create a new employee with default name
-    	Employee employee = new Employee();
+        // Create a new employee with default name
+        Employee employee = new Employee();
         Client client = clientRepository.findOne(1l);
 
         Locale locale = LocaleContextHolder.getLocale();
@@ -269,10 +270,10 @@ public class EmployeeFormController
         clientRepository.save(client);
 
 
-         // Redirect to EmployeeList page
-         return "redirect:/EmployeeList";
+        // Redirect to EmployeeList page
+        return "redirect:/EmployeeList";
     }
-    
+
     @RequestMapping("/EmployeeList")
     public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
@@ -285,28 +286,28 @@ public class EmployeeFormController
         mav.addObject("Employees", clientsEmployees);
         return mav;
     }
-    
+
     @RequestMapping("/ClientLogin")
     public ModelAndView ClientLogin(Model model) throws Exception
     {
-        
-    	ModelAndView mav = new ModelAndView();
-    	return mav;
+
+        ModelAndView mav = new ModelAndView();
+        return mav;
     }
-    
+
     @RequestMapping("/FrontPage")
     public String FrontPage(Model model) throws Exception
     {
-        
+
         return "FrontPage";
     }
-    
+
     @RequestMapping("/RegistrationPage")
     public ModelAndView RegistrationPage(Model model) throws Exception
     {
-    	ModelAndView mav = new ModelAndView();
-    
-		mav.addObject("allTitle", Title.values());
-    	return mav;
+        ModelAndView mav = new ModelAndView();
+
+        mav.addObject("allTitle", Title.values());
+        return mav;
     }
 }
