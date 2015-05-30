@@ -1,10 +1,9 @@
 package de.fau.amos4.web;
 
-import de.fau.amos4.model.Client;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.util.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,11 +21,24 @@ public class TestController
         this.clientRepository = clientRepository;
     }
 
-    @RequestMapping("/test")
-    public String message()
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping("/testA")
+    public String messageAdmin()
     {
-        String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
-        Iterable<Client> allClients = clientRepository.findAll();
-        return String.valueOf(token);
+        return "You are ADMIN.";
+    }
+
+    @PreAuthorize("hasAuthority('CLIENT')")
+    @RequestMapping("/testC")
+    public String messageClient()
+    {
+        return "You are CLIENT.";
+    }
+
+    @PreAuthorize("hasAuthority('EMPLOYEE')")
+    @RequestMapping("/testE")
+    public String messageEmployee()
+    {
+        return "You are EMPLOYEE.";
     }
 }
