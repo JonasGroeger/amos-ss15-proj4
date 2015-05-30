@@ -23,8 +23,15 @@ public class Client
     @Column
     private String companyName;
 
-    @Column
+    @Column(unique = true)
     private String email;
+
+    @Column
+    private String passwordHash;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private ClientRole role;
 
     @Column
     private Boolean activated;
@@ -72,6 +79,26 @@ public class Client
         this.email = email;
     }
 
+    public String getPasswordHash()
+    {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash)
+    {
+        this.passwordHash = passwordHash;
+    }
+
+    public ClientRole getRole()
+    {
+        return role;
+    }
+
+    public void setRole(ClientRole role)
+    {
+        this.role = role;
+    }
+
     public boolean isActivated()
     {
         return activated;
@@ -108,25 +135,23 @@ public class Client
 	}
 
     @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("employees", employees)
-                .append("companyName", companyName)
-                .toString();
-    }
-
-    @Override
     public boolean equals(Object o)
     {
         if (this == o) return true;
+
         if (!(o instanceof Client)) return false;
+
         Client client = (Client) o;
+
         return new EqualsBuilder()
                 .append(id, client.id)
                 .append(employees, client.employees)
                 .append(companyName, client.companyName)
+                .append(email, client.email)
+                .append(passwordHash, client.passwordHash)
+                .append(role, client.role)
+                .append(activated, client.activated)
+                .append(confirmationString, client.confirmationString)
                 .isEquals();
     }
 
@@ -137,6 +162,26 @@ public class Client
                 .append(id)
                 .append(employees)
                 .append(companyName)
+                .append(email)
+                .append(passwordHash)
+                .append(role)
+                .append(activated)
+                .append(confirmationString)
                 .toHashCode();
+    }
+
+    @Override
+    public String toString()
+    {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("employees", employees)
+                .append("companyName", companyName)
+                .append("email", email)
+                .append("passwordHash", passwordHash)
+                .append("role", role)
+                .append("activated", activated)
+                .append("confirmationString", confirmationString)
+                .toString();
     }
 }
