@@ -62,6 +62,16 @@
     </a>
 
      </span>
+
+    <!-- Start: Logout button -->
+    <div th:if="${currentClient != null}">
+        <form th:action="@{/client/logout}" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <button th:text="#{logout}" th:type="submit">Log out</button>
+        </form>
+    </div>
+    <!-- End: Logout button -->
+
      <h1 th:text="#{EmployeeForm.header}"></h1>
 <form class="form-horizontal">
   
