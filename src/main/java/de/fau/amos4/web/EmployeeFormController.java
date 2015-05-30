@@ -6,6 +6,7 @@ import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.StringUtils;
@@ -14,6 +15,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -33,6 +35,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -49,12 +52,10 @@ public class EmployeeFormController
     @Resource
     ClientRepository clientRepository;
 
+	
+
     // Login form
-    @RequestMapping({"/", "/ClientLogin"})
-    public String ClientLogin(Model model) throws Exception
-    {
-        return "ClientLogin";
-    }
+    
 
     // Employee data form - Enter Employee data
     @RequestMapping("/EmployeeForm")
@@ -292,4 +293,26 @@ public class EmployeeFormController
         mav.addObject("Employees", clientsEmployees);
         return mav;
     }
+    @RequestMapping("/ClientLogin")
+    public ModelAndView ClientLogin(Model model) throws Exception
+    {
+        
+    	ModelAndView mav = new ModelAndView();
+    	return mav;
+    }
+    @RequestMapping("/FrontPage")
+    public String FrontPage(Model model) throws Exception
+    {
+        
+        return "FrontPage";
+    }
+    @RequestMapping("/RegistrationPage")
+    public ModelAndView RegistrationPage(Model model) throws Exception
+    {
+    	ModelAndView mav = new ModelAndView();
+    
+		mav.addObject("allTitle", Title.values());
+    	return mav;
+    }
+
 }

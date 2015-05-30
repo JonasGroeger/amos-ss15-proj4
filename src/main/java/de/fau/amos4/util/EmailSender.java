@@ -1,8 +1,12 @@
 package de.fau.amos4.util;
 import java.util.Properties;
-
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.util.Date;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 
 public class EmailSender {
 	// Implements basic email sending functionality
