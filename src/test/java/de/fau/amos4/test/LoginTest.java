@@ -1,24 +1,27 @@
 package de.fau.amos4.test;
 
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.test.configuration.TestConfiguration;
+import de.fau.amos4.web.LoginFormController;
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import de.fau.amos4.test.configuration.TestConfiguration;
-import de.fau.amos4.web.LoginFormController;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = TestConfiguration.class)
-public class LoginTest {
+public class LoginTest
+{
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Test
     public void Login_InvalidLoginAndPassword() throws Exception
     {
     	// Invalid username and password. Should be rejected.
-    	LoginFormController loginFormController = new LoginFormController();
+    	LoginFormController loginFormController = new LoginFormController(clientRepository);
     	
     	String userName = "WrongUser";
     	String password = "WrongPassword";
@@ -33,7 +36,7 @@ public class LoginTest {
     public void Login_ValidUserAndInvalidPassword() throws Exception
     {
     	// Valid username with invalid password. Should be rejected.
-    	LoginFormController loginFormController = new LoginFormController();
+    	LoginFormController loginFormController = new LoginFormController(clientRepository);
     	
     	String userName = "Client15";
     	String password = "Pass16";
@@ -48,7 +51,7 @@ public class LoginTest {
     public void Login_ValidLogin() throws Exception
     {
     	// Valid credentials. Should be accepted -> redirected to EmployeeList
-    	LoginFormController loginFormController = new LoginFormController();
+    	LoginFormController loginFormController = new LoginFormController(clientRepository);
     	
     	String userName = "Client1932";
     	String password = "Pass1932";
