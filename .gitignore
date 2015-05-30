@@ -117,6 +117,9 @@ gradle-app.setting
 
 ### Project specific ###
 
+# Avoid ignoring IntelliJ settings file.
+!idea-settings.jar
+
 # Ignore developer specific configuration
 application.yml
 application-developer-specific.yml
