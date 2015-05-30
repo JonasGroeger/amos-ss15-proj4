@@ -59,12 +59,15 @@ public class Employee
     @Column
     String socialInsuranceNumber;
 
+    @Column
     @Enumerated(EnumType.STRING)
     Sex sex;
 
+    @Column
     @Enumerated(EnumType.STRING)
     MaritalStatus maritalStatus;
 
+    @Column
     @Enumerated(EnumType.STRING)
     Disabled disabled;
 
