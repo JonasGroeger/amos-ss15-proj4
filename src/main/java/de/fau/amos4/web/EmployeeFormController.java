@@ -285,18 +285,6 @@ public class EmployeeFormController
          return "redirect:/EmployeeList";
     }
     
-    @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
-    {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeList");
-
-        Client client = clientRepository.findOne(clientId);
-        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
-
-        mav.addObject("Employees", clientsEmployees);
-        return mav;
-    }
     @RequestMapping("/ClientLogin")
     public ModelAndView ClientLogin(Model model) throws Exception
     {
