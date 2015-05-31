@@ -1,14 +1,15 @@
 <!doctype html>
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Form</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Getting Started: Form</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <form action="#" th:action="@{/PersonEditor}" th:object="${person}" method="post">
-    <input th:field="*{Name}"  th:value='${person.Name}'/>
-    <input th:field="*{Age}"  th:value='${person.Age}' />
-    <input type="submit" value = "Send Data"/>
-    </form>
+	<form action="#" th:action="@{/PersonEditor}" th:object="${person}"
+		method="post">
+		<input th:field="*{Name}" th:value='${person.Name}' /> <input
+			th:field="*{Age}" th:value='${person.Age}' /> <input type="submit"
+			value="Send Data" />
+	</form>
 </body>
 </html>

@@ -2,115 +2,118 @@
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Personalfragebogen 2.0 - v0.1</title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>Personalfragebogen 2.0 - v0.1</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <style>
-        body {
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<style>
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
 
-        h1 {
-            text-align: center;
-        }
-    </style>
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+h1 {
+	text-align: center;
+}
+</style>
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
-<div class="container">
-    <span style="float: right">
-        <a href="?lang=en">
-            <button type="button"  th:with="lang=${en}"  >
-                <img th:src="@{/images/uk.gif}"
-                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
-            </button >
-        </a>
-        <a href="?lang=de">
-            <button  th:with="lang=${de}">
-                <img th:src="@{/images/deutschlandflagge.jpg}"
-                     src="../static/images/uk.gif" class="img-responsive" alt="Responsive image" style="width:32px; height:24px;"/>
-            </button>
-        </a>
-    </span>
-         <h1 th:text="#{EmployeeForm.header}"></h1>
-         <h2 th:text="#{EmployeeList.header}"></h2>
-         <a th:href="@{/NewEmployee}" th:text="#{EmployeeList.newEmployee}">New Employee</a>
-         <table class="table table-striped">
-          <tr>
-            <th th:text="#{EmployeeList.edit}"> </th>
-            <th th:text="#{EmployeeList.delete}"> </th>
-            <th th:text="#{EmployeeList.download}"> </th>
-            <th th:text="#{EmployeeList.token}"> </th>
-            <th th:text="#{employee.familyName}"> </th>
-            <th th:text="#{employee.firstName}"> </th>
-            <th th:text="#{employee.maidenName}"> </th>  
-            <th th:text="#{employee.birthDate}"> </th>
-            <th th:text="#{employee.street}"> </th>
-            <th th:text="#{employee.houseNumber}"> </th>
-            <th th:text="#{employee.additionToAddress}"> </th>
-            <th th:text="#{employee.zipCode}"> </th>
-            <th th:text="#{employee.city}"> </th>
-            <th th:text="#{employee.placeOfBirth}"> </th>
-            <th th:text="#{employee.countryOfBirth}"> </th>
-            <th th:text="#{employee.sex}"> </th>
-            <th th:text="#{employee.maritalStatus}"> </th>
-            <th th:text="#{employee.disabled}"> </th>
-            <th th:text="#{employee.citizenship}"> </th>
-            <th th:text="#{employee.socialInsuranceNumber}"> </th>
-            <th th:text="#{employee.employerSocialSavingsNumber}"> </th>
-            <th th:text="#{employee.iban}"> </th>
-            <th th:text="#{employee.bic}"> </th>   
+	<div class="container">
+		<span style="float: right"> <a href="?lang=en">
+				<button type="button" th:with="lang=${en}">
+					<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
+						class="img-responsive" alt="Responsive image"
+						style="width: 32px; height: 24px;" />
+				</button>
+		</a> <a href="?lang=de">
+				<button th:with="lang=${de}">
+					<img th:src="@{/images/deutschlandflagge.jpg}"
+						src="../static/images/uk.gif" class="img-responsive"
+						alt="Responsive image" style="width: 32px; height: 24px;" />
+				</button>
+		</a>
+		</span>
+		<h1 th:text="#{EmployeeForm.header}"></h1>
+		<h2 th:text="#{EmployeeList.header}"></h2>
+		<a th:href="@{/NewEmployee}" th:text="#{EmployeeList.newEmployee}">New
+			Employee</a>
+		<table class="table table-striped">
+			<tr>
+				<th th:text="#{EmployeeList.edit}"></th>
+				<th th:text="#{EmployeeList.delete}"></th>
+				<th th:text="#{EmployeeList.download}"></th>
+				<th th:text="#{EmployeeList.token}"></th>
+				<th th:text="#{employee.familyName}"></th>
+				<th th:text="#{employee.firstName}"></th>
+				<th th:text="#{employee.maidenName}"></th>
+				<th th:text="#{employee.birthDate}"></th>
+				<th th:text="#{employee.street}"></th>
+				<th th:text="#{employee.houseNumber}"></th>
+				<th th:text="#{employee.additionToAddress}"></th>
+				<th th:text="#{employee.zipCode}"></th>
+				<th th:text="#{employee.city}"></th>
+				<th th:text="#{employee.placeOfBirth}"></th>
+				<th th:text="#{employee.countryOfBirth}"></th>
+				<th th:text="#{employee.sex}"></th>
+				<th th:text="#{employee.maritalStatus}"></th>
+				<th th:text="#{employee.disabled}"></th>
+				<th th:text="#{employee.citizenship}"></th>
+				<th th:text="#{employee.socialInsuranceNumber}"></th>
+				<th th:text="#{employee.employerSocialSavingsNumber}"></th>
+				<th th:text="#{employee.iban}"></th>
+				<th th:text="#{employee.bic}"></th>
 
-          </tr>  
-          <tr th:each="Employee : ${Employees}">
-            <td>
-                <a th:href="@{'/EmployeeEdit?id=' + ${Employee.id}}" th:text="#{EmployeeList.edit}">Edit</a>
-            </td>
-            <td>
-                <a th:href="@{'/EmployeeDelete?id=' + ${Employee.id}}" th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'" th:text="#{EmployeeList.delete}">Delete</a>
-            </td>
-            <td>
-                <a th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}" th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br />
-                <a th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}" th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
-            </td>
-            <td><button th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'" th:text="#{EmployeeList.ViewToken}">View token</button></td>            
-            <td th:text="${Employee.familyName}">Mustermann</td>
-            <td th:text="${Employee.firstName}">Max</td>
-            <td th:text="${Employee.maidenName}"></td>
-            <td th:text="${Employee.birthDate}">20/11/2011</td>
-            <td th:text="${Employee.street}">Musterstraße</td>
-            <td th:text="${Employee.houseNumber}">42</td>
-            <td th:text="${Employee.additionToAddress}"></td>
-            <td th:text="${Employee.zipCode}">0815</td>
-            <td th:text="${Employee.city}">Musterstadt</td>
-            <td th:text="${Employee.placeOfBirth}"></td>
-            <td th:text="${Employee.countryOfBirth}">Österreich</td>
-            <td th:text="${Employee.sex}">männlich</td>
-            <td th:text="${Employee.maritalStatus}">ledig</td>
-            <td th:text="${Employee.disabled}">Nein</td>
-            <td th:text="${Employee.citizenship}">Österreich</td>
-            <td th:text="${Employee.socialInsuranceNumber}"></td>
-            <td th:text="${Employee.employerSocialSavingsNumber}"></td>
-            <td th:text="${Employee.iban}"></td>
-            <td th:text="${Employee.bic}"></td>
+			</tr>
+			<tr th:each="Employee : ${Employees}">
+				<td><a th:href="@{'/EmployeeEdit?id=' + ${Employee.id}}"
+					th:text="#{EmployeeList.edit}">Edit</a></td>
+				<td><a th:href="@{'/EmployeeDelete?id=' + ${Employee.id}}"
+					th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'"
+					th:text="#{EmployeeList.delete}">Delete</a></td>
+				<td><a
+					th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}"
+					th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
+					th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}"
+					th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a></td>
+				<td><button
+						th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
+						th:text="#{EmployeeList.ViewToken}">View token</button></td>
+				<td th:text="${Employee.familyName}">Mustermann</td>
+				<td th:text="${Employee.firstName}">Max</td>
+				<td th:text="${Employee.maidenName}"></td>
+				<td th:text="${Employee.birthDate}">20/11/2011</td>
+				<td th:text="${Employee.street}">Musterstraße</td>
+				<td th:text="${Employee.houseNumber}">42</td>
+				<td th:text="${Employee.additionToAddress}"></td>
+				<td th:text="${Employee.zipCode}">0815</td>
+				<td th:text="${Employee.city}">Musterstadt</td>
+				<td th:text="${Employee.placeOfBirth}"></td>
+				<td th:text="${Employee.countryOfBirth}">Österreich</td>
+				<td th:text="${Employee.sex}">männlich</td>
+				<td th:text="${Employee.maritalStatus}">ledig</td>
+				<td th:text="${Employee.disabled}">Nein</td>
+				<td th:text="${Employee.citizenship}">Österreich</td>
+				<td th:text="${Employee.socialInsuranceNumber}"></td>
+				<td th:text="${Employee.employerSocialSavingsNumber}"></td>
+				<td th:text="${Employee.iban}"></td>
+				<td th:text="${Employee.bic}"></td>
 
-          </tr>
-         </table>
-    <hr/>
-    <footer>
-        <p>&copy; 2015 AMOS GROUP 4</p>
-    </footer>
-</div>
+			</tr>
+		</table>
+		<hr />
+		<footer>
+			<p>&copy; 2015 AMOS GROUP 4</p>
+		</footer>
+	</div>
 
-<script src="js/vendor/jquery-1.11.2.min.js"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
+	<script src="js/vendor/jquery-1.11.2.min.js"></script>
+	<script src="js/vendor/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>
