@@ -119,6 +119,10 @@
 
             <div class="col-sm-6">
                 <div class="form-group">
+                    <label for="token" th:text="#{EmployeeSubmit.token}"></label>
+                    <input th:field="*{token}" type="text" readonly="true" class="form-control"/>
+                </div>
+                <div class="form-group">
                     <label for="firstname" th:text="#{employee.firstName} +#{EmployeeForm.mandatory}"></label>
                     <input th:field="*{firstName}" type="text" class="form-control"
                            th:placeholder="#{placeholder.firstName}"/>

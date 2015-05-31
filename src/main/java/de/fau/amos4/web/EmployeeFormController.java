@@ -76,15 +76,12 @@ public class EmployeeFormController
         mav.addObject("allDisabled", Disabled.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
-        //employeeRepository.save(employee);
-        //model.addAttribute("EmployeeId", employeeId);
         return mav;
     }
 
     @RequestMapping("/EditSubmit")
     public String EditSubmit(Employee employee, Model model)
     {
-        System.out.println(employee.getId());
         Client client = clientRepository.findOne(1l);
         employee.setClient(client);
         client.getEmployees().add(employee);
@@ -95,21 +92,35 @@ public class EmployeeFormController
         // Redirect to EmployeeList page
         return "redirect:/EmployeeList";
     }
-
+    
+    @RequestMapping("/FrontPageSubmit")
+    public ModelAndView FrontPageSubmit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("EmployeeForm");
+        Employee employee = employeeRepository.findOne(employeeId);
+        mav.addObject("id", employeeId);
+        mav.addObject("employee", employee);
+        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allMarital", MaritalStatus.values());
+        mav.addObject("allSex", Sex.values());
+        return mav;
+    }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder)
     {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));
     }
 
-    // Employee data review - Review Employee data
+    // Employee data preview - Review Employee data
     @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST, RequestMethod.GET})
-    public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
+    public String EmployeePreview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        return "EmployeeReview";
+        return "EmployeePreview";
     }
 
     // Employee data submit - Submit Employee data
@@ -117,10 +128,13 @@ public class EmployeeFormController
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
-        // TODO: Move this to a service layer later.
+        Client client = clientRepository.findOne(1l);
+        employee.setClient(client);
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
-
+        client.getEmployees().add(employee);
+        clientRepository.save(client);
+        
         // If the employee is new: Create
         // If the employee already has a primary key: Update
         Employee newOrUpdatedEmployee = employeeRepository.save(employee);
