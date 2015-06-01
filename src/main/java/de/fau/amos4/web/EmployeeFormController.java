@@ -15,6 +15,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -34,10 +35,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -94,17 +97,38 @@ public class EmployeeFormController
     }
     
     @RequestMapping("/FrontPageSubmit")
-    public ModelAndView FrontPageSubmit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
+    public ModelAndView FrontPageSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
+    	long employeeId = 0;
+    	Iterable<Employee> allEmployees = employeeRepository.findAll();
+        for (Iterator<Employee> i = allEmployees.iterator(); i.hasNext(); ) {
+        	Employee currEmployee = i.next();
+        	if( currEmployee.getToken().equals(token)) {
+        		employeeId = currEmployee.getId();
+        	}
+        	
+        }
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeForm");
-        Employee employee = employeeRepository.findOne(employeeId);
-        mav.addObject("id", employeeId);
-        mav.addObject("employee", employee);
-        mav.addObject("allDisabled", Disabled.values());
-        mav.addObject("allMarital", MaritalStatus.values());
-        mav.addObject("allSex", Sex.values());
+        if (employeeId != 0) {
+	        
+	        mav.setViewName("EmployeeForm");
+	        Employee employee = employeeRepository.findOne(employeeId);
+	        mav.addObject("id", employeeId);
+	        mav.addObject("employee", employee);
+	        mav.addObject("allDisabled", Disabled.values());
+	        mav.addObject("allMarital", MaritalStatus.values());
+	        mav.addObject("allSex", Sex.values());
+        } else {
+        	mav.setViewName("WrongToken");
+        }
         return mav;
+        	
+    }
+    
+    @RequestMapping("/WrongToken")
+    public String EmployeeLogin()
+    {
+        return "WrongToken";
     }
     
     @InitBinder

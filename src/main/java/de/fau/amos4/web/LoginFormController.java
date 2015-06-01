@@ -67,7 +67,7 @@ public class LoginFormController
     }
     
     @RequestMapping("/WrongPassword")
-    public String EmployeeLogin()
+    public String ClientLogin()
     {
         return "WrongPassword";
     }
