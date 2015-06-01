@@ -39,15 +39,15 @@ h1 {
 		</a>
 		</span>
 		<h1 th:text="#{EmployeeForm.header}"></h1>
-		<h2 th:text="#{EmployeeList.header}"></h2>
-		<a th:href="@{/NewEmployee}" th:text="#{EmployeeList.newEmployee}">New
+		<h2 th:text="#{AccountPage.header}"></h2>
+		<a th:href="@{/NewEmployee}" th:text="#{AccountPage.newEmployee}">New
 			Employee</a>
 		<table class="table table-striped">
 			<tr>
-				<th th:text="#{EmployeeList.edit}"></th>
-				<th th:text="#{EmployeeList.delete}"></th>
-				<th th:text="#{EmployeeList.download}"></th>
-				<th th:text="#{EmployeeList.token}"></th>
+				<th th:text="#{AccountPage.edit}"></th>
+				<th th:text="#{AccountPage.delete}"></th>
+				<th th:text="#{AccountPage.download}"></th>
+				<th th:text="#{AccountPage.token}"></th>
 				<th th:text="#{employee.familyName}"></th>
 				<th th:text="#{employee.firstName}"></th>
 				<th th:text="#{employee.maidenName}"></th>
@@ -71,10 +71,10 @@ h1 {
 			</tr>
 			<tr th:each="Employee : ${Employees}">
 				<td><a th:href="@{'/EmployeeEdit?id=' + ${Employee.id}}"
-					th:text="#{EmployeeList.edit}">Edit</a></td>
+					th:text="#{AccountPage.edit}">Edit</a></td>
 				<td><a th:href="@{'/EmployeeDelete?id=' + ${Employee.id}}"
-					th:onClick="'return confirm(\'' + #{EmployeeList.deleteConfirm} + '\');'"
-					th:text="#{EmployeeList.delete}">Delete</a></td>
+					th:onClick="'return confirm(\'' + #{AccountPage.deleteConfirm} + '\');'"
+					th:text="#{AccountPage.delete}">Delete</a></td>
 				<td><a
 					th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}"
 					th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
@@ -82,7 +82,7 @@ h1 {
 					th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a></td>
 				<td><button
 						th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
-						th:text="#{EmployeeList.ViewToken}">View token</button></td>
+						th:text="#{AccountPage.ViewToken}">View token</button></td>
 				<td th:text="${Employee.familyName}">Mustermann</td>
 				<td th:text="${Employee.firstName}">Max</td>
 				<td th:text="${Employee.maidenName}"></td>

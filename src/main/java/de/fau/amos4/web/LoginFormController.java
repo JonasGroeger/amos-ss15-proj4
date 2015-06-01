@@ -56,8 +56,8 @@ public class LoginFormController
     	
         if(LoginValid)
         {
-        	// Valid Login -> Redirect to EmployeeList
-    	    return "redirect:/EmployeeList?id=" + ClientNumber;
+        	// Valid Login -> Redirect to AccountPage
+    	    return "redirect:/AccountPage?id=" + ClientNumber;
         }
         else
         {

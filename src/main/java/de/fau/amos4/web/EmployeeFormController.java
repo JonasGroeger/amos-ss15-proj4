@@ -92,8 +92,8 @@ public class EmployeeFormController
         employeeRepository.save(employee);
         clientRepository.save(client);
 
-        // Redirect to EmployeeList page
-        return "redirect:/EmployeeList";
+        // Redirect to AccountPage page
+        return "redirect:/AccountPage";
     }
     
     @RequestMapping("/FrontPageSubmit")
@@ -285,8 +285,8 @@ public class EmployeeFormController
         // Remove employee with passed id
         this.employeeRepository.delete(employeeId);
 
-        // Redirect to EmployeeList page
-        return "redirect:/EmployeeList";
+        // Redirect to AccountPage page
+        return "redirect:/AccountPage";
     }
 
     @RequestMapping("/NewEmployee")
@@ -308,15 +308,15 @@ public class EmployeeFormController
         clientRepository.save(client);
 
 
-        // Redirect to EmployeeList page
-        return "redirect:/EmployeeList";
+        // Redirect to AccountPage page
+        return "redirect:/AccountPage";
     }
 
-    @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    @RequestMapping("/AccountPage")
+    public ModelAndView AccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeList");
+        mav.setViewName("AccountPage");
 
         Client client = clientRepository.findOne(clientId);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
