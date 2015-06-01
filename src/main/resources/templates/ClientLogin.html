@@ -66,20 +66,21 @@ h1 {
 
 		</span>
 
-		<form th:action="@{/Login}" th:object="${employee}"
-			method="POST">
+		<form th:action="@{/client/login}" th:object="${employee}" method="POST">
 			<h1 th:text="#{ClientLogin.header}"></h1>
 			<div class="col-sm-6 col-sm-offset-3">
 				<div class="form-group">
-					<label for="inputUsername" th:text="#{ClientLogin.inputUsername}"></label>
-					<input type="text" class="form-control" required="true" name="username" id="inputUsername"
-						th:placeholder="#{placeholder.Username}"></input>
+					<label th:for="email" th:text="#{ClientLogin.inputUsername}"></label>
+					<input th:name="email" th:autofocus="true" th:required="true" th:id="email" class="form-control" th:placeholder="#{placeholder.Username}"/>
 				</div>
 
 				<div class="form-group">
-					<label for="inputPassword" th:text="#{ClientLogin.inputPassword}"></label>
-					<input type="password" class="form-control" required="true" name="password" id="inputPassword"
-						th:placeholder="#{placeholder.inputPassword}"></input>
+					<label th:for="password" th:text="#{ClientLogin.inputPassword}"></label>
+					<input th:name="password" type="password" th:required="true" th:id="password" class="form-control" th:placeholder="#{placeholder.inputPassword}"/>
+				</div>
+				<div class="form-group">
+					<label th:for="remember-me">Remember me</label>
+					<input th:name="remember-me" type="checkbox" th:id="remember-me"/>
 				</div>
 			</div>
 			<div class="row">
