@@ -66,19 +66,19 @@ h1 {
 
 		</span>
 
-		<form th:action="@{/EmployeeList}" th:object="${employee}"
+		<form th:action="@{/Login}" th:object="${employee}"
 			method="POST">
 			<h1 th:text="#{ClientLogin.header}"></h1>
 			<div class="col-sm-6 col-sm-offset-3">
 				<div class="form-group">
 					<label for="inputUsername" th:text="#{ClientLogin.inputUsername}"></label>
-					<input type="text" class="form-control" id="inputUsername"
+					<input type="text" class="form-control" required="true" name="username" id="inputUsername"
 						th:placeholder="#{placeholder.Username}"></input>
 				</div>
 
 				<div class="form-group">
 					<label for="inputPassword" th:text="#{ClientLogin.inputPassword}"></label>
-					<input type="password" class="form-control" id="inputPassword"
+					<input type="password" class="form-control" required="true" name="password" id="inputPassword"
 						th:placeholder="#{placeholder.inputPassword}"></input>
 				</div>
 			</div>
