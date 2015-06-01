@@ -15,7 +15,6 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
-
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -35,7 +34,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -56,11 +54,6 @@ public class EmployeeFormController
         this.clientRepository = clientRepository;
     }
 
-	
-
-    // Login form
-    
-
     // Employee data form - Enter Employee data
     @RequestMapping("/EmployeeForm")
     public String EmployeeForm(Model model) throws Exception
@@ -71,20 +64,23 @@ public class EmployeeFormController
         model.addAttribute("allSex", Sex.values());
         return "EmployeeForm";
     }
+
     @RequestMapping("/EmployeeEdit")
-    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException {
+    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
+    {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("EmployeeEdit");
-    	Employee employee = employeeRepository.findOne(employeeId);
-    	mav.addObject("id", employeeId);
-    	mav.addObject("employee", employee);
-    	mav.addObject("allDisabled", Disabled.values());
-    	mav.addObject("allMarital", MaritalStatus.values());
-    	mav.addObject("allSex", Sex.values());
-    	//employeeRepository.save(employee);
-    	//model.addAttribute("EmployeeId", employeeId);
-    	return mav;
+        Employee employee = employeeRepository.findOne(employeeId);
+        mav.addObject("id", employeeId);
+        mav.addObject("employee", employee);
+        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allMarital", MaritalStatus.values());
+        mav.addObject("allSex", Sex.values());
+        //employeeRepository.save(employee);
+        //model.addAttribute("EmployeeId", employeeId);
+        return mav;
     }
+
     @RequestMapping("/EditSubmit")
     public String EditSubmit(Employee employee, Model model)
     {
@@ -99,7 +95,7 @@ public class EmployeeFormController
         // Redirect to EmployeeList page
         return "redirect:/EmployeeList";
     }
-    
+
     @InitBinder
     public void initBinder(WebDataBinder binder)
     {
@@ -172,7 +168,7 @@ public class EmployeeFormController
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
-        
+
         final StringBuilder sb = new StringBuilder(fileContent);
         final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
 
@@ -187,18 +183,11 @@ public class EmployeeFormController
             params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
             params.setPassword("AMOS");
             params.setSourceExternalStream(true);
-            
+
             zout.putNextEntry(null, params);
             byte[] data = sb.toString().getBytes();
             zout.write(data, 0, data.length);
             zout.closeEntry();
-
-            // Create temporary file for shitty API
-            //File temp = File.createTempFile("employee", ".txt");
-            //FileOutputStream fOut = new FileOutputStream(temp);
-            //fOut.write(fileContent.getBytes(StandardCharsets.UTF_8));
-            //fOut.flush();
-
 
             try {
                 // Create a document and add a page to it
@@ -255,18 +244,18 @@ public class EmployeeFormController
     @RequestMapping("/EmployeeDelete")
     public String EmployeeDelete(@RequestParam(value = "id", required = true) long employeeId)
     {
-         // Remove employee with passed id
-         this.employeeRepository.delete(employeeId);
-     
-         // Redirect to EmployeeList page
-         return "redirect:/EmployeeList";
+        // Remove employee with passed id
+        this.employeeRepository.delete(employeeId);
+
+        // Redirect to EmployeeList page
+        return "redirect:/EmployeeList";
     }
 
     @RequestMapping("/NewEmployee")
     public String NewEmployee()
     {
-    	// Create a new employee with default name
-    	Employee employee = new Employee();
+        // Create a new employee with default name
+        Employee employee = new Employee();
         Client client = clientRepository.findOne(1l);
 
         Locale locale = LocaleContextHolder.getLocale();
@@ -281,29 +270,44 @@ public class EmployeeFormController
         clientRepository.save(client);
 
 
-         // Redirect to EmployeeList page
-         return "redirect:/EmployeeList";
+        // Redirect to EmployeeList page
+        return "redirect:/EmployeeList";
     }
-    
+
+    @RequestMapping("/EmployeeList")
+    public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("EmployeeList");
+
+        Client client = clientRepository.findOne(clientId);
+        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
+
+        mav.addObject("Employees", clientsEmployees);
+        return mav;
+    }
+
     @RequestMapping("/ClientLogin")
     public ModelAndView ClientLogin(Model model) throws Exception
     {
-        
-    	ModelAndView mav = new ModelAndView();
-    	return mav;
+
+        ModelAndView mav = new ModelAndView();
+        return mav;
     }
+
     @RequestMapping("/FrontPage")
     public String FrontPage(Model model) throws Exception
     {
-        
+
         return "FrontPage";
     }
+
     @RequestMapping("/RegistrationPage")
     public ModelAndView RegistrationPage(Model model) throws Exception
     {
-    	ModelAndView mav = new ModelAndView();
-    
-		mav.addObject("allTitle", Title.values());
-    	return mav;
+        ModelAndView mav = new ModelAndView();
+
+        mav.addObject("allTitle", Title.values());
+        return mav;
     }
 }
