@@ -15,6 +15,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.io.ZipOutputStream;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -34,10 +35,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,15 +79,12 @@ public class EmployeeFormController
         mav.addObject("allDisabled", Disabled.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
-        //employeeRepository.save(employee);
-        //model.addAttribute("EmployeeId", employeeId);
         return mav;
     }
 
     @RequestMapping("/EditSubmit")
     public String EditSubmit(Employee employee, Model model)
     {
-        System.out.println(employee.getId());
         Client client = clientRepository.findOne(1l);
         employee.setClient(client);
         client.getEmployees().add(employee);
@@ -92,24 +92,59 @@ public class EmployeeFormController
         employeeRepository.save(employee);
         clientRepository.save(client);
 
-        // Redirect to EmployeeList page
-        return "redirect:/EmployeeList";
+        // Redirect to AccountPage page
+        return "redirect:/AccountPage";
     }
-
+    
+    @RequestMapping("/FrontPageSubmit")
+    public ModelAndView FrontPageSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
+    {
+    	long employeeId = 0;
+    	Iterable<Employee> allEmployees = employeeRepository.findAll();
+        for (Iterator<Employee> i = allEmployees.iterator(); i.hasNext(); ) {
+        	Employee currEmployee = i.next();
+        	if( currEmployee.getToken().equals(token)) {
+        		employeeId = currEmployee.getId();
+        	}
+        	
+        }
+        ModelAndView mav = new ModelAndView();
+        if (employeeId != 0) {
+	        
+	        mav.setViewName("EmployeeForm");
+	        Employee employee = employeeRepository.findOne(employeeId);
+	        mav.addObject("id", employeeId);
+	        mav.addObject("employee", employee);
+	        mav.addObject("allDisabled", Disabled.values());
+	        mav.addObject("allMarital", MaritalStatus.values());
+	        mav.addObject("allSex", Sex.values());
+        } else {
+        	mav.setViewName("WrongToken");
+        }
+        return mav;
+        	
+    }
+    
+    @RequestMapping("/WrongToken")
+    public String EmployeeLogin()
+    {
+        return "WrongToken";
+    }
+    
     @InitBinder
     public void initBinder(WebDataBinder binder)
     {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));
     }
 
-    // Employee data review - Review Employee data
+    // Employee data preview - Review Employee data
     @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST, RequestMethod.GET})
-    public String EmployeeReview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
+    public String EmployeePreview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        return "EmployeeReview";
+        return "EmployeePreview";
     }
 
     // Employee data submit - Submit Employee data
@@ -117,10 +152,13 @@ public class EmployeeFormController
     public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
-        // TODO: Move this to a service layer later.
+        Client client = clientRepository.findOne(1l);
+        employee.setClient(client);
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
-
+        client.getEmployees().add(employee);
+        clientRepository.save(client);
+        
         // If the employee is new: Create
         // If the employee already has a primary key: Update
         Employee newOrUpdatedEmployee = employeeRepository.save(employee);
@@ -247,8 +285,8 @@ public class EmployeeFormController
         // Remove employee with passed id
         this.employeeRepository.delete(employeeId);
 
-        // Redirect to EmployeeList page
-        return "redirect:/EmployeeList";
+        // Redirect to AccountPage page
+        return "redirect:/AccountPage";
     }
 
     @RequestMapping("/NewEmployee")
@@ -270,15 +308,15 @@ public class EmployeeFormController
         clientRepository.save(client);
 
 
-        // Redirect to EmployeeList page
-        return "redirect:/EmployeeList";
+        // Redirect to AccountPage page
+        return "redirect:/AccountPage";
     }
 
-    @RequestMapping("/EmployeeList")
-    public ModelAndView EmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    @RequestMapping("/AccountPage")
+    public ModelAndView AccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeList");
+        mav.setViewName("AccountPage");
 
         Client client = clientRepository.findOne(clientId);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
@@ -287,18 +325,17 @@ public class EmployeeFormController
         return mav;
     }
 
-    @RequestMapping("/ClientLogin")
+    @RequestMapping({"/", "/ClientLogin"})
     public ModelAndView ClientLogin(Model model) throws Exception
     {
-
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("ClientLogin");
         return mav;
     }
 
     @RequestMapping("/FrontPage")
     public String FrontPage(Model model) throws Exception
     {
-
         return "FrontPage";
     }
 
