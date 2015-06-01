@@ -33,7 +33,11 @@ public class ClientController
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = {"/", "/client/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {
+            "/",              // TODO: This better be the front page?
+            "/client/login",
+            "/ClientLogin"    // TODO: Remove legacy mapping
+    }, method = RequestMethod.GET)
     public String getClientLoginPage() throws Exception
     {
         return "ClientLogin";
@@ -41,12 +45,12 @@ public class ClientController
 
     @RequestMapping(value = {
             "/client/list",
-            "/EmployeeList"  // Legacy
+            "/EmployeeList"  // TODO: Remove legacy mapping
     })
-    public ModelAndView getClientAccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    public ModelAndView getClientEmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeList");
+        mav.setViewName("AccountPage");
 
         Client client = clientService.getClientById(clientId);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);

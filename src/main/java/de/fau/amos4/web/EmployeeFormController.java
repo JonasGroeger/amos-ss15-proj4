@@ -325,14 +325,6 @@ public class EmployeeFormController
         return mav;
     }
 
-    @RequestMapping({"/", "/ClientLogin"})
-    public ModelAndView ClientLogin(Model model) throws Exception
-    {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("ClientLogin");
-        return mav;
-    }
-
     @RequestMapping("/FrontPage")
     public String FrontPage(Model model) throws Exception
     {
