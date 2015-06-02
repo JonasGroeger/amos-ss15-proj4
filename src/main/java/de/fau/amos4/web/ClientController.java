@@ -33,20 +33,13 @@ public class ClientController
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = {
-            "/",              // TODO: This better be the front page?
-            "/client/login",
-            "/ClientLogin"    // TODO: Remove legacy mapping
-    }, method = RequestMethod.GET)
+    @RequestMapping(value =  "/", method = RequestMethod.GET)
     public String getClientLoginPage() throws Exception
     {
         return "ClientLogin";
     }
 
-    @RequestMapping(value = {
-            "/client/list",
-            "/EmployeeList"  // TODO: Remove legacy mapping
-    })
+    @RequestMapping(value = "/client/list")
     public ModelAndView getClientEmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();

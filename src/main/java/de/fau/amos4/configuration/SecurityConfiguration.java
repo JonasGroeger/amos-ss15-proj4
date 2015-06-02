@@ -53,6 +53,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
                 // Allow access to the front page.
                 .antMatchers("/").permitAll()
+                // Allow access to the register page.
+                .antMatchers("/client/register").permitAll()
+                // Allow access to the submit registration page.
+                .antMatchers("/client/submit").permitAll()
+                // Allow access to the confirm page.
+                .antMatchers("/client/confirm").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 .and()
