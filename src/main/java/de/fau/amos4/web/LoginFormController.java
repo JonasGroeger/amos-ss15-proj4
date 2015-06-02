@@ -28,13 +28,19 @@ public class LoginFormController
     }
 
     @RequestMapping("/client/register")
-    public String RegisterClient(HttpServletRequest request, @RequestParam(value = "client", required = true) Client client) throws AddressException, MessagingException
+    public String RegisterClient()
+    {
+    	return "RegistrationPage";
+    }
+
+    @RequestMapping("/client/submit")
+    public String SubmitClient(HttpServletRequest request, @RequestParam(value = "client", required = true) Client client) throws AddressException, MessagingException
     {
         // Generate new confirmation string for the client
         client.generateConfirmationString();
         // Set client to inactive
         client.setActivated(false);
-        // Save new, unactivated client
+        // Save new, in-activate client
         clientRepository.save(client);
 
         // Prepare and send email
@@ -45,7 +51,7 @@ public class LoginFormController
         sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content);
 
         // Display login screen after
-        return "RegistrationAlmostReady";
+        return "";
     }
 
     @RequestMapping("/client/confirm")
@@ -57,6 +63,6 @@ public class LoginFormController
             this.clientRepository.save(client);
         }
 
-        return "redirect:/client/login";
+        return "";
     }
 }
