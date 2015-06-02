@@ -1,34 +1,35 @@
 <html class="no-js" lang="de" xmlns:th="http://www.thymeleaf.org">
 
 <!-- External CSS hook for decorating pages -->
-<div th:fragment="css-ext">
-    <link rel="stylesheet" href=""></link>
-    <link rel="stylesheet" href=""></link>
-    <link rel="stylesheet" href=""></link>
+<div th:fragment="css-ext" th:remove="tag">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
 </div>
 
 <!-- JS hook for decorating pages -->
-<div th:fragment="js-head">
-    <script src=""></script>
-    <script src=""></script>
-    <script></script>
-    <script></script>
-    <script></script>
+<div th:fragment="js-head" th:remove="tag">
+    <script th:src="@{/js/vendor/modernizr-2.8.3.min.js}"></script>
 </div>
 
 <!-- CSS hook for decorating pages -->
-<div th:fragment="css">
+<div th:fragment="css" th:remove="tag">
     <style></style>
-    <style></style>
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
 </div>
 
 <!-- JS hook for decorating pages -->
-<div th:fragment="js-body">
-    <script src=""></script>
-    <script src=""></script>
-    <script></script>
-    <script></script>
-    <script></script>
+<div th:fragment="js-body" th:remove="tag">
+    <script th:src="@{js/vendor/jquery-1.11.2.min.js}"></script>
+    <script th:src="@{js/vendor/bootstrap.min.js}"></script>
+    <script th:src="@{js/main.js}"></script>
 </div>
 
 </html>
