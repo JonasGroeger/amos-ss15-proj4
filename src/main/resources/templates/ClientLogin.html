@@ -8,7 +8,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Personalfragebogen 2.0 - v0.1</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <style>
 body {
 	position: center;
@@ -100,16 +100,13 @@ h1 {
 			</div>
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-5">
-
-					<button type="button" class="btn btn-primary"
-						onClick="parent.location='RegistrationPage.html'"
-						value='click here'>
-						<span class="glyphicon glyphicon-ok " th:text="#{ClientLogin.reg}"></span>
-					</button>
-
-					<button type="submit" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok"
-							th:text="#{ClientLogin.preview}"></span>
+				    <a class="btn btn-primary" style='margin:3px;' href="/client/register">
+						<span class="glyphicon glyphicon-user"></span>
+						<span th:text=" #{ClientLogin.reg}"></span>
+				    </a> 
+					<button type="submit" class="btn btn-success"  style='margin:3px;'>
+						<span class="glyphicon glyphicon-ok"></span>
+						<span th:text="#{ClientLogin.preview}"/>
 					</button>
 
 				</div>
