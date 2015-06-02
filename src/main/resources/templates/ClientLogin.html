@@ -36,39 +36,42 @@
                     <span class="glyphicon glyphicon-ok " th:text="#{ClientLogin.reg}"></span>
                 </button>
 
-	<form th:action="@{/}" method="POST">
-		<h1 th:text="#{ClientLogin.header}"></h1>
-		<div class="col-sm-6 col-sm-offset-3">
-			<div class="form-group">
-				<label th:for="email" th:text="#{ClientLogin.inputUsername}"></label>
-				<input th:name="email" th:autofocus="true" th:required="true" th:id="email" class="form-control" th:placeholder="#{placeholder.Username}"/>
-			</div>
+                <form th:action="@{/}" method="POST">
+                    <h1 th:text="#{ClientLogin.header}"></h1>
 
-			<div class="form-group">
-				<label th:for="password" th:text="#{ClientLogin.inputPassword}"></label>
-				<input th:name="password" type="password" th:required="true" th:id="password" class="form-control" th:placeholder="#{placeholder.inputPassword}"/>
-			</div>
-			<div class="form-group">
-				<label th:for="remember-me">Remember me</label>
-				<input th:name="remember-me" type="checkbox" th:id="remember-me"/>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6 col-sm-offset-5">
-				<a class="btn btn-primary" style='margin:3px;' href="/client/register">
-					<span class="glyphicon glyphicon-user"></span>
-					<span th:text=" #{ClientLogin.reg}"></span>
-				</a>
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <div class="form-group">
+                            <label th:for="email" th:text="#{ClientLogin.inputUsername}"></label>
+                            <input th:name="email" th:autofocus="true" th:required="true" th:id="email"
+                                   class="form-control" th:placeholder="#{placeholder.Username}" />
+                        </div>
 
-				<button type="submit" class="btn btn-success"  style='margin:3px;'>
-					<span class="glyphicon glyphicon-ok"></span>
-					<span th:text="#{ClientLogin.preview}"/>
-				</button>
-			</div>
-		</div>
-	</form>
-</div>
+                        <div class="form-group">
+                            <label th:for="password" th:text="#{ClientLogin.inputPassword}"></label>
+                            <input th:name="password" type="password" th:required="true" th:id="password"
+                                   class="form-control" th:placeholder="#{placeholder.inputPassword}" />
+                        </div>
+                        <div class="form-group">
+                            <label th:for="remember-me">Remember me</label>
+                            <input th:name="remember-me" type="checkbox" th:id="remember-me" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-5">
+                            <a class="btn btn-primary" style='margin:3px;' href="/client/register">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <span th:text=" #{ClientLogin.reg}"></span>
+                            </a>
 
+                            <button type="submit" class="btn btn-success" style='margin:3px;'>
+                                <span class="glyphicon glyphicon-ok"></span>
+                                <span th:text="#{ClientLogin.preview}" />
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 </body>
 
 </html>
