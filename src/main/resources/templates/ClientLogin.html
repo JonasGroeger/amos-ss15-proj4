@@ -3,130 +3,129 @@
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="description" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Personalfragebogen 2.0 - v0.1</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<style>
-body {
-	position: center;
-	padding-top: 10px;
-	padding-bottom: 300px;
-}
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Personalfragebogen 2.0 - v0.1</title>
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+	<style>
+		body {
+			position: center;
+			padding-top: 10px;
+			padding-bottom: 300px;
+		}
 
-h1 {
-	padding-top: 0px;
-	padding-bottom: 150px;
-	margin-left: 70px;
-	text-align: center;
-}
+		h1 {
+			padding-top: 0px;
+			padding-bottom: 150px;
+			margin-left: 70px;
+			text-align: center;
+		}
 
-.footerWrap {
-	width: 100%;
-	position: fixed;
-	bottom: 0px;
-}
+		.footerWrap {
+			width: 100%;
+			position: fixed;
+			bottom: 0px;
+		}
 
-.footer {
-	width: 400px;
-	margin: auto;
-}
+		.footer {
+			width: 400px;
+			margin: auto;
+		}
 
-.footerContent {
-	float: center;
-	width: 100%;
-	padding: 20px 0;
-}
+		.footerContent {
+			float: center;
+			width: 100%;
+			padding: 20px 0;
+		}
 
-.footer p {
-	float: center;
-	width: 40%;
-	text-align: center;
-}
-</style>
-<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+		.footer p {
+			float: center;
+			width: 40%;
+			text-align: center;
+		}
+	</style>
+	<script th:src="@{/js/vendor/modernizr-2.8.3.min.js}"></script>
 </head>
 <body>
-	<div class="container">
+<div class="container">
 		<span style="float: right"> <a href="?lang=en">
-				<button type="button" th:with="lang=${en}">
-					<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
-						class="img-responsive" alt="Responsive image"
-						style="width: 32px; height: 24px;" />
-				</button>
+			<button type="button" th:with="lang=${en}">
+				<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
+					 class="img-responsive" alt="Responsive image"
+					 style="width: 32px; height: 24px;" />
+			</button>
 		</a> <a href="?lang=de">
-				<button th:with="lang=${de}">
-					<img th:src="@{/images/deutschlandflagge.jpg}"
-						src="../static/images/uk.gif" class="img-responsive"
-						alt="Responsive image" style="width: 32px; height: 24px;" />
-				</button>
+			<button th:with="lang=${de}">
+				<img th:src="@{/images/deutschlandflagge.jpg}"
+					 src="../static/images/uk.gif" class="img-responsive"
+					 alt="Responsive image" style="width: 32px; height: 24px;" />
+			</button>
 		</a>
 
 		</span>
 
-		<script th:inline="javascript">
-			var DUMMY_TEXT = 'DUMMY_TEXT';
-			var _translate = {};
-			_translate['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
-			// TODO: Add more strings here. Maybe all of them dynamically and minimized?
-		</script>
+	<script th:inline="javascript">
+		var DUMMY_TEXT = 'DUMMY_TEXT';
+		var _translate = {};
+		_translate['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
+		// TODO: Add more strings here. Maybe all of them dynamically and minimized?
+	</script>
 
-		<!-- Start: Logout button -->
-		<div th:if="${currentClient != null}">
-			<form onsubmit="return confirm(_translate['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
-				<button th:text="#{logout}" th:type="submit">Log out</button>
-			</form>
-		</div>
-		<!-- End: Logout button -->
+	<!-- Start: Logout button -->
+	<div th:if="${currentClient != null}">
+		<form onsubmit="return confirm(_translate['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
+			<button th:text="#{logout}" th:type="submit">Log out</button>
+		</form>
+	</div>
+	<!-- End: Logout button -->
 
-		<form th:action="@{/client/login}" th:object="${employee}" method="POST">
-			<h1 th:text="#{ClientLogin.header}"></h1>
-			<div class="col-sm-6 col-sm-offset-3">
-				<div class="form-group">
-					<label th:for="email" th:text="#{ClientLogin.inputUsername}"></label>
-					<input th:name="email" th:autofocus="true" th:required="true" th:id="email" class="form-control" th:placeholder="#{placeholder.Username}"/>
-				</div>
-
-				<div class="form-group">
-					<label th:for="password" th:text="#{ClientLogin.inputPassword}"></label>
-					<input th:name="password" type="password" th:required="true" th:id="password" class="form-control" th:placeholder="#{placeholder.inputPassword}"/>
-				</div>
-				<div class="form-group">
-					<label th:for="remember-me">Remember me</label>
-					<input th:name="remember-me" type="checkbox" th:id="remember-me"/>
-				</div>
+	<form th:action="@{/client/login}" th:object="${employee}" method="POST">
+		<h1 th:text="#{ClientLogin.header}"></h1>
+		<div class="col-sm-6 col-sm-offset-3">
+			<div class="form-group">
+				<label th:for="email" th:text="#{ClientLogin.inputUsername}"></label>
+				<input th:name="email" th:autofocus="true" th:required="true" th:id="email" class="form-control" th:placeholder="#{placeholder.Username}"/>
 			</div>
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-5">
 
-					<button type="button" class="btn btn-primary"
+			<div class="form-group">
+				<label th:for="password" th:text="#{ClientLogin.inputPassword}"></label>
+				<input th:name="password" type="password" th:required="true" th:id="password" class="form-control" th:placeholder="#{placeholder.inputPassword}"/>
+			</div>
+			<div class="form-group">
+				<label th:for="remember-me">Remember me</label>
+				<input th:name="remember-me" type="checkbox" th:id="remember-me"/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-5">
+
+				<button type="button" class="btn btn-primary"
 						onClick="parent.location='RegistrationPage.html'"
 						value='click here'>
-						<span class="glyphicon glyphicon-ok " th:text="#{ClientLogin.reg}"></span>
-					</button>
+					<span class="glyphicon glyphicon-ok " th:text="#{ClientLogin.reg}"></span>
+				</button>
 
-					<button type="submit" class="btn btn-success">
+				<button type="submit" class="btn btn-success">
 						<span class="glyphicon glyphicon-ok"
-							th:text="#{ClientLogin.preview}"></span>
-					</button>
+							  th:text="#{ClientLogin.preview}"></span>
+				</button>
 
-				</div>
 			</div>
-		</form>
-		<div class="footerWrap">
-			<div class="footer">
-				<div class="footerContent">
-					<p>&copy; 2015 AMOS GROUP 4</p>
-				</div>
+		</div>
+	</form>
+	<div class="footerWrap">
+		<div class="footer">
+			<div class="footerContent">
+				<p>&copy; 2015 AMOS GROUP 4</p>
 			</div>
 		</div>
 	</div>
-	<script src="js/vendor/jquery-1.11.2.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="js/main.js"></script>
+</div>
+<script th:src="@{/js/vendor/jquery-1.11.2.min.js}"></script>
+<script th:src="@{/js/vendor/bootstrap.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 
 </html>
-
