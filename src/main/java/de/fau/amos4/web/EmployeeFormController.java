@@ -163,7 +163,7 @@ public class EmployeeFormController
         // If the employee already has a primary key: Update
         Employee newOrUpdatedEmployee = employeeRepository.save(employee);
 
-        // Setup modell and return view
+        // Setup model and return view
         model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
         return "EmployeeSubmit";
     }
