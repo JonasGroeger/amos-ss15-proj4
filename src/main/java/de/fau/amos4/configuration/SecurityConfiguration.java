@@ -53,13 +53,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 
                 // Allow access to the front page.
                 .antMatchers("/").permitAll()
+                // Allow access to the register page.
+                .antMatchers("/client/register").permitAll()
+                // Allow access to the submit registration page.
+                .antMatchers("/client/submit").permitAll()
+                // Allow access to the confirm page.
+                .antMatchers("/client/confirm").permitAll()
+                //Allow access to FrontPage
+                .antMatchers("/FrontPage").permitAll()
+                .antMatchers("/FrontPageSubmit").permitAll()
+                .antMatchers("/WrongToken").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 .and()
 
                 // Login page at /login with email as username
-                .formLogin().loginPage("/client/login").loginProcessingUrl("/client/login").defaultSuccessUrl("/client/list")
-                    .usernameParameter("email").failureUrl("/client/login?error").permitAll()
+                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/list")
+                    .usernameParameter("email").failureUrl("/?error").permitAll()
 
                 .and()
 
