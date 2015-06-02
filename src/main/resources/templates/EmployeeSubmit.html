@@ -39,6 +39,22 @@ h1 {
 					</button>
 			</a>
 			</span>
+
+			<script th:inline="javascript">
+				var DUMMY_TEXT = 'DUMMY_TEXT';
+				var _translate = {};
+				_translate['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
+				// TODO: Add more strings here. Maybe all of them dynamically and minimized?
+			</script>
+
+			<!-- Start: Logout button -->
+			<div th:if="${currentClient != null}">
+				<form onsubmit="return confirm(_translate['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
+					<button th:text="#{logout}" th:type="submit">Log out</button>
+				</form>
+			</div>
+			<!-- End: Logout button -->
+
 			<p th:text="#{EmployeeSubmit.submitMessage}" />
 			<p th:text="'Employee id:' + ${EmployeeId}" />
 
