@@ -56,11 +56,11 @@ labelClass {
 
 		<h1 th:text="#{EmployeeForm.header}"></h1>
 		<h3 th:text="#{RegistrationPage.header}"></h3>
-		<form th:action="@{/EmployeePreview}" th:object="${employee}"
-			method="POST">
+		<form th:action="@{/client/submit}" th:object="${client}" method="POST">
 			<div class="col-sm-6 col-sm-offset-3">
 				<label class="labelClass" for="personalDetails"
-					th:text="#{RegistrationPage.personalDetails}"></label>
+					th:text="#{RegistrationPage.personalDetails}"
+					></label>
 
 				<div class="form-group">
 					<label for="title" th:text="#{RegistrationPage.title}"></label> <select
@@ -143,7 +143,8 @@ labelClass {
 					<label for="CompanyEmail"
 						th:text="#{RegistrationPage.CompanyEmail}"></label> <input
 						type="email" class="form-control" id="CompanyEmail "
-						th:placeholder="#{placeholder.CompanyEmail}"></input>
+						th:placeholder="#{placeholder.CompanyEmail}"						
+					    th:field="*{email}"></input>
 				</div>
 
 				<div class="form-group">
@@ -159,8 +160,8 @@ labelClass {
 						th:placeholder="#{placeholder.ConfirmPassword}"></input>
 				</div>
 				<button type="submit" class="btn btn-block btn-lg btn-info">
-					<span class="glyphicon glyphicon-search"
-						th:text="#{RegistrationPage.Submit}"></span>
+					<span class="glyphicon glyphicon-search"></span>
+					<span th:text="#{RegistrationPage.Submit}"></span>
 				</button>
 			</div>
 		</form>
