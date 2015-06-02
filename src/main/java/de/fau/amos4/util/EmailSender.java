@@ -36,7 +36,7 @@ public class EmailSender {
 	      properties.put("mail.smtp.port", "465");
 	}
 	
-	public void SendEmail(String SendToEmailAddress, String Subject, String Content) throws AddressException, MessagingException
+	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent) throws AddressException, MessagingException
 	   {	
 		final String UserName = this.User;
 		final String Password = this.Pass;
@@ -52,7 +52,7 @@ public class EmailSender {
 	      message.setFrom(new InternetAddress(this.SenderEmail));
 	      message.addRecipient(Message.RecipientType.TO, new InternetAddress(SendToEmailAddress));
 	      message.setSubject(Subject);
-	      message.setText(Content);
+	      message.setContent(HTMLContent, "text/html; charset=utf-8");
 	      
 	      // Send Email
 	      Transport.send(message);

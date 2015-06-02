@@ -53,9 +53,10 @@ public class LoginFormController
         clientRepository.save(client);
 
         // Prepare and send email
-        String contextPath = servletContext.getContextPath();
+        String contextPath = "http://" + request.getServerName() + ":" + request.getServerPort() +  request.getServletPath().replace("/client/submit", "/client/confirm");
         String ConfirmationCode = client.getConfirmationString();
-        String Content = "<a href=" + contextPath + "/client/confirm?id=" + client.getId() + "&confirmation=" + ConfirmationCode + ">";
+        // TODO: Replace this with Thymeleaf based tample generated content
+        String Content = "<a href='" + contextPath + "?id=" + client.getId() + "&confirmation=" + ConfirmationCode + "'>Confirm my email address.</a>";
         EmailSender sender = new EmailSender();
         sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content);
 
@@ -70,8 +71,12 @@ public class LoginFormController
         if (client.tryToActivate(enteredConfirmationCode)) {
             // Save client after successful activation
             this.clientRepository.save(client);
+            return "redirect:/?confirmed";
+        }
+        else
+        {
+            return "redirect:/?confirmfail";
         }
 
-        return "redirect:/?confirmed";
     }
 }
