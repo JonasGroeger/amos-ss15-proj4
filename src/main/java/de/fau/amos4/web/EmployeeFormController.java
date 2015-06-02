@@ -330,13 +330,4 @@ public class EmployeeFormController
     {
         return "FrontPage";
     }
-
-    @RequestMapping("/RegistrationPage")
-    public ModelAndView RegistrationPage(Model model) throws Exception
-    {
-        ModelAndView mav = new ModelAndView();
-
-        mav.addObject("allTitle", Title.values());
-        return mav;
-    }
 }
