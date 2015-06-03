@@ -36,8 +36,9 @@ repositories {
 }
 
 def javaVersion = '1.7'
-compileJava     { sourceCompatibility = javaVersion; targetCompatibility = javaVersion }
-compileTestJava { sourceCompatibility = javaVersion; targetCompatibility = javaVersion }
+def javaEncoding = 'UTF-8'
+compileJava     { sourceCompatibility = javaVersion; targetCompatibility = javaVersion; options.encoding = javaEncoding }
+compileTestJava { sourceCompatibility = javaVersion; targetCompatibility = javaVersion; options.encoding = javaEncoding }
 
 dependencies {
     // Framework
