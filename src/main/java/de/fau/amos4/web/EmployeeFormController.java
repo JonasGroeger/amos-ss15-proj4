@@ -65,7 +65,7 @@ public class EmployeeFormController
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        return "EmployeeForm";
+        return "employee/form";
     }
 
     @RequestMapping("/EmployeeEdit")
@@ -111,7 +111,7 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
 	        
-	        mav.setViewName("EmployeeForm");
+	        mav.setViewName("employee/form");
 	        Employee employee = employeeRepository.findOne(employeeId);
 	        mav.addObject("id", employeeId);
 	        mav.addObject("employee", employee);
@@ -144,7 +144,7 @@ public class EmployeeFormController
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        return "EmployeePreview";
+        return "employee/preview";
     }
 
     // Employee data submit - Submit Employee data
@@ -165,7 +165,7 @@ public class EmployeeFormController
 
         // Setup model and return view
         model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
-        return "EmployeeSubmit";
+        return "employee/confirm";
     }
 
     // Exception handling - Display exception information
@@ -316,7 +316,7 @@ public class EmployeeFormController
     public ModelAndView AccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("AccountPage");
+        mav.setViewName("client/dashboard");
 
         Client client = clientRepository.findOne(clientId);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
@@ -328,6 +328,6 @@ public class EmployeeFormController
     @RequestMapping("/FrontPage")
     public String FrontPage(Model model) throws Exception
     {
-        return "FrontPage";
+        return "employee/token";
     }
 }

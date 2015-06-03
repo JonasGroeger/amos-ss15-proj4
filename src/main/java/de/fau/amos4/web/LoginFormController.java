@@ -39,7 +39,7 @@ public class LoginFormController
     	model.addAttribute("client", NewClient);
     	model.addAttribute("allTitles", Title.values());
     	// Display the registration page
-    	return "RegistrationPage";
+    	return "client/register";
     }
 
     @RequestMapping("/client/submit")

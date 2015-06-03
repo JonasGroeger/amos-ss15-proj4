@@ -38,7 +38,7 @@ public class ClientController
     {
         ModelAndView mav = new ModelAndView();
         // Display the default login screen
-        mav.setViewName("ClientLogin");
+        mav.setViewName("client/login");
         // Set the message to be displayed (invalid login, confirm success, confirm fail, registration done)
         mav.addObject("message", message);
     	
@@ -49,7 +49,7 @@ public class ClientController
     public ModelAndView getClientEmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("AccountPage");
+        mav.setViewName("client/dashboard");
 
         Client client = clientService.getClientById(clientId);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
