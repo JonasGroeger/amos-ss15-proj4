@@ -27,13 +27,13 @@ h1 {
 	<div class="container">
 
 		<span style="float: right"> <a
-			th:href="@{/EmployeeEdit(lang=en, id=${employee.id})}">
+			th:href="@{/employee/edit(lang=en, id=${employee.id})}">
 				<button type="button" th:with="lang=${en}">
 					<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
 						class="img-responsive" alt="Responsive image"
 						style="width: 32px; height: 24px;" />
 				</button>
-		</a> <a th:href="@{/EmployeeEdit(lang=de, id=${employee.id})}">
+		</a> <a th:href="@{/employee/edit(lang=de, id=${employee.id})}">
 				<button th:with="lang=${de}">
 					<img th:src="@{/images/deutschlandflagge.jpg}"
 						src="../static/images/uk.gif" class="img-responsive"
@@ -42,7 +42,7 @@ h1 {
 		</a>
 
 		</span>
-		<form th:action="@{/EditSubmit}" th:object="${employee}">
+		<form th:action="@{/employee/edit/submit}" th:object="${employee}">
 
 			<div class="row">
 

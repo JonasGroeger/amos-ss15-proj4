@@ -184,7 +184,7 @@ public class EmployeeFormController
 
     // Employee file download - Download text file with Employee data
     @RequestMapping("/employee/download/text")
-    public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
+    public void EmployeeDownloadText(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         Employee employee = employeeRepository.findOne(employeeId);
         String fileContent = employee.toString();
@@ -199,7 +199,7 @@ public class EmployeeFormController
 
     // Employee zip file download - Download zip file containing a text with Employee data
     @RequestMapping("/employee/download/zip")
-    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
+    public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
@@ -313,21 +313,8 @@ public class EmployeeFormController
         return "redirect:/client/dashboard";
     }
 
-    @RequestMapping("/client/dashboard")
-    public ModelAndView AccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
-    {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("client/dashboard");
-
-        Client client = clientRepository.findOne(clientId);
-        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
-
-        mav.addObject("Employees", clientsEmployees);
-        return mav;
-    }
-
     @RequestMapping({"/employee/token", "/FrontPage"}) //FrontPage mapping is required by user story TODO ask PO's about this?
-    public String FrontPage(Model model) throws Exception
+    public String EmployeeToken(Model model) throws Exception
     {
         return "employee/token";
     }
