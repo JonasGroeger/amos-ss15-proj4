@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="no-js" lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Header</title></head>
+<body>
+
+<!-- Start: Fragment-->
+<div th:fragment="header">
+    <header>
+        <!-- Start: Language selectors -->
+        <span style="float: right">
+            <a href="?lang=en">
+                <button type="button" th:with="lang=${en}">
+                    <img th:src="@{/images/uk.gif}" src="../../static/images/uk.gif"
+                         class="img-responsive" alt="Flag of the UK"
+                         style="width: 32px; height: 24px;" />
+                </button>
+            </a>
+            <a href="?lang=de">
+                <button th:with="lang=${de}">
+                    <img th:src="@{/images/deutschlandflagge.jpg}" src="../../static/images/uk.gif"
+                         class="img-responsive" alt="Flag of Germany"
+                         style="width: 32px; height: 24px;" />
+                </button>
+            </a>
+        </span>
+        <!-- End: Language selectors-->
+
+        <!-- Start: Translation -->
+        <script th:inline="javascript">
+            var DUMMY_TEXT = 'DUMMY_TEXT';
+            var _t = {};
+            _t['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
+            // TODO: Add more strings here. Maybe all of them dynamically and minimized?
+        </script>
+        <!-- End: Translation -->
+
+        <!-- Start: Logout button -->
+        <div th:if="${currentClient != null}">
+            <form onsubmit="return confirm(_t['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
+                <button th:text="#{logout}" th:type="submit">Log out</button>
+            </form>
+        </div>
+        <!-- End: Logout button -->
+    </header>
+</div>
+<!-- End: Fragment-->
+
+</body>
+</html>

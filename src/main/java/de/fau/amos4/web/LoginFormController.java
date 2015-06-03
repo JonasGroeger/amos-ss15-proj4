@@ -1,10 +1,14 @@
 package de.fau.amos4.web;
 
 import de.fau.amos4.model.Client;
+import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.util.EmailSender;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,24 +32,36 @@ public class LoginFormController
     }
 
     @RequestMapping("/client/register")
-    public String RegisterClient(HttpServletRequest request, @RequestParam(value = "client", required = true) Client client) throws AddressException, MessagingException
+    public String RegisterClient(Model model)
+    {
+    	// Create a client object for the currently registered client
+    	Client NewClient = new Client();
+    	model.addAttribute("client", NewClient);
+    	model.addAttribute("allTitles", Title.values());
+    	// Display the registration page
+    	return "RegistrationPage";
+    }
+
+    @RequestMapping("/client/submit")
+    public String SubmitClient(HttpServletRequest request, @ModelAttribute(value = "client") Client client) throws AddressException, MessagingException
     {
         // Generate new confirmation string for the client
         client.generateConfirmationString();
         // Set client to inactive
         client.setActivated(false);
-        // Save new, unactivated client
+        // Save new, in-activate client
         clientRepository.save(client);
 
         // Prepare and send email
-        String contextPath = servletContext.getContextPath();
+        String contextPath = "http://" + request.getServerName() + ":" + request.getServerPort() +  request.getServletPath().replace("/client/submit", "/client/confirm");
         String ConfirmationCode = client.getConfirmationString();
-        String Content = "<a href=" + contextPath + "/client/confirm?id=" + client.getId() + "&confirmation=" + ConfirmationCode + ">";
+        // TODO: Replace this with Thymeleaf based tample generated content
+        String Content = "<a href='" + contextPath + "?id=" + client.getId() + "&confirmation=" + ConfirmationCode + "'>Confirm my email address.</a>";
         EmailSender sender = new EmailSender();
         sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content);
 
         // Display login screen after
-        return "RegistrationAlmostReady";
+        return "redirect:/?registered";
     }
 
     @RequestMapping("/client/confirm")
@@ -55,8 +71,12 @@ public class LoginFormController
         if (client.tryToActivate(enteredConfirmationCode)) {
             // Save client after successful activation
             this.clientRepository.save(client);
+            return "redirect:/?confirmed";
+        }
+        else
+        {
+            return "redirect:/?confirmfail";
         }
 
-        return "redirect:/client/login";
     }
 }
