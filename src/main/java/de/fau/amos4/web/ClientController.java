@@ -34,7 +34,7 @@ public class ClientController
      * @throws Exception
      */
     @RequestMapping(value =  "/", method = RequestMethod.GET)
-    public ModelAndView getClientLoginPage(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
+    public ModelAndView ClientLogin(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
     {
         ModelAndView mav = new ModelAndView();
         // Display the default login screen
@@ -45,8 +45,8 @@ public class ClientController
         return mav;
     }
 
-    @RequestMapping(value = "/client/list")
-    public ModelAndView getClientEmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    @RequestMapping(value = "/client/dashboard")
+    public ModelAndView ClientDashboard(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("client/dashboard");

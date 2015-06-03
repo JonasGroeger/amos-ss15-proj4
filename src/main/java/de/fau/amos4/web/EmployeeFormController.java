@@ -58,7 +58,7 @@ public class EmployeeFormController
     }
 
     // Employee data form - Enter Employee data
-    @RequestMapping("/EmployeeForm")
+    @RequestMapping("/employee/form")
     public String EmployeeForm(Model model) throws Exception
     {
         model.addAttribute("employee", new Employee());
@@ -68,11 +68,11 @@ public class EmployeeFormController
         return "employee/form";
     }
 
-    @RequestMapping("/EmployeeEdit")
+    @RequestMapping("/employee/edit")
     public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeEdit");
+        mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
         mav.addObject("id", employeeId);
         mav.addObject("employee", employee);
@@ -82,8 +82,8 @@ public class EmployeeFormController
         return mav;
     }
 
-    @RequestMapping("/EditSubmit")
-    public String EditSubmit(Employee employee, Model model)
+    @RequestMapping("/employee/edit/submit")
+    public String EmployeeEditSubmit(Employee employee, Model model)
     {
         Client client = clientRepository.findOne(1l);
         employee.setClient(client);
@@ -93,11 +93,11 @@ public class EmployeeFormController
         clientRepository.save(client);
 
         // Redirect to AccountPage page
-        return "redirect:/AccountPage";
+        return "redirect:/client/dashboard";
     }
     
-    @RequestMapping("/FrontPageSubmit")
-    public ModelAndView FrontPageSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
+    @RequestMapping("/employee/token/submit")
+    public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
     	long employeeId = 0;
     	Iterable<Employee> allEmployees = employeeRepository.findAll();
@@ -119,16 +119,17 @@ public class EmployeeFormController
 	        mav.addObject("allMarital", MaritalStatus.values());
 	        mav.addObject("allSex", Sex.values());
         } else {
-        	mav.setViewName("WrongToken");
+        	mav.setViewName("employee/wrongtoken");
         }
         return mav;
         	
     }
     
-    @RequestMapping("/WrongToken")
-    public String EmployeeLogin()
+    @RequestMapping("employee/token/wrong")
+    public String EmployeeTokenWrong()
     {
-        return "WrongToken";
+    	//TODO get rid of these invalid pages
+        return "employee/tokenwrong";
     }
     
     @InitBinder
@@ -138,7 +139,7 @@ public class EmployeeFormController
     }
 
     // Employee data preview - Review Employee data
-    @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/employee/preview", method = {RequestMethod.POST, RequestMethod.GET})
     public String EmployeePreview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
@@ -148,8 +149,8 @@ public class EmployeeFormController
     }
 
     // Employee data submit - Submit Employee data
-    @RequestMapping("/EmployeeSubmit")
-    public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
+    @RequestMapping("/employee/confirm")
+    public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
         Client client = clientRepository.findOne(1l);
@@ -182,7 +183,7 @@ public class EmployeeFormController
     }
 
     // Employee file download - Download text file with Employee data
-    @RequestMapping("/EmployeeTextFileDownload")
+    @RequestMapping("/employee/download/text")
     public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         Employee employee = employeeRepository.findOne(employeeId);
@@ -197,7 +198,7 @@ public class EmployeeFormController
     }
 
     // Employee zip file download - Download zip file containing a text with Employee data
-    @RequestMapping("/EmployeeZipFileDownload")
+    @RequestMapping("/employee/download/zip")
     public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         //Prepare textfile contents
@@ -279,18 +280,18 @@ public class EmployeeFormController
         }
     }
 
-    @RequestMapping("/EmployeeDelete")
+    @RequestMapping("/employee/delete")
     public String EmployeeDelete(@RequestParam(value = "id", required = true) long employeeId)
     {
         // Remove employee with passed id
         this.employeeRepository.delete(employeeId);
 
         // Redirect to AccountPage page
-        return "redirect:/AccountPage";
+        return "redirect:/client/dashboard";
     }
 
-    @RequestMapping("/NewEmployee")
-    public String NewEmployee()
+    @RequestMapping("/employee/new")
+    public String EmployeeNew()
     {
         // Create a new employee with default name
         Employee employee = new Employee();
@@ -309,10 +310,10 @@ public class EmployeeFormController
 
 
         // Redirect to AccountPage page
-        return "redirect:/AccountPage";
+        return "redirect:/client/dashboard";
     }
 
-    @RequestMapping("/AccountPage")
+    @RequestMapping("/client/dashboard")
     public ModelAndView AccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
     {
         ModelAndView mav = new ModelAndView();
@@ -325,7 +326,7 @@ public class EmployeeFormController
         return mav;
     }
 
-    @RequestMapping("/FrontPage")
+    @RequestMapping({"/employee/token", "/FrontPage"}) //FrontPage mapping is required by user story TODO ask PO's about this?
     public String FrontPage(Model model) throws Exception
     {
         return "employee/token";

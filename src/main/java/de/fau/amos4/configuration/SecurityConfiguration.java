@@ -68,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .and()
 
                 // Login page at /login with email as username
-                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/list")
+                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/dashboard")
                     .usernameParameter("email").failureUrl("/?m=invalid").permitAll()
 
                 .and()

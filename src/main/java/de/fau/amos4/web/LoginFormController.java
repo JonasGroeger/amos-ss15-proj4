@@ -32,7 +32,7 @@ public class LoginFormController
     }
 
     @RequestMapping("/client/register")
-    public String RegisterClient(Model model)
+    public String ClientRegister(Model model)
     {
     	// Create a client object for the currently registered client
     	Client NewClient = new Client();
@@ -43,7 +43,7 @@ public class LoginFormController
     }
 
     @RequestMapping("/client/submit")
-    public String SubmitClient(HttpServletRequest request, @ModelAttribute(value = "client") Client client) throws AddressException, MessagingException
+    public String ClientSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client) throws AddressException, MessagingException
     {
         // Generate new confirmation string for the client
         client.generateConfirmationString();
@@ -65,7 +65,7 @@ public class LoginFormController
     }
 
     @RequestMapping("/client/confirm")
-    public String RegisterClient(@RequestParam(value = "id", required = true) long clientId, @RequestParam(value = "confirmation", required = true) String enteredConfirmationCode) throws AddressException, MessagingException
+    public String ClientConfirm(@RequestParam(value = "id", required = true) long clientId, @RequestParam(value = "confirmation", required = true) String enteredConfirmationCode) throws AddressException, MessagingException
     {
         Client client = this.clientRepository.findOne(clientId);
         if (client.tryToActivate(enteredConfirmationCode)) {
