@@ -61,4 +61,17 @@ public class ClientController
         mav.addObject("Employees", clientsEmployees);
         return mav;
     }
+    
+    @RequestMapping(value = "/client/profile")
+    public ModelAndView ClientProfile(Principal principal)
+    {
+        ModelAndView mav = new ModelAndView();
+        
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
+        mav.addObject("Client", client);
+        
+        mav.setViewName("client/profile");
+        return mav;
+    }
 }
