@@ -1,4 +1,4 @@
-# amos-ss15-proj4
+# amos-ss15-proj4 [![Build Status](https://travis-ci.org/JOBAA/amos-ss15-proj4.svg?branch=master)](https://travis-ci.org/JOBAA/amos-ss15-proj4)
 Personalfragebogen 2.0 @ DATEV
 
 # Setup (*long*)
@@ -42,13 +42,13 @@ combined (and will be resolved hierarchically),
 When working on the l18n, just use [the online tool native2ascii](http://native2ascii.net/) to convert. If you dont want
 to do that for some reason, use the provided table below:
 	
-	ß: \u00df
-	ä: \u00e4
-	ö: \u00f6
-	ü: \u00fc
-	Ä: \u004c
-	Ü: \u00dc
-	Ö: \u00d6
+    Ã¤ -> \u00e4
+    Ã¶ -> \u00f6
+    Ã¼ -> \u00fc
+    Ã„ -> \u00c4
+    Ã– -> \u00d6
+    Ãœ -> \u00dc
+    ÃŸ -> \u00df
 
 
 # Running the Tests

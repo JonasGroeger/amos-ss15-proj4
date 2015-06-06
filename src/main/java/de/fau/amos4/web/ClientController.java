@@ -1,9 +1,12 @@
 package de.fau.amos4.web;
 
+import java.security.Principal;
+
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,18 +37,25 @@ public class ClientController
      * @throws Exception
      */
     @RequestMapping(value =  "/", method = RequestMethod.GET)
-    public String getClientLoginPage() throws Exception
+    public ModelAndView getClientLoginPage(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
     {
-        return "ClientLogin";
+        ModelAndView mav = new ModelAndView();
+        // Display the default login screen
+        mav.setViewName("ClientLogin");
+        // Set the message to be displayed (invalid login, confirm success, confirm fail, registration done)
+        mav.addObject("message", message);
+    	
+        return mav;
     }
 
     @RequestMapping(value = "/client/list")
-    public ModelAndView getClientEmployeeList(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    public ModelAndView getClientEmployeeList(Principal principal)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("AccountPage");
-
-        Client client = clientService.getClientById(clientId);
+        final String currentUser = principal.getName();
+        
+        Client client = clientService.getClientByEmail(currentUser);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
 
         mav.addObject("Employees", clientsEmployees);

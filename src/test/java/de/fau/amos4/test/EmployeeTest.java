@@ -2,34 +2,19 @@ package de.fau.amos4.test;
 
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.test.configuration.TestConfiguration;
 import de.fau.amos4.util.TokenGenerator;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TestConfiguration.class)
-@ActiveProfiles("test")
-public class EmployeeTest
+public class EmployeeTest extends BaseWebApplicationContextTests
 {
-    @Resource
-    EmployeeRepository employeeRepository;
-
-    @Resource
-    ClientRepository clientRepository;
 
     @Test
     public void generatedTokenIsInCorrectFormat() throws Exception

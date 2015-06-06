@@ -61,7 +61,7 @@ public class LoginFormController
         sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content);
 
         // Display login screen after
-        return "redirect:/?registered";
+        return "redirect:/?m=registered";
     }
 
     @RequestMapping("/client/confirm")
@@ -71,11 +71,11 @@ public class LoginFormController
         if (client.tryToActivate(enteredConfirmationCode)) {
             // Save client after successful activation
             this.clientRepository.save(client);
-            return "redirect:/?confirmed";
+            return "redirect:/?m=confirmed";
         }
         else
         {
-            return "redirect:/?confirmfail";
+            return "redirect:/?m=confirmfail";
         }
 
     }
