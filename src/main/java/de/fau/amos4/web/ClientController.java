@@ -53,8 +53,8 @@ public class ClientController
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("client/dashboard");
-        final String currentUser = principal.getName();
         
+        final String currentUser = principal.getName();
         Client client = clientService.getClientByEmail(currentUser);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
 

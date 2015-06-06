@@ -8,6 +8,7 @@ import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
 import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.TokenGenerator;
@@ -38,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,10 +51,12 @@ public class EmployeeFormController
 {
     private final EmployeeRepository employeeRepository;
     private final ClientRepository clientRepository;
+    private final ClientService clientService;
 
     @Autowired
-    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService)
     {
+    	this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
     }
@@ -291,11 +295,13 @@ public class EmployeeFormController
     }
 
     @RequestMapping("/employee/new")
-    public String EmployeeNew()
+    public String EmployeeNew(Principal principal)
     {
         // Create a new employee with default name
         Employee employee = new Employee();
-        Client client = clientRepository.findOne(1l);
+        
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
 
         Locale locale = LocaleContextHolder.getLocale();
         String newEmployee = AppContext.getApplicationContext().getMessage("EmployeeFormController.newEmployee", null, locale);

@@ -1,63 +1,16 @@
-<!doctype html>
-<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org"
+      layout:decorator="layout">
 
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>Personalfragebogen 2.0 - v0.1</title>
-<meta name="description" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<style>
-body {
-	padding-top: 20px;
-	padding-bottom: 20px;
-}
-
-h1 {
-	text-align: center;
-}
-</style>
-<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <title>Personalfragebogen 2.0 - v0.1</title>
 </head>
-
 <body>
-	<div class="container">
-		<span style="float: right"> <a href="?lang=en">
-				<button type="button" th:with="lang=${en}">
-					<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
-						class="img-responsive" alt="Responsive image"
-						style="width: 32px; height: 24px;" />
-				</button>
-		</a> <a href="?lang=de">
-				<button th:with="lang=${de}">
-					<img th:src="@{/images/deutschlandflagge.jpg}"
-						src="../static/images/uk.gif" class="img-responsive"
-						alt="Responsive image" style="width: 32px; height: 24px;" />
-				</button>
-		</a>
-		</span>
 
-		<script th:inline="javascript">
-			var DUMMY_TEXT = 'DUMMY_TEXT';
-			var _translate = {};
-			_translate['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
-			// TODO: Add more strings here. Maybe all of them dynamically and minimized?
-		</script>
-
-		<!-- Start: Logout button -->
-		<div th:if="${currentClient != null}">
-			<form onsubmit="return confirm(_translate['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
-				<button th:text="#{logout}" th:type="submit">Log out</button>
-			</form>
-		</div>
-		<!-- End: Logout button -->
-
+<div layout:fragment="content">
 		<h1 th:text="#{EmployeeForm.header}"></h1>
 		<h2 th:text="#{AccountPage.header}"></h2>
-		<a th:href="@{/NewEmployee}" th:text="#{AccountPage.newEmployee}">New
-			Employee</a>
+		<a th:href="@{/employee/new}" th:text="#{AccountPage.newEmployee}">New Employee</a>
 		<table class="table table-striped">
 			<tr>
 				<th th:text="#{AccountPage.edit}"></th>
@@ -86,9 +39,9 @@ h1 {
 
 			</tr>
 			<tr th:each="Employee : ${Employees}">
-				<td><a th:href="@{'/EmployeeEdit?id=' + ${Employee.id}}"
+				<td><a th:href="@{'/employee/edit?id=' + ${Employee.id}}"
 					th:text="#{AccountPage.edit}">Edit</a></td>
-				<td><a th:href="@{'/EmployeeDelete?id=' + ${Employee.id}}"
+				<td><a th:href="@{'/employee/delete?id=' + ${Employee.id}}"
 					th:onClick="'return confirm(\'' + #{AccountPage.deleteConfirm} + '\');'"
 					th:text="#{AccountPage.delete}">Delete</a></td>
 				<td><a
@@ -121,15 +74,8 @@ h1 {
 
 			</tr>
 		</table>
-		<hr />
-		<footer>
-			<p>&copy; 2015 AMOS GROUP 4</p>
-		</footer>
-	</div>
-
-	<script src="js/vendor/jquery-1.11.2.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="js/main.js"></script>
+	
+</div>
 </body>
-
 </html>
+	
