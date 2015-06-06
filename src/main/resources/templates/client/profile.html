@@ -12,16 +12,17 @@
 	
     <div th:object="${Client}">
     	<p th:text="#{Client.id} + ': ' + *{id}" />
+    	<p th:text="#{Client.email} + ': ' + *{email}" />
+    	<p th:text="#{Client.title} + ': ' + *{title}" />
     	<p th:text="#{Client.firstname} + ': ' + *{firstName}" />
     	<p th:text="#{Client.familyname} + ': ' + *{familyName}" />
     	<p th:text="#{Client.birthdate} + ': ' + *{birthDate}" />
-    	<p th:text="#{Client.officeNumber} + ': ' + *{officeNumber}" />
-    	<!--<p th:text="#{Client.mobileNumber} + ': ' + *{mobileNumber}" />-->
+    	<p th:text="#{Client.officePhoneNumber} + ': ' + *{officePhoneNumber}" />
+    	<p th:text="#{Client.mobilePhoneNumber} + ': ' + *{mobilePhoneNumber}" />
     	<p th:text="#{Client.companyName} + ': ' + *{companyName}" />
     	<p th:text="#{Client.companyType} + ': ' + *{companyType}" />
-    	<p th:text="#{Client.email} + ': ' + *{email}" />
     	<p th:text="#{Client.country} + ': ' + *{country}" />
-    	<p th:text="#{Client.address} + ': ' + *{streetName}" /> <!-- TODO make address right -->
+    	<p th:text="#{Client.address} + ': ' + *{address}" />
     	<p th:text="#{Client.zipCode} + ': ' + *{zipCode}" />
     </div>
 </div>
