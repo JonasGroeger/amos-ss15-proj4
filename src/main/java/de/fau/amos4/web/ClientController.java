@@ -1,9 +1,12 @@
 package de.fau.amos4.web;
 
+import java.security.Principal;
+
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +53,7 @@ public class ClientController
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("client/dashboard");
+        final String currentUser = principal.getName();
 
         Client client = clientService.getClientById(clientId);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
