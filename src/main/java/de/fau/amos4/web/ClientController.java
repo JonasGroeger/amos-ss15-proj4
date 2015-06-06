@@ -37,22 +37,22 @@ public class ClientController
      * @throws Exception
      */
     @RequestMapping(value =  "/", method = RequestMethod.GET)
-    public ModelAndView getClientLoginPage(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
+    public ModelAndView ClientLogin(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
     {
         ModelAndView mav = new ModelAndView();
         // Display the default login screen
-        mav.setViewName("ClientLogin");
+        mav.setViewName("client/login");
         // Set the message to be displayed (invalid login, confirm success, confirm fail, registration done)
         mav.addObject("message", message);
     	
         return mav;
     }
 
-    @RequestMapping(value = "/client/list")
-    public ModelAndView getClientEmployeeList(Principal principal)
+    @RequestMapping(value = "/client/dashboard")
+    public ModelAndView ClientDashboard(Principal principal)
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("AccountPage");
+        mav.setViewName("client/dashboard");
         final String currentUser = principal.getName();
         
         Client client = clientService.getClientByEmail(currentUser);

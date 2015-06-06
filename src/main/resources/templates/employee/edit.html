@@ -25,13 +25,15 @@ h1 {
 <body>
 
 	<div class="container">
-		<span style="float: right"> <a href="?lang=en">
+
+		<span style="float: right"> <a
+			th:href="@{/employee/edit(lang=en, id=${employee.id})}">
 				<button type="button" th:with="lang=${en}">
 					<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
 						class="img-responsive" alt="Responsive image"
 						style="width: 32px; height: 24px;" />
 				</button>
-		</a> <a href="?lang=de">
+		</a> <a th:href="@{/employee/edit(lang=de, id=${employee.id})}">
 				<button th:with="lang=${de}">
 					<img th:src="@{/images/deutschlandflagge.jpg}"
 						src="../static/images/uk.gif" class="img-responsive"
@@ -40,25 +42,12 @@ h1 {
 		</a>
 
 		</span>
+		<form th:action="@{/employee/edit/submit}" th:object="${employee}">
 
-		<script th:inline="javascript">
-			var DUMMY_TEXT = 'DUMMY_TEXT';
-			var _translate = {};
-			_translate['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
-			// TODO: Add more strings here. Maybe all of them dynamically and minimized?
-		</script>
-
-		<!-- Start: Logout button -->
-		<div th:if="${currentClient != null}">
-			<form onsubmit="return confirm(_translate['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
-				<button th:text="#{logout}" th:type="submit">Log out</button>
-			</form>
-		</div>
-		<!-- End: Logout button -->
-
-		<form th:action="@{/EmployeePreview}" th:object="${employee}"
-			method="POST">
 			<div class="row">
+
+
+
 				<h1 th:text="#{EmployeeForm.header}"></h1>
 				<div class="col-sm-6">
 					<div class="form-group">
@@ -68,8 +57,8 @@ h1 {
 					<div class="form-group">
 						<label for="familyName"
 							th:text="#{employee.familyName} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{familyName}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.familyName}" />
+						<input th:field="*{familyName}" type="text" class="form-control"
+							th:placeholder="#{placeholder.familyName}" />
 					</div>
 					<div class="form-group">
 						<label for="maidenName" th:text="#{employee.maidenName}"></label>
@@ -79,15 +68,14 @@ h1 {
 					<div class="form-group">
 						<label for="street"
 							th:text="#{employee.street} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{street}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.street}" />
+						<input th:field="*{street}" type="text" class="form-control"
+							th:placeholder="#{placeholder.street}" />
 					</div>
 					<div class="form-group">
 						<label for="houseNumber"
 							th:text="#{employee.houseNumber} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{houseNumber}"  type="number"
-							min="0" class="form-control"
-							th:placeholder="#{placeholder.houseNumber}" />
+						<input th:field="*{houseNumber}" type="number" min="0"
+							class="form-control" th:placeholder="#{placeholder.houseNumber}" />
 					</div>
 					<div class="form-group">
 						<label for="additionToAddress"
@@ -103,7 +91,7 @@ h1 {
 					<div class="form-group">
 						<label for="sex"
 							th:text="#{employee.sex} +#{EmployeeForm.mandatory}"></label> <select
-							th:field="*{sex}"  class="form-control">
+							th:field="*{sex}" class="form-control">
 							<option value="" th:text="#{employee.select}"></option>
 							<option th:each="sex : ${allSex}" th:value="${sex.name()}"
 								th:text="${sex.getText()}"></option>
@@ -112,8 +100,7 @@ h1 {
 					<div class="form-group">
 						<label for="maritalStatus"
 							th:text="#{employee.maritalStatus}  +#{EmployeeForm.mandatory}"></label>
-						<select th:field="*{maritalStatus}" 
-							class="form-control">
+						<select th:field="*{maritalStatus}" class="form-control">
 							<option value="" th:text="#{employee.select}"></option>
 							<option th:each="maritalStatus : ${allMarital}"
 								th:value="${maritalStatus.name()}"
@@ -123,8 +110,7 @@ h1 {
 					<div class="form-group">
 						<label for="disabled"
 							th:text="#{employee.disabled} +#{EmployeeForm.mandatory}"></label>
-						<select th:field="*{disabled}" 
-							class="form-control">
+						<select th:field="*{disabled}" class="form-control">
 							<option value="" th:text="#{employee.select}"></option>
 							<option th:each="disabled : ${allDisabled}"
 								th:value="${disabled.name()}" th:text="${disabled.getText()}"></option>
@@ -133,8 +119,8 @@ h1 {
 					<div class="form-group">
 						<label for="iban"
 							th:text="#{employee.iban} +#{EmployeeForm.mandatory}"></label> <input
-							th:field="*{iban}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.iban}" />
+							th:field="*{iban}" type="text" class="form-control"
+							th:placeholder="#{placeholder.iban}" />
 					</div>
 				</div>
 
@@ -147,32 +133,32 @@ h1 {
 					<div class="form-group">
 						<label for="firstname"
 							th:text="#{employee.firstName} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{firstName}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.firstName}" />
+						<input th:field="*{firstName}" type="text" class="form-control"
+							th:placeholder="#{placeholder.firstName}" />
 					</div>
 					<div class="form-group">
 						<label for="birthDate"
 							th:text="#{employee.birthDate} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{birthDate}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.birthDate}" />
+						<input th:field="*{birthDate}" type="text" class="form-control"
+							th:placeholder="#{placeholder.birthDate}" />
 					</div>
 					<div class="form-group">
 						<label for="postCode"
 							th:text="#{employee.zipCode} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{zipCode}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.zipCode}" />
+						<input th:field="*{zipCode}" type="text" class="form-control"
+							th:placeholder="#{placeholder.zipCode}" />
 					</div>
 					<div class="form-group">
 						<label for="city"
 							th:text="#{employee.city} +#{EmployeeForm.mandatory}"></label> <input
-							th:field="*{city}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.city}" />
+							th:field="*{city}" type="text" class="form-control"
+							th:placeholder="#{placeholder.city}" />
 					</div>
 					<div class="form-group">
 						<label for="socialInsuranceNumber"
 							th:text="#{employee.socialInsuranceNumber} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{socialInsuranceNumber}" 
-							type="text" class="form-control"
+						<input th:field="*{socialInsuranceNumber}" type="text"
+							class="form-control"
 							th:placeholder="#{placeholder.socialInsuranceNumber}" />
 					</div>
 					<div class="form-group">
@@ -184,8 +170,8 @@ h1 {
 					<div class="form-group">
 						<label for="citizenship"
 							th:text="#{employee.citizenship} +#{EmployeeForm.mandatory}"></label>
-						<input th:field="*{citizenship}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.citizenship}" />
+						<input th:field="*{citizenship}" type="text" class="form-control"
+							th:placeholder="#{placeholder.citizenship}" />
 					</div>
 					<div class="form-group">
 						<label for="employerSocialSavingsNumber"
@@ -197,8 +183,8 @@ h1 {
 					<div class="form-group">
 						<label for="bic"
 							th:text="#{employee.bic} +#{EmployeeForm.mandatory}"></label> <input
-							th:field="*{bic}"  type="text"
-							class="form-control" th:placeholder="#{placeholder.bic}" />
+							th:field="*{bic}" type="text" class="form-control"
+							th:placeholder="#{placeholder.bic}" />
 					</div>
 				</div>
 			</div>
@@ -206,11 +192,14 @@ h1 {
 				<div class="col-md-6 col-md-offset-3">
 					<button type="submit" class="btn btn-block btn-lg btn-info">
 						<span class="glyphicon glyphicon-search"
-							th:text="#{EmployeeForm.preview}"></span>
+							th:text="#{AccountPage.edit}"></span>
 					</button>
 				</div>
 			</div>
 		</form>
+
+
+
 		<hr />
 		<footer>
 			<p>&copy; 2015 AMOS GROUP 4</p>
