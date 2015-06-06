@@ -49,13 +49,13 @@ public class ClientController
     }
 
     @RequestMapping(value = "/client/dashboard")
-    public ModelAndView ClientDashboard(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    public ModelAndView ClientDashboard(Principal principal)
     {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("client/dashboard");
         final String currentUser = principal.getName();
-
-        Client client = clientService.getClientById(clientId);
+        
+        Client client = clientService.getClientByEmail(currentUser);
         Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
 
         mav.addObject("Employees", clientsEmployees);
