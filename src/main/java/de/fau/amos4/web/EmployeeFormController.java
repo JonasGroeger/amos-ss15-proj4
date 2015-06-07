@@ -84,8 +84,9 @@ public class EmployeeFormController
     The client can edit the prefilled fields of one respective employee entry in the dashboard.
      */
     @RequestMapping("/employee/edit")
-    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
+    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Principal principal, Model model) throws IOException
     {
+
         ModelAndView mav = new ModelAndView();
         mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
@@ -101,9 +102,11 @@ public class EmployeeFormController
     Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
      */
     @RequestMapping("/employee/edit/submit")
-    public String EmployeeEditSubmit(Employee employee, Model model)
+    public String EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
-        Client client = clientRepository.findOne(1l);
+
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
         employee.setClient(client);
         client.getEmployees().add(employee);
 
@@ -189,9 +192,10 @@ public class EmployeeFormController
      */
     @RequestMapping("/employee/confirm")
     public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
-                                 BindingResult result, Model model) throws Exception
+                                 BindingResult result,Principal principal, Model model) throws Exception
     {
-        Client client = clientRepository.findOne(1l);
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
         employee.setClient(client);
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
