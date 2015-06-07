@@ -1,81 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org"
-      layout:decorator="layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
 
 <head>
     <title>Personalfragebogen 2.0 - v0.1</title>
 </head>
+
 <body>
-
 <div layout:fragment="content">
-		<h1 th:text="#{EmployeeForm.header}"></h1>
-		<h2 th:text="#{AccountPage.header}"></h2>
-		<a th:href="@{/employee/new}" th:text="#{AccountPage.newEmployee}">New Employee</a>
-		<table class="table table-striped">
-			<tr>
-				<th th:text="#{AccountPage.edit}"></th>
-				<th th:text="#{AccountPage.delete}"></th>
-				<th th:text="#{AccountPage.download}"></th>
-				<th th:text="#{AccountPage.token}"></th>
-				<th th:text="#{employee.familyName}"></th>
-				<th th:text="#{employee.firstName}"></th>
-				<th th:text="#{employee.maidenName}"></th>
-				<th th:text="#{employee.birthDate}"></th>
-				<th th:text="#{employee.street}"></th>
-				<th th:text="#{employee.houseNumber}"></th>
-				<th th:text="#{employee.additionToAddress}"></th>
-				<th th:text="#{employee.zipCode}"></th>
-				<th th:text="#{employee.city}"></th>
-				<th th:text="#{employee.placeOfBirth}"></th>
-				<th th:text="#{employee.countryOfBirth}"></th>
-				<th th:text="#{employee.sex}"></th>
-				<th th:text="#{employee.maritalStatus}"></th>
-				<th th:text="#{employee.disabled}"></th>
-				<th th:text="#{employee.citizenship}"></th>
-				<th th:text="#{employee.socialInsuranceNumber}"></th>
-				<th th:text="#{employee.employerSocialSavingsNumber}"></th>
-				<th th:text="#{employee.iban}"></th>
-				<th th:text="#{employee.bic}"></th>
-
-			</tr>
-			<tr th:each="Employee : ${Employees}">
-				<td><a th:href="@{'/employee/edit?id=' + ${Employee.id}}"
-					th:text="#{AccountPage.edit}">Edit</a></td>
-				<td><a th:href="@{'/employee/delete?id=' + ${Employee.id}}"
-					th:onClick="'return confirm(\'' + #{AccountPage.deleteConfirm} + '\');'"
-					th:text="#{AccountPage.delete}">Delete</a></td>
-				<td><a
-					th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}"
-					th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
-					th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}"
-					th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a></td>
-				<td><button
-						th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
-						th:text="#{AccountPage.ViewToken}">View token</button></td>
-				<td th:text="${Employee.familyName}">Mustermann</td>
-				<td th:text="${Employee.firstName}">Max</td>
-				<td th:text="${Employee.maidenName}"></td>
-				<td th:text="${Employee.birthDate}">20/11/2011</td>
-				<td th:text="${Employee.street}">Musterstraße</td>
-				<td th:text="${Employee.houseNumber}">42</td>
-				<td th:text="${Employee.additionToAddress}"></td>
-				<td th:text="${Employee.zipCode}">0815</td>
-				<td th:text="${Employee.city}">Musterstadt</td>
-				<td th:text="${Employee.placeOfBirth}"></td>
-				<td th:text="${Employee.countryOfBirth}">Österreich</td>
-				<td th:text="${Employee.sex}">männlich</td>
-				<td th:text="${Employee.maritalStatus}">ledig</td>
-				<td th:text="${Employee.disabled}">Nein</td>
-				<td th:text="${Employee.citizenship}">Österreich</td>
-				<td th:text="${Employee.socialInsuranceNumber}"></td>
-				<td th:text="${Employee.employerSocialSavingsNumber}"></td>
-				<td th:text="${Employee.iban}"></td>
-				<td th:text="${Employee.bic}"></td>
-
-			</tr>
-		</table>
-	
+        <h1 th:text="#{EmployeeForm.header}"></h1>
+        <h2 th:text="#{AccountPage.header}"></h2>
+        <a th:href="@{/employee/new}" th:text="#{AccountPage.newEmployee}">New Employee</a>
+        <table class="table table-striped">
+            <tr>
+                <th th:text="#{AccountPage.edit}"></th>
+                <th th:text="#{AccountPage.delete}"></th>
+                <th th:text="#{AccountPage.download}"></th>
+                <th th:text="#{AccountPage.token}"></th>
+                <th th:text="#{employee.familyName}"></th>
+                <th th:text="#{employee.firstName}"></th>
+                <th th:text="#{employee.maidenName}"></th>
+                <th th:text="#{employee.birthDate}"></th>
+                <th th:text="#{employee.street}"></th>
+                <th th:text="#{employee.houseNumber}"></th>
+                <th th:text="#{employee.additionToAddress}"></th>
+                <th th:text="#{employee.zipCode}"></th>
+                <th th:text="#{employee.city}"></th>
+                <th th:text="#{employee.placeOfBirth}"></th>
+                <th th:text="#{employee.countryOfBirth}"></th>
+                <th th:text="#{employee.sex}"></th>
+                <th th:text="#{employee.maritalStatus}"></th>
+                <th th:text="#{employee.disabled}"></th>
+                <th th:text="#{employee.citizenship}"></th>
+                <th th:text="#{employee.socialInsuranceNumber}"></th>
+                <th th:text="#{employee.employerSocialSavingsNumber}"></th>
+                <th th:text="#{employee.iban}"></th>
+                <th th:text="#{employee.bic}"></th>
+            </tr>
+            <tr th:each="Employee : ${Employees}">
+                <td><a th:href="@{'/employee/edit?id=' + ${Employee.id}}"
+                    th:text="#{AccountPage.edit}">Edit</a>
+                </td>
+                <td><a th:href="@{'/employee/delete?id=' + ${Employee.id}}"
+                    th:onClick="'return confirm(\'' + #{AccountPage.deleteConfirm} + '\');'"
+                    th:text="#{AccountPage.delete}">Delete</a>
+                </td>
+                <td><a
+                    th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}"
+                    th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
+                    th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}"
+                    th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
+                </td>
+                <td><button
+                        th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
+                        th:text="#{AccountPage.ViewToken}">View token</button>
+                </td>
+                <td th:text="${Employee.familyName}">Mustermann</td>
+                <td th:text="${Employee.firstName}">Max</td>
+                <td th:text="${Employee.maidenName}"></td>
+                <td th:text="${Employee.birthDate}">20/11/2011</td>
+                <td th:text="${Employee.street}">Musterstraße</td>
+                <td th:text="${Employee.houseNumber}">42</td>
+                <td th:text="${Employee.additionToAddress}"></td>
+                <td th:text="${Employee.zipCode}">0815</td>
+                <td th:text="${Employee.city}">Musterstadt</td>
+                <td th:text="${Employee.placeOfBirth}"></td>
+                <td th:text="${Employee.countryOfBirth}">Österreich</td>
+                <td th:text="${Employee.sex}">männlich</td>
+                <td th:text="${Employee.maritalStatus}">ledig</td>
+                <td th:text="${Employee.disabled}">Nein</td>
+                <td th:text="${Employee.citizenship}">Österreich</td>
+                <td th:text="${Employee.socialInsuranceNumber}"></td>
+                <td th:text="${Employee.employerSocialSavingsNumber}"></td>
+                <td th:text="${Employee.iban}"></td>
+                <td th:text="${Employee.bic}"></td>
+            </tr>
+        </table>
 </div>
 </body>
 </html>
-	
