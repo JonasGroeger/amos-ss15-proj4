@@ -63,12 +63,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .antMatchers("/FrontPage").permitAll()
                 .antMatchers("/FrontPageSubmit").permitAll()
                 .antMatchers("/WrongToken").permitAll()
+                .antMatchers("/EmployeePreview").permitAll()
+                .antMatchers("/EmployeeSubmit").permitAll()
+                .antMatchers("/EmployeeTextFileDownload").permitAll()
+                .antMatchers("/EmployeeZipFileDownload").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 .and()
 
                 // Login page at /login with email as username
-                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/list")
+                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/dashboard")
                     .usernameParameter("email").failureUrl("/?m=invalid").permitAll()
 
                 .and()

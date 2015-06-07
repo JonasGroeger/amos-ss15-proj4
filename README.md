@@ -41,7 +41,8 @@ combined (and will be resolved hierarchically),
 
 When working on the l18n, just use [the online tool native2ascii](http://native2ascii.net/) to convert. If you dont want
 to do that for some reason, use the provided table below:
-	
+
+
     ä -> \u00e4
     ö -> \u00f6
     ü -> \u00fc
@@ -49,6 +50,7 @@ to do that for some reason, use the provided table below:
     Ö -> \u00d6
     Ü -> \u00dc
     ß -> \u00df
+
 
 
 # Running the Tests
