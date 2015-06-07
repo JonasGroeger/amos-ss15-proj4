@@ -53,6 +53,9 @@ public class EmployeeFormController
     private final ClientRepository clientRepository;
     private final ClientService clientService;
 
+    /*
+    Constructor called at program start.
+     */
     @Autowired
     public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService)
     {
@@ -61,7 +64,10 @@ public class EmployeeFormController
         this.clientRepository = clientRepository;
     }
 
-    // Employee data form - Enter Employee data
+    /*
+    After entering a valid token in the employee/token.hmtl page, an employee gets redirected to the
+    employee/form.html page which contains the prefilled
+
     @RequestMapping("/employee/form")
     public String EmployeeForm(Model model) throws Exception
     {
@@ -71,7 +77,12 @@ public class EmployeeFormController
         model.addAttribute("allSex", Sex.values());
         return "employee/form";
     }
-
+    */
+    /*
+    EmployeeEdit handles employee/edit.html
+    It is invoked by the edit button in the client/dashboard.html
+    The client can edit the prefilled fields of one respective employee entry in the dashboard.
+     */
     @RequestMapping("/employee/edit")
     public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
     {
@@ -85,7 +96,10 @@ public class EmployeeFormController
         mav.addObject("allSex", Sex.values());
         return mav;
     }
-
+    /*
+    EmployeeEditSubmit is invoked by the submit button in the employee/edit.html page.
+    Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
+     */
     @RequestMapping("/employee/edit/submit")
     public String EmployeeEditSubmit(Employee employee, Model model)
     {
@@ -99,7 +113,16 @@ public class EmployeeFormController
         // Redirect to AccountPage page
         return "redirect:/client/dashboard";
     }
-    
+
+    /*
+    EmployeeTokenSubmit is invoked on click of the submit botton on employee/token.html
+    If the token is valid, the employee gets redirected to the prefilled employee/form.html to make changes on
+    the data associated with the token.
+
+    If the token is invalid, an error message shows up on the screen.
+
+    After a token is used, it becomes invalid.
+     */
     @RequestMapping("/employee/token/submit")
     public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
@@ -142,7 +165,12 @@ public class EmployeeFormController
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));
     }
 
-    // Employee data preview - Review Employee data
+    /*
+    EmployeePreview handles employee/preview.html
+    It is invoked by the submit button in employee/form.htlm.
+
+    The previously entered data can be review before it is submitted.
+     */
     @RequestMapping(value = "/employee/preview", method = {RequestMethod.POST, RequestMethod.GET})
     public String EmployeePreview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
@@ -152,7 +180,13 @@ public class EmployeeFormController
         return "employee/preview";
     }
 
-    // Employee data submit - Submit Employee data
+    /*
+    EmployeeConfirm handles employee/confirm.html
+    Invoked by: Submit button in employee/preview.html
+
+    Apart from providing the opportunity to download the data as text file or pdf, the
+    previously entered data is stored in the database.
+     */
     @RequestMapping("/employee/confirm")
     public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
@@ -186,107 +220,15 @@ public class EmployeeFormController
         return mav;
     }
 
-    // Employee file download - Download text file with Employee data
-    @RequestMapping("/employee/download/text")
-    public void EmployeeDownloadText(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
-    {
-        Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
+    /*
+    Invoked by: Delete button on client/dashboard.html
 
-        // Send file contents
-        response.setContentType("text/plain");
-        response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
-        ServletOutputStream out = response.getOutputStream();
-        out.println(fileContent);
-        out.close();
-    }
-
-    // Employee zip file download - Download zip file containing a text with Employee data
-    @RequestMapping("/employee/download/zip")
-    public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
-    {
-        //Prepare textfile contents
-        Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
-
-        response.setContentType("application/zip");
-        response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
-
-        final StringBuilder sb = new StringBuilder(fileContent);
-        final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
-
-        try {
-            ZipParameters params = new ZipParameters();
-            params.setFileNameInZip("employee.txt");
-            params.setCompressionLevel(Zip4jConstants.COMP_DEFLATE);
-            params.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_ULTRA);
-            params.setEncryptFiles(true);
-            params.setReadHiddenFiles(false);
-            params.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
-            params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
-            params.setPassword("AMOS");
-            params.setSourceExternalStream(true);
-
-            zout.putNextEntry(null, params);
-            byte[] data = sb.toString().getBytes();
-            zout.write(data, 0, data.length);
-            zout.closeEntry();
-
-            try {
-                // Create a document and add a page to it
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage();
-                document.addPage(page);
-
-                // Create a new font object selecting one of the PDF base fonts
-                PDFont font = PDType1Font.COURIER;
-
-                // Start a new content stream which will "hold" the to be created content
-                PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-                // Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
-                contentStream.beginText();
-                contentStream.setFont(font, 10);
-                contentStream.moveTextPositionByAmount(10, 700);
-
-                List<String> list = StringUtils.splitEqually(fileContent, 90);
-                for (String e : list) {
-                    contentStream.moveTextPositionByAmount(0, -15);
-                    contentStream.drawString(e);
-                }
-                contentStream.endText();
-
-                // Make sure that the content stream is closed:
-                contentStream.close();
-
-                // Save the results and ensure that the document is properly closed:
-                ByteArrayOutputStream pdfout = new ByteArrayOutputStream();
-                document.save(pdfout);
-                document.close();
-
-
-                ZipParameters params2 = (ZipParameters) params.clone();
-                params2.setFileNameInZip("employee.pdf");
-
-                zout.putNextEntry(null, params2);
-                zout.write(pdfout.toByteArray());
-                zout.closeEntry();
-            } catch (CloneNotSupportedException | COSVisitorException e) {
-                e.printStackTrace();
-            }
-
-            // Write the zip to client
-            zout.finish();
-            zout.flush();
-            zout.close();
-        } catch (ZipException e) {
-            e.printStackTrace();
-        }
-    }
-
+    The respective employee is deleted in the database, recovery is not possible
+     */
     @RequestMapping("/employee/delete")
     public String EmployeeDelete(@RequestParam(value = "id", required = true) long employeeId)
     {
+        //TODO: Security, allow deletion only for employees assigned to respective client.
         // Remove employee with passed id
         this.employeeRepository.delete(employeeId);
 
@@ -294,6 +236,11 @@ public class EmployeeFormController
         return "redirect:/client/dashboard";
     }
 
+    /*
+    Invoked by: New Employee link on client/dashboard.html
+
+    Creates a new employee in the database.
+     */
     @RequestMapping("/employee/new")
     public String EmployeeNew(Principal principal)
     {
