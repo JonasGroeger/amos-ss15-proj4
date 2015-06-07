@@ -10,6 +10,7 @@ import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.TokenGenerator;
 import net.lingala.zip4j.exception.ZipException;
@@ -52,16 +53,18 @@ public class EmployeeFormController
     private final EmployeeRepository employeeRepository;
     private final ClientRepository clientRepository;
     private final ClientService clientService;
+    private final EmployeeService employeeService;
 
     /*
     Constructor called at program start.
      */
     @Autowired
-    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService)
+    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService, EmployeeService employeeService)
     {
     	this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
+        this.employeeService = employeeService;
     }
 
     /*
@@ -192,16 +195,17 @@ public class EmployeeFormController
      */
     @RequestMapping("/employee/confirm")
     public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
-                                 BindingResult result,Principal principal, Model model) throws Exception
+                                 BindingResult result, Model model) throws Exception
     {
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
+
+        Employee e = employeeService.getEmployeeByToken(employee.getToken());
+        Client client = e.getClient();
         employee.setClient(client);
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
         client.getEmployees().add(employee);
         clientRepository.save(client);
-        
+
         // If the employee is new: Create
         // If the employee already has a primary key: Update
         Employee newOrUpdatedEmployee = employeeRepository.save(employee);
