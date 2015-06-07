@@ -72,6 +72,12 @@ dependencies {
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 }
 
+test {
+    afterTest { desc, result -> 
+        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+}
+
 idea {
     module {
         downloadJavadoc = true
