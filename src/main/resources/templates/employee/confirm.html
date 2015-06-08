@@ -2,40 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
 
 <head>
-	<title>Personalfragebogen 2.0 - v0.1</title>
+    <title>Personalfragebogen 2.0 - v0.1</title>
 </head>
 
 <body>
-<div layout:fragment="content">
-	<form th:action="@{/employee/confirm}" th:object="${employee}"
-		method="POST">
-
-			<script th:inline="javascript">
-				var DUMMY_TEXT = 'DUMMY_TEXT';
-				var _translate = {};
-				_translate['client_logout_confirm'] = /*[[#{client.logout.confirm}]]*/ DUMMY_TEXT;
-				// TODO: Add more strings here. Maybe all of them dynamically and minimized?
-			</script>
-
-			<!-- Start: Logout button -->
-			<div th:if="${currentClient != null}">
-				<form onsubmit="return confirm(_translate['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
-					<button th:text="#{logout}" th:type="submit">Log out</button>
-				</form>
-			</div>
-			<!-- End: Logout button -->
-
-			<p th:text="#{EmployeeSubmit.submitMessage}" />
-			<p th:text="'Employee id:' + ${EmployeeId}" />
-
-			<p th:text="#{EmployeeSubmit.downloadLabel}" />
-			<a th:href="@{'/employee/download/text?id=' + ${EmployeeId}}"
-				th:text="#{EmployeeSubmit.downloadLink}"></a> <br />
-			<p th:text="#{EmployeeSubmit.zipDownloadLabel}" />
-			<a th:href="@{'/employee/download/zip?id=' + ${EmployeeId}}"
-				th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
-
-		</form>
-	</div>
+    <div layout:fragment="content">
+        <form th:action="@{/employee/confirm}" th:object="${employee}" method="POST">
+            <p th:text="#{EmployeeSubmit.submitMessage}" />
+            <p th:text="'Employee id:' + ${EmployeeId}" />
+            
+            <p th:text="#{EmployeeSubmit.downloadLabel}" />
+            <a th:href="@{'/employee/download/text?id=' + ${EmployeeId}}" th:text="#{EmployeeSubmit.downloadLink}"></a>
+            
+            <br />
+            <p th:text="#{EmployeeSubmit.zipDownloadLabel}" />
+            <a th:href="@{'/employee/download/zip?id=' + ${EmployeeId}}" th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
+        </form>
+    </div>
 </body>
 </html>
