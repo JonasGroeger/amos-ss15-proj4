@@ -11,4 +11,6 @@ import java.util.List;
 public interface EmployeeRepository extends CrudRepository<Employee, Long>
 {
     List<Employee> findByClient(Client client);
+
+    Employee findOneByToken(String token);
 }

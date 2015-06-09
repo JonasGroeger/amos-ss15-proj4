@@ -1,100 +1,28 @@
-<!doctype html>
-
-<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
 
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="description" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Personalfragebogen 2.0 - v0.1</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<style>
-h1 {
-	padding-bottom: 150px;
-	margin-left: 70px;
-	text-align: center;
-}
-
-body {
-	position: center;
-	padding-top: 50px;
-	margin-left: 10px;
-	padding-bottom: 100px;
-}
-
-.footerWrap {
-	width: 50%;
-	position: fixed;
-	bottom: 0px;
-}
-
-.footer {
-	width: 300px;
-	margin: auto;
-}
-
-.footerContent {
-	float: center;
-	width: 500%;
-	padding: 20px;
-}
-
-.footer p {
-	float: center;
-	width: 50%;
-	text-align: center;
-}
-</style>
-<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <title>Personalfragebogen 2.0 - v0.1</title>
 </head>
+
 <body>
-	<div class="container">
-		<span style="float: right"> <a href="?lang=en">
-				<button type="button" th:with="lang=${en}">
-					<img th:src="@{/images/uk.gif}" src="../static/images/uk.gif"
-						class="img-responsive" alt="Responsive image"
-						style="width: 32px; height: 24px;" />
-				</button>
-		</a> <a href="?lang=de">
-				<button th:with="lang=${de}">
-					<img th:src="@{/images/deutschlandflagge.jpg}"
-						src="../static/images/uk.gif" class="img-responsive"
-						alt="Responsive image" style="width: 32px; height: 24px;" />
-				</button>
-		</a>
-
-		</span>
-		<h1 th:text="#{EmployeeForm.header}"></h1>
-		<form class="form-horizontal" th:action="@{/employee/token/submit}">
-
-
-			<div class="col-sm-4 col-sm-offset-4">
-				<div class="form-group">
-					<label for="inputtoken">Token</label> <input type="text"
-						class="form-control" name="token" required="true" id="inputtoken"
-						th:placeholder="#{placeholder.token}"> </input>
-				</div>
-
-				<div class="form-group">
-
-					<button type="submit" class="btn btn-success"
-						th:text="#{FrontPage.next}"></button>
-				</div>
-			</div>
-
-		</form>
-		<div class="footerWrap">
-			<div class="footer">
-				<div class="footerContent">
-					<p>&copy; 2015 AMOS GROUP 4</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="js/vendor/jquery-1.11.2.min.js"></script>
-	<script src="js/vendor/bootstrap.min.js"></script>
-	<script src="js/main.js"></script>
+    <div layout:fragment="content">
+        <form th:action="@{/employee/token/submit}">
+            <h1 th:text="#{EmployeeForm.header}"></h1>
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="form-group">
+                        <label for="inputtoken">Token</label>
+                        <input type="text" class="form-control" name="token" required="true" id="inputtoken" th:placeholder="#{placeholder.token}">
+                        </input>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" th:text="#{FrontPage.next}"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>

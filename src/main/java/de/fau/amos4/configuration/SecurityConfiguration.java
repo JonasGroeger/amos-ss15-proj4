@@ -60,13 +60,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 // Allow access to the confirm page.
                 .antMatchers("/client/confirm").permitAll()
                 //Allow access to FrontPage
-                .antMatchers("/FrontPage").permitAll()
-                .antMatchers("/FrontPageSubmit").permitAll()
-                .antMatchers("/WrongToken").permitAll()
-                .antMatchers("/EmployeePreview").permitAll()
-                .antMatchers("/EmployeeSubmit").permitAll()
-                .antMatchers("/EmployeeTextFileDownload").permitAll()
-                .antMatchers("/EmployeeZipFileDownload").permitAll()
+                .antMatchers("/employee/token").permitAll()
+                .antMatchers("/employee/token/submit").permitAll()
+                .antMatchers("/employee/token/wrong").permitAll()
+                .antMatchers("/employee/preview").permitAll()
+                .antMatchers("/employee/confirm").permitAll()
+                .antMatchers("/employee/download/text").permitAll()
+                .antMatchers("/employee/download/zip").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 .and()

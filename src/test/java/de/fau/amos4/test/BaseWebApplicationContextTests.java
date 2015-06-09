@@ -23,7 +23,9 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import de.fau.amos4.Application;
 import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.web.ClientController;
 import de.fau.amos4.web.EmployeeFormController;
 
 import javax.annotation.Resource;
@@ -51,9 +53,12 @@ public abstract class BaseWebApplicationContextTests {
 
     @Autowired
     protected EmployeeRepository employeeRepository;
+
+    @Autowired
+    protected ClientRepository clientRepository;
     
     @Autowired
-    protected ClientRepository clientRepository;    
+    protected ClientService clientService;
 
     @Before
     public void initDispatcherServlet() throws Exception{

@@ -43,8 +43,8 @@ public class PrintDataController {
     }
 
     // Employee file download - Download text file with Employee data
-    @RequestMapping("/EmployeeTextFileDownload")
-    public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
+    @RequestMapping("/employee/download/text")
+    public void EmployeeDownloadText(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
 
         Employee employee = employeeRepository.findOne(employeeId);
@@ -63,8 +63,8 @@ public class PrintDataController {
     }
 
     // Employee zip file download - Download zip file containing a text with Employee data
-    @RequestMapping("/EmployeeZipFileDownload")
-    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
+    @RequestMapping("/employee/download/zip")
+    public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
