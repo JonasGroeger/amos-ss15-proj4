@@ -124,4 +124,3 @@ gradle-app.setting
 application.yml
 application-developer-specific.yml
 application-production.yml
-*.sample
