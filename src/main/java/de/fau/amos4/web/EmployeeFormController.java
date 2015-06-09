@@ -6,7 +6,6 @@ import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
@@ -67,20 +66,6 @@ public class EmployeeFormController
         this.employeeService = employeeService;
     }
 
-    /*
-    After entering a valid token in the employee/token.hmtl page, an employee gets redirected to the
-    employee/form.html page which contains the prefilled
-
-    @RequestMapping("/employee/form")
-    public String EmployeeForm(Model model) throws Exception
-    {
-        model.addAttribute("employee", new Employee());
-        model.addAttribute("allDisabled", Disabled.values());
-        model.addAttribute("allMarital", MaritalStatus.values());
-        model.addAttribute("allSex", Sex.values());
-        return "employee/form";
-    }
-    */
     /*
     EmployeeEdit handles employee/edit.html
     It is invoked by the edit button in the client/dashboard.html
@@ -152,18 +137,13 @@ public class EmployeeFormController
 	        mav.addObject("allMarital", MaritalStatus.values());
 	        mav.addObject("allSex", Sex.values());
         } else {
-        	mav.setViewName("employee/wrongtoken");
+            mav.addObject("m", "invalid");
+        	mav.setViewName("employee/token");
         }
         return mav;
         	
     }
     
-    @RequestMapping("employee/token/wrong")
-    public String EmployeeTokenWrong()
-    {
-    	//TODO get rid of these invalid pages
-        return "employee/tokenwrong";
-    }
     
     @InitBinder
     public void initBinder(WebDataBinder binder)
