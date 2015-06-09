@@ -10,7 +10,11 @@
         <form th:action="@{/employee/token/submit}">
             <h1 th:text="#{EmployeeForm.header}"></h1>
             <div class="row">
+                <div th:switch="${m}">
+                    <div th:case="'invalid'" th:text="#{employee.token.invalid}" style='color:red;font-weight:bold;'>Invalid login.</div>
+                </div>
                 <div class="col-sm-4 col-sm-offset-4">
+
                     <div class="form-group">
                         <label for="inputtoken">Token</label>
                         <input type="text" class="form-control" name="token" required="true" id="inputtoken" th:placeholder="#{placeholder.token}">
