@@ -43,6 +43,9 @@ public class Client
     @Column
     private String confirmationString;
     
+    @Column
+    private String zipPassword;
+    
     //personal information
     
     @Column
@@ -153,6 +156,16 @@ public class Client
         this.confirmationString = confirmationString;
     }
     
+    public String getZipPassword()
+    {
+        return zipPassword;
+    }
+
+    public void setZipPassword(String zipPassword)
+    {
+        this.zipPassword = zipPassword;
+    }
+    
     public Title getTitle()
     {
         return title;
@@ -178,7 +191,7 @@ public class Client
         return familyName;
     }
 
-    public void setLastName(String familyName)
+    public void setFamilyName(String familyName)
     {
         this.familyName = familyName;
     }
@@ -295,6 +308,7 @@ public class Client
                 .append(role, client.role)
                 .append(activated, client.activated)
                 .append(confirmationString, client.confirmationString)
+                .append(zipPassword, client.zipPassword)
                 .append(title, client.title)
                 .append(firstName, client.firstName)
                 .append(familyName, client.familyName)
@@ -320,6 +334,7 @@ public class Client
                 .append(role)
                 .append(activated)
                 .append(confirmationString)
+                .append(zipPassword)
                 .append(title)
                 .append(firstName)
                 .append(familyName)
@@ -345,6 +360,7 @@ public class Client
                 .append("role", role)
                 .append("activated", activated)
                 .append("confirmationString", confirmationString)
+                .append("zipPassword", zipPassword)
                 .append("title", title)
                 .append("firstName", firstName)
                 .append("familyName", familyName)

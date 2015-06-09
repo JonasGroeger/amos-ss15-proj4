@@ -14,12 +14,16 @@
 			method="POST">
 			<p th:text="#{Client.id} + ': ' + *{id}" />
 			
+			<fieldset>
+				<input type="radio" id="LODAS" name="Programm" value="LODAS"><label for="LODAS"> LODAS</label></input>
+				<input type="radio" id="LuG" name="Programm" value="LuG"><label for="LuG"> LuG</label></input>
+			</fieldset>
 			
 			<label class="labelClass" for="loginAndSecurity" th:text="#{ClientEdit.loginAndSecurity}"></label>
 
 			<div class="form-group">
 				<label for="Email" th:text="#{Client.email}"></label>
-				<input type="email" class="form-control" id="Email" th:placeholder="#{placeholder.Email}" th:field="*{email}"></input>
+				<input readonly="true" type="email" class="form-control" id="Email" th:placeholder="#{placeholder.Email}" th:field="*{email}"></input>
 			</div>
 
 			<div class="form-group">
@@ -39,7 +43,7 @@
 			
 			<div class="form-group">
 				<label for="ZipPassword" th:text="#{ClientEdit.ZipPassword}"></label>
-				<input type="password" class="form-control" id="ZipPassword" th:placeholder="#{placeholder.ZipPassword}"></input>
+				<input type="password" class="form-control" id="ZipPassword" th:placeholder="#{placeholder.ZipPassword}" th:field="*{zipPassword}"></input>
 			</div>
 
 
@@ -49,35 +53,34 @@
 				<label for="title" th:text="#{Client.title}"></label>
 				<select class="form-control">
 					<option value="" th:text="#{RegistrationPage.select}"></option>
-					<option th:each="title : ${allTitle}" th:value="${title.name()}" th:text="${title.getText()}"></option>
+					<option th:each="title : ${allTitle}" th:value="${title.name()}" th:text="${title.getText()}" th:field="*{title}"></option>
 				</select>
 			</div>
 
 			<div class="form-group">
 				<label for="firstname" th:text="#{Client.firstname}"></label>
-				<input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.firstname}"></input>
+				<input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.firstname}" th:field="*{firstName}"></input>
 			</div>
 
 
 			<div class="form-group">
 				<label for="familyname" th:text="#{Client.familyname}"></label>
-				<input type="text" class="form-control" id="familyname" th:placeholder="#{placeholder.lastname}"></input>
+				<input type="text" class="form-control" id="familyname" th:placeholder="#{placeholder.lastname}" th:field="*{familyName}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="birthdate" th:text="#{Client.birthdate}"></label>
-				<input type="birthdate" class="form-control" id="birthdate" th:placeholder="#{placeholder.birthdate}"></input>
+				<input type="birthdate" class="form-control" id="birthdate" th:placeholder="#{placeholder.birthdate}" th:field="*{birthDate}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="officePhoneNumber" th:text="#{Client.officePhoneNumber}"></label>
-				<input type="text" class="form-control" id="officePhoneNumber" th:placeholder="#{placeholder.phoneNumber}"></input>
+				<input type="text" class="form-control" id="officePhoneNumber" th:placeholder="#{placeholder.phoneNumber}" th:field="*{officePhoneNumber}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="mobilePhoneNumber" th:text="#{Client.mobilePhoneNumber}"></label>
-				<input type="text" class="form-control" id="mobilePhoneNumber"
-					th:placeholder="#{placeholder.mobileNumber}"></input>
+				<input type="text" class="form-control" id="mobilePhoneNumber" th:placeholder="#{placeholder.mobileNumber}" th:field="*{mobilePhoneNumber}"></input>
 			</div>
 
 
@@ -85,33 +88,32 @@
 
 			<div class="form-group">
 				<label for="companyName" th:text="#{Client.companyName}"></label>
-				<input type="text" class="form-control" id="companyName" th:placeholder="#{placeholder.CompanyName}"></input>
+				<input type="text" class="form-control" id="companyName" th:placeholder="#{placeholder.CompanyName}" th:field="*{companyName}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="companyType" th:text="#{Client.companyType}"></label>
-				<input type="text" class="form-control" id="companyType"
-					th:placeholder="#{placeholder.CompanyType}"></input>
+				<input type="text" class="form-control" id="companyType" th:placeholder="#{placeholder.CompanyType}" th:field="*{companyType}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="country" th:text="#{Client.country}"></label>
-				<input type="text" class="form-control" id="country" th:placeholder="#{placeholder.Country}"></input>
+				<input type="text" class="form-control" id="country" th:placeholder="#{placeholder.Country}" th:field="*{country}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="address" th:text="#{Client.address}"></label>
-				<input type="text" class="form-control" id="address" th:placeholder="#{placeholder.Address}"></input>
+				<input type="text" class="form-control" id="address" th:placeholder="#{placeholder.Address}" th:field="*{address}"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="zipCode" th:text="#{Client.zipCode}"></label>
-				<input type="text" class="form-control" id="zipCode" th:placeholder="#{placeholder.ZipCode}"></input>
+				<input type="text" class="form-control" id="zipCode" th:placeholder="#{placeholder.ZipCode}" th:field="*{zipCode}"></input>
 			</div>
 
 			
 			<button type="submit" class="btn btn-block btn-lg btn-primary">
-				<span class="glyphicon glyphicon-ok" th:text="#{EmployeePreview.send}"></span>
+				<span class="glyphicon glyphicon-ok" th:text="#{KEYWORD.submit}"></span>
 			</button>
 		</form>
 	</div>
