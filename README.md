@@ -51,8 +51,23 @@ to do that for some reason, use the provided table below:
     Ü -> \u00dc
     ß -> \u00df
 
-
-
 # Running the Tests
-
 If you want to run the tests using for example `./gradlew test`.
+
+
+# Adding the license to new files
+We need to have our license at the start of every file. This can be done manually or automatically.
+
+## Automatically (recommended)
+The gradle plugin we use (`com.github.hierynomus.license`) introduces two tasks:
+
+    1. license : Checks for header consistency.
+    2. licenseFormat : Applies the header (`LICENSE.header`) in files missing it
+    
+*Yes, there are more than two tasks introduced (6 to be precise). The ones that additionally include the `Main` or
+`Test` part in their name. These however just cover the respective source set and not all source sets. Thus, you most
+probably do not need them.*
+
+## Manually
+Take the license from one of the existing files and copy-paste it over to the new file. Make sure that there is no
+newline between the license and the `package ...` part.
