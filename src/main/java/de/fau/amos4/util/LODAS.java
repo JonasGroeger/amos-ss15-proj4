@@ -19,7 +19,7 @@ public class LODAS {
     Feldtrennzeichen (optional, default: ; )
     Zahlenkomma      (optional, default: ',' also possible '.')
     Datumsformat     (optional, default: TT.MM.JJJJ)
-    StammdatenGueltigAb (optional, TT.MM.JJJJ default: Abrechnungsstand +1 als GültigAb-Monat)
+    StammdatenGueltigAb (optional, TT.MM.JJJJ default: Abrechnungsstand +1 als GÃ¼ltigAb-Monat)
      */
     private final HashMap<String,String> Allgemein;
 
