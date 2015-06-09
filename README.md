@@ -1,23 +1,25 @@
 # amos-ss15-proj4 [![Build Status](https://travis-ci.org/JOBAA/amos-ss15-proj4.svg?branch=master)](https://travis-ci.org/JOBAA/amos-ss15-proj4)
 Personalfragebogen 2.0 @ DATEV
 
-# Setup (*long*)
+# Setup
+## Longer version
 1. Clone the project using `git clone git@github.com:JOBAA/amos-ss15-proj4.git`
 2. Change to the project directory using `cd amos-ss15-proj4`
 3. Run `./gradlew idea` or `./gradlew eclipse`, depending on which IDE you use.
 4. Load the project in the IDE using "Import existing (Gradle) Project" or similar.
 
-# Setup (*tl;dr*)
+## Shorter version
     git clone git@github.com:JOBAA/amos-ss15-proj4.git
     cd amos-ss15-proj4
     ./gradlew idea # For IntelliJ Idea
     ./gradlew eclipse # For Eclipse
 
+
 # Gradle
 To get a list of available commands, use `./gradlew tasks`.
 
-# Configuration
 
+# Configuration
 Configuration is held in [YAML](http://yaml.org/) files. We have a main configuration with application wide
 configuration. Then, there is a developer specific configuration file which overrides any configuration that a developer
 might have locally. To enable this, just rename the file:
@@ -39,5 +41,22 @@ combined (and will be resolved hierarchically),
 
 
 # Running the Tests
-
 If you want to run the tests using for example `./gradlew test`.
+
+
+# Adding the license to new files
+We need to have our license at the start of every file. This can be done manually or automatically.
+
+## Automatically (recommended)
+The gradle plugin we use (`com.github.hierynomus.license`) introduces two tasks:
+
+    1. license : Checks for header consistency.
+    2. licenseFormat : Applies the header (`LICENSE.header`) in files missing it
+    
+*Yes, there are more than two tasks introduced (6 to be precise). The ones that additionally include the `Main` or
+`Test` part in their name. These however just cover the respective source set and not all source sets. Thus, you most
+probably do not need them.*
+
+## Manually
+Take the license from one of the existing files and copy-paste it over to the new file. Make sure that there is no
+newline between the license and the `package ...` part.
