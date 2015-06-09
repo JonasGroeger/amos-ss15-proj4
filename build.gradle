@@ -7,11 +7,17 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.github.hierynomus.license" version "0.11.0"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
+
+
 
 springBoot {
     mainClass = 'de.fau.amos4.Application'
@@ -83,6 +89,16 @@ idea {
         downloadJavadoc = true
         downloadSources = true
     }
+}
+
+license {
+    header = file('LICENSE.header')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo\n' +
+            '    Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh'
+
+    // Only mark Java files with license
+    include '**/*.java'
 }
 
 task wrapper(type: Wrapper) {
