@@ -243,14 +243,14 @@ public class Client
         this.country = country;
     }
     
-    public String getStreetName()
+    public String getAddress()
     {
         return address;
     }
 
-    public void setStreetName(String streetName)
+    public void setAddress(String address)
     {
-        this.address = streetName;
+        this.address = address;
     }
     
     public String getZipCode()
@@ -354,7 +354,7 @@ public class Client
                 .append("companyName", companyName)
                 .append("companyType", companyType)
                 .append("country", country)
-                .append("streetName", address)
+                .append("address", address)
                 .append("zipCode", zipCode)
                 .toString();
     }

@@ -25,6 +25,8 @@
     	<p th:text="#{Client.address} + ': ' + *{address}" />
     	<p th:text="#{Client.zipCode} + ': ' + *{zipCode}" />
     </div>
+    
+    <a th:href="@{/client/edit}" th:text="#{KEYWORD.edit}"></a>
 </div>
 </body>
 
