@@ -121,7 +121,5 @@ gradle-app.setting
 !idea-settings.jar
 
 # Ignore developer specific configuration
-application.yml
 application-developer-specific.yml
 application-production.yml
-*.sample

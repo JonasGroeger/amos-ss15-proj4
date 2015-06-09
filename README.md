@@ -40,19 +40,6 @@ combined (and will be resolved hierarchically),
 [as seen in the Spring Boot documentation](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html).
 
 
-# Localization
-When working on the l18n, just use [the online tool native2ascii](http://native2ascii.net/) to convert. If you dont want
-to do that for some reason, use the provided table below:
-
-    ä -> \u00e4
-    ö -> \u00f6
-    ü -> \u00fc
-    Ä -> \u00c4
-    Ö -> \u00d6
-    Ü -> \u00dc
-    ß -> \u00df
-
-
 # Running the Tests
 If you want to run the tests using for example `./gradlew test`.
 
