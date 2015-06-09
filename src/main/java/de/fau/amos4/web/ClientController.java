@@ -74,4 +74,17 @@ public class ClientController
         mav.setViewName("client/profile");
         return mav;
     }
+    
+    @RequestMapping(value = "/client/edit")
+    public ModelAndView ClientEdit(Principal principal)
+    {
+        ModelAndView mav = new ModelAndView();
+        
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
+        mav.addObject("Client", client);
+        
+        mav.setViewName("client/edit");
+        return mav;
+    }
 }

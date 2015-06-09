@@ -1,5 +1,7 @@
 package de.fau.amos4.web;
 
+import java.security.Principal;
+
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -78,5 +81,14 @@ public class LoginFormController
             return "redirect:/?m=confirmfail";
         }
 
+    }
+    
+    @RequestMapping("/client/edit/submit")
+    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client) throws AddressException, MessagingException
+    {
+    	//TODO Save to database
+    	//Client tmp = clientRepository.findOne(client.getId());
+    	//clientRepository.save(tmp);
+        return "redirect:/client/dashboard";
     }
 }

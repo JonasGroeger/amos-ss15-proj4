@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
+
+<head>
+<title>Personalfragebogen 2.0 - v0.1</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<h1 th:text="#{ClientEdit.header}"></h1>
+
+		<form th:action="@{/client/edit/submit}" th:object="${Client}"
+			method="POST">
+			<p th:text="#{Client.id} + ': ' + *{id}" />
+			
+			
+			<label class="labelClass" for="loginAndSecurity" th:text="#{ClientEdit.loginAndSecurity}"></label>
+
+			<div class="form-group">
+				<label for="Email" th:text="#{Client.email}"></label>
+				<input type="email" class="form-control" id="Email" th:placeholder="#{placeholder.Email}" th:field="*{email}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="NewPassword" th:text="#{ClientEdit.NewPassword}"></label>
+				<input type="password" class="form-control" id="NewPassword" th:placeholder="#{placeholder.NewPassword}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="ConfirmPassword" th:text="#{ClientEdit.ConfirmPassword}"></label>
+				<input type="password" class="form-control" id="ConfirmPassword" th:placeholder="#{placeholder.ConfirmPassword}"></input>
+			</div>
+			
+			<div class="form-group">
+				<label for="OldPassword" th:text="#{ClientEdit.OldPassword}"></label>
+				<input type="password" class="form-control" id="OldPassword" th:placeholder="#{placeholder.OldPassword}"></input>
+			</div>
+			
+			<div class="form-group">
+				<label for="ZipPassword" th:text="#{ClientEdit.ZipPassword}"></label>
+				<input type="password" class="form-control" id="ZipPassword" th:placeholder="#{placeholder.ZipPassword}"></input>
+			</div>
+
+
+			<label class="labelClass" for="personalDetails" th:text="#{RegistrationPage.personalDetails}"></label>
+
+			<div class="form-group">
+				<label for="title" th:text="#{Client.title}"></label>
+				<select class="form-control">
+					<option value="" th:text="#{RegistrationPage.select}"></option>
+					<option th:each="title : ${allTitle}" th:value="${title.name()}" th:text="${title.getText()}"></option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="firstname" th:text="#{Client.firstname}"></label>
+				<input type="text" class="form-control" id="firstname" th:placeholder="#{placeholder.firstname}"></input>
+			</div>
+
+
+			<div class="form-group">
+				<label for="familyname" th:text="#{Client.familyname}"></label>
+				<input type="text" class="form-control" id="familyname" th:placeholder="#{placeholder.lastname}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="birthdate" th:text="#{Client.birthdate}"></label>
+				<input type="birthdate" class="form-control" id="birthdate" th:placeholder="#{placeholder.birthdate}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="officePhoneNumber" th:text="#{Client.officePhoneNumber}"></label>
+				<input type="text" class="form-control" id="officePhoneNumber" th:placeholder="#{placeholder.phoneNumber}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="mobilePhoneNumber" th:text="#{Client.mobilePhoneNumber}"></label>
+				<input type="text" class="form-control" id="mobilePhoneNumber"
+					th:placeholder="#{placeholder.mobileNumber}"></input>
+			</div>
+
+
+			<label class="labelClass" for="companyDetails" th:text="#{RegistrationPage.companyDetails}"></label>
+
+			<div class="form-group">
+				<label for="companyName" th:text="#{Client.companyName}"></label>
+				<input type="text" class="form-control" id="companyName" th:placeholder="#{placeholder.CompanyName}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="companyType" th:text="#{Client.companyType}"></label>
+				<input type="text" class="form-control" id="companyType"
+					th:placeholder="#{placeholder.CompanyType}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="country" th:text="#{Client.country}"></label>
+				<input type="text" class="form-control" id="country" th:placeholder="#{placeholder.Country}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="address" th:text="#{Client.address}"></label>
+				<input type="text" class="form-control" id="address" th:placeholder="#{placeholder.Address}"></input>
+			</div>
+
+			<div class="form-group">
+				<label for="zipCode" th:text="#{Client.zipCode}"></label>
+				<input type="text" class="form-control" id="zipCode" th:placeholder="#{placeholder.ZipCode}"></input>
+			</div>
+
+			
+			<button type="submit" class="btn btn-block btn-lg btn-primary">
+				<span class="glyphicon glyphicon-ok" th:text="#{EmployeePreview.send}"></span>
+			</button>
+		</form>
+	</div>
+</body>
+
+</html>

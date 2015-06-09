@@ -9,6 +9,7 @@
 
 <div layout:fragment="content">
 		<h1 th:text="#{EmployeeForm.header}"></h1>
+		<a th:href="@{/client/edit}">Edit</a>
 		<h2 th:text="#{AccountPage.header}"></h2>
 		<a th:href="@{/employee/new}" th:text="#{AccountPage.newEmployee}">New Employee</a>
 		<table class="table table-striped">
