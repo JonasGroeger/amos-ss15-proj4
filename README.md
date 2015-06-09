@@ -1,23 +1,25 @@
 # amos-ss15-proj4 [![Build Status](https://travis-ci.org/JOBAA/amos-ss15-proj4.svg?branch=master)](https://travis-ci.org/JOBAA/amos-ss15-proj4)
 Personalfragebogen 2.0 @ DATEV
 
-# Setup (*long*)
+# Setup
+## Longer version
 1. Clone the project using `git clone git@github.com:JOBAA/amos-ss15-proj4.git`
 2. Change to the project directory using `cd amos-ss15-proj4`
 3. Run `./gradlew idea` or `./gradlew eclipse`, depending on which IDE you use.
 4. Load the project in the IDE using "Import existing (Gradle) Project" or similar.
 
-# Setup (*tl;dr*)
+## Shorter version
     git clone git@github.com:JOBAA/amos-ss15-proj4.git
     cd amos-ss15-proj4
     ./gradlew idea # For IntelliJ Idea
     ./gradlew eclipse # For Eclipse
 
+
 # Gradle
 To get a list of available commands, use `./gradlew tasks`.
 
-# Configuration
 
+# Configuration
 Configuration is held in [YAML](http://yaml.org/) files. We have a main configuration with application wide
 configuration. Then, there is a developer specific configuration file which overrides any configuration that a developer
 might have locally. To enable this, just rename the file:
@@ -37,11 +39,10 @@ could have a configuration `use-in-memory-db` and a configuration `load-sql-from
 combined (and will be resolved hierarchically),
 [as seen in the Spring Boot documentation](http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html).
 
-# Localization
 
+# Localization
 When working on the l18n, just use [the online tool native2ascii](http://native2ascii.net/) to convert. If you dont want
 to do that for some reason, use the provided table below:
-
 
     ä -> \u00e4
     ö -> \u00f6
@@ -50,6 +51,7 @@ to do that for some reason, use the provided table below:
     Ö -> \u00d6
     Ü -> \u00dc
     ß -> \u00df
+
 
 # Running the Tests
 If you want to run the tests using for example `./gradlew test`.
