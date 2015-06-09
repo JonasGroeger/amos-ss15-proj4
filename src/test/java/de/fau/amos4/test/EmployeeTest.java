@@ -71,12 +71,24 @@ public class EmployeeTest extends BaseWebApplicationContextTests
         }
     }
 
+    /*
+     * Employee test: Newly added employee can be retrieved from it's client. 
+     */
     @Test
     public void testFindEmployeeByClient()
     {
-        Client c = clientRepository.findOne(1l);
-        List<Employee> foundEmployees = employeeRepository.findByClient(c);
-
-        Assert.assertEquals("Inserting a employee inserted more than one.", foundEmployees.size(), 1);
+        // Get a client
+        Client client = clientRepository.findOne(1l);
+        
+        // Add a new employee to the client
+        Employee employee = new Employee();
+        employee.setClient(client);
+        employeeRepository.save(employee);
+        
+        // Retrieve employees for this client
+        List<Employee> foundEmployees = employeeRepository.findByClient(client);
+        
+        // Make sure that at least one employee is returned. (One has just been added.)
+        Assert.assertTrue(foundEmployees.size() > 0);
     }
 }

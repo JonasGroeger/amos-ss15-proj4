@@ -19,9 +19,12 @@
  */
 package de.fau.amos4.web;
 
+import java.security.Principal;
+
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
 import de.fau.amos4.util.EmailSender;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -40,14 +44,16 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginFormController
 {
     private final ClientRepository clientRepository;
+    private final ClientService clientService;
 
     @Autowired
     private ServletContext servletContext;
 
     @Autowired
-    public LoginFormController(ClientRepository clientRepository)
+    public LoginFormController(ClientRepository clientRepository, ClientService clientService)
     {
         this.clientRepository = clientRepository;
+        this.clientService = clientService;
     }
 
     @RequestMapping("/client/register")
@@ -97,5 +103,33 @@ public class LoginFormController
             return "redirect:/?m=confirmfail";
         }
 
+    }
+    
+    @RequestMapping("/client/edit/submit")
+    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client) throws AddressException, MessagingException
+    {
+    	//TODO find better method to copy client
+    	Client tmp = clientService.getClientByEmail(client.getEmail());
+    	
+    	//TODO insert Password change
+    	
+    	if (client.getZipPassword() != null) {
+    		tmp.setZipPassword(client.getZipPassword());
+    	}
+    	tmp.setTitle(client.getTitle());
+    	tmp.setFirstName(client.getFirstName());
+    	tmp.setFamilyName(client.getFamilyName());
+    	tmp.setBirthDate(client.getBirthDate()); //FIXME outputs null at the moment
+    	tmp.setOfficePhoneNumber(client.getOfficePhoneNumber());
+    	tmp.setMobilePhoneNumber(client.getMobilePhoneNumber());
+    	tmp.setCompanyName(client.getCompanyName());
+    	tmp.setCompanyType(client.getCompanyType());
+    	tmp.setCountry(client.getCountry());
+    	tmp.setAddress(client.getAddress());
+    	tmp.setZipCode(client.getZipCode());
+    	tmp.setBirthDate(client.getBirthDate());
+    	
+    	clientRepository.save(tmp);
+        return "redirect:/client/dashboard";
     }
 }

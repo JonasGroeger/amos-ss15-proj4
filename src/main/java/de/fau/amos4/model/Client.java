@@ -25,7 +25,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Title;
 
 import javax.persistence.*;
@@ -37,6 +36,8 @@ import java.util.List;
 @Table
 public class Client
 {
+	//login information
+	
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +45,7 @@ public class Client
 
     @OneToMany(mappedBy="client")
     private List<Employee> employees;
-
-    @Column
-    private String companyName;
-
+    
     @Column(unique = true)
     private String email;
 
@@ -65,6 +63,11 @@ public class Client
     private String confirmationString;
     
     @Column
+    private String zipPassword;
+    
+    //personal information
+    
+    @Column
     @Enumerated(EnumType.STRING)
     private Title title;
     
@@ -80,10 +83,15 @@ public class Client
     Date birthDate;
     
     @Column
-    private String officeNumber;
+    private String officePhoneNumber;
     
     @Column
-    private String phoneNumber;
+    private String mobilePhoneNumber;
+    
+    //company information
+    
+    @Column
+    private String companyName;
     
     @Column
     private String companyType;
@@ -92,7 +100,7 @@ public class Client
     private String country;
     
     @Column
-    private String streetName;
+    private String address;
     
     @Column
     private String zipCode;
@@ -115,16 +123,6 @@ public class Client
     public void setEmployees(List<Employee> employees)
     {
         this.employees = employees;
-    }
-
-    public String getCompanyName()
-    {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName)
-    {
-        this.companyName = companyName;
     }
 
     public String getEmail()
@@ -177,6 +175,16 @@ public class Client
         this.confirmationString = confirmationString;
     }
     
+    public String getZipPassword()
+    {
+        return zipPassword;
+    }
+
+    public void setZipPassword(String zipPassword)
+    {
+        this.zipPassword = zipPassword;
+    }
+    
     public Title getTitle()
     {
         return title;
@@ -202,7 +210,7 @@ public class Client
         return familyName;
     }
 
-    public void setLastName(String familyName)
+    public void setFamilyName(String familyName)
     {
         this.familyName = familyName;
     }
@@ -217,24 +225,34 @@ public class Client
         this.birthDate = birthDate;
     }
     
-    public String getOfficeNumber()
+    public String getOfficePhoneNumber()
     {
-        return officeNumber;
+        return officePhoneNumber;
     }
 
-    public void setOfficeNumber(String officeNumber)
+    public void setOfficePhoneNumber(String officeNumber)
     {
-        this.officeNumber = officeNumber;
+        this.officePhoneNumber = officeNumber;
     }
     
-    public String getPhoneNumber()
+    public String getMobilePhoneNumber()
     {
-        return phoneNumber;
+        return mobilePhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber)
+    public void setMobilePhoneNumber(String phoneNumber)
     {
-        this.phoneNumber = phoneNumber;
+        this.mobilePhoneNumber = phoneNumber;
+    }
+    
+    public String getCompanyName()
+    {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName)
+    {
+        this.companyName = companyName;
     }
     
     public String getCompanyType()
@@ -257,14 +275,14 @@ public class Client
         this.country = country;
     }
     
-    public String getStreetName()
+    public String getAddress()
     {
-        return streetName;
+        return address;
     }
 
-    public void setStreetName(String streetName)
+    public void setAddress(String address)
     {
-        this.streetName = streetName;
+        this.address = address;
     }
     
     public String getZipCode()
@@ -304,21 +322,22 @@ public class Client
         return new EqualsBuilder()
                 .append(id, client.id)
                 .append(employees, client.employees)
-                .append(companyName, client.companyName)
                 .append(email, client.email)
                 .append(passwordHash, client.passwordHash)
                 .append(role, client.role)
                 .append(activated, client.activated)
                 .append(confirmationString, client.confirmationString)
+                .append(zipPassword, client.zipPassword)
                 .append(title, client.title)
                 .append(firstName, client.firstName)
                 .append(familyName, client.familyName)
                 .append(birthDate, client.birthDate)
-                .append(officeNumber, client.officeNumber)
-                .append(phoneNumber, client.phoneNumber)
+                .append(officePhoneNumber, client.officePhoneNumber)
+                .append(mobilePhoneNumber, client.mobilePhoneNumber)
+                .append(companyName, client.companyName)
                 .append(companyType, client.companyType)
                 .append(country, client.country)
-                .append(streetName, client.streetName)
+                .append(address, client.address)
                 .append(zipCode, client.zipCode)
                 .isEquals();
     }
@@ -329,21 +348,22 @@ public class Client
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(employees)
-                .append(companyName)
                 .append(email)
                 .append(passwordHash)
                 .append(role)
                 .append(activated)
                 .append(confirmationString)
+                .append(zipPassword)
                 .append(title)
                 .append(firstName)
                 .append(familyName)
                 .append(birthDate)
-                .append(officeNumber)
-                .append(phoneNumber)
+                .append(officePhoneNumber)
+                .append(mobilePhoneNumber)
+                .append(companyName)
                 .append(companyType)
                 .append(country)
-                .append(streetName)
+                .append(address)
                 .append(zipCode)
                 .toHashCode();
     }
@@ -354,21 +374,22 @@ public class Client
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("employees", employees)
-                .append("companyName", companyName)
                 .append("email", email)
                 .append("passwordHash", passwordHash)
                 .append("role", role)
                 .append("activated", activated)
                 .append("confirmationString", confirmationString)
+                .append("zipPassword", zipPassword)
                 .append("title", title)
                 .append("firstName", firstName)
                 .append("familyName", familyName)
                 .append("birthDate", birthDate)
-                .append("officeNumber", officeNumber)
-                .append("phoneNumber", phoneNumber)
+                .append("officeNumber", officePhoneNumber)
+                .append("phoneNumber", mobilePhoneNumber)
+                .append("companyName", companyName)
                 .append("companyType", companyType)
                 .append("country", country)
-                .append("streetName", streetName)
+                .append("address", address)
                 .append("zipCode", zipCode)
                 .toString();
     }

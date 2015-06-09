@@ -20,6 +20,7 @@
 package de.fau.amos4.test;
 
 import com.sun.security.auth.UserPrincipal;
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.web.ClientController;
 import org.junit.Assert;
@@ -52,5 +53,54 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
             // Make sure that each Employee belongs to the current client.
             Assert.assertEquals(UserName, employee.getClient().getEmail());
         }
+    }
+    
+    /*
+     * Test client dashboard: Make sure that a newly added employee is also displayed.
+     * After adding a new employee to the client, then the number of displayed employees
+     * should be higher.
+     */
+    @Test
+    public void clientDashboard_addedNewEmployeeIsAlsoListed() throws Exception
+    {
+        // Instantiate the controller
+        ClientController clientController = new ClientController(this.clientService, this.employeeRepository);
+        // Get a client's username
+        Client client = this.clientService.getClientById(1l);
+        String UserName = client.getEmail();
+        
+        // Get the List
+        Principal principal = new UserPrincipal(UserName);
+        ModelAndView mav = clientController.ClientDashboard(principal);
+        
+        // Model should contain only employees with this client.
+        Iterable<Employee> employees = (Iterable<Employee>)mav.getModel().get("Employees");
+        
+        // Count original employee count
+        int originalEmployeeCount = 0;
+        for(Employee employee : employees)
+        {
+            originalEmployeeCount++;
+        }
+        
+        // Add new employee to the client
+        Employee newEmployee = new Employee();
+        newEmployee.setClient(client);
+        employeeRepository.save(newEmployee);
+        
+        // Get new employee list
+        mav = clientController.ClientDashboard(principal);
+        
+        // Model should contain only employees with this client.
+        employees = (Iterable<Employee>)mav.getModel().get("Employees");
+        
+        // Count new employee count
+        int newEmployeeCount = 0;
+        for(Employee employee : employees)
+        {
+            newEmployeeCount++;
+        }
+        
+        Assert.assertEquals(originalEmployeeCount + 1, newEmployeeCount);
     }
 }

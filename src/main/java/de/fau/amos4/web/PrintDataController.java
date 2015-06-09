@@ -68,14 +68,13 @@ public class PrintDataController {
 
         Employee employee = employeeRepository.findOne(employeeId);
         String fileContent = employee.toString();
-        System.out.println(fileContent);
         String hallo = "Hallo World!";
         // Send file contents
         response.setContentType("text/plain");
         response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
 
         ServletOutputStream out = response.getOutputStream();
-        out.println(hallo);
+        out.println(fileContent);
 
         out.close();
 

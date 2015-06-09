@@ -123,3 +123,6 @@ gradle-app.setting
 # Ignore developer specific configuration
 application-developer-specific.yml
 application-production.yml
+
+# Ignore changes to main application.yml, so that we can change it unnoticed in development.
+application.yml
