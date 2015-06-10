@@ -17,8 +17,6 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
 
-
-
 springBoot {
     mainClass = 'de.fau.amos4.Application'
 }
@@ -57,7 +55,7 @@ dependencies {
     compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.2.8')
 
     // Persistance
-	compile('org.postgresql:postgresql:9.4-1201-jdbc41')
+    compile('org.postgresql:postgresql:9.4-1201-jdbc41')
     runtime('org.hsqldb:hsqldb:2.3.2')
 
     // Zip
@@ -92,6 +90,9 @@ idea {
 }
 
 license {
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        ignoreFailures = true
+    }
     header = file('LICENSE.header')
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
     ext.name = 'Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo\n' +
