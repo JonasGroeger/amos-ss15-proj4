@@ -17,33 +17,40 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.model.fields;
+package de.fau.amos4.service;
 
-import de.fau.amos4.configuration.AppContext;
-import org.springframework.context.i18n.LocaleContextHolder;
+import de.fau.amos4.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Locale;
+/**
+ * Created by Yao Bochao on 07/06/2015.
+ */
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+    private final EmployeeRepository employeeRepository;
 
-public enum Sex
-{
-    //From .properties files
-    MALE("employee.sex.male"), FEMALE("employee.sex.female"), UNKNOWN("employee.sex.unknown");
-
-    private String text;
-
-    Sex(String text)
+    @Autowired
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository)
     {
-        this.text = text;
+        this.employeeRepository = employeeRepository;
     }
 
-    public String getText()
+    @Override
+    public Employee getEmployeeByToken(String token)
     {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
+        return this.employeeRepository.findOneByToken(token);
     }
 
-    public String toString()
+    @Override
+    public Iterable<Employee> getAllClients()
     {
-        return getText();
+        return this.employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee create(Employee employee)
+    {
+        return employeeRepository.save(employee);
     }
 }

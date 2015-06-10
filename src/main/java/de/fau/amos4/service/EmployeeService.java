@@ -17,33 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.model.fields;
+package de.fau.amos4.service;
 
-import de.fau.amos4.configuration.AppContext;
-import org.springframework.context.i18n.LocaleContextHolder;
+import de.fau.amos4.model.Employee;
 
-import java.util.Locale;
+/**
+ * Created by Yao Bochao on 07/06/2015.
+ */
+public interface EmployeeService {
+    Employee getEmployeeByToken(String token);
 
-public enum Sex
-{
-    //From .properties files
-    MALE("employee.sex.male"), FEMALE("employee.sex.female"), UNKNOWN("employee.sex.unknown");
+    Iterable<Employee> getAllClients();
 
-    private String text;
-
-    Sex(String text)
-    {
-        this.text = text;
-    }
-
-    public String getText()
-    {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
-    public String toString()
-    {
-        return getText();
-    }
+    Employee create(Employee employee);
 }

@@ -1,0 +1,25 @@
+This project uses various dependencies. These will be listed here.
+
+First, the parts that WILL NOT get distributed to the user (as part of a web request):
+
+Spring                - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+Thymeleaf             - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+Zip4j                 - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+Tomcat                - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+PDFBox                - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+Commons Lang          - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+Commons Collections   - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+License Gradle Plugin - Apache License 2.0         - https://www.tldrlegal.com/l/apache2
+JUnit                 - Eclipse Public License 1.0 - https://www.tldrlegal.com/l/epl
+Hibernate             - LGPL v2.1                  - https://www.tldrlegal.com/l/lgpl2
+Java SE               - Oracle Binary Code License - http://www.oracle.com/technetwork/java/javase/terms/license/index.html
+PostgreSQL            - PosgreSQL License          - http://opensource.org/licenses/postgresql
+HSQLDB                - BSD License                - http://hsqldb.org/web/hsqlLicense.html
+JavaMail              - CDDL-1.1 / GPL-2.0         - https://java.net/projects/javamail/pages/License
+
+Second, the parts that WILL get distributed to the user (as part of a web request):
+
+jQuery                - MIT License (Expat)        - https://www.tldrlegal.com/l/mit
+Modernizr             - MIT License (Expat)        - https://www.tldrlegal.com/l/mit
+Bootstrap             - MIT License (Expat)        - https://www.tldrlegal.com/l/mit
+Glyphicons            - CC-BY                      - https://tldrlegal.com/license/creative-commons-attribution-(cc)

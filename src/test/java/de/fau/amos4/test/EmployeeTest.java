@@ -1,35 +1,39 @@
+/**
+ * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+ * other purposes.
+ * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
+ *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.fau.amos4.test;
 
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.test.configuration.TestConfiguration;
 import de.fau.amos4.util.TokenGenerator;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TestConfiguration.class)
-@ActiveProfiles("test")
-public class EmployeeTest
+public class EmployeeTest extends BaseWebApplicationContextTests
 {
-    @Resource
-    EmployeeRepository employeeRepository;
-
-    @Resource
-    ClientRepository clientRepository;
 
     @Test
     public void generatedTokenIsInCorrectFormat() throws Exception
@@ -67,12 +71,24 @@ public class EmployeeTest
         }
     }
 
+    /*
+     * Employee test: Newly added employee can be retrieved from it's client. 
+     */
     @Test
     public void testFindEmployeeByClient()
     {
-        Client c = clientRepository.findOne(1l);
-        List<Employee> foundEmployees = employeeRepository.findByClient(c);
-
-        Assert.assertEquals("Inserting a employee inserted more than one.", foundEmployees.size(), 1);
+        // Get a client
+        Client client = clientRepository.findOne(1l);
+        
+        // Add a new employee to the client
+        Employee employee = new Employee();
+        employee.setClient(client);
+        employeeRepository.save(employee);
+        
+        // Retrieve employees for this client
+        List<Employee> foundEmployees = employeeRepository.findByClient(client);
+        
+        // Make sure that at least one employee is returned. (One has just been added.)
+        Assert.assertTrue(foundEmployees.size() > 0);
     }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
+
+<head>
+    <title>Personalfragebogen 2.0 - v0.1</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <form th:action="@{/employee/token/submit}">
+            <h1 th:text="#{EmployeeForm.header}"></h1>
+            <div class="row">
+                <div th:switch="${m}">
+                    <div th:case="'invalid'" th:text="#{employee.token.invalid}" style='color:red;font-weight:bold;'>Invalid login.</div>
+                </div>
+                <div class="col-sm-4 col-sm-offset-4">
+
+                    <div class="form-group">
+                        <label for="inputtoken">Token</label>
+                        <input type="text" class="form-control" name="token" required="true" id="inputtoken" th:placeholder="#{placeholder.token}">
+                        </input>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" th:text="#{FrontPage.next}"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

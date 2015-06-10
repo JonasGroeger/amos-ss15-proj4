@@ -1,3 +1,22 @@
+/**
+ * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+ * other purposes.
+ * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
+ *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.fau.amos4.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,15 +79,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 // Allow access to the confirm page.
                 .antMatchers("/client/confirm").permitAll()
                 //Allow access to FrontPage
-                .antMatchers("/FrontPage").permitAll()
-                .antMatchers("/FrontPageSubmit").permitAll()
-                .antMatchers("/WrongToken").permitAll()
+                .antMatchers("/employee/token").permitAll()
+                .antMatchers("/employee/token/submit").permitAll()
+                .antMatchers("/employee/token/wrong").permitAll()
+                .antMatchers("/employee/preview").permitAll()
+                .antMatchers("/employee/confirm").permitAll()
+                .antMatchers("/employee/download/text").permitAll()
+                .antMatchers("/employee/download/zip").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 .and()
 
                 // Login page at /login with email as username
-                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/list")
+                .formLogin().loginPage("/").loginProcessingUrl("/").defaultSuccessUrl("/client/dashboard")
                     .usernameParameter("email").failureUrl("/?m=invalid").permitAll()
 
                 .and()

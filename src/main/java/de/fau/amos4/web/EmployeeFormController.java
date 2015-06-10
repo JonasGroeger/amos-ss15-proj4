@@ -1,3 +1,22 @@
+/**
+ * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+ * other purposes.
+ * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
+ *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.fau.amos4.web;
 
 import de.fau.amos4.configuration.AppContext;
@@ -6,9 +25,10 @@ import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.TokenGenerator;
 import net.lingala.zip4j.exception.ZipException;
@@ -38,6 +58,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,30 +70,32 @@ public class EmployeeFormController
 {
     private final EmployeeRepository employeeRepository;
     private final ClientRepository clientRepository;
+    private final ClientService clientService;
+    private final EmployeeService employeeService;
 
+    /*
+    Constructor called at program start.
+     */
     @Autowired
-    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService, EmployeeService employeeService)
     {
+    	this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
+        this.employeeService = employeeService;
     }
 
-    // Employee data form - Enter Employee data
-    @RequestMapping("/EmployeeForm")
-    public String EmployeeForm(Model model) throws Exception
+    /*
+    EmployeeEdit handles employee/edit.html
+    It is invoked by the edit button in the client/dashboard.html
+    The client can edit the prefilled fields of one respective employee entry in the dashboard.
+     */
+    @RequestMapping("/employee/edit")
+    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Principal principal, Model model) throws IOException
     {
-        model.addAttribute("employee", new Employee());
-        model.addAttribute("allDisabled", Disabled.values());
-        model.addAttribute("allMarital", MaritalStatus.values());
-        model.addAttribute("allSex", Sex.values());
-        return "EmployeeForm";
-    }
 
-    @RequestMapping("/EmployeeEdit")
-    public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Model model) throws IOException
-    {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("EmployeeEdit");
+        mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
         mav.addObject("id", employeeId);
         mav.addObject("employee", employee);
@@ -81,11 +104,16 @@ public class EmployeeFormController
         mav.addObject("allSex", Sex.values());
         return mav;
     }
-
-    @RequestMapping("/EditSubmit")
-    public String EditSubmit(Employee employee, Model model)
+    /*
+    EmployeeEditSubmit is invoked by the submit button in the employee/edit.html page.
+    Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
+     */
+    @RequestMapping("/employee/edit/submit")
+    public String EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
-        Client client = clientRepository.findOne(1l);
+
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
         employee.setClient(client);
         client.getEmployees().add(employee);
 
@@ -93,11 +121,20 @@ public class EmployeeFormController
         clientRepository.save(client);
 
         // Redirect to AccountPage page
-        return "redirect:/AccountPage";
+        return "redirect:/client/dashboard";
     }
-    
-    @RequestMapping("/FrontPageSubmit")
-    public ModelAndView FrontPageSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
+
+    /*
+    EmployeeTokenSubmit is invoked on click of the submit botton on employee/token.html
+    If the token is valid, the employee gets redirected to the prefilled employee/form.html to make changes on
+    the data associated with the token.
+
+    If the token is invalid, an error message shows up on the screen.
+
+    After a token is used, it becomes invalid.
+     */
+    @RequestMapping("/employee/token/submit")
+    public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
     	long employeeId = 0;
     	Iterable<Employee> allEmployees = employeeRepository.findAll();
@@ -111,7 +148,7 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
 	        
-	        mav.setViewName("EmployeeForm");
+	        mav.setViewName("employee/form");
 	        Employee employee = employeeRepository.findOne(employeeId);
 	        mav.addObject("id", employeeId);
 	        mav.addObject("employee", employee);
@@ -119,17 +156,13 @@ public class EmployeeFormController
 	        mav.addObject("allMarital", MaritalStatus.values());
 	        mav.addObject("allSex", Sex.values());
         } else {
-        	mav.setViewName("WrongToken");
+            mav.addObject("m", "invalid");
+        	mav.setViewName("employee/token");
         }
         return mav;
         	
     }
     
-    @RequestMapping("/WrongToken")
-    public String EmployeeLogin()
-    {
-        return "WrongToken";
-    }
     
     @InitBinder
     public void initBinder(WebDataBinder binder)
@@ -137,35 +170,48 @@ public class EmployeeFormController
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));
     }
 
-    // Employee data preview - Review Employee data
-    @RequestMapping(value = "/EmployeePreview", method = {RequestMethod.POST, RequestMethod.GET})
+    /*
+    EmployeePreview handles employee/preview.html
+    It is invoked by the submit button in employee/form.htlm.
+
+    The previously entered data can be review before it is submitted.
+     */
+    @RequestMapping(value = "/employee/preview", method = {RequestMethod.POST, RequestMethod.GET})
     public String EmployeePreview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
     {
         model.addAttribute("allDisabled", Disabled.values());
         model.addAttribute("allMarital", MaritalStatus.values());
         model.addAttribute("allSex", Sex.values());
-        return "EmployeePreview";
+        return "employee/preview";
     }
 
-    // Employee data submit - Submit Employee data
-    @RequestMapping("/EmployeeSubmit")
-    public String EmployeeSubmit(@ModelAttribute("employee") Employee employee,
+    /*
+    EmployeeConfirm handles employee/confirm.html
+    Invoked by: Submit button in employee/preview.html
+
+    Apart from providing the opportunity to download the data as text file or pdf, the
+    previously entered data is stored in the database.
+     */
+    @RequestMapping("/employee/confirm")
+    public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
-        Client client = clientRepository.findOne(1l);
+
+        Employee e = employeeService.getEmployeeByToken(employee.getToken());
+        Client client = e.getClient();
         employee.setClient(client);
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
         client.getEmployees().add(employee);
         clientRepository.save(client);
-        
+
         // If the employee is new: Create
         // If the employee already has a primary key: Update
         Employee newOrUpdatedEmployee = employeeRepository.save(employee);
 
         // Setup model and return view
         model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
-        return "EmployeeSubmit";
+        return "employee/confirm";
     }
 
     // Exception handling - Display exception information
@@ -181,120 +227,35 @@ public class EmployeeFormController
         return mav;
     }
 
-    // Employee file download - Download text file with Employee data
-    @RequestMapping("/EmployeeTextFileDownload")
-    public void EmployeeTextFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
-    {
-        Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
+    /*
+    Invoked by: Delete button on client/dashboard.html
 
-        // Send file contents
-        response.setContentType("text/plain");
-        response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
-        ServletOutputStream out = response.getOutputStream();
-        out.println(fileContent);
-        out.close();
-    }
-
-    // Employee zip file download - Download zip file containing a text with Employee data
-    @RequestMapping("/EmployeeZipFileDownload")
-    public void EmployeeZipFileDownload(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
-    {
-        //Prepare textfile contents
-        Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
-
-        response.setContentType("application/zip");
-        response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
-
-        final StringBuilder sb = new StringBuilder(fileContent);
-        final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
-
-        try {
-            ZipParameters params = new ZipParameters();
-            params.setFileNameInZip("employee.txt");
-            params.setCompressionLevel(Zip4jConstants.COMP_DEFLATE);
-            params.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_ULTRA);
-            params.setEncryptFiles(true);
-            params.setReadHiddenFiles(false);
-            params.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
-            params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
-            params.setPassword("AMOS");
-            params.setSourceExternalStream(true);
-
-            zout.putNextEntry(null, params);
-            byte[] data = sb.toString().getBytes();
-            zout.write(data, 0, data.length);
-            zout.closeEntry();
-
-            try {
-                // Create a document and add a page to it
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage();
-                document.addPage(page);
-
-                // Create a new font object selecting one of the PDF base fonts
-                PDFont font = PDType1Font.COURIER;
-
-                // Start a new content stream which will "hold" the to be created content
-                PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-                // Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
-                contentStream.beginText();
-                contentStream.setFont(font, 10);
-                contentStream.moveTextPositionByAmount(10, 700);
-
-                List<String> list = StringUtils.splitEqually(fileContent, 90);
-                for (String e : list) {
-                    contentStream.moveTextPositionByAmount(0, -15);
-                    contentStream.drawString(e);
-                }
-                contentStream.endText();
-
-                // Make sure that the content stream is closed:
-                contentStream.close();
-
-                // Save the results and ensure that the document is properly closed:
-                ByteArrayOutputStream pdfout = new ByteArrayOutputStream();
-                document.save(pdfout);
-                document.close();
-
-
-                ZipParameters params2 = (ZipParameters) params.clone();
-                params2.setFileNameInZip("employee.pdf");
-
-                zout.putNextEntry(null, params2);
-                zout.write(pdfout.toByteArray());
-                zout.closeEntry();
-            } catch (CloneNotSupportedException | COSVisitorException e) {
-                e.printStackTrace();
-            }
-
-            // Write the zip to client
-            zout.finish();
-            zout.flush();
-            zout.close();
-        } catch (ZipException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @RequestMapping("/EmployeeDelete")
+    The respective employee is deleted in the database, recovery is not possible
+     */
+    @RequestMapping("/employee/delete")
     public String EmployeeDelete(@RequestParam(value = "id", required = true) long employeeId)
     {
+        //TODO: Security, allow deletion only for employees assigned to respective client.
         // Remove employee with passed id
         this.employeeRepository.delete(employeeId);
 
         // Redirect to AccountPage page
-        return "redirect:/AccountPage";
+        return "redirect:/client/dashboard";
     }
 
-    @RequestMapping("/NewEmployee")
-    public String NewEmployee()
+    /*
+    Invoked by: New Employee link on client/dashboard.html
+
+    Creates a new employee in the database.
+     */
+    @RequestMapping("/employee/new")
+    public String EmployeeNew(Principal principal)
     {
         // Create a new employee with default name
         Employee employee = new Employee();
-        Client client = clientRepository.findOne(1l);
+        
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
 
         Locale locale = LocaleContextHolder.getLocale();
         String newEmployee = AppContext.getApplicationContext().getMessage("EmployeeFormController.newEmployee", null, locale);
@@ -309,25 +270,12 @@ public class EmployeeFormController
 
 
         // Redirect to AccountPage page
-        return "redirect:/AccountPage";
+        return "redirect:/client/dashboard";
     }
 
-    @RequestMapping("/AccountPage")
-    public ModelAndView AccountPage(@RequestParam(value = "id", defaultValue = "1") long clientId)
+    @RequestMapping({"/employee/token", "/FrontPage"}) //FrontPage mapping is required by user story TODO ask PO's about this?
+    public String EmployeeToken(Model model) throws Exception
     {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("AccountPage");
-
-        Client client = clientRepository.findOne(clientId);
-        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
-
-        mav.addObject("Employees", clientsEmployees);
-        return mav;
-    }
-
-    @RequestMapping("/FrontPage")
-    public String FrontPage(Model model) throws Exception
-    {
-        return "FrontPage";
+        return "employee/token";
     }
 }

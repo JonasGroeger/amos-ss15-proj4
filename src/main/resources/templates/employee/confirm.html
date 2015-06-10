@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
+
+<head>
+    <title>Personalfragebogen 2.0 - v0.1</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <form th:action="@{/employee/confirm}" th:object="${employee}" method="POST">
+            <p th:text="#{EmployeeSubmit.submitMessage}" />
+            <p th:text="'Employee id:' + ${EmployeeId}" />
+            
+            <p th:text="#{EmployeeSubmit.downloadLabel}" />
+            <a th:href="@{'/employee/download/text?id=' + ${EmployeeId}}" th:text="#{EmployeeSubmit.downloadLink}"></a>
+            
+            <br />
+            <p th:text="#{EmployeeSubmit.zipDownloadLabel}" />
+            <a th:href="@{'/employee/download/zip?id=' + ${EmployeeId}}" th:text="#{EmployeeSubmit.zipDownloadLink}"></a>
+        </form>
+    </div>
+</body>
+</html>
