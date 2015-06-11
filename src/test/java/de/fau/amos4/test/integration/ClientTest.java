@@ -20,6 +20,8 @@
 package de.fau.amos4.test.integration;
 
 import de.fau.amos4.test.BaseIntegrationTest;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,6 +36,48 @@ public class ClientTest extends BaseIntegrationTest
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("client/login"));
+    }
+
+    @Test
+    public void testThatMainPageHasForgotPassowrdLinkDE() throws Exception
+    {
+        String content = mockMvc.perform(get("/?lang=de"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        Assert.assertTrue("Forgot password caption not found. (DE)", content.contains("Passwort vergessen?"));
+    }
+    @Test
+    public void testThatMainPageHasForgotPasswordLinkEN() throws Exception
+    {
+        String content = mockMvc.perform(get("/?lang=en"))
+                                .andReturn()
+                                .getResponse()
+                                .getContentAsString();
+        Assert.assertTrue("Forgot password caption not found. (EN)", content.contains("Forgot password?"));
+    }
+
+    @Test
+    public void testThatForgotPasswordPageHasNeededCaptionsEN() throws Exception
+    {
+        String content = mockMvc.perform(get("/client/forgotPassword?lang=en"))
+                                .andReturn()
+                                .getResponse()
+                                .getContentAsString();
+
+        Assert.assertTrue("New password caption not found. (EN)", content.contains("New password"));
+        Assert.assertTrue("Forgot password caption not found. (EN)", content.contains("Forgot password?"));
+    }
+    @Test
+    public void testThatForgotPasswordPageHasNeededCaptionsDE() throws Exception
+    {
+        String content = mockMvc.perform(get("/client/forgotPassword?lang=de"))
+                                .andReturn()
+                                .getResponse()
+                                .getContentAsString();
+
+        Assert.assertTrue("New password caption not found. (DE)", content.contains("Neues Passwort"));
+        Assert.assertTrue("Forgot password caption not found. (DE)", content.contains("Passwort vergessen?"));
     }
 
     @Test

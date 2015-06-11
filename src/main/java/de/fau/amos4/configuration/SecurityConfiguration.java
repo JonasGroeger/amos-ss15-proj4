@@ -78,6 +78,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .antMatchers("/client/submit").permitAll()
                 // Allow access to the confirm page.
                 .antMatchers("/client/confirm").permitAll()
+                // Allow access to the forgot password page.
+                .antMatchers("/client/forgotPassword").permitAll()
                 //Allow access to FrontPage
                 .antMatchers("/employee/token").permitAll()
                 .antMatchers("/employee/token/submit").permitAll()
