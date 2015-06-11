@@ -106,4 +106,15 @@ public class ClientController
         mav.setViewName("client/edit");
         return mav;
     }
+    
+    @RequestMapping(value = "/client/forgotPassword")
+    public ModelAndView ClientForgotPassword()
+    {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("client/forgotPassword");
+        
+        // TODO: Implement 'forgot password' function.
+        
+        return mav;
+    }
 }

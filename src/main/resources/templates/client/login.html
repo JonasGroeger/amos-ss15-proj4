@@ -26,8 +26,15 @@
                        class="form-control" th:placeholder="#{placeholder.inputPassword}" />
             </div>
             <div class="form-group">
-                <label th:for="remember-me">Remember me</label>
-                <input th:name="remember-me" type="checkbox" th:id="remember-me" />
+                <div style="float:left;">
+                    <label th:for="remember-me">Remember me</label>
+                    <input th:name="remember-me" type="checkbox" th:id="remember-me" />
+                </div>
+                <div style="float:right;">
+                <a style='margin:3px;' th:href="@{/client/forgotPassword}">
+                    [<span th:text=" #{ClientLogin.forgotPassword}"></span>]
+                </a>
+                </div>
             </div>
         </div>
         <div class="row">
