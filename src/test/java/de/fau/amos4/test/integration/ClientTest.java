@@ -20,26 +20,14 @@
 package de.fau.amos4.test.integration;
 
 import de.fau.amos4.test.BaseIntegrationTest;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 public class ClientTest extends BaseIntegrationTest
 {
-    @Before
-    public void setUp() throws Exception
-    {
-        this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(this.wac)
-                .apply(springSecurity())
-                .build();
-    }
-
     @Test
     public void testThatMainPageIsLogin() throws Exception
     {
