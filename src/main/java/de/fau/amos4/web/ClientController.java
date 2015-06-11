@@ -21,12 +21,19 @@ package de.fau.amos4.web;
 
 import java.security.Principal;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.util.EmailSender;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,13 +47,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class ClientController
 {
     private final ClientService clientService;
-
     private final EmployeeRepository employeeRepository;
+    private final ClientRepository clientRepository;
 
     @Autowired
-    public ClientController(ClientService clientService, EmployeeRepository employeeRepository)
+    public ClientController(ClientService clientService, EmployeeRepository employeeRepository, ClientRepository clientRepository)
     {
         this.clientService = clientService;
+        this.clientRepository = clientRepository;
         this.employeeRepository = employeeRepository;
     }
 
@@ -108,13 +116,27 @@ public class ClientController
     }
     
     @RequestMapping(value = "/client/forgotPassword")
-    public ModelAndView ClientForgotPassword()
+    public ModelAndView ClientForgotPassword(@RequestParam(value="email", required= false, defaultValue = "")String email) throws AddressException, MessagingException
     {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("client/forgotPassword");
         
-        // TODO: Implement 'forgot password' function.
-        
+        if(!email.equals(""))
+        {
+            // Create new password for user
+            Client client = clientService.getClientByEmail(email);
+            String newRandomPassword = RandomStringUtils.random(8, "ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
+            String newPasswordHash = new BCryptPasswordEncoder().encode(newRandomPassword);
+            client.setPasswordHash(newPasswordHash);
+            
+            EmailSender Sender = new EmailSender();
+            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is:" + newRandomPassword);
+            clientRepository.save(client);
+            mav.setViewName("/client/login");
+        }
+        else
+        {
+            mav.setViewName("/client/forgotPassword");
+        }
         return mav;
     }
 }
