@@ -71,6 +71,7 @@ dependencies {
     // Test
     testCompile('junit:junit')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test:4.0.1.RELEASE')
 
     // Deployment
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
