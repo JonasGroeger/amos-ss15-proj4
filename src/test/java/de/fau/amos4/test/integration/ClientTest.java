@@ -20,9 +20,9 @@
 package de.fau.amos4.test.integration;
 
 import de.fau.amos4.test.BaseIntegrationTest;
-
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -86,6 +86,15 @@ public class ClientTest extends BaseIntegrationTest
         mockMvc.perform(get("/client/dashboard"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl(createUrl("/")));
+    }
+
+    @Test
+    @WithUserDetails("datev@example.com")
+    public void testThatDashboardWorksAuthenticacted() throws Exception
+    {
+        mockMvc.perform(get("/client/dashboard"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("client/dashboard"));
     }
 
     @Test
