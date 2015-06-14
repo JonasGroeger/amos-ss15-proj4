@@ -49,9 +49,9 @@
                     th:text="#{AccountPage.delete}">Delete</a>
                 </td>
                 <td><a
-                    th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}"
+                    th:href="@{'/employee/download/text?id=' + ${Employee.id}}"
                     th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
-                    th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}"
+                    th:href="@{'/employee/download/zip?id=' + ${Employee.id}}"
                     th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
                 </td>
                 <td><button
