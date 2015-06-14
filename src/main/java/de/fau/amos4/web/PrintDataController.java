@@ -19,6 +19,7 @@
  */
 package de.fau.amos4.web;
 
+import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
@@ -34,6 +35,7 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +44,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yao Bochao on 06/06/2015.
@@ -67,14 +69,24 @@ public class PrintDataController {
     {
 
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
-        String hallo = "Hallo World!";
         // Send file contents
         response.setContentType("text/plain");
         response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
 
         ServletOutputStream out = response.getOutputStream();
-        out.println(fileContent);
+        Map<String,String> fields = employee.getFields();
+        Locale locale = LocaleContextHolder.getLocale();
+
+        out.println(AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale));
+        out.println();
+        out.println(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
+        out.println();
+        Iterator it = fields.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            out.println(pair.getKey() + " : " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
 
         out.close();
 
