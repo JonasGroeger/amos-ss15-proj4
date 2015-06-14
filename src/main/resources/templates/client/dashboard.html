@@ -19,6 +19,7 @@
                 <th th:text="#{AccountPage.delete}"></th>
                 <th th:text="#{AccountPage.download}"></th>
                 <th th:text="#{AccountPage.token}"></th>
+                <th th:text="#{employee.personnelNumber}"></th>
                 <th th:text="#{employee.familyName}"></th>
                 <th th:text="#{employee.firstName}"></th>
                 <th th:text="#{employee.maidenName}"></th>
@@ -57,6 +58,7 @@
                         th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
                         th:text="#{AccountPage.ViewToken}">View token</button>
                 </td>
+                <td th:text="${Employee.personnelNumber}"></td>
                 <td th:text="${Employee.familyName}">Mustermann</td>
                 <td th:text="${Employee.firstName}">Max</td>
                 <td th:text="${Employee.maidenName}"></td>

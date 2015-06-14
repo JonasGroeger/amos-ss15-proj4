@@ -44,6 +44,9 @@ public class Employee
     Client client;
 
     @Column
+    int personnelNumber;
+
+    @Column
     String firstName;
 
     @Column
@@ -141,6 +144,10 @@ public class Employee
     {
         this.client = client;
     }
+
+    public int getPersonnelNumber() {return personnelNumber;}
+
+    public void setPersonnelNumber(int personnelNumber) { this.personnelNumber = personnelNumber;}
 
     public String getFirstName()
     {
@@ -338,6 +345,7 @@ public class Employee
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("client", client)
+                .append ("personnelNumber", personnelNumber)
                 .append("firstName", firstName)
                 .append("maidenName", maidenName)
                 .append("familyName", familyName)
@@ -373,6 +381,7 @@ public class Employee
         return new EqualsBuilder()
                 .append(id, employee.id)
                 .append(client, employee.client)
+                .append(personnelNumber, employee.personnelNumber)
                 .append(firstName, employee.firstName)
                 .append(maidenName, employee.maidenName)
                 .append(familyName, employee.familyName)
@@ -402,6 +411,7 @@ public class Employee
         return new HashCodeBuilder(17, 37)
                 .append(id)
                 .append(client)
+                .append(personnelNumber)
                 .append(firstName)
                 .append(maidenName)
                 .append(familyName)
