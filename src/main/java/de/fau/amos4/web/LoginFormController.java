@@ -24,7 +24,9 @@ import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.util.EmailSender;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -98,17 +100,28 @@ public class LoginFormController
     }
 
     @RequestMapping("/client/edit/submit")
-    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client)
+    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client, @RequestParam("NewPassword") String NewPassword, @RequestParam("ConfirmPassword") String ConfirmPassword, @RequestParam("OldPassword") String OldPassword)
             throws MessagingException
     {
-        //TODO find better method to copy client
+    	//get database object
         Client tmp = clientService.getClientByEmail(client.getEmail());
-
-        //TODO insert Password change
-
+        
+        //update password
+        if (NewPassword != null) {
+        	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	        if (NewPassword.equals(ConfirmPassword)) {
+	        	if (encoder.matches(OldPassword, tmp.getPasswordHash())) {
+	        		//store as hash
+	        		tmp.setPasswordHash(encoder.encode(NewPassword));
+	        	}
+	        }
+        }
+        
         if (client.getZipPassword() != null) {
             tmp.setZipPassword(client.getZipPassword());
         }
+        
+        //update client information
         tmp.setTitle(client.getTitle());
         tmp.setFirstName(client.getFirstName());
         tmp.setFamilyName(client.getFamilyName());
@@ -121,8 +134,10 @@ public class LoginFormController
         tmp.setAddress(client.getAddress());
         tmp.setZipCode(client.getZipCode());
         tmp.setBirthDate(client.getBirthDate());
-
+        
+        //write back to database
         clientRepository.save(tmp);
+        
         return "redirect:/client/dashboard";
     }
 }
