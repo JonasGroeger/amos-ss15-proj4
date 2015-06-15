@@ -127,11 +127,12 @@ public class Employee
     public Map<String,String> getFields() {
         Map<String,String> allFields = new LinkedHashMap<String, String>();
         Locale locale = LocaleContextHolder.getLocale();
+        DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
         DateFormat df;
         if(locale.getLanguage().equals("de")) {
-            df = new SimpleDateFormat("DD.mm.yyyy");
+            df = new SimpleDateFormat("dd.MM.yyyy");
         } else {
-            df = new SimpleDateFormat("DD/mm/yyyy");
+            df = new SimpleDateFormat("dd/MM/yyyy");
         }
 
         allFields.put( AppContext.getApplicationContext().getMessage("employee.id", null, locale), Long.toString(getId()));
@@ -140,7 +141,7 @@ public class Employee
         allFields.put( AppContext.getApplicationContext().getMessage("employee.firstName", null, locale), getFirstName());
         allFields.put( AppContext.getApplicationContext().getMessage("employee.familyName", null, locale), getFamilyName());
         allFields.put( AppContext.getApplicationContext().getMessage("employee.maidenName", null, locale), getMaidenName());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.birthDate", null, locale), df.format(getBirthDate()));
+        allFields.put( AppContext.getApplicationContext().getMessage("employee.birthDate", null, locale), format.format(getBirthDate()));
         allFields.put( AppContext.getApplicationContext().getMessage("employee.placeOfBirth", null, locale), getPlaceOfBirth());
         allFields.put( AppContext.getApplicationContext().getMessage("employee.countryOfBirth", null, locale), getCountryOfBirth());
         allFields.put( AppContext.getApplicationContext().getMessage("employee.street", null, locale), getStreet());

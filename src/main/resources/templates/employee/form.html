@@ -41,7 +41,7 @@
                         <input th:field="*{additionToAddress}" type="text" class="form-control" th:placeholder="#{placeholder.additionToAddress}" />
                     </div>
                     <div class="form-group">
-                        <label for="placeOfBirth" th:text="#{employee.placeOfBirth}"></label>
+                        <label for="placeOfBirth" th:text="#{employee.placeOfBirth} + ' ' + #{employee.placeOfBirth.remark}"></label>
                         <input th:field="*{placeOfBirth}" type="text" class="form-control" th:placeholder="#{placeholder.placeOfBirth}" />
                     </div>
                     <div class="form-group">
@@ -85,7 +85,7 @@
                         <input th:field="*{firstName}"  type="text" class="form-control" th:placeholder="#{placeholder.firstName}" />
                     </div>
                     <div class="form-group">
-                        <label for="birthDate" th:text="#{employee.birthDate} +#{EmployeeForm.mandatory}"></label>
+                        <label for="birthDate" th:text="#{employee.birthDate} + ' ' + #{employee.birthDate.remark} + #{EmployeeForm.mandatory}"></label>
                         <input th:field="*{birthDate}"  type="text" class="form-control" th:placeholder="#{placeholder.birthDate}" />
                     </div>
                     <div class="form-group">
@@ -101,7 +101,7 @@
                         <input th:field="*{socialInsuranceNumber}" type="text" class="form-control" th:placeholder="#{placeholder.socialInsuranceNumber}" />
                     </div>
                     <div class="form-group">
-                        <label for="countryOfBirth" th:text="#{employee.countryOfBirth}"></label>
+                        <label for="countryOfBirth" th:text="#{employee.countryOfBirth} + ' ' + #{employee.countryOfBirth.remark}"></label>
                         <input th:field="*{countryOfBirth}" type="text" class="form-control" th:placeholder="#{placeholder.countryOfBirth}" />
                     </div>
                     <div class="form-group">
