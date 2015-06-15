@@ -40,7 +40,7 @@
                         <label for="additionToAddress" th:text="#{employee.additionToAddress}"></label> <input th:field="*{additionToAddress}" readonly="true" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="placeOfBirth" th:text="#{employee.placeOfBirth}"></label>
+                        <label for="placeOfBirth" th:text="#{employee.placeOfBirth} + ' ' + #{employee.placeOfBirth.remark}"></label>
                         <input th:field="*{placeOfBirth}" readonly="true" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
@@ -86,7 +86,7 @@
                         <input th:field="*{firstName}" readonly="true" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="birthDate" th:text="#{employee.birthDate}"></label>
+                        <label for="birthDate" th:text="#{employee.birthDate} + ' ' + #{employee.birthDate.remark}"></label>
                         <input th:field="*{birthDate}" readonly="true" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
@@ -102,7 +102,7 @@
                         <input th:field="*{socialInsuranceNumber}" readonly="true" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="countryOfBirth" th:text="#{employee.countryOfBirth}"></label>
+                        <label for="countryOfBirth" th:text="#{employee.countryOfBirth} + ' ' + #{employee.countryOfBirth.remark}"></label>
                         <input th:field="*{countryOfBirth}" readonly="true" type="text" class="form-control" />
                     </div>
                     <div class="form-group">
