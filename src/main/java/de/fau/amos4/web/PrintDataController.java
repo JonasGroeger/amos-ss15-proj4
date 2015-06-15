@@ -19,6 +19,7 @@
  */
 package de.fau.amos4.web;
 
+import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.EmployeeRepository;
@@ -34,6 +35,7 @@ import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +44,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yao Bochao on 06/06/2015.
@@ -67,14 +69,24 @@ public class PrintDataController {
     {
 
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
-        String hallo = "Hallo World!";
         // Send file contents
         response.setContentType("text/plain");
         response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
 
         ServletOutputStream out = response.getOutputStream();
-        out.println(fileContent);
+        Map<String,String> fields = employee.getFields();
+        Locale locale = LocaleContextHolder.getLocale();
+
+        out.println(AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale));
+        out.println();
+        out.println(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
+        out.println();
+        Iterator it = fields.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            out.println(pair.getKey() + ": " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
 
         out.close();
 
@@ -84,14 +96,18 @@ public class PrintDataController {
     @RequestMapping("/employee/download/zip")
     public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
     {
+        int fontSize=12;
+        float height= 1;
+        height = height*fontSize*1.05f;
+
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
-        String fileContent = employee.toString();
+        Locale locale = LocaleContextHolder.getLocale();
+        Map<String,String> fields = employee.getFields();
 
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
 
-        final StringBuilder sb = new StringBuilder(fileContent);
         final ZipOutputStream zout = new ZipOutputStream(response.getOutputStream());
 
         try {
@@ -106,9 +122,22 @@ public class PrintDataController {
             params.setPassword("AMOS");
             params.setSourceExternalStream(true);
 
+
+
+
+
+
             zout.putNextEntry(null, params);
-            byte[] data = sb.toString().getBytes();
-            zout.write(data, 0, data.length);
+            zout.write((AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale) + "\n\n").getBytes());
+            //zout.println();
+            zout.write((AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale) + "\n\n").getBytes());
+            //zout.println();
+            Iterator it = fields.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                zout.write((pair.getKey() + ": " + pair.getValue() + '\n').getBytes());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
             zout.closeEntry();
 
             try {
@@ -116,22 +145,49 @@ public class PrintDataController {
                 PDDocument document = new PDDocument();
                 PDPage page = new PDPage();
                 document.addPage(page);
+                float y = -1;
+                int margin = 100;
+                float maxStringLength = page.getMediaBox().getWidth() - 2*margin;
 
                 // Create a new font object selecting one of the PDF base fonts
-                PDFont font = PDType1Font.COURIER;
+                PDFont font = PDType1Font.TIMES_ROMAN;
 
                 // Start a new content stream which will "hold" the to be created content
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
                 // Define a text content stream using the selected font, moving the cursor and drawing the text "Hello World"
                 contentStream.beginText();
-                contentStream.setFont(font, 10);
-                contentStream.moveTextPositionByAmount(10, 700);
 
+                y = page.getMediaBox().getHeight() - margin + height;
+                contentStream.moveTextPositionByAmount(margin, y);
+                /*
                 List<String> list = StringUtils.splitEqually(fileContent, 90);
                 for (String e : list) {
                     contentStream.moveTextPositionByAmount(0, -15);
                     contentStream.drawString(e);
+                }
+                */
+
+                fields = employee.getFields();
+
+                contentStream.setFont(PDType1Font.TIMES_BOLD, 36);
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale));
+                contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
+                contentStream.moveTextPositionByAmount(0, -4 * height);
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
+                contentStream.moveTextPositionByAmount(0, -2 * height);
+                contentStream.setFont(font, fontSize);
+                it = fields.entrySet().iterator();
+                while (it.hasNext()) {
+                    StringBuffer nextLineToDraw = new StringBuffer();
+                    Map.Entry pair = (Map.Entry)it.next();
+                    nextLineToDraw.append( pair.getKey());
+                    nextLineToDraw.append(": ");
+                    nextLineToDraw.append(pair.getValue());
+
+                    contentStream.drawString( nextLineToDraw.toString() );
+                    contentStream.moveTextPositionByAmount(0, -height);
+                    it.remove(); // avoids a ConcurrentModificationException
                 }
                 contentStream.endText();
 

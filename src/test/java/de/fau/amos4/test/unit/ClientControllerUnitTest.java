@@ -17,11 +17,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.test;
+package de.fau.amos4.test.unit;
 
 import com.sun.security.auth.UserPrincipal;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.web.ClientController;
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
     public void clientDashboard_OnlyClientsEmployeesAreDisplayrd() throws Exception
     {
         // Instantiate the controller
-        ClientController clientController = new ClientController(this.clientService, this.employeeRepository);
+        ClientController clientController = new ClientController(this.clientService, this.employeeRepository, clientRepository);
         // Get a client's username
         String UserName = this.clientService.getClientById(1l).getEmail();
         
@@ -64,7 +65,7 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
     public void clientDashboard_addedNewEmployeeIsAlsoListed() throws Exception
     {
         // Instantiate the controller
-        ClientController clientController = new ClientController(this.clientService, this.employeeRepository);
+        ClientController clientController = new ClientController(this.clientService, this.employeeRepository, this.clientRepository);
         // Get a client's username
         Client client = this.clientService.getClientById(1l);
         String UserName = client.getEmail();

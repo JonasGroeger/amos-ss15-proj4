@@ -19,6 +19,7 @@
                 <th th:text="#{AccountPage.delete}"></th>
                 <th th:text="#{AccountPage.download}"></th>
                 <th th:text="#{AccountPage.token}"></th>
+                <th th:text="#{employee.personnelNumber}"></th>
                 <th th:text="#{employee.familyName}"></th>
                 <th th:text="#{employee.firstName}"></th>
                 <th th:text="#{employee.maidenName}"></th>
@@ -48,15 +49,16 @@
                     th:text="#{AccountPage.delete}">Delete</a>
                 </td>
                 <td><a
-                    th:href="@{'/EmployeeTextFileDownload?id=' + ${Employee.id}}"
+                    th:href="@{'/employee/download/text?id=' + ${Employee.id}}"
                     th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
-                    th:href="@{'/EmployeeZipFileDownload?id=' + ${Employee.id}}"
+                    th:href="@{'/employee/download/zip?id=' + ${Employee.id}}"
                     th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
                 </td>
                 <td><button
                         th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
                         th:text="#{AccountPage.ViewToken}">View token</button>
                 </td>
+                <td th:text="${Employee.personnelNumber}"></td>
                 <td th:text="${Employee.familyName}">Mustermann</td>
                 <td th:text="${Employee.firstName}">Max</td>
                 <td th:text="${Employee.maidenName}"></td>

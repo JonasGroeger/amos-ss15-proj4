@@ -17,10 +17,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.test;
+package de.fau.amos4.test.unit;
 
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.util.TokenGenerator;
 
 import org.junit.Assert;

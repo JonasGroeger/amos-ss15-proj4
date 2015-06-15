@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.test;
+package de.fau.amos4.test.unit;
 
 import org.junit.Assert;
 
@@ -29,19 +29,19 @@ public class EmailSenderTest {
     @Test
     public void SendDummyEmail_NoExceptionsThrown() throws Exception
     {
-    	 Boolean NoExceptions = true; 
-    	
-    	 EmailSender sender = new EmailSender();
-    	 try
-    	 {
-    	    sender.SendEmail("Test@gmail.com", "Test", "Test Content");    	 
-    	 }
-    	 catch(Exception ex)
-    	 {
-    		 NoExceptions = false;
-    	 }
-    	 
-    	 Assert.assertTrue(NoExceptions);
+        Boolean NoExceptions = true;
+        
+        EmailSender sender = new EmailSender();
+        try
+        {
+           sender.SendEmail("Test@gmail.com", "Test", "Test Content");
+        }
+        catch(Exception ex)
+        {
+            NoExceptions = false;
+        }
+        
+        Assert.assertTrue(NoExceptions);
     }
     
 }
