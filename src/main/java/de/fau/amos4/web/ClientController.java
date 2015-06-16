@@ -26,6 +26,8 @@ import javax.mail.internet.AddressException;
 
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
@@ -110,6 +112,7 @@ public class ClientController
         final String currentUser = principal.getName();
         Client client = clientService.getClientByEmail(currentUser);
         mav.addObject("Client", client);
+        mav.addObject("allTitles", Title.values());
         
         mav.setViewName("client/edit");
         return mav;

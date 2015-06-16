@@ -55,8 +55,11 @@
                         <label for="maritalStatus" th:text="#{employee.maritalStatus}  +#{EmployeeForm.mandatory}"></label>
                         <select th:field="*{maritalStatus}" class="form-control">
                             <option value="" th:text="#{employee.select}"></option>
-                            <option th:each="maritalStatus : ${allMarital}" th:value="${maritalStatus.name()}" th:text="${maritalStatus.getText()}"></option>
-                        </select>
+                            <option
+								th:each="maritalStatus : ${allMarital}"
+								th:value="${maritalStatus.name()}"
+								th:text="${maritalStatus.getText()}"></option>
+						</select>
                     </div>
                     <div class="form-group">
                         <label for="disabled" th:text="#{employee.disabled} +#{EmployeeForm.mandatory}"></label>

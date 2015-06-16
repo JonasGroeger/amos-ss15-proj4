@@ -67,14 +67,14 @@
 				th:text="#{RegistrationPage.personalDetails}"></label>
 
 			<div class="form-group">
-				<label for="title" th:text="#{Client.title}"></label> <select
-					class="form-control">
-					<option value="" th:text="#{RegistrationPage.select}"></option>
-					<option th:each="title : ${allTitle}" th:value="${title.name()}"
-						th:text="${title.getText()}" th:field="*{title}"></option>
-				</select>
+				<label for="title" th:text="#{Client.title}"></label>
+					<select th:field="*{title}" class="form-control">
+						<option value="" th:text="#{RegistrationPage.select}"></option>
+						<option th:each="title : ${allTitles}" th:value="${title.name()}"
+						th:text="${title.getText()}"></option>
+					</select>
 			</div>
-
+			
 			<div class="form-group">
 				<label for="firstname" th:text="#{Client.firstname}"></label> <input
 					type="text" class="form-control" id="firstname"
