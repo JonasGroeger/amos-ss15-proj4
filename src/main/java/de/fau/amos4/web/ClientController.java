@@ -128,11 +128,11 @@ public class ClientController
             // Create new password for user
             Client client = clientService.getClientByEmail(email);
             String newRandomPassword = RandomStringUtils.random(8, "ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
-            String newPasswordHash = new BCryptPasswordEncoder().encode(newRandomPassword);
+            String newPasswordHash = new BCryptPasswordEncoder(4).encode(newRandomPassword);
             client.setPasswordHash(newPasswordHash);
             
             EmailSender Sender = new EmailSender();
-            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is:" + newRandomPassword);
+            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newRandomPassword);
             clientRepository.save(client);
             mav.setViewName("/client/login");
         }
