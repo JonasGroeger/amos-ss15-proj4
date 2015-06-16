@@ -107,13 +107,14 @@ public class LoginFormController
         Client tmp = clientService.getClientByEmail(client.getEmail());
         
         //update password
-        if (NewPassword != null) {
+        if (NewPassword.equals("") == false) {
         	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	        if (NewPassword.equals(ConfirmPassword)) {
-	        	if (encoder.matches(OldPassword, tmp.getPasswordHash())) {
-	        		//store as hash
-	        		tmp.setPasswordHash(encoder.encode(NewPassword));
-	        	}
+	        if (NewPassword.equals(ConfirmPassword) && encoder.matches(OldPassword, tmp.getPasswordHash())) {
+	        	//store as hash
+	        	tmp.setPasswordHash(encoder.encode(NewPassword));
+	        }
+	        else {
+	        	return "redirect:/client/edit?m=newPasswordFailed";
 	        }
         }
         
@@ -122,6 +123,7 @@ public class LoginFormController
         }
         
         //update client information
+        tmp.setOutputFormat(client.getOutputFormat());
         tmp.setTitle(client.getTitle());
         tmp.setFirstName(client.getFirstName());
         tmp.setFamilyName(client.getFamilyName());
@@ -138,6 +140,6 @@ public class LoginFormController
         //write back to database
         clientRepository.save(tmp);
         
-        return "redirect:/client/dashboard";
+        return "redirect:/client/dashboard?m=profileChanged";
     }
 }

@@ -25,6 +25,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import de.fau.amos4.model.fields.OutputFormat;
 import de.fau.amos4.model.fields.Title;
 
 import javax.persistence.*;
@@ -36,6 +37,13 @@ import java.util.List;
 @Table
 public class Client
 {
+	//settings
+	
+	//LODAS or LuG
+	@Column
+    @Enumerated(EnumType.STRING)
+    private OutputFormat outputFormat;
+	
 	//login information
 	
     @Id
@@ -104,6 +112,16 @@ public class Client
     
     @Column
     private String zipCode;
+    
+    public OutputFormat getOutputFormat()
+    {
+        return outputFormat;
+    }
+
+    public void setOutputFormat(OutputFormat outputFormat)
+    {
+        this.outputFormat = outputFormat;
+    }
 
     public long getId()
     {
@@ -320,6 +338,7 @@ public class Client
         Client client = (Client) o;
 
         return new EqualsBuilder()
+        		.append(outputFormat, client.outputFormat)
                 .append(id, client.id)
                 .append(employees, client.employees)
                 .append(email, client.email)
@@ -346,6 +365,7 @@ public class Client
     public int hashCode()
     {
         return new HashCodeBuilder(17, 37)
+        		.append(outputFormat)
                 .append(id)
                 .append(employees)
                 .append(email)
@@ -372,6 +392,7 @@ public class Client
     public String toString()
     {
         return new ToStringBuilder(this)
+        		.append("outputFormat", outputFormat)
                 .append("id", id)
                 .append("employees", employees)
                 .append("email", email)

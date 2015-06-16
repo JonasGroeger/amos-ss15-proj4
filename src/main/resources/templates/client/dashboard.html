@@ -9,8 +9,11 @@
 
 <div layout:fragment="content">
         <h1 th:text="#{EmployeeForm.header}"></h1>
+        <div th:if="${param.m} != null" th:switch="${param.m[0]}">
+	        <p th:case="'profileChanged'" th:text="#{clientDashboard.profileChanged}" style='color:green;font-weight:bold;' />
+        </div>
         <a th:href="@{/client/profile}" th:text="#{KEYWORD.profile}"></a> 
-		<a th:href="@{/client/edit}" th:text="#{KEYWORD.edit}"></a>
+		<a th:href="@{/client/edit}" th:text="#{KEYWORD.edit}"></a> 
         <h2 th:text="#{AccountPage.header}"></h2>
         <a th:href="@{/employee/new}" th:text="#{AccountPage.newEmployee}">New Employee</a>
         <table class="table table-striped">
