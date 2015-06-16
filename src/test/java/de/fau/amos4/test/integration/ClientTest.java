@@ -117,4 +117,20 @@ public class ClientTest extends BaseIntegrationTest
                 .andExpect(status().isOk())
                 .andExpect(view().name("client/edit"));
     }
+    
+    
+    @Test
+    @WithUserDetails("datev@example.com")
+    public void testThatClientEditSubmitChangesPassword() throws Exception
+    {
+        mockMvc.perform(post("/client/edit/submit")
+        		.sessionAttr("client", new Client())
+        		.param("NewPassword", "test")
+        		.param("ConformPassword", "test")
+        		.param("OldPassword", "datev"))
+        		.andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("client/dashboard"));
+        		.andExpect(content().string("Password changed"));
+    }
 }
