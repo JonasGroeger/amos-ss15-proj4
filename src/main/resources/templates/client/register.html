@@ -19,7 +19,7 @@
                         <label for="title" th:text="#{RegistrationPage.title}"></label> <select
                             class="form-control">
                             <option value="" th:text="#{RegistrationPage.select}"></option>
-                            <option th:each="title : ${allTitle}" th:value="${title.name()}"
+                            <option th:each="title : ${allTitles}" th:value="${title.name()}"
                                 th:text="${title.getText()}"></option>
                         </select>
                     </div>
