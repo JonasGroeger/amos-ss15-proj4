@@ -118,6 +118,13 @@ public class Employee
 
     @Column
     String token;
+    
+    @Column
+    String employment;
+    
+    @Column
+    String temporaryEmployment;
+
 
 
     public Employee()
@@ -157,6 +164,8 @@ public class Employee
         allFields.put( AppContext.getApplicationContext().getMessage("employee.employerSocialSavingsNumber", null, locale), getEmployerSocialSavingsNumber());
         allFields.put( AppContext.getApplicationContext().getMessage("employee.iban", null, locale), getIban());
         allFields.put( AppContext.getApplicationContext().getMessage("employee.bic", null, locale), getBic());
+        allFields.put( AppContext.getApplicationContext().getMessage("employee.employment", null, locale), getEmployment());
+        allFields.put( AppContext.getApplicationContext().getMessage("employee.temporaryEmployment", null, locale), getTemporaryEmployment());
         //allFields.put( AppContext.getApplicationContext().getMessage("employee.token", null, locale), getToken());
         return allFields;
     }
@@ -203,6 +212,25 @@ public class Employee
     public void setFirstName(String firstName)
     {
         this.firstName = firstName;
+    }
+    
+    public String getEmployment()
+    {
+        return employment;
+    }
+
+    public void setEmployment(String employment)
+    {
+        this.employment = employment;
+    }
+    public String getTemporaryEmployment()
+    {
+        return temporaryEmployment;
+    }
+
+    public void setTemporaryEmployment(String temporaryEmployment)
+    {
+        this.temporaryEmployment = temporaryEmployment;
     }
 
     public String getMaidenName()
@@ -413,6 +441,8 @@ public class Employee
                 .append("bic", bic)
                 .append("additionToAddress", additionToAddress)
                 .append("token", token)
+                .append("employment", employment)
+                .append("temporaryEmployment", temporaryEmployment)
                 .toString();
     }
 
@@ -449,6 +479,8 @@ public class Employee
                 .append(bic, employee.bic)
                 .append(additionToAddress, employee.additionToAddress)
                 .append(token, employee.token)
+                .append(employment, employee.employment)
+                .append(temporaryEmployment, employee.temporaryEmployment)
                 .isEquals();
     }
 
@@ -479,6 +511,8 @@ public class Employee
                 .append(bic)
                 .append(additionToAddress)
                 .append(token)
+                .append(employment)
+                .append(temporaryEmployment)
                 .toHashCode();
     }
 }

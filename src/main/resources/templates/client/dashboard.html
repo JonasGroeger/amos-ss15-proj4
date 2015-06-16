@@ -42,6 +42,8 @@
                 <th th:text="#{employee.employerSocialSavingsNumber}"></th>
                 <th th:text="#{employee.iban}"></th>
                 <th th:text="#{employee.bic}"></th>
+                <th th:text="#{employee.employment}"></th>
+                <th th:text="#{employee.temporaryEmployment}"></th>
             </tr>
             <tr th:each="Employee : ${Employees}">
                 <td><a th:href="@{'/employee/edit?id=' + ${Employee.id}}"
@@ -81,6 +83,8 @@
                 <td th:text="${Employee.employerSocialSavingsNumber}"></td>
                 <td th:text="${Employee.iban}"></td>
                 <td th:text="${Employee.bic}"></td>
+                <td th:text="${Employee.employment}"></td>
+                <td th:text="${Employee.temporaryEmployment}"></td>
             </tr>
         </table>
 </div>

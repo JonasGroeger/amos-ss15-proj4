@@ -163,6 +163,18 @@
 							th:field="*{bic}" type="text" class="form-control"
 							th:placeholder="#{placeholder.bic}" />
 					</div>
+					<div class="form-group">
+						<label for="employment" th:text="#{employee.employment}"></label>
+						<input th:field="*{employment}" type="text"
+							class="form-control"
+							th:placeholder="#{placeholder.employment}" />
+					</div>
+					<div class="form-group">
+						<label for="temporaryEmployment" th:text="#{employee.temporaryEmployment}"></label>
+						<input th:field="*{temporaryEmployment}" type="text"
+							class="form-control"
+							th:placeholder="#{placeholder.temporaryEmployment}" />
+					</div>
 				</div>
 			</div>
 			<div class="row">
