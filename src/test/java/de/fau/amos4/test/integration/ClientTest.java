@@ -19,13 +19,17 @@
  */
 package de.fau.amos4.test.integration;
 
+import de.fau.amos4.model.Client;
 import de.fau.amos4.test.BaseIntegrationTest;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 
 public class ClientTest extends BaseIntegrationTest
@@ -103,5 +107,14 @@ public class ClientTest extends BaseIntegrationTest
         mockMvc.perform(get("/client/register"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("client/register"));
+    }
+    
+    @Test
+    @WithUserDetails("datev@example.com")
+    public void testThatClientEditShows() throws Exception
+    {
+        mockMvc.perform(get("/client/edit"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("client/edit"));
     }
 }
