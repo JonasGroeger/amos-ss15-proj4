@@ -8,27 +8,15 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <style>
-        body {
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-    </style>
-    <div th:src="@{/js/vendor/modernizr-2.8.3.min.js}" />
-
     <!-- External CSS -->
-    <div th:replace="fragments/assets :: link" />
+    <link th:replace="fragments/assets :: css-ext" />
 
     <!-- JS in the head -->
-    <div th:replace="fragments/assets :: js-head" />
+    <script th:replace="fragments/assets :: js-head"></script>
 
     <!-- CSS -->
-    <div th:replace="fragments/assets :: css" />
+    <style th:replace="fragments/assets :: css"></style>
+
 </head>
 
 <body>
@@ -44,15 +32,11 @@
 
     <!-- Insert the footer -->
     <div th:replace="fragments/footer :: footer"></div>
+
 </div>
 
 <!-- JS in the body -->
 <div th:replace="fragments/assets :: js-body"></div>
 
-<!-- General scripts -->
-<script th:src="@{js/vendor/jquery-1.11.2.min.js}"></script>
-<script th:src="@{js/vendor/bootstrap.min.js}"></script>
-<script th:src="@{js/main.js}"></script>
 </body>
-
 </html>
