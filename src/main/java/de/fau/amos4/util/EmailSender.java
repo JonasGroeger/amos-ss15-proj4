@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package de.fau.amos4.util;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
@@ -58,7 +59,7 @@ public class EmailSender {
 	      properties.put("mail.smtp.port", "465");
 	}
 	
-	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, InputStream attachment) throws AddressException, MessagingException
+	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, byte[] attachment) throws AddressException, MessagingException
 	   {	
 		final String UserName = this.User;
 		final String Password = this.Pass;
@@ -88,7 +89,8 @@ public class EmailSender {
 	      if (attachment != null) {
 		      //TODO Add for loop for multiple attachments
 		      // Part two is attachment
-		      messageBodyPart = new MimeBodyPart(attachment);
+		      messageBodyPart = new MimeBodyPart();
+		      messageBodyPart.setContent(attachment, "application/zip");
 		      messageBodyPart.setFileName("Data.zip");
 		      multipart.addBodyPart(messageBodyPart);
 	      }

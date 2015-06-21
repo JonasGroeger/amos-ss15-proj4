@@ -121,12 +121,7 @@ public class PrintDataController {
             params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
             params.setPassword("AMOS");
             params.setSourceExternalStream(true);
-
-
-
-
-
-
+            
             zout.putNextEntry(null, params);
             zout.write((AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale) + "\n\n").getBytes());
             //zout.println();

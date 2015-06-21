@@ -279,9 +279,9 @@ public class ClientController
         }
         
         EmailSender sender = new EmailSender();
-        sender.SendEmail(to, "Employee Data", "test", new ByteArrayInputStream(out.toByteArray()));
+        sender.SendEmail(to, "Employee Data", "test", out.toByteArray());
         
-        mav.setViewName("/client/dashboard");
+        mav.setViewName("redirect:/client/dashboard");
         return mav;
     }
 }
