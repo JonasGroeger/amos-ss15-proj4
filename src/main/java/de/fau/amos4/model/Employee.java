@@ -142,31 +142,31 @@ public class Employee
             df = new SimpleDateFormat("dd/MM/yyyy");
         }
 
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.id", null, locale), Long.toString(getId()));
-        allFields.put(AppContext.getApplicationContext().getMessage("client.companyName", null, locale), getClient().getCompanyName());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.personnelNumber", null, locale), Long.toString(getPersonnelNumber()));
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.firstName", null, locale), getFirstName());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.familyName", null, locale), getFamilyName());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.maidenName", null, locale), getMaidenName());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.birthDate", null, locale), format.format(getBirthDate()));
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.placeOfBirth", null, locale), getPlaceOfBirth());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.countryOfBirth", null, locale), getCountryOfBirth());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.street", null, locale), getStreet());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.houseNumber", null, locale), getHouseNumber());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.additionToAddress", null, locale), getAdditionToAddress());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.city", null, locale), getCity());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.zipCode", null, locale), getZipCode());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.sex", null, locale), getSex().toString());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.maritalStatus", null, locale), getMaritalStatus().toString());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.disabled", null, locale), getDisabled().toString());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.citizenship", null, locale), getCitizenship());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.socialInsuranceNumber", null, locale), getSocialInsuranceNumber());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.employerSocialSavingsNumber", null, locale), getEmployerSocialSavingsNumber());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.iban", null, locale), getIban());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.bic", null, locale), getBic());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.employment", null, locale), getEmployment());
-        allFields.put( AppContext.getApplicationContext().getMessage("employee.temporaryEmployment", null, locale), getTemporaryEmployment());
-        //allFields.put( AppContext.getApplicationContext().getMessage("employee.token", null, locale), getToken());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.id", null, locale), Long.toString(getId()));
+        allFields.put( AppContext.getApplicationContext().getMessage("Client.companyName", null, locale), getClient().getCompanyName());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.personnelNumber", null, locale), Long.toString(getPersonnelNumber()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.firstName", null, locale), getFirstName());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.familyName", null, locale), getFamilyName());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.maidenName", null, locale), getMaidenName());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.birthDate", null, locale), format.format(getBirthDate()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.placeOfBirth", null, locale), getPlaceOfBirth());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.countryOfBirth", null, locale), getCountryOfBirth());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.street", null, locale), getStreet());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.houseNumber", null, locale), getHouseNumber());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.additionToAddress", null, locale), getAdditionToAddress());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.city", null, locale), getCity());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.zipCode", null, locale), getZipCode());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.sex", null, locale), getSex().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.maritalStatus", null, locale), getMaritalStatus().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.disabled", null, locale), getDisabled().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.citizenship", null, locale), getCitizenship());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.socialInsuranceNumber", null, locale), getSocialInsuranceNumber());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.employerSocialSavingsNumber", null, locale), getEmployerSocialSavingsNumber());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.iban", null, locale), getIban());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.bic", null, locale), getBic());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.employment", null, locale), getEmployment());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.temporaryEmployment", null, locale), getTemporaryEmployment());
+        //allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.token", null, locale), getToken());
         return allFields;
     }
 
