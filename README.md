@@ -1,4 +1,6 @@
 # amos-ss15-proj4 [![Build Status](https://travis-ci.org/JOBAA/amos-ss15-proj4.svg?branch=master)](https://travis-ci.org/JOBAA/amos-ss15-proj4)
+
+[![Join the chat at https://gitter.im/JOBAA/amos-ss15-proj4](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JOBAA/amos-ss15-proj4?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Personalfragebogen 2.0 @ DATEV
 
 # Setup
