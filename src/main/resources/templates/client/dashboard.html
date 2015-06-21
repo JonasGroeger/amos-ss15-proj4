@@ -21,6 +21,7 @@
                 <th th:text="#{AccountPage.edit}"></th>
                 <th th:text="#{AccountPage.delete}"></th>
                 <th th:text="#{AccountPage.download}"></th>
+                <th th:text="#{AccountPage.sendEmail}"></th>
                 <th th:text="#{AccountPage.token}"></th>
                 <th th:text="#{employee.personnelNumber}"></th>
                 <th th:text="#{employee.familyName}"></th>
@@ -58,6 +59,10 @@
                     th:text="#{EmployeeSubmit.downloadLink}">Text</a> <br /> <a
                     th:href="@{'/employee/download/zip?id=' + ${Employee.id}}"
                     th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
+                </td>
+                <td><button
+                        th:OnClick="@{'window.location.href=\'/employee/email/send?id=' + ${Employee.id} + '&amp;' + 'to=\' + window.prompt();'}"
+                        th:text="#{AccountPage.ViewToken}">Send eMail</button>
                 </td>
                 <td><button
                         th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
