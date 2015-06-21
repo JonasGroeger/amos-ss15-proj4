@@ -13,48 +13,48 @@
                 <h1 th:text="#{EmployeeForm.header}"></h1>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="id" th:text="#{employee.id}"></label>
+                        <label for="id" th:text="#{EMPLOYEE.id}"></label>
                         <input th:field="*{id}" type="number" readonly="true" class="form-control" th:placeholder="#{placeholder.id}"/>
                     </div>
                     <div class="form-group">
-                        <label for="personnelNumber" th:text="#{employee.personnelNumber}"></label>
+                        <label for="personnelNumber" th:text="#{EMPLOYEE.personnelNumber}"></label>
                         <input th:field="*{personnelNumber}" type="number" class="form-control" th:placeholder="#{placeholder.personnelNumber}"/>
                     </div>
                     <div class="form-group">
-                        <label for="familyName" th:text="#{employee.familyName} +#{EmployeeForm.mandatory}"></label>
+                        <label for="familyName" th:text="#{EMPLOYEE.familyName} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{familyName}" type="text" class="form-control" th:placeholder="#{placeholder.familyName}" />
                     </div>
                     <div class="form-group">
-                        <label for="maidenName" th:text="#{employee.maidenName}"></label>
+                        <label for="maidenName" th:text="#{EMPLOYEE.maidenName}"></label>
                         <input th:field="*{maidenName}" type="text" class="form-control" th:placeholder="#{placeholder.maidenName}" />
                     </div>
                     <div class="form-group">
-                        <label for="street" th:text="#{employee.street} +#{EmployeeForm.mandatory}"></label>
+                        <label for="street" th:text="#{EMPLOYEE.street} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{street}" type="text" class="form-control" th:placeholder="#{placeholder.street}" />
                     </div>
                     <div class="form-group">
-                        <label for="houseNumber" th:text="#{employee.houseNumber} +#{EmployeeForm.mandatory}"></label>
+                        <label for="houseNumber" th:text="#{EMPLOYEE.houseNumber} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{houseNumber}" type="text" min="0" class="form-control" th:placeholder="#{placeholder.houseNumber}" />
                     </div>
                     <div class="form-group">
-                        <label for="additionToAddress" th:text="#{employee.additionToAddress}"></label>
+                        <label for="additionToAddress" th:text="#{EMPLOYEE.additionToAddress}"></label>
                         <input th:field="*{additionToAddress}" type="text" class="form-control" th:placeholder="#{placeholder.additionToAddress}" />
                     </div>
                     <div class="form-group">
-                        <label for="placeOfBirth" th:text="#{employee.placeOfBirth} + ' ' + #{employee.placeOfBirth.remark}"></label>
+                        <label for="placeOfBirth" th:text="#{EMPLOYEE.placeOfBirth} + ' ' + #{EMPLOYEE.placeOfBirth.remark}"></label>
                         <input th:field="*{placeOfBirth}" type="text" class="form-control" th:placeholder="#{placeholder.placeOfBirth}" />
                     </div>
                     <div class="form-group">
-                        <label for="sex" th:text="#{employee.sex} +#{EmployeeForm.mandatory}"></label>
+                        <label for="sex" th:text="#{EMPLOYEE.sex} +#{EmployeeForm.mandatory}"></label>
                         <select th:field="*{sex}" class="form-control">
-                            <option value="" th:text="#{employee.select}"></option>
+                            <option value="" th:text="#{EMPLOYEE.select}"></option>
                             <option th:each="sex : ${allSex}" th:value="${sex.name()}" th:text="${sex.getText()}"></option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="maritalStatus" th:text="#{employee.maritalStatus}  +#{EmployeeForm.mandatory}"></label>
+                        <label for="maritalStatus" th:text="#{EMPLOYEE.maritalStatus}  +#{EmployeeForm.mandatory}"></label>
                         <select th:field="*{maritalStatus}" class="form-control">
-                            <option value="" th:text="#{employee.select}"></option>
+                            <option value="" th:text="#{EMPLOYEE.select}"></option>
                             <option
 								th:each="maritalStatus : ${allMarital}"
 								th:value="${maritalStatus.name()}"
@@ -62,66 +62,66 @@
 						</select>
                     </div>
                     <div class="form-group">
-                        <label for="disabled" th:text="#{employee.disabled} +#{EmployeeForm.mandatory}"></label>
+                        <label for="disabled" th:text="#{EMPLOYEE.disabled} +#{EmployeeForm.mandatory}"></label>
                         <select th:field="*{disabled}" class="form-control">
-                            <option value="" th:text="#{employee.select}"></option>
+                            <option value="" th:text="#{EMPLOYEE.select}"></option>
                             <option th:each="disabled : ${allDisabled}" th:value="${disabled.name()}" th:text="${disabled.getText()}"></option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="iban" th:text="#{employee.iban} +#{EmployeeForm.mandatory}"></label>
+                        <label for="iban" th:text="#{EMPLOYEE.iban} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{iban}" type="text" class="form-control" th:placeholder="#{placeholder.iban}" />
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="token" th:text="#{employee.token}"></label> <input
+                        <label for="token" th:text="#{EMPLOYEE.token}"></label> <input
                             th:field="*{token}" type="text" readonly="true"
                             class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="firstname" th:text="#{employee.firstName} +#{EmployeeForm.mandatory}"></label>
+                        <label for="firstname" th:text="#{EMPLOYEE.firstName} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{firstName}" type="text" class="form-control" th:placeholder="#{placeholder.firstName}" />
                     </div>
                     <div class="form-group">
-                        <label for="birthDate" th:text="#{employee.birthDate} + ' ' + #{employee.birthDate.remark} + #{EmployeeForm.mandatory}"></label>
+                        <label for="birthDate" th:text="#{EMPLOYEE.birthDate} + ' ' + #{EMPLOYEE.birthDate.remark} + #{EmployeeForm.mandatory}"></label>
                         <input th:field="*{birthDate}" type="text" class="form-control" th:placeholder="#{placeholder.birthDate}" />
                     </div>
                     <div class="form-group">
-                        <label for="postCode" th:text="#{employee.zipCode} +#{EmployeeForm.mandatory}"></label>
+                        <label for="postCode" th:text="#{EMPLOYEE.zipCode} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{zipCode}" type="text" class="form-control" th:placeholder="#{placeholder.zipCode}" />
                     </div>
                     <div class="form-group">
-                        <label for="city" th:text="#{employee.city} +#{EmployeeForm.mandatory}"></label>
+                        <label for="city" th:text="#{EMPLOYEE.city} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{city}" type="text" class="form-control" th:placeholder="#{placeholder.city}" />
                     </div>
                     <div class="form-group">
-                        <label for="socialInsuranceNumber" th:text="#{employee.socialInsuranceNumber} +#{EmployeeForm.mandatory}"></label>
+                        <label for="socialInsuranceNumber" th:text="#{EMPLOYEE.socialInsuranceNumber} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{socialInsuranceNumber}" type="text" class="form-control" th:placeholder="#{placeholder.socialInsuranceNumber}" />
                     </div>
                     <div class="form-group">
-                        <label for="countryOfBirth" th:text="#{employee.countryOfBirth} + ' ' + #{employee.countryOfBirth.remark}"></label>
+                        <label for="countryOfBirth" th:text="#{EMPLOYEE.countryOfBirth} + ' ' + #{EMPLOYEE.countryOfBirth.remark}"></label>
                         <input th:field="*{countryOfBirth}" type="text" class="form-control" th:placeholder="#{placeholder.countryOfBirth}" />
                     </div>
                     <div class="form-group">
-                        <label for="citizenship" th:text="#{employee.citizenship} +#{EmployeeForm.mandatory}"></label>
+                        <label for="citizenship" th:text="#{EMPLOYEE.citizenship} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{citizenship}" type="text" class="form-control" th:placeholder="#{placeholder.citizenship}" />
                     </div>
                     <div class="form-group">
-                        <label for="employerSocialSavingsNumber" th:text="#{employee.employerSocialSavingsNumber} +#{EmployeeForm.mandatory}"></label>
+                        <label for="employerSocialSavingsNumber" th:text="#{EMPLOYEE.employerSocialSavingsNumber} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{employerSocialSavingsNumber}" type="text" class="form-control" th:placeholder="#{placeholder.employerSocialSavingsNumber}" />
                     </div>
                     <div class="form-group">
-                        <label for="bic" th:text="#{employee.bic} +#{EmployeeForm.mandatory}"></label>
+                        <label for="bic" th:text="#{EMPLOYEE.bic} +#{EmployeeForm.mandatory}"></label>
                         <input th:field="*{bic}" type="text" class="form-control" th:placeholder="#{placeholder.bic}" />
                     </div>
                     <div class="form-group">
-+                        <label for="employment" th:text="#{employee.employment}"></label>
++                        <label for="employment" th:text="#{EMPLOYEE.employment}"></label>
 +                        <input th:field="*{employment}" type="text" class="form-control" th:placeholder="#{placeholder.employment}"/>
                      </div>
                      <div class="form-group">
-+                        <label for="temporaryEmployment" th:text="#{employee.temporaryEmployment}"></label>
++                        <label for="temporaryEmployment" th:text="#{EMPLOYEE.temporaryEmployment}"></label>
 +                        <input th:field="*{temporaryEmployment}" type="text" class="form-control" th:placeholder="#{placeholder.temporaryEmployment}"/>
                      </div>
                 </div>
