@@ -36,6 +36,14 @@
         </script>
         <!-- End: Translation -->
 
+        <!-- Start: Error notification -->
+        <div th:if="${error} != null">
+            <script th:inline="javascript">
+                errors.push( [[ ${error} ]]);
+            </script>
+        </div>
+        <!-- End: Error notification -->
+
         <!-- Start: Logout button -->
         <div th:if="${currentClient != null}">
             <form onsubmit="return confirm(_t['client_logout_confirm']);" th:action="@{/client/logout}" method="POST">
@@ -43,6 +51,7 @@
             </form>
         </div>
         <!-- End: Logout button -->
+
     </header>
 </div>
 <!-- End: Fragment-->
