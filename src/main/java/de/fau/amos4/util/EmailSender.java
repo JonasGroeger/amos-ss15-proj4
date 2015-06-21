@@ -19,7 +19,6 @@
  */
 package de.fau.amos4.util;
 import java.io.File;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -58,7 +57,7 @@ public class EmailSender {
 	      properties.put("mail.smtp.port", "465");
 	}
 	
-	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, InputStream attachment) throws AddressException, MessagingException
+	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, File[] attachments) throws AddressException, MessagingException
 	   {	
 		final String UserName = this.User;
 		final String Password = this.Pass;
@@ -85,11 +84,13 @@ public class EmailSender {
 	      Multipart multipart = new MimeMultipart();
 	      multipart.addBodyPart(messageBodyPart);
 	      
-	      if (attachment != null) {
+	      if (attachments != null) {
 		      //TODO Add for loop for multiple attachments
 		      // Part two is attachment
-		      messageBodyPart = new MimeBodyPart(attachment);
-		      messageBodyPart.setFileName("Data.zip");
+		      messageBodyPart = new MimeBodyPart();
+		      DataSource source = new FileDataSource(attachments[0]);
+		      messageBodyPart.setDataHandler(new DataHandler(source));
+		      messageBodyPart.setFileName(attachments[0].getName());
 		      multipart.addBodyPart(messageBodyPart);
 	      }
 
