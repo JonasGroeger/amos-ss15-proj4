@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.thymeleaf.org" layout:decorator="layout">
 
 <head>
-    <title>Personalfragebogen 2.0 - v0.1</title>
+<title>Personalfragebogen 2.0 - v0.1</title>
 </head>
 
 <body>
@@ -21,6 +22,7 @@
                 <th th:text="#{AccountPage.edit}"></th>
                 <th th:text="#{AccountPage.delete}"></th>
                 <th th:text="#{AccountPage.download}"></th>
+                <th th:text="#{Dashboard.sendData}"></th>
                 <th th:text="#{AccountPage.token}"></th>
                 <th th:text="#{EMPLOYEE.personnelNumber}"></th>
                 <th th:text="#{EMPLOYEE.familyName}"></th>
@@ -59,6 +61,9 @@
                     th:href="@{'/employee/download/zip?id=' + ${Employee.id}}"
                     th:text="#{EmployeeSubmit.zipDownloadLink}">Zip</a>
                 </td>
+                <td><button
+						th:OnClick="@{'window.location.href=\'/employee/email/send?id=' + ${Employee.id} + '&amp;' + 'to=\' + window.prompt(\'' + #{Dashboard.enterEmail} + '\');'}"
+						th:text="#{Dashboard.sendEmail}"></button></td>
                 <td><button
                         th:OnClick="'window.alert(\''+ ${Employee.token} + '\');'"
                         th:text="#{AccountPage.ViewToken}">View token</button>
