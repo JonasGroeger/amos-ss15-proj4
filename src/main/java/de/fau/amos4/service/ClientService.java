@@ -30,4 +30,6 @@ public interface ClientService
     Iterable<Client> getAllClients();
 
     Client create(Client client);
+
+    void generateNewPassword(Client client);
 }
