@@ -27,7 +27,7 @@ import java.util.Locale;
 public enum Disabled
 {
     //From .properties files
-    YES("employee.disabled.yes"), NO("employee.disabled.no");
+    YES("EMPLOYEE.disabled.yes"), NO("EMPLOYEE.disabled.no");
 
     private String text;
 

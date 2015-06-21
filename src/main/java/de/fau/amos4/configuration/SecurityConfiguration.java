@@ -88,6 +88,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                 .antMatchers("/employee/confirm").permitAll()
                 .antMatchers("/employee/download/text").permitAll()
                 .antMatchers("/employee/download/zip").permitAll()
+                .antMatchers("/employee/edit").permitAll()
+                .antMatchers("/employee/edit/submit").permitAll()
                 .anyRequest().fullyAuthenticated()
 
                 .and()

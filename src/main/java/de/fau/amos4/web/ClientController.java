@@ -19,11 +19,19 @@
  */
 package de.fau.amos4.web;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.MaritalStatus;
@@ -32,9 +40,23 @@ import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.EmailSender;
+import de.fau.amos4.util.ZipGenerator;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.io.ZipOutputStream;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -128,11 +150,11 @@ public class ClientController
             // Create new password for user
             Client client = clientService.getClientByEmail(email);
             String newRandomPassword = RandomStringUtils.random(8, "ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
-            String newPasswordHash = new BCryptPasswordEncoder().encode(newRandomPassword);
+            String newPasswordHash = new BCryptPasswordEncoder(4).encode(newRandomPassword);
             client.setPasswordHash(newPasswordHash);
             
             EmailSender Sender = new EmailSender();
-            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is:" + newRandomPassword);
+            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newRandomPassword, null);
             clientRepository.save(client);
             mav.setViewName("/client/login");
         }
@@ -140,6 +162,32 @@ public class ClientController
         {
             mav.setViewName("/client/forgotPassword");
         }
+        return mav;
+    }
+    
+    @RequestMapping(value = "/employee/email/send")
+    public ModelAndView EmployeeEmailSend(@RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
+    {
+        ModelAndView mav = new ModelAndView();
+        
+        Employee employee = employeeRepository.findOne(id);
+        
+        int fontSize=12;
+        float height= 1;
+        height = height*fontSize*1.05f;
+        
+        Locale locale = LocaleContextHolder.getLocale();
+        Map<String,String> fields = employee.getFields();
+        
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        
+        ZipGenerator zipGenerator = new ZipGenerator();
+        zipGenerator.generate(out, locale, fields, height, employee, fontSize);
+        
+        EmailSender sender = new EmailSender();
+        sender.SendEmail(to, "Employee Data", "test", out.toByteArray());
+        
+        mav.setViewName("redirect:/client/dashboard");
         return mav;
     }
 }

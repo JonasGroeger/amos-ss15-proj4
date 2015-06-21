@@ -27,7 +27,7 @@ import java.util.Locale;
 public enum MaritalStatus
 {
     //From .properties files
-    SINGLE("employee.marital.single"), MARRIED("employee.marital.married"), SEPARATED("employee.marital.separated"), OTHER("employee.marital.other");
+    SINGLE("EMPLOYEE.marital.single"), MARRIED("EMPLOYEE.marital.married"), SEPARATED("EMPLOYEE.marital.separated"), OTHER("EMPLOYEE.marital.other");
 
     private String text;
 
