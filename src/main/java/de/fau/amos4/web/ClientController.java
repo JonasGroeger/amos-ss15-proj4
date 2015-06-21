@@ -132,7 +132,7 @@ public class ClientController
             client.setPasswordHash(newPasswordHash);
             
             EmailSender Sender = new EmailSender();
-            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newRandomPassword);
+            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newRandomPassword, null);
             clientRepository.save(client);
             mav.setViewName("/client/login");
         }

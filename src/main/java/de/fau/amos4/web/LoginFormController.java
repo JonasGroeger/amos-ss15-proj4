@@ -77,7 +77,7 @@ public class LoginFormController
         // TODO: Replace this with Thymeleaf based tample generated content
         String Content = "<a href='" + contextPath + "?id=" + client.getId() + "&confirmation=" + ConfirmationCode + "'>Confirm my email address.</a>";
         EmailSender sender = new EmailSender();
-        sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content);
+        sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content, null);
 
         // Display login screen after
         return "redirect:/?m=registered";
