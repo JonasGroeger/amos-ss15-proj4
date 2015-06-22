@@ -72,7 +72,7 @@ public class ClientServiceImpl implements ClientService
         try
         {
             EmailSender postman = new EmailSender();
-            postman.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newPassword);
+            postman.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newPassword, null);
         } catch (MessagingException e) {
             e.printStackTrace();
             return;
