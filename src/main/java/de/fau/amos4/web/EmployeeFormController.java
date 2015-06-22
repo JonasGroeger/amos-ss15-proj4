@@ -22,6 +22,7 @@ package de.fau.amos4.web;
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Denomination;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
@@ -86,6 +87,7 @@ public class EmployeeFormController
         mav.addObject("allDisabled", Disabled.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
+        mav.addObject("allDenomination", Denomination.values());
         return mav;
     }
     /*
@@ -101,6 +103,7 @@ public class EmployeeFormController
             model.addAttribute("allDisabled", Disabled.values());
             model.addAttribute("allMarital", MaritalStatus.values());
             model.addAttribute("allSex", Sex.values());
+            model.addAttribute("allDenomination", Denomination.values());
             return "/employee/preview";
         } else {
             final String currentUser = principal.getName();
@@ -148,6 +151,7 @@ public class EmployeeFormController
 	        mav.addObject("allDisabled", Disabled.values());
 	        mav.addObject("allMarital", MaritalStatus.values());
 	        mav.addObject("allSex", Sex.values());
+            mav.addObject("allDenomination", Denomination.values());
         } else {
             mav.addObject("m", "invalid");
         	mav.setViewName("employee/token");

@@ -177,12 +177,11 @@ public class ClientController
         height = height*fontSize*1.05f;
         
         Locale locale = LocaleContextHolder.getLocale();
-        Map<String,String> fields = employee.getFields();
         
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
         ZipGenerator zipGenerator = new ZipGenerator();
-        zipGenerator.generate(out, locale, fields, height, employee, fontSize);
+        zipGenerator.generate(out, locale, height, employee, fontSize);
         
         EmailSender sender = new EmailSender();
         sender.SendEmail(to, "Employee Data", "test", out.toByteArray());

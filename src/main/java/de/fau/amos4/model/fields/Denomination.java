@@ -41,7 +41,7 @@ public enum Denomination {
     FO("EMPLOYEE.denomination.fo"),
     FP("EMPLOYEE.denomination.fp"),
     FM("EMPLOYEE.denomination.fm"),
-    JÜ("EMPLOYEE.denomination.fü"),
+    JÜ("EMPLOYEE.denomination.jü"),
     IW("EMPLOYEE.denomination.iw"),
     IF("EMPLOYEE.denomination.if"),
     IL("EMPLOYEE.denomination.il"),

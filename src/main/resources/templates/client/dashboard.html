@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content">
-        <h1 th:text="#{EmployeeForm.header}"></h1>
+        <h1 th:text="#{HEADER}"></h1>
         <div th:if="${param.m} != null" th:switch="${param.m[0]}">
 	        <p th:case="'profileChanged'" th:text="#{clientDashboard.profileChanged}" style='color:green;font-weight:bold;' />
         </div>
@@ -46,6 +46,12 @@
                 <th th:text="#{EMPLOYEE.bic}"></th>
                 <th th:text="#{EMPLOYEE.employment}"></th>
                 <th th:text="#{EMPLOYEE.temporaryEmployment}"></th>
+                <th th:text="#{EMPLOYEE.taxOfficeNumber}"></th>
+                <th th:text="#{EMPLOYEE.identificationNumber}"></th>
+                <th th:text="#{EMPLOYEE.taxClass}"></th>
+                <th th:text="#{EMPLOYEE.factor}"></th>
+                <th th:text="#{EMPLOYEE.numberOfExemptionsForChildren}"></th>
+                <th th:text="#{EMPLOYEE.denomination}"></th>
             </tr>
             <tr th:each="Employee : ${Employees}">
                 <td><a th:href="@{'/employee/edit?id=' + ${Employee.id}}"
@@ -90,6 +96,12 @@
                 <td th:text="${Employee.bic}"></td>
                 <td th:text="${Employee.employment}"></td>
                 <td th:text="${Employee.temporaryEmployment}"></td>
+                <td th:text="${Employee.taxOfficeNumber}"></td>
+                <td th:text="${Employee.identificationNumber}"></td>
+                <td th:text="${Employee.taxClass}"></td>
+                <td th:text="${Employee.factor}"></td>
+                <td th:text="${Employee.numberOfExemptionsForChildren}"></td>
+                <td th:text="${Employee.denomination}"></td>
             </tr>
         </table>
 </div>

@@ -161,7 +161,7 @@ public class Employee
 
     }
 
-    public Map<String,String> getFields() {
+    public Map<String,String> getPersonalDataFields() {
         Map<String,String> allFields = new LinkedHashMap<String, String>();
         Locale locale = LocaleContextHolder.getLocale();
         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
@@ -173,7 +173,7 @@ public class Employee
         }
 
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.id", null, locale), Long.toString(getId()));
-        allFields.put( AppContext.getApplicationContext().getMessage("Client.companyName", null, locale), getClient().getCompanyName());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.companyName", null, locale), getClient().getCompanyName());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.personnelNumber", null, locale), Long.toString(getPersonnelNumber()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.firstName", null, locale), getFirstName());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.familyName", null, locale), getFamilyName());
@@ -197,6 +197,18 @@ public class Employee
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.employment", null, locale), getEmployment());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.temporaryEmployment", null, locale), getTemporaryEmployment());
         //allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.token", null, locale), getToken());
+        return allFields;
+    }
+
+    public Map<String,String> getTaxesFields() {
+        Map<String,String> allFields = new LinkedHashMap<String, String>();
+        Locale locale = LocaleContextHolder.getLocale();
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.taxOfficeNumber", null, locale), Integer.toString(getTaxOfficeNumber()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.identificationNumber", null, locale), Long.toString(getIdentificationNumber()));
+        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.taxClass", null, locale), Integer.toString(getTaxClass()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.factor", null, locale), Float.toString(getFactor()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.numberOfExemptionsForChildren", null, locale), Float.toString(getNumberOfExemptionsForChildren()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.denomination", null, locale), getDenomination().toString());
         return allFields;
     }
 

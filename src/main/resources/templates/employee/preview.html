@@ -9,7 +9,7 @@
 <div layout:fragment="content">
         <form th:action="@{/employee/confirm}" th:object="${employee}">
             <div class="row">
-                <h1 th:text="#{EmployeeForm.header}"></h1>
+                <h1 th:text="#{HEADER}"></h1>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="id" th:text="#{EMPLOYEE.id}"></label>
@@ -78,10 +78,6 @@
                         <input th:field="*{token}" type="text" readonly="true" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="client" th:text="#{client.companyName}"></label>
-                        <input th:field="*{client.companyName}" type="text" readonly="true" class="form-control" />
-                    </div>
-                    <div class="form-group">
                         <label for="firstname" th:text="#{EMPLOYEE.firstName}"></label>
                         <input th:field="*{firstName}" readonly="true" type="text" class="form-control" />
                     </div>
@@ -124,6 +120,40 @@
                     <div class="form-group">
                         <label for="temporaryEmployment" th:text="#{EMPLOYEE.temporaryEmployment}"></label>
                         <input th:field="*{temporaryEmployment}" type="text" readonly="true" class="form-control" th:placeholder="#{placeholder.temporaryEmployment}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <h2 th:text="#{employeeEdit.taxesSection}"></h2>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="taxOfficeNumber" th:text="#{EMPLOYEE.taxOfficeNumber}"></label>
+                        <input th:field="*{taxOfficeNumber}" type="text" readonly="true" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.taxOfficeNumber}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxClass" th:text="#{EMPLOYEE.taxClass}"></label>
+                        <input th:field="*{taxClass}" type="text" readonly="true" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.taxClass}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="numberOfExemptionsForChildren" th:text="#{EMPLOYEE.numberOfExemptionsForChildren}"></label>
+                        <input th:field="*{numberOfExemptionsForChildren}" type="text" readonly="true" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.numberOfExemptionsForChildren}"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="identificationNumber" th:text="#{EMPLOYEE.identificationNumber}"></label>
+                        <input th:field="*{identificationNumber}" type="text" readonly="true" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.identificationNumber}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="factor" th:text="#{EMPLOYEE.factor}"></label>
+                        <input th:field="*{factor}" type="text" readonly="true" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.factor}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="denomination" th:text="#{EMPLOYEE.denomination} +#{employeeEdit.mandatory}"></label>
+                        <select th:field="*{denomination}" readonly="true" class="form-control">
+                            <option value="" th:text="#{EMPLOYEE.select}"></option>
+                            <option th:each="denomination : ${allDenomination}" th:value="${denomination.name()}" th:text="${denomination.getText()}"></option>
+                        </select>
                     </div>
                 </div>
             </div>

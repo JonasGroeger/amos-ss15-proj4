@@ -43,7 +43,7 @@ import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Employee;
 
 public class ZipGenerator {
-	public void generate(OutputStream out, Locale locale, Map<String,String> fields, float height, Employee employee, int fontSize) throws ZipException, NoSuchMessageException, IOException, COSVisitorException, CloneNotSupportedException {
+	public void generate(OutputStream out, Locale locale, float height, Employee employee, int fontSize) throws ZipException, NoSuchMessageException, IOException, COSVisitorException, CloneNotSupportedException {
 		final ZipOutputStream zout = new ZipOutputStream(out);
 
         
@@ -59,11 +59,20 @@ public class ZipGenerator {
             params.setSourceExternalStream(true);
             
             zout.putNextEntry(null, params);
-            zout.write((AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale) + "\n\n").getBytes());
-            //zout.println();
-            zout.write((AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale) + "\n\n").getBytes());
-            //zout.println();
-            Iterator it = fields.entrySet().iterator();
+            zout.write((AppContext.getApplicationContext().getMessage("HEADER", null, locale) + "\n\n").getBytes());
+
+            zout.write((AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale) + "\n\n").getBytes());
+
+            Iterator it = employee.getPersonalDataFields().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                zout.write((pair.getKey() + ": " + pair.getValue() + '\n').getBytes());
+                it.remove(); // avoids a ConcurrentModificationException
+            }
+
+            zout.write(("\n\n" + AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale) + "\n\n").getBytes());
+
+            it = employee.getTaxesFields().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 zout.write((pair.getKey() + ": " + pair.getValue() + '\n').getBytes());
@@ -98,16 +107,34 @@ public class ZipGenerator {
                 }
                 */
 
-                fields = employee.getFields();
+
 
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 36);
-                contentStream.drawString(AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale));
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("HEADER", null, locale));
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.moveTextPositionByAmount(0, -4 * height);
-                contentStream.drawString(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale));
                 contentStream.moveTextPositionByAmount(0, -2 * height);
                 contentStream.setFont(font, fontSize);
-                it = fields.entrySet().iterator();
+
+                it = employee.getPersonalDataFields().entrySet().iterator();
+                while (it.hasNext()) {
+                    StringBuffer nextLineToDraw = new StringBuffer();
+                    Map.Entry pair = (Map.Entry)it.next();
+                    nextLineToDraw.append( pair.getKey());
+                    nextLineToDraw.append(": ");
+                    nextLineToDraw.append(pair.getValue());
+
+                    contentStream.drawString( nextLineToDraw.toString() );
+                    contentStream.moveTextPositionByAmount(0, -height);
+                    it.remove(); // avoids a ConcurrentModificationException
+                }
+                contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
+                contentStream.moveTextPositionByAmount(0, -2 * height);
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale));
+                contentStream.moveTextPositionByAmount(0, -2 * height);
+                contentStream.setFont(font, fontSize);
+                it = employee.getTaxesFields().entrySet().iterator();
                 while (it.hasNext()) {
                     StringBuffer nextLineToDraw = new StringBuffer();
                     Map.Entry pair = (Map.Entry)it.next();
