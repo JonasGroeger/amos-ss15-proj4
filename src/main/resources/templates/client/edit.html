@@ -12,7 +12,7 @@
 
 		<form th:action="@{/client/edit/submit}" th:object="${Client}"
 			method="POST">
-			<p th:text="#{Client.id} + ': ' + *{id}" />
+			<p th:text="#{CLIENT.id} + ': ' + *{id}" />
 
 			<fieldset>
 				<label for="LODAS">LODAS</label><input type="radio" id="LODAS"
@@ -25,9 +25,9 @@
 				th:text="#{ClientEdit.loginAndSecurity}"></label>
 
 			<div class="form-group">
-				<label for="Email" th:text="#{Client.email}"></label> <input
+				<label for="Email" th:text="#{CLIENT.email}"></label> <input
 					readonly="true" type="email" class="form-control" id="Email"
-					th:placeholder="#{placeholder.Email}" th:field="*{email}"></input>
+					th:placeholder="#{CLIENT.placeholder.email}" th:field="*{email}"></input>
 			</div>
 
 			<div th:if="${param.m} != null" th:switch="${param.m[0]}">
@@ -39,26 +39,26 @@
 			<div class="form-group">
 				<label for="NewPassword" th:text="#{ClientEdit.NewPassword}"></label>
 				<input type="password" class="form-control" id="NewPassword"
-					th:placeholder="#{placeholder.NewPassword}" name="NewPassword"></input>
+					th:placeholder="#{CLIENT.placeholder.newPassword}" name="NewPassword"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="ConfirmPassword" th:text="#{ClientEdit.ConfirmPassword}"></label>
 				<input type="password" class="form-control" id="ConfirmPassword"
-					th:placeholder="#{placeholder.ConfirmPassword}"
+					th:placeholder="#{CLIENT.placeholder.confirmPassword}"
 					name="ConfirmPassword"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="OldPassword" th:text="#{ClientEdit.OldPassword}"></label>
 				<input type="password" class="form-control" id="OldPassword"
-					th:placeholder="#{placeholder.OldPassword}" name="OldPassword"></input>
+					th:placeholder="#{CLIENT.placeholder.oldPassword}" name="OldPassword"></input>
 			</div>
 
 			<div class="form-group">
 				<label for="ZipPassword" th:text="#{ClientEdit.ZipPassword}"></label>
 				<input type="password" class="form-control" id="ZipPassword"
-					th:placeholder="#{placeholder.ZipPassword}"
+					th:placeholder="#{CLIENT.placeholder.zipPassword}"
 					th:field="*{zipPassword}"></input>
 			</div>
 
@@ -67,7 +67,7 @@
 				th:text="#{RegistrationPage.personalDetails}"></label>
 
 			<div class="form-group">
-				<label for="title" th:text="#{Client.title}"></label>
+				<label for="title" th:text="#{CLIENT.title}"></label>
 					<select th:field="*{title}" class="form-control">
 						<option value="" th:text="#{RegistrationPage.select}"></option>
 						<option th:each="title : ${allTitles}" th:value="${title.name()}"
@@ -76,35 +76,35 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="firstname" th:text="#{Client.firstname}"></label> <input
+				<label for="firstname" th:text="#{CLIENT.firstName}"></label> <input
 					type="text" class="form-control" id="firstname"
-					th:placeholder="#{placeholder.firstname}" th:field="*{firstName}"></input>
+					th:placeholder="#{CLIENT.placeholder.firstName}" th:field="*{firstName}"></input>
 			</div>
 
 
 			<div class="form-group">
-				<label for="familyname" th:text="#{Client.familyname}"></label> <input
+				<label for="familyname" th:text="#{CLIENT.familyName}"></label> <input
 					type="text" class="form-control" id="familyname"
-					th:placeholder="#{placeholder.lastname}" th:field="*{familyName}"></input>
+					th:placeholder="#{CLIENT.placeholder.lastName}" th:field="*{familyName}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="birthdate" th:text="#{Client.birthdate}"></label> <input
+				<label for="birthdate" th:text="#{CLIENT.birthDate}"></label> <input
 					type="birthdate" class="form-control" id="birthdate"
-					th:placeholder="#{placeholder.birthdate}" th:field="*{birthDate}"></input>
+					th:placeholder="#{CLIENT.placeholder.birthDate}" th:field="*{birthDate}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="officePhoneNumber" th:text="#{Client.officePhoneNumber}"></label>
+				<label for="officePhoneNumber" th:text="#{CLIENT.officePhoneNumber}"></label>
 				<input type="text" class="form-control" id="officePhoneNumber"
-					th:placeholder="#{placeholder.phoneNumber}"
+					th:placeholder="#{CLIENT.placeholder.phoneNumber}"
 					th:field="*{officePhoneNumber}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="mobilePhoneNumber" th:text="#{Client.mobilePhoneNumber}"></label>
+				<label for="mobilePhoneNumber" th:text="#{CLIENT.mobilePhoneNumber}"></label>
 				<input type="text" class="form-control" id="mobilePhoneNumber"
-					th:placeholder="#{placeholder.mobileNumber}"
+					th:placeholder="#{CLIENT.placeholder.mobileNumber}"
 					th:field="*{mobilePhoneNumber}"></input>
 			</div>
 
@@ -113,35 +113,35 @@
 				th:text="#{RegistrationPage.companyDetails}"></label>
 
 			<div class="form-group">
-				<label for="companyName" th:text="#{Client.companyName}"></label> <input
+				<label for="companyName" th:text="#{CLIENT.companyName}"></label> <input
 					type="text" class="form-control" id="companyName"
-					th:placeholder="#{placeholder.CompanyName}"
+					th:placeholder="#{CLIENT.placeholder.companyName}"
 					th:field="*{companyName}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="companyType" th:text="#{Client.companyType}"></label> <input
+				<label for="companyType" th:text="#{CLIENT.companyType}"></label> <input
 					type="text" class="form-control" id="companyType"
-					th:placeholder="#{placeholder.CompanyType}"
+					th:placeholder="#{CLIENT.placeholder.companyType}"
 					th:field="*{companyType}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="country" th:text="#{Client.country}"></label> <input
+				<label for="country" th:text="#{CLIENT.country}"></label> <input
 					type="text" class="form-control" id="country"
-					th:placeholder="#{placeholder.Country}" th:field="*{country}"></input>
+					th:placeholder="#{CLIENT.placeholder.country}" th:field="*{country}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="address" th:text="#{Client.address}"></label> <input
+				<label for="address" th:text="#{CLIENT.address}"></label> <input
 					type="text" class="form-control" id="address"
-					th:placeholder="#{placeholder.Address}" th:field="*{address}"></input>
+					th:placeholder="#{CLIENT.placeholder.address}" th:field="*{address}"></input>
 			</div>
 
 			<div class="form-group">
-				<label for="zipCode" th:text="#{Client.zipCode}"></label> <input
+				<label for="zipCode" th:text="#{CLIENT.zipCode}"></label> <input
 					type="text" class="form-control" id="zipCode"
-					th:placeholder="#{placeholder.ZipCode}" th:field="*{zipCode}"></input>
+					th:placeholder="#{CLIENT.placeholder.zipCode}" th:field="*{zipCode}"></input>
 			</div>
 
 
