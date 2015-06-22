@@ -39,7 +39,7 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
     public void clientDashboard_OnlyClientsEmployeesAreDisplayrd() throws Exception
     {
         // Instantiate the controller
-        ClientController clientController = new ClientController(this.clientService, this.employeeRepository, clientRepository);
+        ClientController clientController = new ClientController(this.clientService, this.employeeRepository, translatorService);
         // Get a client's username
         String UserName = this.clientService.getClientById(1l).getEmail();
         
@@ -65,7 +65,7 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
     public void clientDashboard_addedNewEmployeeIsAlsoListed() throws Exception
     {
         // Instantiate the controller
-        ClientController clientController = new ClientController(this.clientService, this.employeeRepository, this.clientRepository);
+        ClientController clientController = new ClientController(this.clientService, this.employeeRepository, translatorService);
         // Get a client's username
         Client client = this.clientService.getClientById(1l);
         String UserName = client.getEmail();
