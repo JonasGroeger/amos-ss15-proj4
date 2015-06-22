@@ -173,7 +173,7 @@ public class Employee
         }
 
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.id", null, locale), Long.toString(getId()));
-        allFields.put(AppContext.getApplicationContext().getMessage("client.companyName", null, locale), getClient().getCompanyName());
+        allFields.put( AppContext.getApplicationContext().getMessage("Client.companyName", null, locale), getClient().getCompanyName());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.personnelNumber", null, locale), Long.toString(getPersonnelNumber()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.firstName", null, locale), getFirstName());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.familyName", null, locale), getFamilyName());
