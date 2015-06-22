@@ -3,11 +3,15 @@
 <!-- External CSS hook for decorating pages -->
 <div th:fragment="css-ext" th:remove="tag">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/flatty.css}"/>
 </div>
 
 <!-- JS hook for decorating pages -->
 <div th:fragment="js-head" th:remove="tag">
     <script th:src="@{/js/vendor/modernizr-2.8.3.min.js}"></script>
+    <script>
+        var errors = [];
+    </script>
 </div>
 
 <!-- CSS hook for decorating pages -->
@@ -28,6 +32,7 @@
 <div th:fragment="js-body" th:remove="tag">
     <script th:src="@{/js/vendor/jquery-1.11.2.min.js}"></script>
     <script th:src="@{/js/vendor/bootstrap.min.js}"></script>
+    <script th:src="@{/js/vendor/humane-3.2.2.js}"></script>
     <script th:src="@{/js/main.js}"></script>
 </div>
 

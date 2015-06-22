@@ -17,19 +17,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.service;
+package de.fau.amos4.web.form;
 
-import de.fau.amos4.model.Client;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
-public interface ClientService
+public class ResetPasswordForm
 {
-    Client getClientById(Long id);
+    @NotBlank
+    @Email
+    private String email;
 
-    Client getClientByEmail(String email);
+    public String getEmail()
+    {
+        return email;
+    }
 
-    Iterable<Client> getAllClients();
-
-    Client create(Client client);
-
-    void generateNewPassword(Client client);
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
 }

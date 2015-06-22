@@ -19,17 +19,9 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.model.Client;
-
-public interface ClientService
+public interface TranslatorService
 {
-    Client getClientById(Long id);
+    String translate(String message);
 
-    Client getClientByEmail(String email);
-
-    Iterable<Client> getAllClients();
-
-    Client create(Client client);
-
-    void generateNewPassword(Client client);
+    String translate(String message, Object[] args);
 }

@@ -34,11 +34,12 @@ import javax.mail.internet.AddressException;
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Title;
-import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.TranslatorService;
+import de.fau.amos4.web.form.ResetPasswordForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import de.fau.amos4.util.EmailSender;
 import de.fau.amos4.util.ZipGenerator;
 import net.lingala.zip4j.core.ZipFile;
@@ -59,10 +60,15 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.security.Principal;
 
 /**
  * Handles client related requests.
@@ -72,14 +78,14 @@ public class ClientController
 {
     private final ClientService clientService;
     private final EmployeeRepository employeeRepository;
-    private final ClientRepository clientRepository;
+    private final TranslatorService translatorService;
 
     @Autowired
-    public ClientController(ClientService clientService, EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    public ClientController(ClientService clientService, EmployeeRepository employeeRepository, TranslatorService translatorService)
     {
         this.clientService = clientService;
-        this.clientRepository = clientRepository;
         this.employeeRepository = employeeRepository;
+        this.translatorService = translatorService;
     }
 
     /**
@@ -139,30 +145,45 @@ public class ClientController
         mav.setViewName("client/edit");
         return mav;
     }
-    
-    @RequestMapping(value = "/client/forgotPassword")
-    public ModelAndView ClientForgotPassword(@RequestParam(value="email", required= false, defaultValue = "")String email) throws AddressException, MessagingException
+
+    /**
+     * Displays the "reset password" page.
+     * @return The "reset password view".
+     */
+    @RequestMapping(value = "/client/forgotPassword", method = RequestMethod.GET)
+    public ModelAndView getForgotPasswordPage()
     {
-        ModelAndView mav = new ModelAndView();
-        
-        if(!email.equals(""))
-        {
-            // Create new password for user
-            Client client = clientService.getClientByEmail(email);
-            String newRandomPassword = RandomStringUtils.random(8, "ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
-            String newPasswordHash = new BCryptPasswordEncoder(4).encode(newRandomPassword);
-            client.setPasswordHash(newPasswordHash);
-            
-            EmailSender Sender = new EmailSender();
-            Sender.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", "Your new password is: " + newRandomPassword, null);
-            clientRepository.save(client);
-            mav.setViewName("/client/login");
+        return new ModelAndView("/client/forgotPassword");
+    }
+
+    /**
+     * Resets the users password to a randomly generated one if a valid email has been provided.
+     * @param resetPasswordForm The form the user has entered his "reset password" request.
+     * @param errors If there were any errors during POST.
+     * @return Redirects to the "reset password" page on error. Else, redirects to the login page.
+     */
+    @RequestMapping(value = "/client/forgotPassword", method = RequestMethod.POST)
+    public ModelAndView postForgotPasswordPage(@Valid @ModelAttribute final ResetPasswordForm resetPasswordForm,
+                                              final BindingResult errors)
+    {
+        if(errors.hasErrors()) {
+            final ModelAndView mav = new ModelAndView("/client/forgotPassword");
+            mav.addObject("error", translatorService.translate("client.resetpassword.error"));
+            return mav;
+
         }
-        else
-        {
-            mav.setViewName("/client/forgotPassword");
+
+        final Client client = clientService.getClientByEmail(resetPasswordForm.getEmail());
+        if(client == null) {
+            ModelAndView mav = new ModelAndView("/client/forgotPassword");
+            mav.addObject("error", translatorService.translate("client.resetpassword.noclient"));
+            return mav;
         }
-        return mav;
+
+        // Actually change the clients password to a random one
+        clientService.generateNewPassword(client);
+
+        return new ModelAndView("/client/login");
     }
     
     @RequestMapping(value = "/employee/email/send")
