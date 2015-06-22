@@ -19,6 +19,19 @@
  */
 package de.fau.amos4.web;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
+import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Title;
@@ -27,6 +40,25 @@ import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.TranslatorService;
 import de.fau.amos4.web.form.ResetPasswordForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import de.fau.amos4.util.EmailSender;
+import de.fau.amos4.util.ZipGenerator;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.io.ZipOutputStream;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -138,6 +170,7 @@ public class ClientController
             final ModelAndView mav = new ModelAndView("/client/forgotPassword");
             mav.addObject("error", translatorService.translate("client.resetpassword.error"));
             return mav;
+
         }
 
         final Client client = clientService.getClientByEmail(resetPasswordForm.getEmail());
@@ -151,5 +184,30 @@ public class ClientController
         clientService.generateNewPassword(client);
 
         return new ModelAndView("/client/login");
+    }
+    
+    @RequestMapping(value = "/employee/email/send")
+    public ModelAndView EmployeeEmailSend(@RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
+    {
+        ModelAndView mav = new ModelAndView();
+        
+        Employee employee = employeeRepository.findOne(id);
+        
+        int fontSize=12;
+        float height= 1;
+        height = height*fontSize*1.05f;
+        
+        Locale locale = LocaleContextHolder.getLocale();
+        
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        
+        ZipGenerator zipGenerator = new ZipGenerator();
+        zipGenerator.generate(out, locale, height, employee, fontSize);
+        
+        EmailSender sender = new EmailSender();
+        sender.SendEmail(to, "Employee Data", "test", out.toByteArray());
+        
+        mav.setViewName("redirect:/client/dashboard");
+        return mav;
     }
 }

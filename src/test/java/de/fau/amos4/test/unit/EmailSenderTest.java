@@ -34,7 +34,7 @@ public class EmailSenderTest {
         EmailSender sender = new EmailSender();
         try
         {
-           sender.SendEmail("Test@gmail.com", "Test", "Test Content");
+           sender.SendEmail("Test@gmail.com", "Test", "Test Content", null);
         }
         catch(Exception ex)
         {

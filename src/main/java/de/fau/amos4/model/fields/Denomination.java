@@ -1,5 +1,7 @@
+
+
 /**
- * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+ *  Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
  * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
  *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
@@ -16,22 +18,46 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Created by Yao Bochao on 21/06/2015.
  */
-package de.fau.amos4.model.fields;
 
+package de.fau.amos4.model.fields;
 import de.fau.amos4.configuration.AppContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
 
-public enum Sex
-{
+public enum Denomination {
     //From .properties files
-    MALE("EMPLOYEE.sex.male"), FEMALE("EMPLOYEE.sex.female"), UNKNOWN("EMPLOYEE.sex.unknown");
+    RK("EMPLOYEE.denomination.rk"),
+    EV("EMPLOYEE.denomination.ev"),
+    LT("EMPLOYEE.denomination.lt"),
+    RF("EMPLOYEE.denomination.rf"),
+    AK("EMPLOYEE.denomination.ak"),
+    IS("EMPLOYEE.denomination.is"),
+    FB("EMPLOYEE.denomination.fb"),
+    IB("EMPLOYEE.denomination.ib"),
+    FO("EMPLOYEE.denomination.fo"),
+    FP("EMPLOYEE.denomination.fp"),
+    FM("EMPLOYEE.denomination.fm"),
+    JÜ("EMPLOYEE.denomination.jü"),
+    IW("EMPLOYEE.denomination.iw"),
+    IF("EMPLOYEE.denomination.if"),
+    IL("EMPLOYEE.denomination.il"),
+    UN("EMPLOYEE.denomination.un"),
+    FR("EMPLOYEE.denomination.fr"),
+    FA("EMPLOYEE.denomination.fa"),
+    FG("EMPLOYEE.denomination.fg"),
+    FS("EMPLOYEE.denomination.fs"),
+    IH("EMPLOYEE.denomination.ih"),
+    JD("EMPLOYEE.denomination.jd"),
+    JH("EMPLOYEE.denomination.jh"),
+    ;
 
     private String text;
 
-    Sex(String text)
+    Denomination(String text)
     {
         this.text = text;
     }
