@@ -20,8 +20,10 @@
 package de.fau.amos4.web;
 
 import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.ZipGenerator;
@@ -49,6 +51,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.util.*;
 
 /**
@@ -59,13 +62,13 @@ import java.util.*;
 public class PrintDataController {
 
     private final EmployeeRepository employeeRepository;
-    private final ClientRepository clientRepository;
+    private final ClientService clientService;
 
     @Autowired
-    public PrintDataController(EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    public PrintDataController(EmployeeRepository employeeRepository, ClientService clientService)
     {
         this.employeeRepository = employeeRepository;
-        this.clientRepository = clientRepository;
+        this.clientService = clientService;
     }
 
     // Employee file download - Download text file with Employee data
@@ -111,8 +114,11 @@ public class PrintDataController {
 
     // Employee zip file download - Download zip file containing a text with Employee data
     @RequestMapping("/employee/download/zip")
-    public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException, NoSuchMessageException, COSVisitorException, ZipException, CloneNotSupportedException
+    public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId, Principal principal) throws IOException, NoSuchMessageException, COSVisitorException, ZipException, CloneNotSupportedException
     {
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
+        
         int fontSize=12;
         float height= 1;
         height = height*fontSize*1.05f;
@@ -124,6 +130,6 @@ public class PrintDataController {
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
         
         ZipGenerator zipGenerator = new ZipGenerator();
-        zipGenerator.generate(response.getOutputStream(), locale, height, employee, fontSize);
+        zipGenerator.generate(response.getOutputStream(), locale, height, employee, fontSize, client.getZipPassword());
     }
 }

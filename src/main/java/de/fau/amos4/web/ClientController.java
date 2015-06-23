@@ -39,7 +39,9 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.TranslatorService;
 import de.fau.amos4.web.form.ResetPasswordForm;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import de.fau.amos4.util.EmailSender;
 import de.fau.amos4.util.ZipGenerator;
 import net.lingala.zip4j.core.ZipFile;
@@ -68,6 +70,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+
 import java.security.Principal;
 
 /**
@@ -187,9 +190,11 @@ public class ClientController
     }
     
     @RequestMapping(value = "/employee/email/send")
-    public ModelAndView EmployeeEmailSend(@RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
+    public ModelAndView EmployeeEmailSend(@RequestParam(value="id")long id, @RequestParam(value="to")String to, Principal principal) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
     {
         ModelAndView mav = new ModelAndView();
+        final String currentUser = principal.getName();
+        Client client = clientService.getClientByEmail(currentUser);
         
         Employee employee = employeeRepository.findOne(id);
         
@@ -202,7 +207,7 @@ public class ClientController
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
         ZipGenerator zipGenerator = new ZipGenerator();
-        zipGenerator.generate(out, locale, height, employee, fontSize);
+        zipGenerator.generate(out, locale, height, employee, fontSize, client.getZipPassword());
         
         EmailSender sender = new EmailSender();
         sender.SendEmail(to, "Employee Data", "test", out.toByteArray());
