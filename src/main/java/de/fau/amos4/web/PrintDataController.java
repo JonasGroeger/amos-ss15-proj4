@@ -79,12 +79,12 @@ public class PrintDataController {
         response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
 
         ServletOutputStream out = response.getOutputStream();
-        Map<String,String> fields = employee.getFields();
+        Map<String,String> fields = employee.getPersonalDataFields();
         Locale locale = LocaleContextHolder.getLocale();
 
-        out.println(AppContext.getApplicationContext().getMessage("EmployeeForm.header", null, locale));
+        out.println(AppContext.getApplicationContext().getMessage("HEADER", null, locale));
         out.println();
-        out.println(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
+        out.println(AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale));
         out.println();
         Iterator it = fields.entrySet().iterator();
         while (it.hasNext()) {
@@ -92,6 +92,18 @@ public class PrintDataController {
             out.println(pair.getKey() + ": " + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
         }
+
+        fields = employee.getTaxesFields();
+        it = fields.entrySet().iterator();
+        out.println();
+        out.println(AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale));
+        out.println();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            out.println(pair.getKey() + ": " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
 
         out.close();
 
@@ -108,12 +120,10 @@ public class PrintDataController {
         //Prepare textfile contents
         Employee employee = employeeRepository.findOne(employeeId);
         Locale locale = LocaleContextHolder.getLocale();
-        Map<String,String> fields = employee.getFields();
-
         response.setContentType("application/zip");
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
         
         ZipGenerator zipGenerator = new ZipGenerator();
-        zipGenerator.generate(response.getOutputStream(), locale, fields, height, employee, fontSize);
+        zipGenerator.generate(response.getOutputStream(), locale, height, employee, fontSize);
     }
 }
