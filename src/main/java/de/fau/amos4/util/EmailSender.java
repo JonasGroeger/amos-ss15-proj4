@@ -60,7 +60,7 @@ public class EmailSender {
 	      properties.put("mail.smtp.port", "465");
 	}
 	
-	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, byte[] attachment) throws AddressException, MessagingException
+	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, byte[] attachment, String filename) throws AddressException, MessagingException
 	   {	
 		final String UserName = this.User;
 		final String Password = this.Pass;
@@ -88,11 +88,11 @@ public class EmailSender {
 	      multipart.addBodyPart(messageBodyPart);
 	      
 	      if (attachment != null) {
-		      //TODO Add for loop for multiple attachments
+		      //TODO add loop for multiple attachments
 		      // Part two is attachment
 		      messageBodyPart = new MimeBodyPart();
 		      messageBodyPart.setContent(attachment, "application/zip");
-		      messageBodyPart.setFileName("Data.zip");
+		      messageBodyPart.setFileName(filename);
 		      multipart.addBodyPart(messageBodyPart);
 	      }
 

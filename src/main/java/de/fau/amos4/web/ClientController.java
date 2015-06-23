@@ -34,6 +34,7 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -169,11 +170,14 @@ public class ClientController
     }
     
     @RequestMapping(value = "/employee/email/send")
-    public ModelAndView EmployeeEmailSend(@RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
+    public ModelAndView EmployeeEmailSend(Principal principal, @RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
     {
         ModelAndView mav = new ModelAndView();
         
         Employee employee = employeeRepository.findOne(id);
+
+        final String currentUser = principal.getName();
+        Client currentClient = clientService.getClientByEmail(currentUser);
         
         int fontSize=12;
         float height= 1;
@@ -184,10 +188,13 @@ public class ClientController
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
         ZipGenerator zipGenerator = new ZipGenerator();
-        zipGenerator.generate(out, locale, height, employee, fontSize);
+        zipGenerator.generate(out, locale, height, employee, fontSize, currentClient.getZipPassword());
         
+        String filename = "employee.zip";
+        String subject = filename + "_" + currentClient.getCompanyName() + "_" + employee.getFirstName() + "," + employee.getFamilyName();
+        String emailContent = "This email is sent by " + currentClient.getEmail() + "via Personalfragebogen 2.0";
         EmailSender sender = new EmailSender();
-        sender.SendEmail(to, "Employee Data", "test", out.toByteArray());
+        sender.SendEmail(to, "Employee Data", "test", out.toByteArray(), filename);
         
         mav.setViewName("redirect:/client/dashboard");
         return mav;

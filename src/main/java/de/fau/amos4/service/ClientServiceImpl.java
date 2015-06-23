@@ -74,7 +74,7 @@ public class ClientServiceImpl implements ClientService
         {
             EmailSender postman = new EmailSender();
             String template = "Your new password is: %s. Please change the password as soon as you are logged in.";
-            postman.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", String.format(template, newPassword), null);
+            postman.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", String.format(template, newPassword), null, null);
         } catch (MessagingException e) {
             e.printStackTrace();
             return;

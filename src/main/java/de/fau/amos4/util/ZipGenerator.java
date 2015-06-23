@@ -43,7 +43,7 @@ import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Employee;
 
 public class ZipGenerator {
-	public void generate(OutputStream out, Locale locale, float height, Employee employee, int fontSize) throws ZipException, NoSuchMessageException, IOException, COSVisitorException, CloneNotSupportedException {
+	public void generate(OutputStream out, Locale locale, float height, Employee employee, int fontSize, String zipPassword) throws ZipException, NoSuchMessageException, IOException, COSVisitorException, CloneNotSupportedException {
 		final ZipOutputStream zout = new ZipOutputStream(out);
 
         
@@ -55,7 +55,7 @@ public class ZipGenerator {
             params.setReadHiddenFiles(false);
             params.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES);
             params.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256);
-            params.setPassword("AMOS");
+            params.setPassword(zipPassword);
             params.setSourceExternalStream(true);
             
             zout.putNextEntry(null, params);

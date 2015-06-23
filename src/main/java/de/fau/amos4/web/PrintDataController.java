@@ -20,6 +20,7 @@
 package de.fau.amos4.web;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -38,8 +39,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.ZipGenerator;
 
@@ -49,15 +52,16 @@ import de.fau.amos4.util.ZipGenerator;
 
 @Controller
 public class PrintDataController {
-
     private final EmployeeRepository employeeRepository;
     private final ClientRepository clientRepository;
+    private final ClientService clientService;
 
     @Autowired
-    public PrintDataController(EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    public PrintDataController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService)
     {
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
+        this.clientService = clientService;
     }
 
     // Employee file download - Download text file with Employee data
@@ -103,8 +107,11 @@ public class PrintDataController {
 
     // Employee zip file download - Download zip file containing a text with Employee data
     @RequestMapping("/employee/download/zip")
-    public void EmployeeDownloadZip(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException, NoSuchMessageException, COSVisitorException, ZipException, CloneNotSupportedException
+    public void EmployeeDownloadZip(Principal principal, HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException, NoSuchMessageException, COSVisitorException, ZipException, CloneNotSupportedException
     {
+    	final String currentUser = principal.getName();
+        Client currentClient = clientService.getClientByEmail(currentUser);
+        
         int fontSize=12;
         float height= 1;
         height = height*fontSize*1.05f;
@@ -116,6 +123,6 @@ public class PrintDataController {
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
         
         ZipGenerator zipGenerator = new ZipGenerator();
-        zipGenerator.generate(response.getOutputStream(), locale, height, employee, fontSize);
+        zipGenerator.generate(response.getOutputStream(), locale, height, employee, fontSize, currentClient.getZipPassword());
     }
 }
