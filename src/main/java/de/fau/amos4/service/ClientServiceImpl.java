@@ -19,14 +19,15 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.util.EmailSender;
+import javax.mail.MessagingException;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.util.EmailSender;
 
 @Service
 public class ClientServiceImpl implements ClientService

@@ -19,23 +19,17 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.util.StringUtils;
-import de.fau.amos4.util.ZipGenerator;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.io.ZipOutputStream;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -43,13 +37,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.*;
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.util.ZipGenerator;
 
 /**
  * Created by Yao Bochao on 06/06/2015.

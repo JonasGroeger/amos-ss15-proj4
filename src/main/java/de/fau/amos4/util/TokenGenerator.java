@@ -19,13 +19,14 @@
  */
 package de.fau.amos4.util;
 
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.EmployeeRepository;
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.EmployeeRepository;
 
 @Configuration
 public class TokenGenerator

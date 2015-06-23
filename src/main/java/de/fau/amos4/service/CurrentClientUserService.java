@@ -19,13 +19,14 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.CurrentClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.CurrentClient;
 
 /**
  * This is used in the {@link de.fau.amos4.configuration.SecurityConfiguration} to retrieve a user.

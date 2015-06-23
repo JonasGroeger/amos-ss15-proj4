@@ -19,12 +19,13 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.EmployeeRepository;
 
 
 @RestController

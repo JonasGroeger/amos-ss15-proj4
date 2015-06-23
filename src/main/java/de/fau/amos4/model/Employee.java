@@ -19,25 +19,34 @@
  */
 package de.fau.amos4.model;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.fields.Denomination;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.format.annotation.DateTimeFormat;
-import de.fau.amos4.model.fields.Disabled;
-import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.model.fields.Sex;
-
-import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.fields.Denomination;
+import de.fau.amos4.model.fields.Disabled;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.Sex;
 
 @Entity
 @Table
