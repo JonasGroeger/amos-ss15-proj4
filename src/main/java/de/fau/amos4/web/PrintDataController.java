@@ -19,7 +19,6 @@
  */
 package de.fau.amos4.web;
 
-<<<<<<< HEAD
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
@@ -28,7 +27,7 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.StringUtils;
 import de.fau.amos4.util.ZipGenerator;
-=======
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Locale;
@@ -37,7 +36,6 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
->>>>>>> 9f8b35d3368625965211360e511b8a8cce4f69d4
 import net.lingala.zip4j.exception.ZipException;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -48,23 +46,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-<<<<<<< HEAD
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
 import java.util.*;
-=======
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.util.ZipGenerator;
->>>>>>> 9f8b35d3368625965211360e511b8a8cce4f69d4
-
 /**
  * Created by Yao Bochao on 06/06/2015.
  */

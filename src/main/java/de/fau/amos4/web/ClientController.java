@@ -28,23 +28,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.validation.Valid;
 
-<<<<<<< HEAD
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Title;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.TranslatorService;
-import de.fau.amos4.web.form.ResetPasswordForm;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import de.fau.amos4.util.EmailSender;
-import de.fau.amos4.util.ZipGenerator;
-import net.lingala.zip4j.core.ZipFile;
-=======
->>>>>>> 9f8b35d3368625965211360e511b8a8cce4f69d4
 import net.lingala.zip4j.exception.ZipException;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
@@ -59,11 +42,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-<<<<<<< HEAD
-import javax.validation.Valid;
-
-import java.security.Principal;
-=======
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Title;
@@ -73,7 +51,6 @@ import de.fau.amos4.service.TranslatorService;
 import de.fau.amos4.util.EmailSender;
 import de.fau.amos4.util.ZipGenerator;
 import de.fau.amos4.web.form.ResetPasswordForm;
->>>>>>> 9f8b35d3368625965211360e511b8a8cce4f69d4
 
 /**
  * Handles client related requests.
