@@ -195,7 +195,7 @@ public class ClientController
         String subject = filename + "_" + currentClient.getCompanyName() + "_" + employee.getFirstName() + "," + employee.getFamilyName();
         String emailContent = "This email is sent by " + currentClient.getEmail() + "via Personalfragebogen 2.0";
         EmailSender sender = new EmailSender();
-        sender.SendEmail(to, "Employee Data", "test", out.toByteArray(), filename);
+        sender.SendEmail(to, subject, emailContent, out.toByteArray(), filename);
         
         mav.setViewName("redirect:/client/dashboard");
         return mav;
