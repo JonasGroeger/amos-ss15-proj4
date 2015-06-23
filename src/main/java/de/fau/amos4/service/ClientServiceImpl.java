@@ -19,9 +19,15 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.model.Client;
+import javax.mail.MessagingException;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import de.fau.amos4.model.Client;
+import de.fau.amos4.util.EmailSender;
 
 @Service
 public class ClientServiceImpl implements ClientService
@@ -58,5 +64,24 @@ public class ClientServiceImpl implements ClientService
         return clientRepository.save(client);
     }
 
-    // More business functionality without just proxying the repository.
+    @Override
+    public void generateNewPassword(Client client)
+    {
+        String newPassword = RandomStringUtils.random(8, "ABCDEFGHJKLMNPQRSTUVWXYZ23456789");
+        String newPasswordHash = new BCryptPasswordEncoder().encode(newPassword);
+
+        try
+        {
+            EmailSender postman = new EmailSender();
+            String template = "Your new password is: %s. Please change the password as soon as you are logged in.";
+            postman.SendEmail(client.getEmail(), "PersonalFragebogen 2.0", String.format(template, newPassword), null, null);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Having the return in the catch block, we only save changes when the E-Mail could have successfully been sent
+        client.setPasswordHash(newPasswordHash);
+        clientRepository.save(client);
+    }
 }

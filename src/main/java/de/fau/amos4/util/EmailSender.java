@@ -19,10 +19,18 @@
  */
 package de.fau.amos4.util;
 import java.util.Properties;
+
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.AddressException;
-import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class EmailSender {
 	// Implements basic email sending functionality
@@ -52,7 +60,7 @@ public class EmailSender {
 	      properties.put("mail.smtp.port", "465");
 	}
 	
-	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent) throws AddressException, MessagingException
+	public void SendEmail(String SendToEmailAddress, String Subject, String HTMLContent, byte[] attachment, String filename) throws AddressException, MessagingException
 	   {	
 		final String UserName = this.User;
 		final String Password = this.Pass;
@@ -63,12 +71,33 @@ public class EmailSender {
 					return new PasswordAuthentication(UserName, Password);
 				}
 			});
-	      // Generate message
+	      
+	      // Define message
 	      MimeMessage message = new MimeMessage(session);
 	      message.setFrom(new InternetAddress(this.SenderEmail));
 	      message.addRecipient(Message.RecipientType.TO, new InternetAddress(SendToEmailAddress));
 	      message.setSubject(Subject);
-	      message.setContent(HTMLContent, "text/html; charset=utf-8");
+
+	      // create the message part 
+	      MimeBodyPart messageBodyPart = new MimeBodyPart();
+
+	      //fill message
+	      messageBodyPart.setContent(HTMLContent, "text/html; charset=utf-8");;
+
+	      Multipart multipart = new MimeMultipart();
+	      multipart.addBodyPart(messageBodyPart);
+	      
+	      if (attachment != null) {
+		      //TODO add loop for multiple attachments
+		      // Part two is attachment
+		      messageBodyPart = new MimeBodyPart();
+		      messageBodyPart.setContent(attachment, "application/zip");
+		      messageBodyPart.setFileName(filename);
+		      multipart.addBodyPart(messageBodyPart);
+	      }
+
+	      // Put parts in message
+	      message.setContent(multipart);
 	      
 	      // Send Email
 	      Transport.send(message);

@@ -19,11 +19,8 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.fields.Title;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.util.EmailSender;
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,13 +30,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.fields.Title;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.util.EmailSender;
 
 @Controller
 public class LoginFormController
 {
+	@Autowired
     private final ClientRepository clientRepository;
+	
+	@Autowired
     private final ClientService clientService;
 
     @Autowired
@@ -77,7 +80,7 @@ public class LoginFormController
         // TODO: Replace this with Thymeleaf based tample generated content
         String Content = "<a href='" + contextPath + "?id=" + client.getId() + "&confirmation=" + ConfirmationCode + "'>Confirm my email address.</a>";
         EmailSender sender = new EmailSender();
-        sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content);
+        sender.SendEmail(client.getEmail(), "Personalragebogen 2.0 - Confirmation", Content, null, null);
 
         // Display login screen after
         return "redirect:/?m=registered";

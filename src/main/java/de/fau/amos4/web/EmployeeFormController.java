@@ -19,9 +19,34 @@
  */
 package de.fau.amos4.web;
 
+import java.io.IOException;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Denomination;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
@@ -30,24 +55,6 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.TokenGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Locale;
 
 @Controller
 public class EmployeeFormController
@@ -86,6 +93,7 @@ public class EmployeeFormController
         mav.addObject("allDisabled", Disabled.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
+        mav.addObject("allDenomination", Denomination.values());
         return mav;
     }
     /*
@@ -96,16 +104,26 @@ public class EmployeeFormController
     public String EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
 
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        employee.setClient(client);
-        client.getEmployees().add(employee);
+        if (principal == null) {
+            System.out.println("null");
+            model.addAttribute("allDisabled", Disabled.values());
+            model.addAttribute("allMarital", MaritalStatus.values());
+            model.addAttribute("allSex", Sex.values());
+            model.addAttribute("allDenomination", Denomination.values());
+            return "/employee/preview";
+        } else {
+            final String currentUser = principal.getName();
+            System.out.println("not null");
+            Client client = clientService.getClientByEmail(currentUser);
+            employee.setClient(client);
+            client.getEmployees().add(employee);
 
-        employeeRepository.save(employee);
-        clientRepository.save(client);
+            employeeRepository.save(employee);
+            clientRepository.save(client);
 
-        // Redirect to AccountPage page
-        return "redirect:/client/dashboard";
+            // Redirect to AccountPage page
+            return "redirect:/client/dashboard";
+        }
     }
 
     /*
@@ -132,13 +150,14 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
 	        
-	        mav.setViewName("employee/form");
+	        mav.setViewName("employee/edit");
 	        Employee employee = employeeRepository.findOne(employeeId);
 	        mav.addObject("id", employeeId);
 	        mav.addObject("employee", employee);
 	        mav.addObject("allDisabled", Disabled.values());
 	        mav.addObject("allMarital", MaritalStatus.values());
 	        mav.addObject("allSex", Sex.values());
+            mav.addObject("allDenomination", Denomination.values());
         } else {
             mav.addObject("m", "invalid");
         	mav.setViewName("employee/token");
@@ -154,20 +173,6 @@ public class EmployeeFormController
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true, 10));
     }
 
-    /*
-    EmployeePreview handles employee/preview.html
-    It is invoked by the submit button in employee/form.htlm.
-
-    The previously entered data can be review before it is submitted.
-     */
-    @RequestMapping(value = "/employee/preview", method = {RequestMethod.POST, RequestMethod.GET})
-    public String EmployeePreview(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
-    {
-        model.addAttribute("allDisabled", Disabled.values());
-        model.addAttribute("allMarital", MaritalStatus.values());
-        model.addAttribute("allSex", Sex.values());
-        return "employee/preview";
-    }
 
     /*
     EmployeeConfirm handles employee/confirm.html

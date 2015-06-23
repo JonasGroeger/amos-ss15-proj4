@@ -19,15 +19,16 @@
  */
 package de.fau.amos4.model.fields;
 
-import de.fau.amos4.configuration.AppContext;
+import java.util.Locale;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.Locale;
+import de.fau.amos4.configuration.AppContext;
 
 public enum MaritalStatus
 {
     //From .properties files
-    SINGLE("employee.marital.single"), MARRIED("employee.marital.married"), SEPARATED("employee.marital.separated"), OTHER("employee.marital.other");
+    SINGLE("EMPLOYEE.marital.single"), MARRIED("EMPLOYEE.marital.married"), SEPARATED("EMPLOYEE.marital.separated"), OTHER("EMPLOYEE.marital.other");
 
     private String text;
 
