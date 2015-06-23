@@ -19,10 +19,11 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.model.CurrentClient;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import de.fau.amos4.model.CurrentClient;
 
 @ControllerAdvice
 public class CurrentClientControllerAdvice

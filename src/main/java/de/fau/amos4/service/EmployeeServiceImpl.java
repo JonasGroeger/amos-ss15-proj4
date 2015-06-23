@@ -19,9 +19,10 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import de.fau.amos4.model.Employee;
 
 /**
  * Created by Yao Bochao on 07/06/2015.

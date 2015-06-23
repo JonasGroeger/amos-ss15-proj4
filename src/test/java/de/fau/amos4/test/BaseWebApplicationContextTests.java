@@ -19,12 +19,8 @@
  */
 package de.fau.amos4.test;
 
-import de.fau.amos4.Application;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.TranslatorService;
-import de.fau.amos4.web.EmployeeFormController;
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -46,7 +42,12 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.annotation.Resource;
+import de.fau.amos4.Application;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.TranslatorService;
+import de.fau.amos4.web.EmployeeFormController;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class)

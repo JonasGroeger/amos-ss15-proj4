@@ -19,19 +19,19 @@
  */
 package de.fau.amos4.test.unit;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.test.BaseWebApplicationContextTests;
-import de.fau.amos4.util.TokenGenerator;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseWebApplicationContextTests;
+import de.fau.amos4.util.TokenGenerator;
 
 public class EmployeeTest extends BaseWebApplicationContextTests
 {

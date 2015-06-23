@@ -19,8 +19,9 @@
  */
 package de.fau.amos4.test.integration.helper.security;
 
-import de.fau.amos4.model.ClientRole;
 import org.springframework.security.test.context.support.WithSecurityContext;
+
+import de.fau.amos4.model.ClientRole;
 
 /**
  * Annotation that understands how to mock a user in a test. Internally it uses a custom WithSecurityContextFactory

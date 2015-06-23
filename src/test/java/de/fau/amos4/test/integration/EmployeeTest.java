@@ -19,12 +19,13 @@
  */
 package de.fau.amos4.test.integration;
 
-import de.fau.amos4.test.BaseIntegrationTest;
-import org.junit.Test;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import org.junit.Test;
+
+import de.fau.amos4.test.BaseIntegrationTest;
 
 
 public class EmployeeTest extends BaseIntegrationTest

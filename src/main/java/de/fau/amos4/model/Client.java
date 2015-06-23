@@ -19,6 +19,21 @@
  */
 package de.fau.amos4.model;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -27,11 +42,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import de.fau.amos4.model.fields.OutputFormat;
 import de.fau.amos4.model.fields.Title;
-
-import javax.persistence.*;
-
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table

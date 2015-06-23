@@ -19,18 +19,16 @@
  */
 package de.fau.amos4.web;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.validation.Valid;
 
+<<<<<<< HEAD
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
@@ -45,22 +43,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import de.fau.amos4.util.EmailSender;
 import de.fau.amos4.util.ZipGenerator;
 import net.lingala.zip4j.core.ZipFile;
+=======
+>>>>>>> 9f8b35d3368625965211360e511b8a8cce4f69d4
 import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.io.ZipOutputStream;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.util.Zip4jConstants;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,9 +59,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+<<<<<<< HEAD
 import javax.validation.Valid;
 
 import java.security.Principal;
+=======
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Title;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.TranslatorService;
+import de.fau.amos4.util.EmailSender;
+import de.fau.amos4.util.ZipGenerator;
+import de.fau.amos4.web.form.ResetPasswordForm;
+>>>>>>> 9f8b35d3368625965211360e511b8a8cce4f69d4
 
 /**
  * Handles client related requests.

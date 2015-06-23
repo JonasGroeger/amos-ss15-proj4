@@ -19,16 +19,18 @@
  */
 package de.fau.amos4.test.unit;
 
-import com.sun.security.auth.UserPrincipal;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.test.BaseWebApplicationContextTests;
-import de.fau.amos4.web.ClientController;
+import java.security.Principal;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
+import com.sun.security.auth.UserPrincipal;
+
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseWebApplicationContextTests;
+import de.fau.amos4.web.ClientController;
 
 public class ClientControllerUnitTest extends BaseWebApplicationContextTests
 {

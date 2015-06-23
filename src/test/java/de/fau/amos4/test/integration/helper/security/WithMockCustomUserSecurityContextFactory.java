@@ -19,14 +19,15 @@
  */
 package de.fau.amos4.test.integration.helper.security;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.CurrentClient;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithSecurityContextFactory;
+
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.CurrentClient;
 
 /**
  * A factory that knows how to return security contexts. This is used with the {@link WithMockCustomUser} annotation

@@ -20,8 +20,8 @@
 package de.fau.amos4.test.unit;
 
 import org.junit.Assert;
-
 import org.junit.Test;
+
 import de.fau.amos4.util.EmailSender;
 
 public class EmailSenderTest {

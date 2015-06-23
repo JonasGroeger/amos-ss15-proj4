@@ -19,12 +19,13 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Long>
