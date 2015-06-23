@@ -188,6 +188,7 @@ public class ClientController
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
         ZipGenerator zipGenerator = new ZipGenerator();
+
         zipGenerator.generate(out, locale, height, employee, fontSize, currentClient.getZipPassword());
         
         String filename = "employee.zip";

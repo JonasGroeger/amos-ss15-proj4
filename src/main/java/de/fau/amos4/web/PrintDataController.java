@@ -19,6 +19,15 @@
  */
 package de.fau.amos4.web;
 
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.util.StringUtils;
+import de.fau.amos4.util.ZipGenerator;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Iterator;
@@ -45,6 +54,10 @@ import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.util.ZipGenerator;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * Created by Yao Bochao on 06/06/2015.
@@ -123,6 +136,7 @@ public class PrintDataController {
         response.setHeader("Content-Disposition", "attachment;filename=employee.zip");
         
         ZipGenerator zipGenerator = new ZipGenerator();
+        
         zipGenerator.generate(response.getOutputStream(), locale, height, employee, fontSize, currentClient.getZipPassword());
     }
 }
