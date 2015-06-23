@@ -39,7 +39,10 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LoginFormController
 {
+	@Autowired
     private final ClientRepository clientRepository;
+	
+	@Autowired
     private final ClientService clientService;
 
     @Autowired
