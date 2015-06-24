@@ -24,4 +24,6 @@ public interface TranslatorService
     String translate(String message);
 
     String translate(String message, Object[] args);
+
+    String[] translate(String... messages);
 }
