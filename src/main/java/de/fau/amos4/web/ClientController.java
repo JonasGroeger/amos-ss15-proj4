@@ -193,7 +193,7 @@ public class ClientController
         
         String filename = "employee.zip";
         String subject = filename + "_" + currentClient.getCompanyName() + "_" + employee.getFirstName() + "," + employee.getFamilyName();
-        String emailContent = "This email is sent by " + currentClient.getEmail() + "via Personalfragebogen 2.0";
+        String emailContent = "This email is sent by " + currentClient.getEmail() + " via Personalfragebogen 2.0";
         EmailSender sender = new EmailSender();
         sender.SendEmail(to, subject, emailContent, out.toByteArray(), filename);
         
