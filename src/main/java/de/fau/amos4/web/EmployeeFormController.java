@@ -24,6 +24,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,7 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.TokenGenerator;
+import de.fau.amos4.util.CheckDataInput;
 
 @Controller
 public class EmployeeFormController
@@ -99,18 +101,57 @@ public class EmployeeFormController
     /*
     EmployeeEditSubmit is invoked by the submit button in the employee/edit.html page.
     Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
+
+    ModelAndView mav = new ModelAndView();
+        if (employeeId != 0) {
+
+	        mav.setViewName("employee/edit");
+	        Employee employee = employeeRepository.findOne(employeeId);
+	        mav.addObject("id", employeeId);
+	        mav.addObject("employee", employee);
+	        mav.addObject("allDisabled", Disabled.values());
+	        mav.addObject("allMarital", MaritalStatus.values());
+	        mav.addObject("allSex", Sex.values());
+            mav.addObject("allDenomination", Denomination.values());
+        } else {
+            mav.addObject("m", "invalid");
+        	mav.setViewName("employee/token");
+        }
+        return mav;
      */
     @RequestMapping("/employee/edit/submit")
-    public String EmployeeEditSubmit(Employee employee,Principal principal, Model model)
+    public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
 
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> emptyFields = cdi.isEmpty(employee);
+        List<String> wrongFields = cdi.checkInput(employee);
+
+        ModelAndView mav = new ModelAndView();
+        if(!wrongFields.isEmpty()) {
+            mav.addObject("allDisabled", Disabled.values());
+            mav.addObject("allMarital", MaritalStatus.values());
+            mav.addObject("allSex", Sex.values());
+            mav.addObject("allDenomination", Denomination.values());
+
+            for (Iterator<String> i = wrongFields.iterator(); i.hasNext(); ) {
+                mav.addObject("mWrong", i.next());
+            }
+            for (Iterator<String> i = emptyFields.iterator(); i.hasNext(); ) {
+                mav.addObject("mEmpty", i.next());
+            }
+
+            mav.setViewName("employee/edit");
+            return mav;
+        }
         if (principal == null) {
             System.out.println("null");
-            model.addAttribute("allDisabled", Disabled.values());
-            model.addAttribute("allMarital", MaritalStatus.values());
-            model.addAttribute("allSex", Sex.values());
-            model.addAttribute("allDenomination", Denomination.values());
-            return "/employee/preview";
+            mav.addObject("allDisabled", Disabled.values());
+            mav.addObject("allMarital", MaritalStatus.values());
+            mav.addObject("allSex", Sex.values());
+            mav.addObject("allDenomination", Denomination.values());
+            mav.setViewName("employee/preview");
+            return mav;
         } else {
             final String currentUser = principal.getName();
             System.out.println("not null");
@@ -120,9 +161,9 @@ public class EmployeeFormController
 
             employeeRepository.save(employee);
             clientRepository.save(client);
-
+            mav.setViewName("redirect:/client/dashboard");
             // Redirect to AccountPage page
-            return "redirect:/client/dashboard";
+            return mav;
         }
     }
 
@@ -145,8 +186,10 @@ public class EmployeeFormController
         	if( currEmployee.getToken().equals(token)) {
         		employeeId = currEmployee.getId();
         	}
-        	
         }
+
+
+
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
 	        
