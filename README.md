@@ -1,5 +1,5 @@
 # amos-ss15-proj4 [![Build Status](https://travis-ci.org/JOBAA/amos-ss15-proj4.svg?branch=master)](https://travis-ci.org/JOBAA/amos-ss15-proj4)
-Personalfragebogen 2.0 @ DATEV
+## Personalfragebogen 2.0 @ DATEV
 
 Personalfragebogen 2.0 is a personal data management software solution, supporting companies of any size in hiring new employees more efficiently.
 Our product improves the hiring process by automating the collection of personal data during the hiring procedure, and provides aid in managing the collected data.
