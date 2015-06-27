@@ -54,15 +54,28 @@ public class CheckDataInput {
         
         return result;
     }
-
+    
+    private Annotation GetAnnotation(Field field, Class clazz)
+    {
+        Annotation[] annotations = field.getAnnotations();
+        for(Annotation annotation : annotations)
+        {
+            if(clazz.isInstance(annotation))
+            {
+                return annotation;
+            }
+        }
+        return null;
+    }
+    
     public List<String> listInvalidFields(Object object) {
         List<String> result = new ArrayList<String>();
         List<Field> fieldsWithFormat = this.getFieldsWithFormatAttribute(object.getClass());
         
         for(Field field : fieldsWithFormat)
         {
-            ValidFormat validFormat = field.getDeclaredAnnotation(ValidFormat.class);
-            String validFormatRegex = validFormat.value();
+            ValidFormat annotation = (ValidFormat)this.GetAnnotation(field, ValidFormat.class);
+            String validFormatRegex = annotation.value();
             if(!this.isFieldMatching(field, object, validFormatRegex))
             {
                 result.add(field.getName());
