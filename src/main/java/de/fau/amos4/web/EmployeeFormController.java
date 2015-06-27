@@ -72,7 +72,7 @@ public class EmployeeFormController
     @Autowired
     public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService, EmployeeService employeeService)
     {
-    	this.clientService = clientService;
+    this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
         this.employeeService = employeeService;
@@ -105,29 +105,29 @@ public class EmployeeFormController
     ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
 
-	        mav.setViewName("employee/edit");
-	        Employee employee = employeeRepository.findOne(employeeId);
-	        mav.addObject("id", employeeId);
-	        mav.addObject("employee", employee);
-	        mav.addObject("allDisabled", Disabled.values());
-	        mav.addObject("allMarital", MaritalStatus.values());
-	        mav.addObject("allSex", Sex.values());
+        mav.setViewName("employee/edit");
+        Employee employee = employeeRepository.findOne(employeeId);
+        mav.addObject("id", employeeId);
+        mav.addObject("employee", employee);
+        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allMarital", MaritalStatus.values());
+        mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
         } else {
             mav.addObject("m", "invalid");
-        	mav.setViewName("employee/token");
+        mav.setViewName("employee/token");
         }
         return mav;
      */
     @RequestMapping("/employee/edit/submit")
     public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
-
+        ModelAndView mav = new ModelAndView();
+/*
         CheckDataInput cdi = new CheckDataInput();
         List<String> emptyFields = cdi.isEmpty(employee);
         List<String> wrongFields = cdi.checkInput(employee);
 
-        ModelAndView mav = new ModelAndView();
         if(!wrongFields.isEmpty()) {
             mav.addObject("allDisabled", Disabled.values());
             mav.addObject("allMarital", MaritalStatus.values());
@@ -143,7 +143,7 @@ public class EmployeeFormController
 
             mav.setViewName("employee/edit");
             return mav;
-        }
+        }*/
         if (principal == null) {
             System.out.println("null");
             mav.addObject("allDisabled", Disabled.values());
@@ -179,34 +179,34 @@ public class EmployeeFormController
     @RequestMapping("/employee/token/submit")
     public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
-    	long employeeId = 0;
-    	Iterable<Employee> allEmployees = employeeRepository.findAll();
+    long employeeId = 0;
+    Iterable<Employee> allEmployees = employeeRepository.findAll();
         for (Iterator<Employee> i = allEmployees.iterator(); i.hasNext(); ) {
-        	Employee currEmployee = i.next();
-        	if( currEmployee.getToken().equals(token)) {
-        		employeeId = currEmployee.getId();
-        	}
+        Employee currEmployee = i.next();
+        if( currEmployee.getToken().equals(token)) {
+        employeeId = currEmployee.getId();
+        }
         }
 
 
 
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
-	        
-	        mav.setViewName("employee/edit");
-	        Employee employee = employeeRepository.findOne(employeeId);
-	        mav.addObject("id", employeeId);
-	        mav.addObject("employee", employee);
-	        mav.addObject("allDisabled", Disabled.values());
-	        mav.addObject("allMarital", MaritalStatus.values());
-	        mav.addObject("allSex", Sex.values());
+        
+        mav.setViewName("employee/edit");
+        Employee employee = employeeRepository.findOne(employeeId);
+        mav.addObject("id", employeeId);
+        mav.addObject("employee", employee);
+        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allMarital", MaritalStatus.values());
+        mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
         } else {
             mav.addObject("m", "invalid");
-        	mav.setViewName("employee/token");
+        mav.setViewName("employee/token");
         }
         return mav;
-        	
+        
     }
 
     
@@ -228,7 +228,6 @@ public class EmployeeFormController
     public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
-
         Employee e = employeeService.getEmployeeByToken(employee.getToken());
         Client client = e.getClient();
         employee.setClient(client);
