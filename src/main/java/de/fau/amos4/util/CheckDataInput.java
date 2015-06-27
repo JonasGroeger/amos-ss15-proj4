@@ -1,58 +1,112 @@
+/**
+ * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+ * other purposes.
+ * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
+ *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.fau.amos4.util;
 
-import de.fau.amos4.model.Employee;
-
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-/**
- * Created by Yao Bochao on 26/06/2015.
+/*
+ * This lass can be used to validate objects based on their ValidFormat annotations.
  */
 public class CheckDataInput {
-
-    public List<String> isEmpty(Employee employee) {
-        List<String> emptyFields = new Vector<String>();
-
-        if(employee.getFirstName().isEmpty()) {
-            emptyFields.add("firstName");
+    // Lists fields of the class with ValidFormat annotation.
+    private List<Field> getFieldsWithFormatAttribute(Class clazz){
+        List<Field> result = new ArrayList<Field>();
+        
+        Field[] fields = clazz.getDeclaredFields();
+        for(Field field : fields)
+        {
+            Annotation annotation = field.getAnnotation(ValidFormat.class);
+            if(annotation instanceof ValidFormat)
+            {
+                result.add(field);
+            }
         }
-        if(employee.getFamilyName().isEmpty()) {
-            emptyFields.add("familyName");
-        }
-        if(employee.getStreet().isEmpty()) {
-            emptyFields.add("street");
-        }
-        if(employee.getHouseNumber().isEmpty()) {
-            emptyFields.add("houseNumber");
-        }
-
-        Field[] fields = Employee.class.getDeclaredFields();
-        for (Field field : fields) {
-        }
-
-        return  emptyFields;
+        return result;
     }
-
-    public List<String> checkInput(Employee employee) {
-        List<String> wrongInputs = new Vector<String>();
-        if(employee.getFirstName().length() > 30 || employee.getFamilyName().matches(".*[0-9].*")) {
-            wrongInputs.add("firstName");
+    
+    // Lists empty fields with ValidFormat annotation
+    public List<String> listEmptyFields(Object object) {
+        List<String> result = new ArrayList<String>();
+        List<Field> fieldsWithFormat = this.getFieldsWithFormatAttribute(object.getClass());
+        
+        for(Field field : fieldsWithFormat)
+        {
+            if(this.isFieldMatching(field, object, "^$"))
+            {
+                result.add(field.getName());
+            }
         }
-        if(employee.getFamilyName().length() > 30 || employee.getFamilyName().matches(".*[0-9].*")) {
-            wrongInputs.add("familyName");
+        
+        return result;
+    }
+    
+    // Gets an instance of a special annotation, when none is present, then returns null
+    private Annotation GetAnnotation(Field field, Class clazz)
+    {
+        Annotation[] annotations = field.getAnnotations();
+        for(Annotation annotation : annotations)
+        {
+            if(clazz.isInstance(annotation))
+            {
+                return annotation;
+            }
         }
-        if(employee.getMaidenName().length() > 30 || employee.getMaidenName().matches(".*[0-9].*")) {
-            wrongInputs.add("maidenName");
+        return null;
+    }
+    
+    // Lists fields that are containing invalid data, based on their ValidFormat annotation
+    public List<String> listInvalidFields(Object object) {
+        List<String> result = new ArrayList<String>();
+        List<Field> fieldsWithFormat = this.getFieldsWithFormatAttribute(object.getClass());
+        
+        for(Field field : fieldsWithFormat)
+        {
+            ValidFormat annotation = (ValidFormat)this.GetAnnotation(field, ValidFormat.class);
+            String validFormatRegex = annotation.value();
+            if(!this.isFieldMatching(field, object, validFormatRegex))
+            {
+                result.add(field.getName());
+            }
         }
-        if(employee.getStreet().length() > 33 ) {
-            //alphanumerisch
-            wrongInputs.add("street");
+        
+        return result;
+    }
+    
+    // Matches an object's field with the passed regular exception. Returns true on matching, otherwise false.
+    private Boolean isFieldMatching(Field field, Object object, String validFormatRegex) {
+        String FieldContent = "";
+        try {
+            field.setAccessible(true);
+            FieldContent = field.get(object).toString();
+            field.setAccessible(false);
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        if(employee.getHouseNumber().length() > 9) {
-            wrongInputs.add("houseNumber");
-        }
-
-        return wrongInputs;
+        Boolean result = FieldContent.matches(validFormatRegex);
+        return result;
     }
 }
