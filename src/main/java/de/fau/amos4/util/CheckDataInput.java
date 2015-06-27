@@ -24,7 +24,11 @@ import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * This lass can be used to validate objects based on their ValidFormat annotations.
+ */
 public class CheckDataInput {
+    // Lists fields of the class with ValidFormat annotation.
     private List<Field> getFieldsWithFormatAttribute(Class clazz){
         List<Field> result = new ArrayList<Field>();
         
@@ -40,6 +44,7 @@ public class CheckDataInput {
         return result;
     }
     
+    // Lists empty fields with ValidFormat annotation
     public List<String> listEmptyFields(Object object) {
         List<String> result = new ArrayList<String>();
         List<Field> fieldsWithFormat = this.getFieldsWithFormatAttribute(object.getClass());
@@ -55,6 +60,7 @@ public class CheckDataInput {
         return result;
     }
     
+    // Gets an instance of a special annotation, when none is present, then returns null
     private Annotation GetAnnotation(Field field, Class clazz)
     {
         Annotation[] annotations = field.getAnnotations();
@@ -68,6 +74,7 @@ public class CheckDataInput {
         return null;
     }
     
+    // Lists fields that are containing invalid data, based on their ValidFormat annotation
     public List<String> listInvalidFields(Object object) {
         List<String> result = new ArrayList<String>();
         List<Field> fieldsWithFormat = this.getFieldsWithFormatAttribute(object.getClass());
@@ -84,7 +91,8 @@ public class CheckDataInput {
         
         return result;
     }
-
+    
+    // Matches an object's field with the passed regular exception. Returns true on matching, otherwise false.
     private Boolean isFieldMatching(Field field, Object object, String validFormatRegex) {
         String FieldContent = "";
         try {

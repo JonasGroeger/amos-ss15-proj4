@@ -20,24 +20,17 @@
 
 package de.fau.amos4.test.unit;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.util.CheckDataInput;
-import de.fau.amos4.util.TokenGenerator;
 import de.fau.amos4.util.ValidFormat;
 
 public class CheckDataInputTest
 {
+    // Dummy class, used to test data validation.
     public class TestClass
     {
         @ValidFormat("^[0-9a-zA-Z]*$")
@@ -51,7 +44,8 @@ public class CheckDataInputTest
             Data = data;
         }
     }
-
+    
+    // When data field contains invalid characters, based on ValidFormat annotation, it should be detected by the listInvalidFields method.
     @Test
     public void objectIsNotValid() throws Exception
     {
@@ -62,7 +56,8 @@ public class CheckDataInputTest
         Boolean IsDataFieldInvalid = InvalidFields.contains("Data");
         Assert.assertTrue(IsDataFieldInvalid);
     }
-
+    
+    // When a data field is empty, and has the ValidFormat annotation, it should be detected by the listEmptyFields method.
     @Test
     public void objectIsHavingEmptyField() throws Exception
     {
@@ -73,6 +68,8 @@ public class CheckDataInputTest
         Boolean IsDataFieldInvalid = emptyFields.contains("Data");
         Assert.assertTrue(IsDataFieldInvalid);
     }
+    
+    // When an object's field has some value set, then it should not be listed by the listEmptyFields method.
     @Test
     public void objectIsHavingNoEmptyField() throws Exception
     {
@@ -84,7 +81,7 @@ public class CheckDataInputTest
         Assert.assertTrue(IsDataFieldInvalid);
     }
     
-    
+    // When a field is valid based on the ValidFormat annotations it has, the field should not be listed by listInvalidFields method. 
     @Test
     public void objectIsValid() throws Exception
     {
