@@ -2,7 +2,7 @@
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
  * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
- *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
+ * Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -25,8 +25,110 @@ public class Lodas
 {
     private final Employee employee;
 
+    private static final String SEPARATOR = "#psd;";
+
     public Lodas(Employee employee)
     {
         this.employee = employee;
+    }
+
+    private String sectionAllgemein()
+    {
+        return "Ziel                = LODAS\n" +
+               "Version_SST         = 1.0\n" +
+               "Version_DB          = 9.45\n" +
+               "BeraterNr           = 1111111\n" +
+               "MandantenNr         = 2222222\n" +
+               "Kommentarzeichen    = *\n" +
+               "Feldtrennzeichen    = ;\n" +
+               "Zahlenkomma         = ,\n" +
+               "Datumsformat        = TT/MM/JJJJ\n" +
+               "StammdatenGueltigAb = 01.02.2008";
+    }
+
+    private String divider()
+    {
+        return "\n\n";
+    }
+
+    private String indent()
+    {
+        return " ";
+    }
+
+    private String title(String name)
+    {
+        return String.format("[%s]", name);
+    }
+
+    public String generate()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append(title("Allgemein"))
+                .append(sectionAllgemein())
+                .append(divider())
+                .append(title("Satzbeschreibung"))
+                .append(sectionSatzbeschreibung())
+                .append(divider())
+                .append(title("Stammdaten"))
+                .append(sectionStammdaten());
+
+        return sb.toString();
+    }
+
+    private String sectionSatzbeschreibung()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        // Section 100
+        sb.append(indent()).append("100; u_lod_psd_mitarbeiter;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("duevo_familienname").append(SEPARATOR);
+        sb.append("duevo_vorname").append(SEPARATOR);
+        sb.append("gebname").append(SEPARATOR);
+        sb.append("adresse_strassenname").append(SEPARATOR);
+        sb.append("adresse_strasse_nr").append(SEPARATOR);
+        sb.append("adresse_plz").append(SEPARATOR);
+        sb.append("adresse_ort").append(SEPARATOR);
+        sb.append("adresse_anschriftenzusatz").append(SEPARATOR);
+        sb.append("\n");
+
+        // Section 101
+        sb.append(indent()).append("101; u_lod_psd_mitarbeiter;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("geburtsdatum_ttmmjj").append(SEPARATOR);
+        sb.append("gebort").append(SEPARATOR);
+        sb.append("geburtsland").append(SEPARATOR);
+        sb.append("geschlecht").append(SEPARATOR);
+        sb.append("sozialversicherung_nr").append(SEPARATOR);
+        sb.append("familienstand").append(SEPARATOR);
+        sb.append("staatsangehoerigkeit").append(SEPARATOR);
+        sb.append("\n");
+
+        // Section 102
+        sb.append(indent()).append("102; u_lod_psd_ma_bank;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("ma_iban").append(SEPARATOR);
+        sb.append("ma_bic").append(SEPARATOR);
+        sb.append("\n");
+
+        // Section 103
+        sb.append(indent()).append("103; u_lod_psd_mitarbeiter;");
+        sb.append("schwerbeschaedigt").append(SEPARATOR);
+        return sb.toString();
+    }
+
+    private String sectionStammdaten()
+    {
+        final int personnelNumber = this.employee.getPersonnelNumber();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(indent()).append("100; ").append(personnelNumber);
+        sb.append(indent()).append("101; ").append(personnelNumber);
+        sb.append(indent()).append("102; ").append(personnelNumber);
+        sb.append(indent()).append("103; ").append(personnelNumber);
+
+        return sb.toString();
     }
 }
