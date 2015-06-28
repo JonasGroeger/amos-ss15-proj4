@@ -49,6 +49,7 @@ import de.fau.amos4.model.fields.Denomination;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.util.ValidFormat;
 
 @Entity
 @Table
@@ -76,8 +77,10 @@ public class Employee
     Personal Data
      */
 
+
+    @ValidFormat("^[a-zA-Z ]*$")
     @Column
-    @ValidFormat("^\\w{1,30}$")
+
     String firstName;
 
     @ValidFormat("^\\w{1,30}$")

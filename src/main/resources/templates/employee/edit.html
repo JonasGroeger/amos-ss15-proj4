@@ -10,15 +10,10 @@
 <div layout:fragment="content">
         <form th:action="@{/employee/edit/submit}"  th:object="${employee}">
             <h1 th:text="#{HEADER}"></h1>
+            <div th:each="invalidFieldErrorMessage : ${invalidFieldErrorMessages}">
+                    <div th:text="#{'EMPLOYEE.InvalidField.' + ${invalidFieldErrorMessage}}" style='color:red;font-weight:bold;'>Error message.</div>
+            </div>
             <div class="row">
-                <div th:switch="${mEmpty}">
-                    <div th:case="'familyName'" th:text="#{employeeEdit.empty} + ' ' + #{EMPLOYEE.familyName}" style='color:red;font-weight:bold;'>No family name.</div>
-                    <div th:case="'firstName'" th:text="#{employeeEdit.empty} + ' ' + #{EMPLOYEE.firstName}" style='color:red;font-weight:bold;'>No first name.</div>
-                </div>
-                <div th:switch="${mWrong}">
-                    <div th:case="'familyName'" style='color:red;font-weight:bold;'>Wrong family name.</div>
-                    <div th:case="'firstName'" style='color:red;font-weight:bold;'>Wrong first name.</div>
-                </div>
                 <h2 th:text="#{employeeEdit.personalDataSection}"></h2>
                 <div class="col-sm-6">
                     <div class="form-group">

@@ -10,6 +10,9 @@
         <form th:action="@{/employee/confirm}" th:object="${employee}">
             <div class="row">
                 <h1 th:text="#{HEADER}"></h1>
+                    <div th:each="emptyFieldWaringMessage : ${emptyFieldWaringMessages}">
+                        <div th:text="#{'EMPLOYEE.EmptyFieldWarning.' + ${emptyFieldWaringMessage}}" style='color:orange;font-weight:bold;'>Warning message.</div>
+                    </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="id" th:text="#{EMPLOYEE.id}"></label>
