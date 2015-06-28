@@ -123,10 +123,10 @@ public class EmployeeFormController
     public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
         ModelAndView mav = new ModelAndView();
-/*
+
         CheckDataInput cdi = new CheckDataInput();
-        List<String> emptyFields = cdi.isEmpty(employee);
-        List<String> wrongFields = cdi.checkInput(employee);
+        List<String> emptyFields = cdi.listEmptyFields(employee);
+        List<String> wrongFields = cdi.listInvalidFields(employee);
 
         if(!wrongFields.isEmpty()) {
             mav.addObject("allDisabled", Disabled.values());
@@ -143,7 +143,7 @@ public class EmployeeFormController
 
             mav.setViewName("employee/edit");
             return mav;
-        }*/
+        }
         if (principal == null) {
             System.out.println("null");
             mav.addObject("allDisabled", Disabled.values());
