@@ -22,6 +22,7 @@ package de.fau.amos4.web;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -86,7 +87,6 @@ public class EmployeeFormController
     @RequestMapping("/employee/edit")
     public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Principal principal, Model model) throws IOException
     {
-
         ModelAndView mav = new ModelAndView();
         mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
@@ -101,69 +101,58 @@ public class EmployeeFormController
     /*
     EmployeeEditSubmit is invoked by the submit button in the employee/edit.html page.
     Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
-
-    ModelAndView mav = new ModelAndView();
-        if (employeeId != 0) {
-
-        mav.setViewName("employee/edit");
-        Employee employee = employeeRepository.findOne(employeeId);
-        mav.addObject("id", employeeId);
-        mav.addObject("employee", employee);
-        mav.addObject("allDisabled", Disabled.values());
-        mav.addObject("allMarital", MaritalStatus.values());
-        mav.addObject("allSex", Sex.values());
-            mav.addObject("allDenomination", Denomination.values());
-        } else {
-            mav.addObject("m", "invalid");
-        mav.setViewName("employee/token");
-        }
-        return mav;
      */
     @RequestMapping("/employee/edit/submit")
     public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
         ModelAndView mav = new ModelAndView();
-/*
+        
         CheckDataInput cdi = new CheckDataInput();
-        List<String> emptyFields = cdi.isEmpty(employee);
-        List<String> wrongFields = cdi.checkInput(employee);
-
-        if(!wrongFields.isEmpty()) {
-            mav.addObject("allDisabled", Disabled.values());
-            mav.addObject("allMarital", MaritalStatus.values());
-            mav.addObject("allSex", Sex.values());
-            mav.addObject("allDenomination", Denomination.values());
-
-            for (Iterator<String> i = wrongFields.iterator(); i.hasNext(); ) {
-                mav.addObject("mWrong", i.next());
-            }
-            for (Iterator<String> i = emptyFields.iterator(); i.hasNext(); ) {
-                mav.addObject("mEmpty", i.next());
-            }
-
+        
+        // Fields with ValidFormat annotation and no content.
+        List<String> emptyFields = cdi.listEmptyFields(employee);
+        
+        // Fields with ValidFormat annotation and not valid content based on the annotation regex.
+        List<String> invalidFields = cdi.listInvalidFields(employee);
+        
+        // List of invalid and not empty fields
+        List<String> invalidNonEmptyFields = new ArrayList<String>();
+        invalidNonEmptyFields.addAll(invalidFields);
+        invalidNonEmptyFields.removeAll(emptyFields);
+        
+        // If there is a not empty, invalid field, can't accept input.
+        if(invalidNonEmptyFields.size() > 0)
+        {
+            mav.addObject("invalidFieldErrorMessages", invalidNonEmptyFields);
             mav.setViewName("employee/edit");
-            return mav;
-        }*/
-        if (principal == null) {
-            System.out.println("null");
-            mav.addObject("allDisabled", Disabled.values());
-            mav.addObject("allMarital", MaritalStatus.values());
-            mav.addObject("allSex", Sex.values());
-            mav.addObject("allDenomination", Denomination.values());
-            mav.setViewName("employee/preview");
-            return mav;
-        } else {
-            final String currentUser = principal.getName();
-            System.out.println("not null");
-            Client client = clientService.getClientByEmail(currentUser);
-            employee.setClient(client);
-            client.getEmployees().add(employee);
+            return mav; // Display "/employee/edit" with error messages
+        }
+        else
+        {
+            // There is no invalid and non empty field. -> Accept input.
+            // Display warnings because of empty fields:
+            mav.addObject("emptyFieldWaringMessages", emptyFields);
+            
+            if (principal == null) {
+                mav.addObject("allDisabled", Disabled.values());
+                mav.addObject("allMarital", MaritalStatus.values());
+                mav.addObject("allSex", Sex.values());
+                mav.addObject("allDenomination", Denomination.values());
+                mav.setViewName("employee/preview");
+                return mav;
+            } else {
+                final String currentUser = principal.getName();
+                System.out.println("not null");
+                Client client = clientService.getClientByEmail(currentUser);
+                employee.setClient(client);
+                client.getEmployees().add(employee);
 
-            employeeRepository.save(employee);
-            clientRepository.save(client);
-            mav.setViewName("redirect:/client/dashboard");
-            // Redirect to AccountPage page
-            return mav;
+                employeeRepository.save(employee);
+                clientRepository.save(client);
+                mav.setViewName("redirect:/client/dashboard");
+                // Redirect to AccountPage page
+                return mav;
+            }
         }
     }
 
