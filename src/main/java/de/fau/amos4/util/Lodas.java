@@ -21,6 +21,9 @@ package de.fau.amos4.util;
 
 import de.fau.amos4.model.Employee;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Lodas
 {
     private final Employee employee;
@@ -119,15 +122,64 @@ public class Lodas
         return sb.toString();
     }
 
+    private String field(String text)
+    {
+        if(org.apache.commons.lang3.StringUtils.isBlank(text))
+        {
+            return ";";
+        }
+
+        return text + ";";
+    }
+
+    private String field(int number)
+    {
+        return field(String.valueOf(number));
+    }
+
     private String sectionStammdaten()
     {
         final int personnelNumber = this.employee.getPersonnelNumber();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(indent()).append("100; ").append(personnelNumber);
-        sb.append(indent()).append("101; ").append(personnelNumber);
-        sb.append(indent()).append("102; ").append(personnelNumber);
-        sb.append(indent()).append("103; ").append(personnelNumber);
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+        // Section 100
+        sb.append(indent()).append("100; ")
+                .append(field(personnelNumber))
+                .append(field(employee.getFamilyName()))
+                .append(field(employee.getFirstName()))
+                .append(field(employee.getMaidenName()))
+                .append(field(employee.getStreet()))
+                .append(field(employee.getHouseNumber()))
+                .append(field(employee.getZipCode()))
+                .append(field(employee.getCity()))
+                .append(field(employee.getAdditionToAddress()))
+                .append("\n");
+
+        // Section 101
+        sb.append(indent()).append("101; ")
+                .append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getBirthDate())))
+                .append(field(employee.getPlaceOfBirth()))
+                .append(field(employee.getCountryOfBirth()))
+                .append(field(employee.getSex().getLodas()))
+                .append(field(employee.getSocialInsuranceNumber()))
+                .append(field(employee.getMaritalStatus().getLodas()))
+                .append(field(employee.getCitizenship()))
+                .append("\n");
+
+        // Section 102
+        sb.append(indent()).append("102; ")
+                .append(field(personnelNumber))
+                .append(field(employee.getIban()))
+                .append(field(employee.getBic()))
+                .append("\n");
+
+        // Section 103
+        sb.append(indent()).append("103; ")
+                .append(field(employee.getDisabled().getLodas()))
+                .append(field(personnelNumber));
 
         return sb.toString();
     }
