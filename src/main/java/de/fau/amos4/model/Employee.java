@@ -39,7 +39,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.fau.amos4.util.ValidFormat;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.annotation.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import de.fau.amos4.configuration.AppContext;
@@ -47,6 +49,7 @@ import de.fau.amos4.model.fields.Denomination;
 import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.util.ValidFormat;
 
 @Entity
 @Table
@@ -73,13 +76,19 @@ public class Employee
     /*
     Personal Data
      */
+
+
+    @ValidFormat("^[a-zA-Z ]*$")
     @Column
+
     String firstName;
 
+    @ValidFormat("^\\w{1,30}$")
     @Column
     String maidenName;
 
     @Column
+    @ValidFormat("^\\w{1,30}$")
     String familyName;
 
     @Column
@@ -152,6 +161,7 @@ public class Employee
 
     @Column
     int taxClass; //1 digit
+
 
     @Column
     float factor; //0.001 - 0.999

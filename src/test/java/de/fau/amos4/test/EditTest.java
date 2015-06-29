@@ -17,13 +17,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.service;
+package de.fau.amos4.test;
 
-public interface TranslatorService
-{
-    String translate(String message);
+public class EditTest {
 
-    String translate(String message, Object[] args);
-
-    String[] translate(String... messages);
 }

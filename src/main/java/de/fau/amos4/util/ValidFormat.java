@@ -17,13 +17,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.service;
 
-public interface TranslatorService
-{
-    String translate(String message);
+package de.fau.amos4.util;
 
-    String translate(String message, Object[] args);
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-    String[] translate(String... messages);
+// Annotation, used to add regular expression based validation to objects.
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ValidFormat {
+    String value();
 }

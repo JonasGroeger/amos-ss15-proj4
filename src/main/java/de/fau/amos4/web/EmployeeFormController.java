@@ -22,8 +22,10 @@ package de.fau.amos4.web;
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +57,7 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.TokenGenerator;
+import de.fau.amos4.util.CheckDataInput;
 
 @Controller
 public class EmployeeFormController
@@ -70,7 +73,7 @@ public class EmployeeFormController
     @Autowired
     public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService, EmployeeService employeeService)
     {
-    	this.clientService = clientService;
+    this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
         this.employeeService = employeeService;
@@ -84,7 +87,6 @@ public class EmployeeFormController
     @RequestMapping("/employee/edit")
     public ModelAndView EmployeeEdit(HttpServletResponse response, @RequestParam(value = "id") long employeeId, Principal principal, Model model) throws IOException
     {
-
         ModelAndView mav = new ModelAndView();
         mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
@@ -101,28 +103,56 @@ public class EmployeeFormController
     Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
      */
     @RequestMapping("/employee/edit/submit")
-    public String EmployeeEditSubmit(Employee employee,Principal principal, Model model)
+    public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
     {
+        ModelAndView mav = new ModelAndView();
+        
+        CheckDataInput cdi = new CheckDataInput();
+        
+        // Fields with ValidFormat annotation and no content.
+        List<String> emptyFields = cdi.listEmptyFields(employee);
+        
+        // Fields with ValidFormat annotation and not valid content based on the annotation regex.
+        List<String> invalidFields = cdi.listInvalidFields(employee);
+        
+        // List of invalid and not empty fields
+        List<String> invalidNonEmptyFields = new ArrayList<String>();
+        invalidNonEmptyFields.addAll(invalidFields);
+        invalidNonEmptyFields.removeAll(emptyFields);
+        
+        // If there is a not empty, invalid field, can't accept input.
+        if(invalidNonEmptyFields.size() > 0)
+        {
+            mav.addObject("invalidFieldErrorMessages", invalidNonEmptyFields);
+            mav.setViewName("employee/edit");
+            return mav; // Display "/employee/edit" with error messages
+        }
+        else
+        {
+            // There is no invalid and non empty field. -> Accept input.
+            // Display warnings because of empty fields:
+            mav.addObject("emptyFieldWaringMessages", emptyFields);
+            
+            if (principal == null) {
+                mav.addObject("allDisabled", Disabled.values());
+                mav.addObject("allMarital", MaritalStatus.values());
+                mav.addObject("allSex", Sex.values());
+                mav.addObject("allDenomination", Denomination.values());
+                mav.setViewName("employee/preview");
+                return mav;
+            } else {
+                final String currentUser = principal.getName();
+                System.out.println("not null");
+                Client client = clientService.getClientByEmail(currentUser);
+                employee.setClient(client);
+                client.getEmployees().add(employee);
 
-        if (principal == null) {
-            System.out.println("null");
-            model.addAttribute("allDisabled", Disabled.values());
-            model.addAttribute("allMarital", MaritalStatus.values());
-            model.addAttribute("allSex", Sex.values());
-            model.addAttribute("allDenomination", Denomination.values());
-            return "/employee/preview";
-        } else {
-            final String currentUser = principal.getName();
-            System.out.println("not null");
-            Client client = clientService.getClientByEmail(currentUser);
-            employee.setClient(client);
-            client.getEmployees().add(employee);
-
-            employeeRepository.save(employee);
-            clientRepository.save(client);
-
-            // Redirect to AccountPage page
-            return "redirect:/client/dashboard";
+                employeeRepository.save(employee);
+                clientRepository.save(client);
+                mav.setViewName("redirect:/client/dashboard");
+                // Redirect to AccountPage page
+                return mav;
+            }
         }
     }
 
@@ -138,32 +168,34 @@ public class EmployeeFormController
     @RequestMapping("/employee/token/submit")
     public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
-    	long employeeId = 0;
-    	Iterable<Employee> allEmployees = employeeRepository.findAll();
+    long employeeId = 0;
+    Iterable<Employee> allEmployees = employeeRepository.findAll();
         for (Iterator<Employee> i = allEmployees.iterator(); i.hasNext(); ) {
-        	Employee currEmployee = i.next();
-        	if( currEmployee.getToken().equals(token)) {
-        		employeeId = currEmployee.getId();
-        	}
-        	
+        Employee currEmployee = i.next();
+        if( currEmployee.getToken().equals(token)) {
+        employeeId = currEmployee.getId();
         }
+        }
+
+
+
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
-	        
-	        mav.setViewName("employee/edit");
-	        Employee employee = employeeRepository.findOne(employeeId);
-	        mav.addObject("id", employeeId);
-	        mav.addObject("employee", employee);
-	        mav.addObject("allDisabled", Disabled.values());
-	        mav.addObject("allMarital", MaritalStatus.values());
-	        mav.addObject("allSex", Sex.values());
+        
+        mav.setViewName("employee/edit");
+        Employee employee = employeeRepository.findOne(employeeId);
+        mav.addObject("id", employeeId);
+        mav.addObject("employee", employee);
+        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allMarital", MaritalStatus.values());
+        mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
         } else {
             mav.addObject("m", "invalid");
-        	mav.setViewName("employee/token");
+        mav.setViewName("employee/token");
         }
         return mav;
-        	
+        
     }
 
     
@@ -185,7 +217,6 @@ public class EmployeeFormController
     public String EmployeeConfirm(@ModelAttribute("employee") Employee employee,
                                  BindingResult result, Model model) throws Exception
     {
-
         Employee e = employeeService.getEmployeeByToken(employee.getToken());
         Client client = e.getClient();
         employee.setClient(client);

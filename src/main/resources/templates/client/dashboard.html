@@ -31,27 +31,9 @@
                 <th th:text="#{EMPLOYEE.birthDate}"></th>
                 <th th:text="#{EMPLOYEE.street}"></th>
                 <th th:text="#{EMPLOYEE.houseNumber}"></th>
-                <th th:text="#{EMPLOYEE.additionToAddress}"></th>
                 <th th:text="#{EMPLOYEE.zipCode}"></th>
                 <th th:text="#{EMPLOYEE.city}"></th>
-                <th th:text="#{EMPLOYEE.placeOfBirth}"></th>
-                <th th:text="#{EMPLOYEE.countryOfBirth}"></th>
                 <th th:text="#{EMPLOYEE.sex}"></th>
-                <th th:text="#{EMPLOYEE.maritalStatus}"></th>
-                <th th:text="#{EMPLOYEE.disabled}"></th>
-                <th th:text="#{EMPLOYEE.citizenship}"></th>
-                <th th:text="#{EMPLOYEE.socialInsuranceNumber}"></th>
-                <th th:text="#{EMPLOYEE.employerSocialSavingsNumber}"></th>
-                <th th:text="#{EMPLOYEE.iban}"></th>
-                <th th:text="#{EMPLOYEE.bic}"></th>
-                <th th:text="#{EMPLOYEE.employment}"></th>
-                <th th:text="#{EMPLOYEE.temporaryEmployment}"></th>
-                <th th:text="#{EMPLOYEE.taxOfficeNumber}"></th>
-                <th th:text="#{EMPLOYEE.identificationNumber}"></th>
-                <th th:text="#{EMPLOYEE.taxClass}"></th>
-                <th th:text="#{EMPLOYEE.factor}"></th>
-                <th th:text="#{EMPLOYEE.numberOfExemptionsForChildren}"></th>
-                <th th:text="#{EMPLOYEE.denomination}"></th>
             </tr>
             <tr th:each="Employee : ${Employees}">
                 <td><a th:href="@{'/employee/edit?id=' + ${Employee.id}}"
@@ -81,27 +63,9 @@
                 <td th:text="${Employee.birthDate}">20/11/2011</td>
                 <td th:text="${Employee.street}">Musterstraße</td>
                 <td th:text="${Employee.houseNumber}">42</td>
-                <td th:text="${Employee.additionToAddress}"></td>
                 <td th:text="${Employee.zipCode}">0815</td>
                 <td th:text="${Employee.city}">Musterstadt</td>
-                <td th:text="${Employee.placeOfBirth}"></td>
-                <td th:text="${Employee.countryOfBirth}">Österreich</td>
                 <td th:text="${Employee.sex}">männlich</td>
-                <td th:text="${Employee.maritalStatus}">ledig</td>
-                <td th:text="${Employee.disabled}">Nein</td>
-                <td th:text="${Employee.citizenship}">Österreich</td>
-                <td th:text="${Employee.socialInsuranceNumber}"></td>
-                <td th:text="${Employee.employerSocialSavingsNumber}"></td>
-                <td th:text="${Employee.iban}"></td>
-                <td th:text="${Employee.bic}"></td>
-                <td th:text="${Employee.employment}"></td>
-                <td th:text="${Employee.temporaryEmployment}"></td>
-                <td th:text="${Employee.taxOfficeNumber}"></td>
-                <td th:text="${Employee.identificationNumber}"></td>
-                <td th:text="${Employee.taxClass}"></td>
-                <td th:text="${Employee.factor}"></td>
-                <td th:text="${Employee.numberOfExemptionsForChildren}"></td>
-                <td th:text="${Employee.denomination}"></td>
             </tr>
         </table>
 </div>
