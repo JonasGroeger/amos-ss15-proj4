@@ -39,16 +39,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.fau.amos4.model.fields.*;
 import de.fau.amos4.util.ValidFormat;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.Order;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.fields.Denomination;
-import de.fau.amos4.model.fields.Disabled;
-import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.model.fields.Sex;
 import de.fau.amos4.util.ValidFormat;
 
 @Entity
@@ -173,6 +170,33 @@ public class Employee
     @Enumerated(EnumType.STRING)
     Denomination denomination;
 
+    /*
+    Social insurance
+     */
+    @Column
+    long staturoyHealthInsurance; //8 digits
+
+    @Column
+    String parenthood; //TODO: Datatype?
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    HealthInsurance healthInsurance;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    PensionInsurance pensionInsurance;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    UnemploymentInsurance unemploymentInsurance;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    NursingCareInsurance nursingCareInsurance;
+
+    @Column
+    String accidentInsuranceRiskTariff; //TODO: Datatype?
 
 
     public Employee()
@@ -524,6 +548,7 @@ public class Employee
         this.numberOfExemptionsForChildren = numberOfExemptionsForChildren;
     }
 
+
     public Denomination getDenomination()
     {
         return denomination;
@@ -532,6 +557,67 @@ public class Employee
     public void setDenomination(Denomination denomination)
     {
         this.denomination = denomination;
+    }
+
+    /*
+    Social insurance
+     */
+
+
+    public HealthInsurance getHealthInsurance() {
+        return healthInsurance;
+    }
+
+    public void setHealthInsurance(HealthInsurance healthInsurance) {
+        this.healthInsurance = healthInsurance;
+    }
+
+    public PensionInsurance getPensionInsurance() {
+        return pensionInsurance;
+    }
+
+    public void setPensionInsurance(PensionInsurance pensionInsurance) {
+        this.pensionInsurance = pensionInsurance;
+    }
+
+    public long getStaturoyHealthInsurance() {
+        return staturoyHealthInsurance;
+    }
+
+    public void setStaturoyHealthInsurance(long staturoyHealthInsurance) {
+        this.staturoyHealthInsurance = staturoyHealthInsurance;
+    }
+
+    public UnemploymentInsurance getUnemploymentInsurance() {
+        return unemploymentInsurance;
+    }
+
+    public void setUnemploymentInsurance(UnemploymentInsurance unemploymentInsurance) {
+        this.unemploymentInsurance = unemploymentInsurance;
+    }
+
+    public String getParenthood() {
+        return parenthood;
+    }
+
+    public void setParenthood(String parenthood) {
+        this.parenthood = parenthood;
+    }
+
+    public NursingCareInsurance getNursingCareInsurance() {
+        return nursingCareInsurance;
+    }
+
+    public void setNursingCareInsurance(NursingCareInsurance nursingCareInsurance) {
+        this.nursingCareInsurance = nursingCareInsurance;
+    }
+
+    public String getAccidentInsuranceRiskTariff() {
+        return accidentInsuranceRiskTariff;
+    }
+
+    public void setAccidentInsuranceRiskTariff(String accidentInsuranceRiskTariff) {
+        this.accidentInsuranceRiskTariff = accidentInsuranceRiskTariff;
     }
 
     @Override
@@ -548,6 +634,7 @@ public class Employee
         if (taxClass != employee.taxClass) return false;
         if (Float.compare(employee.factor, factor) != 0) return false;
         if (Float.compare(employee.numberOfExemptionsForChildren, numberOfExemptionsForChildren) != 0) return false;
+        if (staturoyHealthInsurance != employee.staturoyHealthInsurance) return false;
         if (token != null ? !token.equals(employee.token) : employee.token != null) return false;
         if (client != null ? !client.equals(employee.client) : employee.client != null) return false;
         if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
@@ -579,7 +666,13 @@ public class Employee
         if (employment != null ? !employment.equals(employee.employment) : employee.employment != null) return false;
         if (temporaryEmployment != null ? !temporaryEmployment.equals(employee.temporaryEmployment) : employee.temporaryEmployment != null)
             return false;
-        return denomination == employee.denomination;
+        if (denomination != employee.denomination) return false;
+        if (parenthood != null ? !parenthood.equals(employee.parenthood) : employee.parenthood != null) return false;
+        if (healthInsurance != employee.healthInsurance) return false;
+        if (pensionInsurance != employee.pensionInsurance) return false;
+        if (unemploymentInsurance != employee.unemploymentInsurance) return false;
+        if (nursingCareInsurance != employee.nursingCareInsurance) return false;
+        return !(accidentInsuranceRiskTariff != null ? !accidentInsuranceRiskTariff.equals(employee.accidentInsuranceRiskTariff) : employee.accidentInsuranceRiskTariff != null);
 
     }
 
@@ -616,6 +709,13 @@ public class Employee
         result = 31 * result + (factor != +0.0f ? Float.floatToIntBits(factor) : 0);
         result = 31 * result + (numberOfExemptionsForChildren != +0.0f ? Float.floatToIntBits(numberOfExemptionsForChildren) : 0);
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
+        result = 31 * result + (int) (staturoyHealthInsurance ^ (staturoyHealthInsurance >>> 32));
+        result = 31 * result + (parenthood != null ? parenthood.hashCode() : 0);
+        result = 31 * result + (healthInsurance != null ? healthInsurance.hashCode() : 0);
+        result = 31 * result + (pensionInsurance != null ? pensionInsurance.hashCode() : 0);
+        result = 31 * result + (unemploymentInsurance != null ? unemploymentInsurance.hashCode() : 0);
+        result = 31 * result + (nursingCareInsurance != null ? nursingCareInsurance.hashCode() : 0);
+        result = 31 * result + (accidentInsuranceRiskTariff != null ? accidentInsuranceRiskTariff.hashCode() : 0);
         return result;
     }
 
@@ -653,6 +753,13 @@ public class Employee
                 ", factor=" + factor +
                 ", numberOfExemptionsForChildren=" + numberOfExemptionsForChildren +
                 ", denomination=" + denomination +
+                ", staturoyHealthInsurance=" + staturoyHealthInsurance +
+                ", parenthood='" + parenthood + '\'' +
+                ", healthInsurance=" + healthInsurance +
+                ", pensionInsurance=" + pensionInsurance +
+                ", unemploymentInsurance=" + unemploymentInsurance +
+                ", nursingCareInsurance=" + nursingCareInsurance +
+                ", accidentInsuranceRiskTariff='" + accidentInsuranceRiskTariff + '\'' +
                 '}';
     }
 

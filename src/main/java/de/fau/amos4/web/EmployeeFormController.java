@@ -31,6 +31,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import de.fau.amos4.model.fields.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -48,10 +49,6 @@ import org.springframework.web.servlet.ModelAndView;
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Denomination;
-import de.fau.amos4.model.fields.Disabled;
-import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.model.fields.Sex;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
@@ -96,6 +93,10 @@ public class EmployeeFormController
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
         mav.addObject("allDenomination", Denomination.values());
+        mav.addObject("allHealthInsurance", HealthInsurance.values());
+        mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
+        mav.addObject("allPensionInsurance", PensionInsurance.values());
+        mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
         return mav;
     }
     /*
@@ -138,6 +139,10 @@ public class EmployeeFormController
                 mav.addObject("allMarital", MaritalStatus.values());
                 mav.addObject("allSex", Sex.values());
                 mav.addObject("allDenomination", Denomination.values());
+                mav.addObject("allHealthInsurance", HealthInsurance.values());
+                mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
+                mav.addObject("allPensionInsurance", PensionInsurance.values());
+                mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
                 mav.setViewName("employee/preview");
                 return mav;
             } else {
@@ -182,14 +187,18 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
         
-        mav.setViewName("employee/edit");
-        Employee employee = employeeRepository.findOne(employeeId);
-        mav.addObject("id", employeeId);
-        mav.addObject("employee", employee);
-        mav.addObject("allDisabled", Disabled.values());
-        mav.addObject("allMarital", MaritalStatus.values());
-        mav.addObject("allSex", Sex.values());
+            mav.setViewName("employee/edit");
+            Employee employee = employeeRepository.findOne(employeeId);
+            mav.addObject("id", employeeId);
+            mav.addObject("employee", employee);
+            mav.addObject("allDisabled", Disabled.values());
+            mav.addObject("allMarital", MaritalStatus.values());
+            mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
+            mav.addObject("allHealthInsurance", HealthInsurance.values());
+            mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
+            mav.addObject("allPensionInsurance", PensionInsurance.values());
+            mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
         } else {
             mav.addObject("m", "invalid");
         mav.setViewName("employee/token");

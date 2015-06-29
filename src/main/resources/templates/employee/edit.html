@@ -162,6 +162,13 @@
                             <option th:each="denomination : ${allDenomination}" th:value="${denomination.name()}" th:text="${denomination.getText()}"></option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="healthInsurance" th:text="#{EMPLOYEE.healthInsurance} +#{employeeEdit.mandatory}"></label>
+                        <select th:field="*{healthInsurance}" class="form-control">
+                            <option value="" th:text="#{EMPLOYEE.select}"></option>
+                            <option th:each="healthInsurance : ${allHealthInsurance}" th:value="${healthInsurance.name()}" th:text="${healthInsurance.getText()}"></option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="row">
