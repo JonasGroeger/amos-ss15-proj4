@@ -17,34 +17,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.configuration;
+package de.fau.amos4.model.fields;
 
-import org.springframework.context.ApplicationContext;
-/*
- * This class is needed so that the drop down classes Disabled, Sex, MaritalStatus...have access to the locale.
- * 
- */
-public class AppContext
+import java.util.Locale;
+
+import org.springframework.context.i18n.LocaleContextHolder;
+
+import de.fau.amos4.configuration.AppContext;
+
+public enum YesNo
 {
-    private static ApplicationContext ctx; 
+    //From .properties files
+    YES("KEYWORD.yes"), ADDITIONAL("KEYWORD.no");
 
-    /**
-     * Injected from the class "ApplicationContextProvider" which is automatically
-     * loaded during Spring-Initialization.
-     */ 
+    private String text;
 
-    public static void setApplicationContext(ApplicationContext applicationContext) { 
-        ctx = applicationContext; 
-    } 
+    YesNo(String text)
+    {
+        this.text = text;
+    }
 
+    public String getText()
+    {
+        Locale locale = LocaleContextHolder.getLocale();
+        return AppContext.getApplicationContext().getMessage(text, null, locale);
+    }
 
-    /**
-     * Get access to the Spring ApplicationContext from everywhere in your Application
-     *
-     * @return
-     */ 
-
-    public static ApplicationContext getApplicationContext() { 
-        return ctx; 
-    } 
+    public String toString()
+    {
+        return getText();
+    }
 }
