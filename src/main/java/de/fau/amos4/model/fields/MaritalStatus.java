@@ -37,14 +37,8 @@ public enum MaritalStatus
         this.text = text;
     }
 
-    public String getText()
-    {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
     public String toString()
     {
-        return getText();
+       return text;
     }
 }
