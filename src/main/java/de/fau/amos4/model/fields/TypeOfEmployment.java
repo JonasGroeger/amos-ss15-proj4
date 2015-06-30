@@ -28,7 +28,8 @@ import de.fau.amos4.configuration.AppContext;
 public enum TypeOfEmployment
 {
     //From .properties files
-    REGULAR("EMPLOYEE.typeOfEmployment.regular"), ADDITIONAL("EMPLOYEE.typeOfEmployment.additional");
+    REGULAR("EMPLOYEE.typeOfEmployment.regular"),
+    ADDITIONAL("EMPLOYEE.typeOfEmployment.additional");
 
     private String text;
 

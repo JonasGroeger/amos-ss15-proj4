@@ -28,7 +28,8 @@ import de.fau.amos4.configuration.AppContext;
 public enum Disabled
 {
     //From .properties files
-    YES("EMPLOYEE.disabled.yes"), NO("EMPLOYEE.disabled.no");
+    YES("EMPLOYEE.disabled.yes"),
+    NO("EMPLOYEE.disabled.no");
 
     private String text;
 

@@ -28,7 +28,10 @@ import de.fau.amos4.configuration.AppContext;
 public enum MaritalStatus
 {
     //From .properties files
-    SINGLE("EMPLOYEE.marital.single"), MARRIED("EMPLOYEE.marital.married"), SEPARATED("EMPLOYEE.marital.separated"), OTHER("EMPLOYEE.marital.other");
+    SINGLE("EMPLOYEE.marital.single"),
+    MARRIED("EMPLOYEE.marital.married"),
+    SEPARATED("EMPLOYEE.marital.separated"),
+    OTHER("EMPLOYEE.marital.other");
 
     private String text;
 

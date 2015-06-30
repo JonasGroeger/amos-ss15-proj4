@@ -28,7 +28,11 @@ import de.fau.amos4.configuration.AppContext;
 public enum LevelOfEducation
 {
     //From .properties files
-    NOTHING("EMPLOYEE.education.nothing"), SCHOOL("EMPLOYEE.education.school"), HIGHSCHOOL("EMPLOYEE.education.highschool"), ALEVELS("EMPLOYEE.education.aLevels"), UNKNOWN("EMPLOYEE.education.unknown");
+    NOTHING("EMPLOYEE.education.nothing"),
+    SCHOOL("EMPLOYEE.education.school"),
+    HIGHSCHOOL("EMPLOYEE.education.highschool"),
+    ALEVELS("EMPLOYEE.education.aLevels"),
+    UNKNOWN("EMPLOYEE.education.unknown");
 
     private String text;
 

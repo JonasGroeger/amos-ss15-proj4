@@ -28,7 +28,13 @@ import de.fau.amos4.configuration.AppContext;
 public enum ProfessionalTraining
 {
     //From .properties files
-    NOTHING("EMPLOYEE.professionalTraining.nothing"), VOCATIONAL("EMPLOYEE.professionalTraining.vocational"), MASTERCRAFTSMAN("EMPLOYEE.professionalTraining.masterCraftsman"), BACHLOR("EMPLOYEE.professionalTraining.bachlor"), MASTER("EMPLOYEE.professionalTraining.master"), PHD("EMPLOYEE.professionalTraining.phd"), UNKNOWN("EMPLOYEE.professionalTraining.unknown");
+    NOTHING("EMPLOYEE.professionalTraining.nothing"),
+    VOCATIONAL("EMPLOYEE.professionalTraining.vocational"),
+    MASTERCRAFTSMAN("EMPLOYEE.professionalTraining.masterCraftsman"),
+    BACHLOR("EMPLOYEE.professionalTraining.bachlor"),
+    MASTER("EMPLOYEE.professionalTraining.master"),
+    PHD("EMPLOYEE.professionalTraining.phd"),
+    UNKNOWN("EMPLOYEE.professionalTraining.unknown");
 
     private String text;
 

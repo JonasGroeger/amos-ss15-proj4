@@ -28,7 +28,8 @@ import de.fau.amos4.configuration.AppContext;
 public enum OutputFormat
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"), LuG("OUTPUTFORMAT.lug");
+    LODAS("OUTPUTFORMAT.lodas"),
+    LuG("OUTPUTFORMAT.lug");
 
     private String text;
 

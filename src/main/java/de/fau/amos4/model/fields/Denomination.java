@@ -53,8 +53,7 @@ public enum Denomination {
     FS("EMPLOYEE.denomination.fs"),
     IH("EMPLOYEE.denomination.ih"),
     JD("EMPLOYEE.denomination.jd"),
-    JH("EMPLOYEE.denomination.jh"),
-    ;
+    JH("EMPLOYEE.denomination.jh");
 
     private String text;
 

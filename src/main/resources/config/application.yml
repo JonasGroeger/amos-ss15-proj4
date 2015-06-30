@@ -30,6 +30,7 @@ spring:
      url: jdbc:hsqldb:mem:pfb
      username: postgres
      password: postgres
+     initialize: false
    jpa:
      database: HSQL
      hibernate:

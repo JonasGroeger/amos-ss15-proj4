@@ -28,7 +28,8 @@ import de.fau.amos4.configuration.AppContext;
 public enum YesNo
 {
     //From .properties files
-    YES("KEYWORD.yes"), ADDITIONAL("KEYWORD.no");
+    YES("KEYWORD.yes"),
+    NO("KEYWORD.no");
 
     private String text;
 
