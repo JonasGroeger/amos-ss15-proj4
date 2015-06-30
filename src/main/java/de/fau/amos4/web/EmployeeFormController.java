@@ -97,7 +97,7 @@ public class EmployeeFormController
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
         mav.addObject("allDenomination", Denomination.values());
-        mav.addObject("allTypeOfContract", TypeOfContract.values());
+        mav.addObject("allTypeOfContract", TypeOfContract1.values());
         mav.addObject("allHealthInsurance", HealthInsurance.values());
         mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
         mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -145,7 +145,7 @@ public class EmployeeFormController
                 mav.addObject("allMarital", MaritalStatus.values());
                 mav.addObject("allSex", Sex.values());
                 mav.addObject("allDenomination", Denomination.values());
-                mav.addObject("allTypeOfContract", TypeOfContract.values());
+                mav.addObject("allTypeOfContract", TypeOfContract1.values());
                 mav.addObject("allHealthInsurance", HealthInsurance.values());
                 mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
                 mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -202,7 +202,7 @@ public class EmployeeFormController
             mav.addObject("allMarital", MaritalStatus.values());
             mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
-            mav.addObject("allTypeOfContract", TypeOfContract.values());
+            mav.addObject("allTypeOfContract", TypeOfContract1.values());
             mav.addObject("allHealthInsurance", HealthInsurance.values());
             mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
             mav.addObject("allPensionInsurance", PensionInsurance.values());

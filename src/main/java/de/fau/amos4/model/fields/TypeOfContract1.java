@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-
 /**
  *  Personalfragebogen 2.0. Revolutionize form data entry for taxation and
 =======
@@ -29,57 +26,28 @@
  */
 
 package de.fau.amos4.model.fields;
-=======
- */
-package de.fau.amos4.model.fields;
 
->>>>>>> 0982800290a8819221f5a74d19766e035b744572
+
 import java.util.Locale;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-<<<<<<< HEAD
-public enum TypeOfContract {
+
     //From .properties files
-    RK("EMPLOYEE.denomination.rk"),
-    EV("EMPLOYEE.denomination.ev"),
-    LT("EMPLOYEE.denomination.lt"),
-    RF("EMPLOYEE.denomination.rf"),
-    AK("EMPLOYEE.denomination.ak"),
-    IS("EMPLOYEE.denomination.is"),
-    FB("EMPLOYEE.denomination.fb"),
-    IB("EMPLOYEE.denomination.ib"),
-    FO("EMPLOYEE.denomination.fo"),
-    FP("EMPLOYEE.denomination.fp"),
-    FM("EMPLOYEE.denomination.fm"),
-    JÜ("EMPLOYEE.denomination.jü"),
-    IW("EMPLOYEE.denomination.iw"),
-    IF("EMPLOYEE.denomination.if"),
-    IL("EMPLOYEE.denomination.il"),
-    UN("EMPLOYEE.denomination.un"),
-    FR("EMPLOYEE.denomination.fr"),
-    FA("EMPLOYEE.denomination.fa"),
-    FG("EMPLOYEE.denomination.fg"),
-    FS("EMPLOYEE.denomination.fs"),
-    IH("EMPLOYEE.denomination.ih"),
-    JD("EMPLOYEE.denomination.jd"),
-    JH("EMPLOYEE.denomination.jh"),
-    ;
-=======
-public enum TypeOfContract
+
+public enum TypeOfContract1
 {
     //From .properties files
     PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
     PERMANENTPART("EMPLOYEE.contract.permanentPart"),
     FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
     FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
->>>>>>> 0982800290a8819221f5a74d19766e035b744572
 
     private String text;
 
-    TypeOfContract(String text)
+    TypeOfContract1(String text)
     {
         this.text = text;
     }
