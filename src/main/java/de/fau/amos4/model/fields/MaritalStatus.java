@@ -27,7 +27,10 @@ import java.util.Locale;
 public enum MaritalStatus
 {
     //From .properties files
-    SINGLE("EMPLOYEE.marital.single"), MARRIED("EMPLOYEE.marital.married"), SEPARATED("EMPLOYEE.marital.separated"), OTHER("EMPLOYEE.marital.other");
+    SINGLE("EMPLOYEE.marital.single"),
+    MARRIED("EMPLOYEE.marital.married"),
+    SEPARATED("EMPLOYEE.marital.separated"),
+    OTHER("EMPLOYEE.marital.other");
 
     private String text;
 
@@ -35,7 +38,7 @@ public enum MaritalStatus
     {
         this.text = text;
     }
-
+    
     public String getText()
     {
         Locale locale = LocaleContextHolder.getLocale();
@@ -55,7 +58,7 @@ public enum MaritalStatus
         }
         return -1;
     }
-
+    
     public String toString()
     {
        return text;

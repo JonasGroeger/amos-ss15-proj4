@@ -43,6 +43,7 @@ import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.ClientServiceImpl;
 import de.fau.amos4.test.BaseIntegrationTest;
+import de.fau.amos4.web.ClientController;
 import de.fau.amos4.web.LoginFormController;
 
 public class ClientEditTest extends BaseIntegrationTest {
@@ -51,15 +52,15 @@ public class ClientEditTest extends BaseIntegrationTest {
 	
 	@Mock
     private final ClientRepository clientRepository = Mockito.spy(ClientRepository.class);
-	
+    
     @InjectMocks
-    private LoginFormController loginFormController;
+    private ClientController clientController;
 	
 	@Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
  
-        mockMvc = MockMvcBuilders.standaloneSetup(loginFormController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(clientController).build();
     }
 	
     @Test

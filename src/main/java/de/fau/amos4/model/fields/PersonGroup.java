@@ -25,15 +25,34 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-public enum OutputFormat
+public enum PersonGroup
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    G101("EMPLOYEE.personGroup.101"),
+    G102("EMPLOYEE.personGroup.102"),
+    G103("EMPLOYEE.personGroup.103"),
+    G104("EMPLOYEE.personGroup.104"),
+    G105("EMPLOYEE.personGroup.105"),
+    G106("EMPLOYEE.personGroup.106"),
+    G107("EMPLOYEE.personGroup.107"),
+    G108("EMPLOYEE.personGroup.108"),
+    G109("EMPLOYEE.personGroup.109"),
+    G110("EMPLOYEE.personGroup.110"),
+    G111("EMPLOYEE.personGroup.111"),
+    G112("EMPLOYEE.personGroup.112"),
+    G113("EMPLOYEE.personGroup.113"),
+    G114("EMPLOYEE.personGroup.114"),
+    G115("EMPLOYEE.personGroup.115"),
+    G116("EMPLOYEE.personGroup.116"),
+    G117("EMPLOYEE.personGroup.117"),
+    G118("EMPLOYEE.personGroup.118"),
+    G119("EMPLOYEE.personGroup.119"),
+    G190("EMPLOYEE.personGroup.190"),
+    G900("EMPLOYEE.personGroup.900");
 
     private String text;
 
-    OutputFormat(String text)
+    PersonGroup(String text)
     {
         this.text = text;
     }

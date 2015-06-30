@@ -27,7 +27,9 @@ import java.util.Locale;
 public enum Sex
 {
     //From .properties files
-    MALE("EMPLOYEE.sex.male"), FEMALE("EMPLOYEE.sex.female"), UNKNOWN("EMPLOYEE.sex.unknown");
+    MALE("EMPLOYEE.sex.male"),
+    FEMALE("EMPLOYEE.sex.female"),
+    UNKNOWN("EMPLOYEE.sex.unknown");
 
     private String text;
 

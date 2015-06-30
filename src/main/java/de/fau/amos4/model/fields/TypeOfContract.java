@@ -25,15 +25,17 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-public enum OutputFormat
+public enum TypeOfContract
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
+    PERMANENTPART("EMPLOYEE.contract.permanentPart"),
+    FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
+    FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
 
     private String text;
 
-    OutputFormat(String text)
+    TypeOfContract(String text)
     {
         this.text = text;
     }

@@ -19,6 +19,16 @@
  */
 package de.fau.amos4.web;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Locale;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import de.fau.amos4.annotation.TheClient;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.CurrentClient;
@@ -35,6 +45,8 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,12 +55,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.mail.MessagingException;
-import javax.validation.Valid;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import de.fau.amos4.service.ClientRepository;
+
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Handles client related requests.
@@ -56,14 +65,23 @@ import java.util.Locale;
 @Controller
 public class ClientController
 {
+	@Autowired
     private final ClientService clientService;
+	
+	@Autowired
+    private final ClientRepository clientRepository;
+	
+	@Autowired
     private final EmployeeRepository employeeRepository;
+	
+	@Autowired
     private final TranslatorService translatorService;
 
     @Autowired
-    public ClientController(ClientService clientService, EmployeeRepository employeeRepository, TranslatorService translatorService)
+    public ClientController(ClientService clientService, ClientRepository clientRepository, EmployeeRepository employeeRepository, TranslatorService translatorService)
     {
         this.clientService = clientService;
+        this.clientRepository = clientRepository;
         this.employeeRepository = employeeRepository;
         this.translatorService = translatorService;
     }
@@ -108,6 +126,50 @@ public class ClientController
         mav.addObject("Client", clientFromDatabase);
         mav.addObject("allTitles", Title.values());
         return mav;
+    }
+    
+    @RequestMapping("/client/edit/submit")
+    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client, @RequestParam("NewPassword") String NewPassword, @RequestParam("ConfirmPassword") String ConfirmPassword, @RequestParam("OldPassword") String OldPassword)
+            throws MessagingException
+    {
+    	//get database object
+        Client tmp = clientService.getClientByEmail(client.getEmail());
+        
+        //update password
+        if (NewPassword.equals("") == false) {
+        	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	        if (NewPassword.equals(ConfirmPassword) && encoder.matches(OldPassword, tmp.getPasswordHash())) {
+	        	//store as hash
+	        	tmp.setPasswordHash(encoder.encode(NewPassword));
+	        }
+	        else {
+	        	return "redirect:/client/edit?m=newPasswordFailed";
+	        }
+        }
+        
+        if (client.getZipPassword() != null) {
+            tmp.setZipPassword(client.getZipPassword());
+        }
+        
+        //update client information
+        tmp.setOutputFormat(client.getOutputFormat());
+        tmp.setTitle(client.getTitle());
+        tmp.setFirstName(client.getFirstName());
+        tmp.setFamilyName(client.getFamilyName());
+        tmp.setBirthDate(client.getBirthDate()); //FIXME outputs null at the moment
+        tmp.setOfficePhoneNumber(client.getOfficePhoneNumber());
+        tmp.setMobilePhoneNumber(client.getMobilePhoneNumber());
+        tmp.setCompanyName(client.getCompanyName());
+        tmp.setCompanyType(client.getCompanyType());
+        tmp.setCountry(client.getCountry());
+        tmp.setAddress(client.getAddress());
+        tmp.setZipCode(client.getZipCode());
+        tmp.setBirthDate(client.getBirthDate());
+        
+        //write back to database
+        clientRepository.save(tmp);
+        
+        return "redirect:/client/dashboard?m=profileChanged";
     }
 
     /**

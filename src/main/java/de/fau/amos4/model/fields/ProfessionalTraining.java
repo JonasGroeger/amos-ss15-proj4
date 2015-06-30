@@ -19,19 +19,26 @@
  */
 package de.fau.amos4.model.fields;
 
-import de.fau.amos4.configuration.AppContext;
-import org.springframework.context.i18n.LocaleContextHolder;
-
 import java.util.Locale;
 
-public enum Disabled
+import org.springframework.context.i18n.LocaleContextHolder;
+
+import de.fau.amos4.configuration.AppContext;
+
+public enum ProfessionalTraining
 {
     //From .properties files
-    YES("EMPLOYEE.disabled.yes"), NO("EMPLOYEE.disabled.no");
+    NOTHING("EMPLOYEE.professionalTraining.nothing"),
+    VOCATIONAL("EMPLOYEE.professionalTraining.vocational"),
+    MASTERCRAFTSMAN("EMPLOYEE.professionalTraining.masterCraftsman"),
+    BACHLOR("EMPLOYEE.professionalTraining.bachlor"),
+    MASTER("EMPLOYEE.professionalTraining.master"),
+    PHD("EMPLOYEE.professionalTraining.phd"),
+    UNKNOWN("EMPLOYEE.professionalTraining.unknown");
 
     private String text;
 
-    Disabled(String text)
+    ProfessionalTraining(String text)
     {
         this.text = text;
     }
@@ -40,18 +47,6 @@ public enum Disabled
     {
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
-    public int getLodas()
-    {
-        switch (this)
-        {
-            case NO:
-                return 0;
-            case YES:
-                return 1;
-        }
-        return -1;
     }
 
     public String toString()
