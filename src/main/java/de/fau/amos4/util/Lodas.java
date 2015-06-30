@@ -61,7 +61,7 @@ public class Lodas
 
     private String title(String name)
     {
-        return String.format("[%s]", name);
+        return String.format("[%s]\n", name);
     }
 
     public String generate()
