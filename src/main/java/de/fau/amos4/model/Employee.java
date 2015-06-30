@@ -203,7 +203,7 @@ public class Employee
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
-    Date planedDateApprenticeshipBegins;
+    Date planedDateApprenticeshipEnds;
     
     @Column
     int weeklyWorkingHours;
@@ -808,12 +808,12 @@ public class Employee
 	}
 
 	public Date getPlanedDateApprenticeshipBegins() {
-		return planedDateApprenticeshipBegins;
+		return planedDateApprenticeshipEnds;
 	}
 
 	public void setPlanedDateApprenticeshipBegins(
 			Date planedDateApprenticeshipBegins) {
-		this.planedDateApprenticeshipBegins = planedDateApprenticeshipBegins;
+		this.planedDateApprenticeshipEnds = planedDateApprenticeshipBegins;
 	}
 
 	public int getWeeklyWorkingHours() {
@@ -1035,8 +1035,8 @@ public class Employee
 						.hashCode());
 		result = prime
 				* result
-				+ ((planedDateApprenticeshipBegins == null) ? 0
-						: planedDateApprenticeshipBegins.hashCode());
+				+ ((planedDateApprenticeshipEnds == null) ? 0
+						: planedDateApprenticeshipEnds.hashCode());
 		result = prime * result
 				+ ((probationPeriod == null) ? 0 : probationPeriod.hashCode());
 		result = prime
@@ -1250,11 +1250,11 @@ public class Employee
 				return false;
 		} else if (!placeOfEmployment.equals(other.placeOfEmployment))
 			return false;
-		if (planedDateApprenticeshipBegins == null) {
-			if (other.planedDateApprenticeshipBegins != null)
+		if (planedDateApprenticeshipEnds == null) {
+			if (other.planedDateApprenticeshipEnds != null)
 				return false;
-		} else if (!planedDateApprenticeshipBegins
-				.equals(other.planedDateApprenticeshipBegins))
+		} else if (!planedDateApprenticeshipEnds
+				.equals(other.planedDateApprenticeshipEnds))
 			return false;
 		if (probationPeriod != other.probationPeriod)
 			return false;
@@ -1335,7 +1335,7 @@ public class Employee
 				+ professionalTraining + ", dateApprenticeshipBegins="
 				+ dateApprenticeshipBegins
 				+ ", planedDateApprenticeshipBegins="
-				+ planedDateApprenticeshipBegins + ", weeklyWorkingHours="
+				+ planedDateApprenticeshipEnds + ", weeklyWorkingHours="
 				+ weeklyWorkingHours + ", holidayEntitlement="
 				+ holidayEntitlement + ", typeOfContract=" + typeOfContract
 				+ ", mon=" + mon + ", tue=" + tue + ", wed=" + wed + ", thu="
