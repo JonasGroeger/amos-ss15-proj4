@@ -16,29 +16,42 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Created by Yao Bochao on 29/06/2015.
  */
-package de.fau.amos4.model.fields;
 
-import java.util.Locale;
+package de.fau.amos4.model;
 
-import org.springframework.context.i18n.LocaleContextHolder;
+import java.util.List;
 
-import de.fau.amos4.configuration.AppContext;
-
-public enum MaritalStatus
-{
-    //From .properties files
-    SINGLE("EMPLOYEE.marital.single"), MARRIED("EMPLOYEE.marital.married"), SEPARATED("EMPLOYEE.marital.separated"), OTHER("EMPLOYEE.marital.other");
-
-    private String text;
-
-    MaritalStatus(String text)
-    {
-        this.text = text;
+public class FormField {
+    FormGroup group;
+    List<String> options;
+    String name;
+    float FormOrder = 0;
+    
+    public float getFormOrder() {
+        return FormOrder;
     }
-
-    public String toString()
-    {
-       return text;
+    public void setFormOrder(float formOrder) {
+        FormOrder = formOrder;
+    }
+    public FormGroup getGroup() {
+        return group;
+    }
+    public void setGroup(FormGroup group) {
+        this.group = group;
+    }
+    public List<String> getOptions() {
+        return options;
+    }
+    public void setOptions(List<String> options) {
+        this.options = options;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 }
