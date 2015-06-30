@@ -17,34 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.model.fields;
+package de.fau.amos4.annotation;
 
-import java.util.Locale;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 
-import org.springframework.context.i18n.LocaleContextHolder;
+import java.lang.annotation.*;
 
-import de.fau.amos4.configuration.AppContext;
-
-public enum Disabled
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@AuthenticationPrincipal
+public @interface TheClient
 {
-    //From .properties files
-    YES("EMPLOYEE.disabled.yes"), NO("EMPLOYEE.disabled.no");
 
-    private String text;
-
-    Disabled(String text)
-    {
-        this.text = text;
-    }
-
-    public String getText()
-    {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
-    public String toString()
-    {
-        return getText();
-    }
 }

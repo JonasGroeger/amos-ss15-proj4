@@ -28,7 +28,9 @@ import de.fau.amos4.configuration.AppContext;
 public enum Title
 {
     //From .properties files
-    Mr("RegistrationPage.title.Mr"), Ms("RegistrationPage.title.Ms"), Mrs("RegistrationPage.title.Mrs");
+    Mr("RegistrationPage.title.Mr"),
+    Ms("RegistrationPage.title.Ms"),
+    Mrs("RegistrationPage.title.Mrs");
 
     private String text;
 

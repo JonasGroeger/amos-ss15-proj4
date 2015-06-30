@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 
 
 /**
  *  Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+=======
+/**
+ * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
+>>>>>>> 0982800290a8819221f5a74d19766e035b744572
  * other purposes.
  * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
  *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
@@ -18,17 +23,24 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+<<<<<<< HEAD
  *
  * Created by Yao Bochao on 21/06/2015.
  */
 
 package de.fau.amos4.model.fields;
+=======
+ */
+package de.fau.amos4.model.fields;
+
+>>>>>>> 0982800290a8819221f5a74d19766e035b744572
 import java.util.Locale;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
+<<<<<<< HEAD
 public enum TypeOfContract {
     //From .properties files
     RK("EMPLOYEE.denomination.rk"),
@@ -55,6 +67,15 @@ public enum TypeOfContract {
     JD("EMPLOYEE.denomination.jd"),
     JH("EMPLOYEE.denomination.jh"),
     ;
+=======
+public enum TypeOfContract
+{
+    //From .properties files
+    PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
+    PERMANENTPART("EMPLOYEE.contract.permanentPart"),
+    FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
+    FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
+>>>>>>> 0982800290a8819221f5a74d19766e035b744572
 
     private String text;
 

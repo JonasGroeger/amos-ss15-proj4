@@ -25,15 +25,20 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-public enum OutputFormat
+public enum ProfessionalTraining
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    NOTHING("EMPLOYEE.professionalTraining.nothing"),
+    VOCATIONAL("EMPLOYEE.professionalTraining.vocational"),
+    MASTERCRAFTSMAN("EMPLOYEE.professionalTraining.masterCraftsman"),
+    BACHLOR("EMPLOYEE.professionalTraining.bachlor"),
+    MASTER("EMPLOYEE.professionalTraining.master"),
+    PHD("EMPLOYEE.professionalTraining.phd"),
+    UNKNOWN("EMPLOYEE.professionalTraining.unknown");
 
     private String text;
 
-    OutputFormat(String text)
+    ProfessionalTraining(String text)
     {
         this.text = text;
     }

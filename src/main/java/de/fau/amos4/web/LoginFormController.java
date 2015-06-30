@@ -99,50 +99,5 @@ public class LoginFormController
         } else {
             return "redirect:/?m=confirmfail";
         }
-
-    }
-
-    @RequestMapping("/client/edit/submit")
-    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client, @RequestParam("NewPassword") String NewPassword, @RequestParam("ConfirmPassword") String ConfirmPassword, @RequestParam("OldPassword") String OldPassword)
-            throws MessagingException
-    {
-    	//get database object
-        Client tmp = clientService.getClientByEmail(client.getEmail());
-        
-        //update password
-        if (NewPassword.equals("") == false) {
-        	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	        if (NewPassword.equals(ConfirmPassword) && encoder.matches(OldPassword, tmp.getPasswordHash())) {
-	        	//store as hash
-	        	tmp.setPasswordHash(encoder.encode(NewPassword));
-	        }
-	        else {
-	        	return "redirect:/client/edit?m=newPasswordFailed";
-	        }
-        }
-        
-        if (client.getZipPassword() != null) {
-            tmp.setZipPassword(client.getZipPassword());
-        }
-        
-        //update client information
-        tmp.setOutputFormat(client.getOutputFormat());
-        tmp.setTitle(client.getTitle());
-        tmp.setFirstName(client.getFirstName());
-        tmp.setFamilyName(client.getFamilyName());
-        tmp.setBirthDate(client.getBirthDate()); //FIXME outputs null at the moment
-        tmp.setOfficePhoneNumber(client.getOfficePhoneNumber());
-        tmp.setMobilePhoneNumber(client.getMobilePhoneNumber());
-        tmp.setCompanyName(client.getCompanyName());
-        tmp.setCompanyType(client.getCompanyType());
-        tmp.setCountry(client.getCountry());
-        tmp.setAddress(client.getAddress());
-        tmp.setZipCode(client.getZipCode());
-        tmp.setBirthDate(client.getBirthDate());
-        
-        //write back to database
-        clientRepository.save(tmp);
-        
-        return "redirect:/client/dashboard?m=profileChanged";
     }
 }

@@ -16,36 +16,16 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Created by Yao Bochao on 29/06/2015.
  */
-package de.fau.amos4.model.fields;
 
-import java.util.Locale;
+package de.fau.amos4.util;
 
-import org.springframework.context.i18n.LocaleContextHolder;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-import de.fau.amos4.configuration.AppContext;
-
-public enum OutputFormat
-{
-    //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
-
-    private String text;
-
-    OutputFormat(String text)
-    {
-        this.text = text;
-    }
-
-    public String getText()
-    {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
-    public String toString()
-    {
-        return getText();
-    }
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FieldOrder {
+    float value();
 }

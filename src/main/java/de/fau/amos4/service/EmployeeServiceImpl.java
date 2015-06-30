@@ -19,16 +19,15 @@
  */
 package de.fau.amos4.service;
 
+import de.fau.amos4.util.Lodas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.fau.amos4.model.Employee;
 
-/**
- * Created by Yao Bochao on 07/06/2015.
- */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+
     private final EmployeeRepository employeeRepository;
 
     @Autowired
@@ -44,14 +43,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Iterable<Employee> getAllClients()
-    {
-        return this.employeeRepository.findAll();
-    }
-
-    @Override
     public Employee create(Employee employee)
     {
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public String getLodasRepresentation(long employeeId)
+    {
+        final Employee employee = this.employeeRepository.findOne(employeeId);
+
+        if(employee == null)
+        {
+            return null;
+        }
+
+        Lodas l = new Lodas(employee);
+        return l.generate();
     }
 }

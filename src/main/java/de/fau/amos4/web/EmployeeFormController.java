@@ -49,6 +49,10 @@ import org.springframework.web.servlet.ModelAndView;
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Denomination;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.model.fields.YesNo;
 import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
@@ -89,7 +93,7 @@ public class EmployeeFormController
         Employee employee = employeeRepository.findOne(employeeId);
         mav.addObject("id", employeeId);
         mav.addObject("employee", employee);
-        mav.addObject("allDisabled", Disabled.values());
+        mav.addObject("allDisabled", YesNo.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
         mav.addObject("allDenomination", Denomination.values());
@@ -137,7 +141,7 @@ public class EmployeeFormController
             mav.addObject("emptyFieldWaringMessages", emptyFields);
             
             if (principal == null) {
-                mav.addObject("allDisabled", Disabled.values());
+                mav.addObject("allDisabled", YesNo.values());
                 mav.addObject("allMarital", MaritalStatus.values());
                 mav.addObject("allSex", Sex.values());
                 mav.addObject("allDenomination", Denomination.values());
@@ -190,12 +194,11 @@ public class EmployeeFormController
 
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
-        
             mav.setViewName("employee/edit");
             Employee employee = employeeRepository.findOne(employeeId);
             mav.addObject("id", employeeId);
             mav.addObject("employee", employee);
-            mav.addObject("allDisabled", Disabled.values());
+            mav.addObject("allDisabled", YesNo.values());
             mav.addObject("allMarital", MaritalStatus.values());
             mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
