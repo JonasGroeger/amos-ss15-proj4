@@ -17,47 +17,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fau.amos4.model.fields;
+package de.fau.amos4.annotation;
 
-import de.fau.amos4.configuration.AppContext;
-import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 
-import java.util.Locale;
+import java.lang.annotation.*;
 
-public enum Sex
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@AuthenticationPrincipal
+public @interface TheClient
 {
-    //From .properties files
-    MALE("EMPLOYEE.sex.male"),
-    FEMALE("EMPLOYEE.sex.female"),
-    UNKNOWN("EMPLOYEE.sex.unknown");
 
-    private String text;
-
-    Sex(String text)
-    {
-        this.text = text;
-    }
-
-    public String getText()
-    {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
-    public int getLodas()
-    {
-        switch (this)
-        {
-            case MALE:
-                return 0;
-            case FEMALE:
-                return 1;
-        }
-        return -1;
-    }
-
-    public String toString()
-    {
-        return getText();
-    }
 }

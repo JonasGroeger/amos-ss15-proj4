@@ -19,18 +19,17 @@
  */
 package de.fau.amos4.test.unit;
 
-import java.security.Principal;
-
+import com.sun.security.auth.UserPrincipal;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.CurrentClient;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseWebApplicationContextTests;
+import de.fau.amos4.web.ClientController;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sun.security.auth.UserPrincipal;
-
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.test.BaseWebApplicationContextTests;
-import de.fau.amos4.web.ClientController;
+import java.security.Principal;
 
 public class ClientControllerUnitTest extends BaseWebApplicationContextTests
 {
@@ -38,23 +37,20 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
      * Test client dashboard: Make sure that each Employee displayed in the dashboard really belongs to the actual client.
      */
     @Test
-    public void clientDashboard_OnlyClientsEmployeesAreDisplayrd() throws Exception
+    public void clientDashboard_OnlyClientsEmployeesAreDisplayed() throws Exception
     {
-        // Instantiate the controller
         ClientController clientController = new ClientController(this.clientService, this.clientRepository, this.employeeRepository, translatorService);
-        // Get a client's username
-        String UserName = this.clientService.getClientById(1l).getEmail();
+        final Client client = this.clientService.getClientById(1l);
         
         // Get the List
-        Principal principal = new UserPrincipal(UserName);
-        ModelAndView mav = clientController.ClientDashboard(principal);
+        ModelAndView mav = clientController.ClientDashboard(new CurrentClient(client));
         
         // Model should contain only employees with this client.
-        Iterable<Employee> employees = (Iterable<Employee>)mav.getModel().get("Employees");
+        Iterable<Employee> employees = (Iterable<Employee>) mav.getModel().get("Employees");
         for(Employee employee : employees)
         {
             // Make sure that each Employee belongs to the current client.
-            Assert.assertEquals(UserName, employee.getClient().getEmail());
+            Assert.assertEquals(client.getEmail(), employee.getClient().getEmail());
         }
     }
     
@@ -74,10 +70,10 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
         
         // Get the List
         Principal principal = new UserPrincipal(UserName);
-        ModelAndView mav = clientController.ClientDashboard(principal);
+        ModelAndView mav = clientController.ClientDashboard(new CurrentClient(client));
         
         // Model should contain only employees with this client.
-        Iterable<Employee> employees = (Iterable<Employee>)mav.getModel().get("Employees");
+        Iterable<Employee> employees = (Iterable<Employee>) mav.getModel().get("Employees");
         
         // Count original employee count
         int originalEmployeeCount = 0;
@@ -92,10 +88,10 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
         employeeRepository.save(newEmployee);
         
         // Get new employee list
-        mav = clientController.ClientDashboard(principal);
+        mav = clientController.ClientDashboard(new CurrentClient(client));
         
         // Model should contain only employees with this client.
-        employees = (Iterable<Employee>)mav.getModel().get("Employees");
+        employees = (Iterable<Employee>) mav.getModel().get("Employees");
         
         // Count new employee count
         int newEmployeeCount = 0;
