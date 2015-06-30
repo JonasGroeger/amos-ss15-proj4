@@ -141,11 +141,6 @@ public class Employee
     @Column
     String additionToAddress;
     
-    @Column
-    String employment;
-    
-    @Column
-    String temporaryEmployment;
 
     /*
     Taxes
@@ -197,7 +192,17 @@ public class Employee
 
     @Column
     String accidentInsuranceRiskTariff; //12 chars
-
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    TypeOfContract typeOfContract;
+    
+    @Column
+    Date contractFixedDate;
+    
+    @Column
+    Date contractConcludeDate;
+    
 
     public Employee()
     {
@@ -237,9 +242,24 @@ public class Employee
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.employerSocialSavingsNumber", null, locale), getEmployerSocialSavingsNumber());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.iban", null, locale), getIban());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.bic", null, locale), getBic());
-        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.employment", null, locale), getEmployment());
-        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.temporaryEmployment", null, locale), getTemporaryEmployment());
+        
         //allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.token", null, locale), getToken());
+        return allFields;
+    }
+    
+    public Map<String,String> getTemporaryEmploymentFields() {
+        Map<String,String> allFields = new LinkedHashMap<String, String>();
+        Locale locale = LocaleContextHolder.getLocale();
+        DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
+        DateFormat df;
+        if(locale.getLanguage().equals("de")) {
+            df = new SimpleDateFormat("dd.MM.yyyy");
+        } else {
+            df = new SimpleDateFormat("dd/MM/yyyy");
+        }
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.typeOfContract", null, locale), getTypeOfContract().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.contractFixedDate", null, locale), format.format(getContractFixedDate()));
+        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.contractConcludeDate", null, locale), format.format(getContractFixedDate()));
         return allFields;
     }
 
@@ -254,6 +274,7 @@ public class Employee
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.denomination", null, locale), getDenomination().toString());
         return allFields;
     }
+    
 
     public String getAdditionToAddress()
     {
@@ -299,25 +320,6 @@ public class Employee
         this.firstName = firstName;
     }
     
-    public String getEmployment()
-    {
-        return employment;
-    }
-
-    public void setEmployment(String employment)
-    {
-        this.employment = employment;
-    }
-    public String getTemporaryEmployment()
-    {
-        return temporaryEmployment;
-    }
-
-    public void setTemporaryEmployment(String temporaryEmployment)
-    {
-        this.temporaryEmployment = temporaryEmployment;
-    }
-
     public String getMaidenName()
     {
         return maidenName;
@@ -558,7 +560,39 @@ public class Employee
     {
         this.denomination = denomination;
     }
+    
+    /*Temporary Employment
+      */
+    
+    public TypeOfContract getTypeOfContract()
+    {
+        return typeOfContract;
+    }
 
+    public void setTypeOfContract(TypeOfContract typeOfContract)
+    {
+        this.typeOfContract = typeOfContract;
+    }
+
+    public Date getContractFixedDate()
+    {
+        return contractFixedDate;
+    }
+
+    public void setContractFixedDate(Date contractFixedDate)
+    {
+        this.contractFixedDate = contractFixedDate;
+    }
+    
+    public Date getContractConcludeDate()
+    {
+        return contractConcludeDate;
+    }
+
+    public void setContractConcludeDate(Date contractConcludeDate)
+    {
+        this.contractConcludeDate = contractConcludeDate;
+    }
     /*
     Social insurance
      */
@@ -664,8 +698,10 @@ public class Employee
         if (bic != null ? !bic.equals(employee.bic) : employee.bic != null) return false;
         if (additionToAddress != null ? !additionToAddress.equals(employee.additionToAddress) : employee.additionToAddress != null)
             return false;
-        if (employment != null ? !employment.equals(employee.employment) : employee.employment != null) return false;
-        if (temporaryEmployment != null ? !temporaryEmployment.equals(employee.temporaryEmployment) : employee.temporaryEmployment != null)
+        if (typeOfContract != employee.typeOfContract) return false;
+        if (contractFixedDate != null ? !contractFixedDate.equals(employee.contractFixedDate) : employee.contractFixedDate != null)
+            return false;
+        if (contractConcludeDate != null ? !contractConcludeDate.equals(employee.contractConcludeDate) : employee.contractConcludeDate != null)
             return false;
         if (denomination != employee.denomination) return false;
         if (parenthood != employee.parenthood) return false;
@@ -702,14 +738,15 @@ public class Employee
         result = 31 * result + (iban != null ? iban.hashCode() : 0);
         result = 31 * result + (bic != null ? bic.hashCode() : 0);
         result = 31 * result + (additionToAddress != null ? additionToAddress.hashCode() : 0);
-        result = 31 * result + (employment != null ? employment.hashCode() : 0);
-        result = 31 * result + (temporaryEmployment != null ? temporaryEmployment.hashCode() : 0);
         result = 31 * result + taxOfficeNumber;
         result = 31 * result + (int) (identificationNumber ^ (identificationNumber >>> 32));
         result = 31 * result + taxClass;
         result = 31 * result + (factor != +0.0f ? Float.floatToIntBits(factor) : 0);
         result = 31 * result + (numberOfExemptionsForChildren != +0.0f ? Float.floatToIntBits(numberOfExemptionsForChildren) : 0);
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
+        result = 31 * result + (contractFixedDate != null ? contractFixedDate.hashCode() : 0);
+        result = 31 * result + (contractConcludeDate != null ? contractConcludeDate.hashCode() : 0);
+        result = 31 * result + (typeOfContract != null ? typeOfContract.hashCode() : 0);
         result = 31 * result + (int) (statutoryHealthInsurance ^ (statutoryHealthInsurance >>> 32));
         result = 31 * result + (parenthood != null ? parenthood.hashCode() : 0);
         result = 31 * result + (healthInsurance != null ? healthInsurance.hashCode() : 0);
@@ -746,14 +783,15 @@ public class Employee
                 ", iban='" + iban + '\'' +
                 ", bic='" + bic + '\'' +
                 ", additionToAddress='" + additionToAddress + '\'' +
-                ", employment='" + employment + '\'' +
-                ", temporaryEmployment='" + temporaryEmployment + '\'' +
                 ", taxOfficeNumber=" + taxOfficeNumber +
                 ", identificationNumber=" + identificationNumber +
                 ", taxClass=" + taxClass +
                 ", factor=" + factor +
                 ", numberOfExemptionsForChildren=" + numberOfExemptionsForChildren +
                 ", denomination=" + denomination +
+                ", typeOfContract=" + typeOfContract +
+                ", contractFixedDate=" + contractFixedDate +
+                ", contractConcludeDate=" + contractConcludeDate +
                 ", statutoryHealthInsurance=" + statutoryHealthInsurance +
                 ", parenthood=" + parenthood +
                 ", healthInsurance=" + healthInsurance +
