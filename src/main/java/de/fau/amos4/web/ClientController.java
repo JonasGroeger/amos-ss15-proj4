@@ -65,9 +65,16 @@ import java.util.List;
 @Controller
 public class ClientController
 {
+	@Autowired
     private final ClientService clientService;
+	
+	@Autowired
     private final ClientRepository clientRepository;
+	
+	@Autowired
     private final EmployeeRepository employeeRepository;
+	
+	@Autowired
     private final TranslatorService translatorService;
 
     @Autowired
