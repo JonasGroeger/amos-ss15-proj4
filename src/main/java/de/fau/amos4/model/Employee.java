@@ -39,6 +39,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.fau.amos4.model.fields.*;
 import de.fau.amos4.util.ValidFormat;
 
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -274,6 +275,34 @@ public class Employee
     @Column
     @Enumerated(EnumType.STRING)
     Denomination denomination;
+
+    /*
+    Social insurance
+     */
+    @Column
+    long statutoryHealthInsurance; //8 digits
+
+    @Column
+    Parenthood parenthood;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    HealthInsurance healthInsurance;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    PensionInsurance pensionInsurance;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    UnemploymentInsurance unemploymentInsurance;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    NursingCareInsurance nursingCareInsurance;
+
+    @Column
+    String accidentInsuranceRiskTariff; //12 chars
 
     public Employee()
     {
@@ -609,6 +638,7 @@ public class Employee
         this.numberOfExemptionsForChildren = numberOfExemptionsForChildren;
     }
 
+
     public Denomination getDenomination()
     {
         return denomination;
@@ -617,6 +647,68 @@ public class Employee
     public void setDenomination(Denomination denomination)
     {
         this.denomination = denomination;
+    }
+
+    /*
+    Social insurance
+     */
+
+
+    public HealthInsurance getHealthInsurance() {
+        return healthInsurance;
+    }
+
+    public void setHealthInsurance(HealthInsurance healthInsurance) {
+        this.healthInsurance = healthInsurance;
+    }
+
+    public PensionInsurance getPensionInsurance() {
+        return pensionInsurance;
+    }
+
+    public void setPensionInsurance(PensionInsurance pensionInsurance) {
+        this.pensionInsurance = pensionInsurance;
+    }
+
+    public long getStatutoryHealthInsurance() {
+        return statutoryHealthInsurance;
+    }
+
+    public void setStatutoryHealthInsurance(long statutoryHealthInsurance) {
+        this.statutoryHealthInsurance = statutoryHealthInsurance;
+    }
+
+
+    public UnemploymentInsurance getUnemploymentInsurance() {
+        return unemploymentInsurance;
+    }
+
+    public void setUnemploymentInsurance(UnemploymentInsurance unemploymentInsurance) {
+        this.unemploymentInsurance = unemploymentInsurance;
+    }
+
+    public Parenthood getParenthood() {
+        return parenthood;
+    }
+
+    public void setParenthood(Parenthood parenthood) {
+        this.parenthood = parenthood;
+    }
+
+    public NursingCareInsurance getNursingCareInsurance() {
+        return nursingCareInsurance;
+    }
+
+    public void setNursingCareInsurance(NursingCareInsurance nursingCareInsurance) {
+        this.nursingCareInsurance = nursingCareInsurance;
+    }
+
+    public String getAccidentInsuranceRiskTariff() {
+        return accidentInsuranceRiskTariff;
+    }
+
+    public void setAccidentInsuranceRiskTariff(String accidentInsuranceRiskTariff) {
+        this.accidentInsuranceRiskTariff = accidentInsuranceRiskTariff;
     }
     
 	public Date getEntryDate() {
@@ -837,7 +929,152 @@ public class Employee
 		this.personGroup = personGroup;
 	}
 
-    @Override
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((accidentInsuranceRiskTariff == null) ? 0
+						: accidentInsuranceRiskTariff.hashCode());
+		result = prime
+				* result
+				+ ((additionToAddress == null) ? 0 : additionToAddress
+						.hashCode());
+		result = prime * result + ((bic == null) ? 0 : bic.hashCode());
+		result = prime * result
+				+ ((birthDate == null) ? 0 : birthDate.hashCode());
+		result = prime * result
+				+ ((citizenship == null) ? 0 : citizenship.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result
+				+ ((costCentre == null) ? 0 : costCentre.hashCode());
+		result = prime * result
+				+ ((countryOfBirth == null) ? 0 : countryOfBirth.hashCode());
+		result = prime
+				* result
+				+ ((dateApprenticeshipBegins == null) ? 0
+						: dateApprenticeshipBegins.hashCode());
+		result = prime * result
+				+ ((denomination == null) ? 0 : denomination.hashCode());
+		result = prime
+				* result
+				+ ((departmentNumber == null) ? 0 : departmentNumber.hashCode());
+		result = prime
+				* result
+				+ ((descriptionOfProfession == null) ? 0
+						: descriptionOfProfession.hashCode());
+		result = prime * result
+				+ ((disabled == null) ? 0 : disabled.hashCode());
+		result = prime
+				* result
+				+ ((employedInConstructionIndustrySince == null) ? 0
+						: employedInConstructionIndustrySince.hashCode());
+		result = prime
+				* result
+				+ ((employerSocialSavingsNumber == null) ? 0
+						: employerSocialSavingsNumber.hashCode());
+		result = prime * result
+				+ ((entryDate == null) ? 0 : entryDate.hashCode());
+		result = prime * result + Float.floatToIntBits(factor);
+		result = prime * result
+				+ ((familyName == null) ? 0 : familyName.hashCode());
+		result = prime * result
+				+ ((firstDay == null) ? 0 : firstDay.hashCode());
+		result = prime * result
+				+ ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + fri;
+		result = prime * result
+				+ ((healthInsurance == null) ? 0 : healthInsurance.hashCode());
+		result = prime
+				* result
+				+ ((holidayEntitlement == null) ? 0 : holidayEntitlement
+						.hashCode());
+		result = prime * result
+				+ ((houseNumber == null) ? 0 : houseNumber.hashCode());
+		result = prime * result + ((iban == null) ? 0 : iban.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ (int) (identificationNumber ^ (identificationNumber >>> 32));
+		result = prime * result
+				+ ((jobPerformed == null) ? 0 : jobPerformed.hashCode());
+		result = prime
+				* result
+				+ ((levelOfEducation == null) ? 0 : levelOfEducation.hashCode());
+		result = prime
+				* result
+				+ ((lowIncomeEmployment == null) ? 0 : lowIncomeEmployment
+						.hashCode());
+		result = prime * result
+				+ ((maidenName == null) ? 0 : maidenName.hashCode());
+		result = prime * result
+				+ ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
+		result = prime * result + mon;
+		result = prime * result
+				+ Float.floatToIntBits(numberOfExemptionsForChildren);
+		result = prime
+				* result
+				+ ((nursingCareInsurance == null) ? 0 : nursingCareInsurance
+						.hashCode());
+		result = prime * result
+				+ ((otherJobs == null) ? 0 : otherJobs.hashCode());
+		result = prime * result
+				+ ((parenthood == null) ? 0 : parenthood.hashCode());
+		result = prime
+				* result
+				+ ((pensionInsurance == null) ? 0 : pensionInsurance.hashCode());
+		result = prime * result
+				+ ((personGroup == null) ? 0 : personGroup.hashCode());
+		result = prime * result + personnelNumber;
+		result = prime * result
+				+ ((placeOfBirth == null) ? 0 : placeOfBirth.hashCode());
+		result = prime
+				* result
+				+ ((placeOfEmployment == null) ? 0 : placeOfEmployment
+						.hashCode());
+		result = prime
+				* result
+				+ ((planedDateApprenticeshipBegins == null) ? 0
+						: planedDateApprenticeshipBegins.hashCode());
+		result = prime * result
+				+ ((probationPeriod == null) ? 0 : probationPeriod.hashCode());
+		result = prime
+				* result
+				+ ((professionalTraining == null) ? 0 : professionalTraining
+						.hashCode());
+		result = prime * result + sat;
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		result = prime
+				* result
+				+ ((socialInsuranceNumber == null) ? 0 : socialInsuranceNumber
+						.hashCode());
+		result = prime
+				* result
+				+ (int) (statutoryHealthInsurance ^ (statutoryHealthInsurance >>> 32));
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		result = prime * result + sun;
+		result = prime * result + taxClass;
+		result = prime * result + taxOfficeNumber;
+		result = prime * result + thu;
+		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + tue;
+		result = prime * result
+				+ ((typeOfContract == null) ? 0 : typeOfContract.hashCode());
+		result = prime
+				* result
+				+ ((typeOfEmployment == null) ? 0 : typeOfEmployment.hashCode());
+		result = prime
+				* result
+				+ ((unemploymentInsurance == null) ? 0 : unemploymentInsurance
+						.hashCode());
+		result = prime * result + wed;
+		result = prime * result + weeklyWorkingHours;
+		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -846,6 +1083,12 @@ public class Employee
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
+		if (accidentInsuranceRiskTariff == null) {
+			if (other.accidentInsuranceRiskTariff != null)
+				return false;
+		} else if (!accidentInsuranceRiskTariff
+				.equals(other.accidentInsuranceRiskTariff))
+			return false;
 		if (additionToAddress == null) {
 			if (other.additionToAddress != null)
 				return false;
@@ -943,6 +1186,8 @@ public class Employee
 			return false;
 		if (fri != other.fri)
 			return false;
+		if (healthInsurance != other.healthInsurance)
+			return false;
 		if (holidayEntitlement == null) {
 			if (other.holidayEntitlement != null)
 				return false;
@@ -983,7 +1228,13 @@ public class Employee
 		if (Float.floatToIntBits(numberOfExemptionsForChildren) != Float
 				.floatToIntBits(other.numberOfExemptionsForChildren))
 			return false;
+		if (nursingCareInsurance != other.nursingCareInsurance)
+			return false;
 		if (otherJobs != other.otherJobs)
+			return false;
+		if (parenthood != other.parenthood)
+			return false;
+		if (pensionInsurance != other.pensionInsurance)
 			return false;
 		if (personGroup != other.personGroup)
 			return false;
@@ -1018,6 +1269,8 @@ public class Employee
 				return false;
 		} else if (!socialInsuranceNumber.equals(other.socialInsuranceNumber))
 			return false;
+		if (statutoryHealthInsurance != other.statutoryHealthInsurance)
+			return false;
 		if (street == null) {
 			if (other.street != null)
 				return false;
@@ -1042,6 +1295,8 @@ public class Employee
 			return false;
 		if (typeOfEmployment != other.typeOfEmployment)
 			return false;
+		if (unemploymentInsurance != other.unemploymentInsurance)
+			return false;
 		if (wed != other.wed)
 			return false;
 		if (weeklyWorkingHours != other.weeklyWorkingHours)
@@ -1054,130 +1309,7 @@ public class Employee
 		return true;
 	}
 
-    @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((additionToAddress == null) ? 0 : additionToAddress
-						.hashCode());
-		result = prime * result + ((bic == null) ? 0 : bic.hashCode());
-		result = prime * result
-				+ ((birthDate == null) ? 0 : birthDate.hashCode());
-		result = prime * result
-				+ ((citizenship == null) ? 0 : citizenship.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((client == null) ? 0 : client.hashCode());
-		result = prime * result
-				+ ((costCentre == null) ? 0 : costCentre.hashCode());
-		result = prime * result
-				+ ((countryOfBirth == null) ? 0 : countryOfBirth.hashCode());
-		result = prime
-				* result
-				+ ((dateApprenticeshipBegins == null) ? 0
-						: dateApprenticeshipBegins.hashCode());
-		result = prime * result
-				+ ((denomination == null) ? 0 : denomination.hashCode());
-		result = prime
-				* result
-				+ ((departmentNumber == null) ? 0 : departmentNumber.hashCode());
-		result = prime
-				* result
-				+ ((descriptionOfProfession == null) ? 0
-						: descriptionOfProfession.hashCode());
-		result = prime * result
-				+ ((disabled == null) ? 0 : disabled.hashCode());
-		result = prime
-				* result
-				+ ((employedInConstructionIndustrySince == null) ? 0
-						: employedInConstructionIndustrySince.hashCode());
-		result = prime
-				* result
-				+ ((employerSocialSavingsNumber == null) ? 0
-						: employerSocialSavingsNumber.hashCode());
-		result = prime * result
-				+ ((entryDate == null) ? 0 : entryDate.hashCode());
-		result = prime * result + Float.floatToIntBits(factor);
-		result = prime * result
-				+ ((familyName == null) ? 0 : familyName.hashCode());
-		result = prime * result
-				+ ((firstDay == null) ? 0 : firstDay.hashCode());
-		result = prime * result
-				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + fri;
-		result = prime
-				* result
-				+ ((holidayEntitlement == null) ? 0 : holidayEntitlement
-						.hashCode());
-		result = prime * result
-				+ ((houseNumber == null) ? 0 : houseNumber.hashCode());
-		result = prime * result + ((iban == null) ? 0 : iban.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result
-				+ (int) (identificationNumber ^ (identificationNumber >>> 32));
-		result = prime * result
-				+ ((jobPerformed == null) ? 0 : jobPerformed.hashCode());
-		result = prime
-				* result
-				+ ((levelOfEducation == null) ? 0 : levelOfEducation.hashCode());
-		result = prime
-				* result
-				+ ((lowIncomeEmployment == null) ? 0 : lowIncomeEmployment
-						.hashCode());
-		result = prime * result
-				+ ((maidenName == null) ? 0 : maidenName.hashCode());
-		result = prime * result
-				+ ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
-		result = prime * result + mon;
-		result = prime * result
-				+ Float.floatToIntBits(numberOfExemptionsForChildren);
-		result = prime * result
-				+ ((otherJobs == null) ? 0 : otherJobs.hashCode());
-		result = prime * result
-				+ ((personGroup == null) ? 0 : personGroup.hashCode());
-		result = prime * result + personnelNumber;
-		result = prime * result
-				+ ((placeOfBirth == null) ? 0 : placeOfBirth.hashCode());
-		result = prime
-				* result
-				+ ((placeOfEmployment == null) ? 0 : placeOfEmployment
-						.hashCode());
-		result = prime
-				* result
-				+ ((planedDateApprenticeshipBegins == null) ? 0
-						: planedDateApprenticeshipBegins.hashCode());
-		result = prime * result
-				+ ((probationPeriod == null) ? 0 : probationPeriod.hashCode());
-		result = prime
-				* result
-				+ ((professionalTraining == null) ? 0 : professionalTraining
-						.hashCode());
-		result = prime * result + sat;
-		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
-		result = prime
-				* result
-				+ ((socialInsuranceNumber == null) ? 0 : socialInsuranceNumber
-						.hashCode());
-		result = prime * result + ((street == null) ? 0 : street.hashCode());
-		result = prime * result + sun;
-		result = prime * result + taxClass;
-		result = prime * result + taxOfficeNumber;
-		result = prime * result + thu;
-		result = prime * result + ((token == null) ? 0 : token.hashCode());
-		result = prime * result + tue;
-		result = prime * result
-				+ ((typeOfContract == null) ? 0 : typeOfContract.hashCode());
-		result = prime
-				* result
-				+ ((typeOfEmployment == null) ? 0 : typeOfEmployment.hashCode());
-		result = prime * result + wed;
-		result = prime * result + weeklyWorkingHours;
-		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
-		return result;
-	}
-
-    @Override
+	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", token=" + token + ", client=" + client
 				+ ", personnelNumber=" + personnelNumber + ", firstName="
@@ -1216,6 +1348,73 @@ public class Employee
 				+ ", taxClass=" + taxClass + ", factor=" + factor
 				+ ", numberOfExemptionsForChildren="
 				+ numberOfExemptionsForChildren + ", denomination="
-				+ denomination + "]";
+				+ denomination + ", statutoryHealthInsurance="
+				+ statutoryHealthInsurance + ", parenthood=" + parenthood
+				+ ", healthInsurance=" + healthInsurance
+				+ ", pensionInsurance=" + pensionInsurance
+				+ ", unemploymentInsurance=" + unemploymentInsurance
+				+ ", nursingCareInsurance=" + nursingCareInsurance
+				+ ", accidentInsuranceRiskTariff="
+				+ accidentInsuranceRiskTariff + ", getPersonalDataFields()="
+				+ getPersonalDataFields() + ", getTaxesFields()="
+				+ getTaxesFields() + ", getAdditionToAddress()="
+				+ getAdditionToAddress() + ", getId()=" + getId()
+				+ ", getClient()=" + getClient() + ", getPersonnelNumber()="
+				+ getPersonnelNumber() + ", getFirstName()=" + getFirstName()
+				+ ", getMaidenName()=" + getMaidenName() + ", getFamilyName()="
+				+ getFamilyName() + ", getBirthDate()=" + getBirthDate()
+				+ ", getPlaceOfBirth()=" + getPlaceOfBirth()
+				+ ", getCountryOfBirth()=" + getCountryOfBirth()
+				+ ", getStreet()=" + getStreet() + ", getZipCode()="
+				+ getZipCode() + ", getHouseNumber()=" + getHouseNumber()
+				+ ", getCity()=" + getCity() + ", getSocialInsuranceNumber()="
+				+ getSocialInsuranceNumber() + ", getSex()=" + getSex()
+				+ ", getMaritalStatus()=" + getMaritalStatus()
+				+ ", getDisabled()=" + getDisabled() + ", getCitizenship()="
+				+ getCitizenship() + ", getEmployerSocialSavingsNumber()="
+				+ getEmployerSocialSavingsNumber() + ", getIban()=" + getIban()
+				+ ", getBic()=" + getBic() + ", getToken()=" + getToken()
+				+ ", getTaxOfficeNumber()=" + getTaxOfficeNumber()
+				+ ", getIdentificationNumber()=" + getIdentificationNumber()
+				+ ", getTaxClass()=" + getTaxClass() + ", getFactor()="
+				+ getFactor() + ", getNumberOfExemptionsForChildren()="
+				+ getNumberOfExemptionsForChildren() + ", getDenomination()="
+				+ getDenomination() + ", getHealthInsurance()="
+				+ getHealthInsurance() + ", getPensionInsurance()="
+				+ getPensionInsurance() + ", getStatutoryHealthInsurance()="
+				+ getStatutoryHealthInsurance()
+				+ ", getUnemploymentInsurance()=" + getUnemploymentInsurance()
+				+ ", getParenthood()=" + getParenthood()
+				+ ", getNursingCareInsurance()=" + getNursingCareInsurance()
+				+ ", getAccidentInsuranceRiskTariff()="
+				+ getAccidentInsuranceRiskTariff() + ", getEntryDate()="
+				+ getEntryDate() + ", getFirstDay()=" + getFirstDay()
+				+ ", getPlaceOfEmployment()=" + getPlaceOfEmployment()
+				+ ", getDescriptionOfProfession()="
+				+ getDescriptionOfProfession() + ", getJobPerformed()="
+				+ getJobPerformed() + ", getTypeOfEmployment()="
+				+ getTypeOfEmployment() + ", getProbationPeriod()="
+				+ getProbationPeriod() + ", getOtherJobs()=" + getOtherJobs()
+				+ ", getLowIncomeEmployment()=" + getLowIncomeEmployment()
+				+ ", getLevelOfEducation()=" + getLevelOfEducation()
+				+ ", getProfessionalTraining()=" + getProfessionalTraining()
+				+ ", getDateApprenticeshipBegins()="
+				+ getDateApprenticeshipBegins()
+				+ ", getPlanedDateApprenticeshipBegins()="
+				+ getPlanedDateApprenticeshipBegins()
+				+ ", getWeeklyWorkingHours()=" + getWeeklyWorkingHours()
+				+ ", getHolidayEntitlement()=" + getHolidayEntitlement()
+				+ ", getTypeOfContract()=" + getTypeOfContract()
+				+ ", getMon()=" + getMon() + ", getTue()=" + getTue()
+				+ ", getWed()=" + getWed() + ", getThu()=" + getThu()
+				+ ", getFri()=" + getFri() + ", getSat()=" + getSat()
+				+ ", getSun()=" + getSun() + ", getCostCentre()="
+				+ getCostCentre() + ", getDepartmentNumber()="
+				+ getDepartmentNumber()
+				+ ", getEmployedInConstructionIndustrySince()="
+				+ getEmployedInConstructionIndustrySince()
+				+ ", getPersonGroup()=" + getPersonGroup() + ", hashCode()="
+				+ hashCode() + ", getClass()=" + getClass() + ", toString()="
+				+ super.toString() + "]";
 	}
 }
