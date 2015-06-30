@@ -67,6 +67,7 @@ public class Employee
     @JoinColumn(name="client_id")
     Client client;
 
+    @ValidFormat("^[0-9]{5}$")
     @Column
     int personnelNumber;
 
@@ -77,7 +78,6 @@ public class Employee
 
     @ValidFormat("^[a-zA-Z ]*$")
     @Column
-
     String firstName;
 
     @ValidFormat("^\\w{1,30}$")
@@ -93,57 +93,74 @@ public class Employee
     @Temporal(TemporalType.DATE)
     Date birthDate;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String placeOfBirth;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String countryOfBirth;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String street;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String zipCode;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String houseNumber;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String city;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String socialInsuranceNumber;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     Sex sex;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     MaritalStatus maritalStatus;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     Disabled disabled;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String citizenship;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String employerSocialSavingsNumber;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String iban;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String bic;
 
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String additionToAddress;
     
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String employment;
     
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String temporaryEmployment;
 
