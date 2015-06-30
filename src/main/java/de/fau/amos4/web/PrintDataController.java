@@ -19,26 +19,13 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.util.StringUtils;
+import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.ZipGenerator;
-
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
 import net.lingala.zip4j.exception.ZipException;
-
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
@@ -46,76 +33,54 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.util.ZipGenerator;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
-import java.util.*;
-
-/**
- * Created by Yao Bochao on 06/06/2015.
- */
+import java.util.Locale;
 
 @Controller
-public class PrintDataController {
+public class PrintDataController
+{
     private final EmployeeRepository employeeRepository;
-    private final ClientRepository clientRepository;
     private final ClientService clientService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public PrintDataController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService)
+    public PrintDataController(EmployeeRepository employeeRepository, ClientService clientService,
+                               EmployeeService employeeService)
     {
         this.employeeRepository = employeeRepository;
-        this.clientRepository = clientRepository;
         this.clientService = clientService;
+        this.employeeService = employeeService;
     }
 
     // Employee file download - Download text file with Employee data
     @RequestMapping("/employee/download/text")
-    public void EmployeeDownloadText(HttpServletResponse response, @RequestParam(value = "id", required = true) long employeeId) throws IOException
+    public ModelAndView EmployeeDownloadText(HttpServletResponse response,
+                                             @RequestParam(value = "id", required = true) long employeeId
+    ) throws IOException
     {
+        // Use the service to get the Employee in the LODAS format
+        final String employeeAsLodas = employeeService.getLodasRepresentation(employeeId);
 
-        Employee employee = employeeRepository.findOne(employeeId);
-        // Send file contents
+        if(employeeAsLodas == null)
+        {
+            return new ModelAndView("redirect:/client/dashboard");
+        }
+
+        // We want to have a txt file download
         response.setContentType("text/plain");
-        response.setHeader("Content-Disposition", "attachment;filename=myFile.txt");
+        response.setHeader("Content-Disposition", "attachment;filename=employee_as_lodas.txt");
 
+        // Write the data out
         ServletOutputStream out = response.getOutputStream();
-        Map<String,String> fields = employee.getPersonalDataFields();
-        Locale locale = LocaleContextHolder.getLocale();
-
-        out.println(AppContext.getApplicationContext().getMessage("HEADER", null, locale));
-        out.println();
-        out.println(AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale));
-        out.println();
-        Iterator it = fields.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            out.println(pair.getKey() + ": " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        fields = employee.getTaxesFields();
-        it = fields.entrySet().iterator();
-        out.println();
-        out.println(AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale));
-        out.println();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            out.println(pair.getKey() + ": " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-
+        out.print(employeeAsLodas);
+        out.flush();
         out.close();
-
+        return null;
     }
 
     // Employee zip file download - Download zip file containing a text with Employee data

@@ -19,13 +19,15 @@
  */
 package de.fau.amos4.test.integration;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-import org.junit.Test;
-
 import de.fau.amos4.test.BaseIntegrationTest;
+import org.junit.Assert;
+import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithUserDetails;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 public class EmployeeTest extends BaseIntegrationTest
@@ -36,5 +38,18 @@ public class EmployeeTest extends BaseIntegrationTest
         mockMvc.perform(get("/employee/token"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("employee/token"));
+    }
+
+    @Test
+    @WithUserDetails("datev@example.com")
+    public void testEmployeeAsLodasFileDownload() throws Exception
+    {
+        final MockHttpServletResponse response = mockMvc.perform(get("/employee/download/text").param("id", "2"))
+                                     .andExpect(status().isOk())
+                                     .andExpect(content().contentType(MediaType.TEXT_PLAIN)).andReturn().getResponse();
+
+        final String contentDisp = response.getHeader("Content-Disposition");
+        Assert.assertNotNull("Content-Disposition is null", contentDisp);
+        Assert.assertTrue("Content-Disposition .", contentDisp.contains("attachment;filename"));
     }
 }

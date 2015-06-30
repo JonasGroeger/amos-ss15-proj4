@@ -19,11 +19,10 @@
  */
 package de.fau.amos4.model.fields;
 
-import java.util.Locale;
-
+import de.fau.amos4.configuration.AppContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import de.fau.amos4.configuration.AppContext;
+import java.util.Locale;
 
 public enum MaritalStatus
 {
@@ -35,6 +34,26 @@ public enum MaritalStatus
     MaritalStatus(String text)
     {
         this.text = text;
+    }
+
+    public String getText()
+    {
+        Locale locale = LocaleContextHolder.getLocale();
+        return AppContext.getApplicationContext().getMessage(text, null, locale);
+    }
+
+    public int getLodas()
+    {
+        switch (this)
+        {
+            case SINGLE:
+            case SEPARATED:
+            case OTHER:
+                return 0;
+            case MARRIED:
+                return 1;
+        }
+        return -1;
     }
 
     public String toString()

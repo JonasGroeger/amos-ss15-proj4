@@ -19,11 +19,10 @@
  */
 package de.fau.amos4.model.fields;
 
-import java.util.Locale;
-
+import de.fau.amos4.configuration.AppContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import de.fau.amos4.configuration.AppContext;
+import java.util.Locale;
 
 public enum Sex
 {
@@ -41,6 +40,18 @@ public enum Sex
     {
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
+    }
+
+    public int getLodas()
+    {
+        switch (this)
+        {
+            case MALE:
+                return 0;
+            case FEMALE:
+                return 1;
+        }
+        return -1;
     }
 
     public String toString()
