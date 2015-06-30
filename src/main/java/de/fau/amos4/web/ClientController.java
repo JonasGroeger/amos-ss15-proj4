@@ -19,31 +19,9 @@
  */
 package de.fau.amos4.web;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Locale;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.validation.Valid;
-
-import net.lingala.zip4j.exception.ZipException;
-
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.NoSuchMessageException;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
+import de.fau.amos4.annotation.TheClient;
 import de.fau.amos4.model.Client;
+import de.fau.amos4.model.CurrentClient;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Title;
 import de.fau.amos4.service.ClientService;
@@ -52,6 +30,25 @@ import de.fau.amos4.service.TranslatorService;
 import de.fau.amos4.util.EmailSender;
 import de.fau.amos4.util.ZipGenerator;
 import de.fau.amos4.web.form.ResetPasswordForm;
+import net.lingala.zip4j.exception.ZipException;
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.NoSuchMessageException;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.mail.MessagingException;
+import javax.validation.Valid;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Handles client related requests.
@@ -77,55 +74,39 @@ public class ClientController
      * @throws Exception
      */
     @RequestMapping(value =  "/", method = RequestMethod.GET)
-    public ModelAndView ClientLogin(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
+    public ModelAndView ClientLogin(@RequestParam(value = "m", required = false, defaultValue = "") String message,
+                                    @TheClient CurrentClient client
+    ) throws Exception
     {
-        ModelAndView mav = new ModelAndView();
-        // Display the default login screen
-        mav.setViewName("client/login");
-        // Set the message to be displayed (invalid login, confirm success, confirm fail, registration done)
-        mav.addObject("message", message);
-    	
-        return mav;
+        if (client != null) {
+            return new ModelAndView("redirect:/client/dashboard");
+        }
+
+        return new ModelAndView("/client/login", "message", message);
     }
 
     @RequestMapping(value = "/client/dashboard")
-    public ModelAndView ClientDashboard(Principal principal)
+    public ModelAndView ClientDashboard(@TheClient CurrentClient client)
     {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("client/dashboard");
-        
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
+        final List<Employee> employees = employeeRepository.findByClient(client.getClient());
+        return new ModelAndView("/client/dashboard", "Employees", employees);
+    }
 
-        mav.addObject("Employees", clientsEmployees);
-        return mav;
-    }
-    
     @RequestMapping(value = "/client/profile")
-    public ModelAndView ClientProfile(Principal principal)
+    public ModelAndView ClientProfile(@TheClient CurrentClient client)
     {
-        ModelAndView mav = new ModelAndView();
-        
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        mav.addObject("Client", client);
-        
-        mav.setViewName("client/profile");
-        return mav;
+        final Client clientFromDatabase = clientService.getClientByEmail(client.getUsername());
+        return new ModelAndView("/client/profile", "Client", clientFromDatabase);
     }
-    
+
     @RequestMapping(value = "/client/edit")
-    public ModelAndView ClientEdit(Principal principal)
+    public ModelAndView ClientEdit(@TheClient CurrentClient client)
     {
-        ModelAndView mav = new ModelAndView();
-        
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        mav.addObject("Client", client);
+        final Client clientFromDatabase = clientService.getClientByEmail(client.getUsername());
+
+        ModelAndView mav = new ModelAndView("/client/edit");
+        mav.addObject("Client", clientFromDatabase);
         mav.addObject("allTitles", Title.values());
-        
-        mav.setViewName("client/edit");
         return mav;
     }
 
@@ -147,13 +128,12 @@ public class ClientController
      */
     @RequestMapping(value = "/client/forgotPassword", method = RequestMethod.POST)
     public ModelAndView postForgotPasswordPage(@Valid @ModelAttribute final ResetPasswordForm resetPasswordForm,
-                                              final BindingResult errors)
+                                               final BindingResult errors)
     {
         if(errors.hasErrors()) {
             final ModelAndView mav = new ModelAndView("/client/forgotPassword");
             mav.addObject("error", translatorService.translate("client.resetpassword.error"));
             return mav;
-
         }
 
         final Client client = clientService.getClientByEmail(resetPasswordForm.getEmail());
@@ -168,35 +148,38 @@ public class ClientController
 
         return new ModelAndView("/client/login");
     }
-    
+
     @RequestMapping(value = "/employee/email/send")
-    public ModelAndView EmployeeEmailSend(Principal principal, @RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
+    public ModelAndView EmployeeEmailSend(@RequestParam(value = "id") long id,
+                                          @RequestParam(value = "to") String to,
+                                          @TheClient CurrentClient client
+    ) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException,
+                     MessagingException
     {
         ModelAndView mav = new ModelAndView();
-        
+
         Employee employee = employeeRepository.findOne(id);
 
-        final String currentUser = principal.getName();
-        Client currentClient = clientService.getClientByEmail(currentUser);
-        
+        Client currentClient = clientService.getClientByEmail(client.getUsername());
+
         int fontSize=12;
         float height= 1;
         height = height*fontSize*1.05f;
-        
+
         Locale locale = LocaleContextHolder.getLocale();
-        
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        
+
         ZipGenerator zipGenerator = new ZipGenerator();
 
         zipGenerator.generate(out, locale, height, employee, fontSize, currentClient.getZipPassword());
-        
+
         String filename = "employee.zip";
         String subject = filename + "_" + currentClient.getCompanyName() + "_" + employee.getFirstName() + "," + employee.getFamilyName();
         String emailContent = "This email is sent by " + currentClient.getEmail() + " via Personalfragebogen 2.0";
         EmailSender sender = new EmailSender();
         sender.SendEmail(to, subject, emailContent, out.toByteArray(), filename);
-        
+
         mav.setViewName("redirect:/client/dashboard");
         return mav;
     }
