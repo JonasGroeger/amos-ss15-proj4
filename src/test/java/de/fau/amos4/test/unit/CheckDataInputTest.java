@@ -138,6 +138,8 @@ public class CheckDataInputTest
         Assert.assertTrue(IsFieldInvalid);
         */
     }@Test
+    
+    // Employee has only valid non empty fields. All the non empty fields should be accepted by the validity check.
     public void employeeIsValid() throws Exception
     {
         List<String> InvalidFields;
@@ -170,7 +172,6 @@ public class CheckDataInputTest
         
         */
 
-
         List<String> listInvalidFields = cdi.listInvalidFields(e);
         List<String> listEmptyFields = cdi.listEmptyFields(e);
         listInvalidFields.removeAll(listEmptyFields);
@@ -190,6 +191,7 @@ public class CheckDataInputTest
         Assert.assertTrue(emptyFields.size() > 0);
     }
     
+    // The employee object has multiple empty fields. These should be detected by the listEmptyFields method.
     @Test
     public void employeeIsHavingEmptyField() throws Exception {
         Employee e = new Employee();
