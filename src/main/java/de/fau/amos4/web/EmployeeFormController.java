@@ -96,6 +96,7 @@ public class EmployeeFormController
         mav.addObject("allHealthInsurance", HealthInsurance.values());
         mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
         mav.addObject("allPensionInsurance", PensionInsurance.values());
+        mav.addObject("allParenthood", Parenthood.values());
         mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
         return mav;
     }
@@ -143,6 +144,7 @@ public class EmployeeFormController
                 mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
                 mav.addObject("allPensionInsurance", PensionInsurance.values());
                 mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
+                mav.addObject("allParenthood", Parenthood.values());
                 mav.setViewName("employee/preview");
                 return mav;
             } else {
@@ -199,6 +201,7 @@ public class EmployeeFormController
             mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
             mav.addObject("allPensionInsurance", PensionInsurance.values());
             mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
+            mav.addObject("allParenthood", Parenthood.values());
         } else {
             mav.addObject("m", "invalid");
         mav.setViewName("employee/token");

@@ -174,10 +174,10 @@ public class Employee
     Social insurance
      */
     @Column
-    long staturoyHealthInsurance; //8 digits
+    long statutoryHealthInsurance; //8 digits
 
     @Column
-    String parenthood; //TODO: Datatype?
+    Parenthood parenthood;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -196,7 +196,7 @@ public class Employee
     NursingCareInsurance nursingCareInsurance;
 
     @Column
-    String accidentInsuranceRiskTariff; //TODO: Datatype?
+    String accidentInsuranceRiskTariff; //12 chars
 
 
     public Employee()
@@ -580,13 +580,14 @@ public class Employee
         this.pensionInsurance = pensionInsurance;
     }
 
-    public long getStaturoyHealthInsurance() {
-        return staturoyHealthInsurance;
+    public long getStatutoryHealthInsurance() {
+        return statutoryHealthInsurance;
     }
 
-    public void setStaturoyHealthInsurance(long staturoyHealthInsurance) {
-        this.staturoyHealthInsurance = staturoyHealthInsurance;
+    public void setStatutoryHealthInsurance(long statutoryHealthInsurance) {
+        this.statutoryHealthInsurance = statutoryHealthInsurance;
     }
+
 
     public UnemploymentInsurance getUnemploymentInsurance() {
         return unemploymentInsurance;
@@ -596,11 +597,11 @@ public class Employee
         this.unemploymentInsurance = unemploymentInsurance;
     }
 
-    public String getParenthood() {
+    public Parenthood getParenthood() {
         return parenthood;
     }
 
-    public void setParenthood(String parenthood) {
+    public void setParenthood(Parenthood parenthood) {
         this.parenthood = parenthood;
     }
 
@@ -634,7 +635,7 @@ public class Employee
         if (taxClass != employee.taxClass) return false;
         if (Float.compare(employee.factor, factor) != 0) return false;
         if (Float.compare(employee.numberOfExemptionsForChildren, numberOfExemptionsForChildren) != 0) return false;
-        if (staturoyHealthInsurance != employee.staturoyHealthInsurance) return false;
+        if (statutoryHealthInsurance != employee.statutoryHealthInsurance) return false;
         if (token != null ? !token.equals(employee.token) : employee.token != null) return false;
         if (client != null ? !client.equals(employee.client) : employee.client != null) return false;
         if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
@@ -667,7 +668,7 @@ public class Employee
         if (temporaryEmployment != null ? !temporaryEmployment.equals(employee.temporaryEmployment) : employee.temporaryEmployment != null)
             return false;
         if (denomination != employee.denomination) return false;
-        if (parenthood != null ? !parenthood.equals(employee.parenthood) : employee.parenthood != null) return false;
+        if (parenthood != employee.parenthood) return false;
         if (healthInsurance != employee.healthInsurance) return false;
         if (pensionInsurance != employee.pensionInsurance) return false;
         if (unemploymentInsurance != employee.unemploymentInsurance) return false;
@@ -709,7 +710,7 @@ public class Employee
         result = 31 * result + (factor != +0.0f ? Float.floatToIntBits(factor) : 0);
         result = 31 * result + (numberOfExemptionsForChildren != +0.0f ? Float.floatToIntBits(numberOfExemptionsForChildren) : 0);
         result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        result = 31 * result + (int) (staturoyHealthInsurance ^ (staturoyHealthInsurance >>> 32));
+        result = 31 * result + (int) (statutoryHealthInsurance ^ (statutoryHealthInsurance >>> 32));
         result = 31 * result + (parenthood != null ? parenthood.hashCode() : 0);
         result = 31 * result + (healthInsurance != null ? healthInsurance.hashCode() : 0);
         result = 31 * result + (pensionInsurance != null ? pensionInsurance.hashCode() : 0);
@@ -753,8 +754,8 @@ public class Employee
                 ", factor=" + factor +
                 ", numberOfExemptionsForChildren=" + numberOfExemptionsForChildren +
                 ", denomination=" + denomination +
-                ", staturoyHealthInsurance=" + staturoyHealthInsurance +
-                ", parenthood='" + parenthood + '\'' +
+                ", statutoryHealthInsurance=" + statutoryHealthInsurance +
+                ", parenthood=" + parenthood +
                 ", healthInsurance=" + healthInsurance +
                 ", pensionInsurance=" + pensionInsurance +
                 ", unemploymentInsurance=" + unemploymentInsurance +

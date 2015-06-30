@@ -145,6 +145,13 @@
                         <label for="numberOfExemptionsForChildren" th:text="#{EMPLOYEE.numberOfExemptionsForChildren}"></label>
                         <input th:field="*{numberOfExemptionsForChildren}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.numberOfExemptionsForChildren}"/>
                     </div>
+                    <div class="form-group">
+                        <label for="parenthood" th:text="#{EMPLOYEE.parenthood} +#{employeeEdit.mandatory}"></label>
+                        <select th:field="*{healthInsurance}" class="form-control">
+                            <option value="" th:text="#{EMPLOYEE.select}"></option>
+                            <option th:each="parenthood : ${allParenthood}" th:value="${parenthood.name()}" th:text="${parenthood.getText()}"></option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">

@@ -1,11 +1,5 @@
-package de.fau.amos4.model.fields;
-
-import de.fau.amos4.configuration.AppContext;
-import org.springframework.context.i18n.LocaleContextHolder;
-
-import java.util.Locale;
-
 /**
+ *
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
  * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
@@ -24,27 +18,27 @@ import java.util.Locale;
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Created by Yao Bochao on 29/06/2015.
+ * Created by Yao Bochao on 30/06/2015.
  */
-public enum UnemploymentInsurance { //Arbeitslosenversicherung
 
-    _0(0, "EMPLOYEE.unemploymentInsurance._0"),
-    _1(1, "EMPLOYEE.unemploymentInsurance._1"),
-    _2(2, "EMPLOYEE.unemploymentInsurance._2"),
-    ;
+package de.fau.amos4.model.fields;
 
-    private int value;
+import de.fau.amos4.configuration.AppContext;
+import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.util.Locale;
+
+
+public enum Parenthood {
+
+    J("EMPLOYEE.parenthood.J"),
+    N("EMPLOYEE.parenthood.N");
 
     private String text;
 
-    UnemploymentInsurance(int value, String text)
+    Parenthood(String text)
     {
-        this.value = value;
         this.text = text;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public String getText()
