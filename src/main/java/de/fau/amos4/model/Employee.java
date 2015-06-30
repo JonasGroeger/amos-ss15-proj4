@@ -46,7 +46,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.fields.Denomination;
-import de.fau.amos4.model.fields.Disabled;
 import de.fau.amos4.model.fields.LevelOfEducation;
 import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.PersonGroup;
@@ -131,7 +130,7 @@ public class Employee
 
     @Column
     @Enumerated(EnumType.STRING)
-    Disabled disabled;
+    YesNo disabled;
 
     @Column
     String citizenship;
@@ -323,7 +322,7 @@ public class Employee
         Locale locale = LocaleContextHolder.getLocale();
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.taxOfficeNumber", null, locale), Integer.toString(getTaxOfficeNumber()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.identificationNumber", null, locale), Long.toString(getIdentificationNumber()));
-        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.taxClass", null, locale), Integer.toString(getTaxClass()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.taxClass", null, locale), Integer.toString(getTaxClass()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.factor", null, locale), Float.toString(getFactor()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.numberOfExemptionsForChildren", null, locale), Float.toString(getNumberOfExemptionsForChildren()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.denomination", null, locale), getDenomination().toString());
@@ -500,12 +499,12 @@ public class Employee
         this.maritalStatus = maritalStatus;
     }
 
-    public Disabled getDisabled()
+    public YesNo getDisabled()
     {
         return disabled;
     }
 
-    public void setDisabled(Disabled disabled)
+    public void setDisabled(YesNo disabled)
     {
         this.disabled = disabled;
     }
