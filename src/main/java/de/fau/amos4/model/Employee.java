@@ -40,6 +40,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import de.fau.amos4.model.fields.*;
+import de.fau.amos4.util.FieldOrder;
+import de.fau.amos4.util.GroupName;
 import de.fau.amos4.util.ValidFormat;
 
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -84,6 +86,8 @@ public class Employee
     Personal Data
      */
 
+    @GroupName("PersonalData")
+    @FieldOrder(1.0f)
     @ValidFormat("^[a-zA-Z ]*$")
     @Column
     String firstName;

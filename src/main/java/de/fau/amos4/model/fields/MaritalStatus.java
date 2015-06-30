@@ -38,7 +38,7 @@ public enum MaritalStatus
     {
         this.text = text;
     }
-
+    
     public String getText()
     {
         Locale locale = LocaleContextHolder.getLocale();
@@ -58,9 +58,9 @@ public enum MaritalStatus
         }
         return -1;
     }
-
+    
     public String toString()
     {
-        return getText();
+       return text;
     }
 }
