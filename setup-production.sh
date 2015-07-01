@@ -2,7 +2,8 @@
 
 usage()
 {
-	echo "Usage: ./setup_production.sh DATABASE USERNAME PASSWORD"
+    echo "You have to provide a database name, username and password."
+	echo -e "\tUsage: ./setup-production.sh DATABASE USERNAME PASSWORD"
 }
 
 ###############################################################################
