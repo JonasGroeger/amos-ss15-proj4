@@ -19,19 +19,16 @@
  */
 package de.fau.amos4.web;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.*;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
+import de.fau.amos4.util.CheckDataInput;
+import de.fau.amos4.util.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -39,26 +36,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Denomination;
-import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.YesNo;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.EmployeeService;
-import de.fau.amos4.util.TokenGenerator;
-import de.fau.amos4.util.CheckDataInput;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class EmployeeFormController
@@ -74,7 +60,7 @@ public class EmployeeFormController
     @Autowired
     public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService, EmployeeService employeeService)
     {
-    this.clientService = clientService;
+        this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
         this.employeeService = employeeService;
@@ -93,6 +79,8 @@ public class EmployeeFormController
         Employee employee = employeeRepository.findOne(employeeId);
         mav.addObject("id", employeeId);
         mav.addObject("employee", employee);
+        // TODO: Move these 'enum' fields to a method with @ModelAttribute so that its available in the whole controller
+        // TODO: Consider if it makes sense to add that as an advice so that its available to all controllers application-wide
         mav.addObject("allDisabled", YesNo.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
