@@ -1,4 +1,4 @@
-   
+ 
 /**
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
@@ -1618,8 +1618,5 @@ public class Employee
 				+ hashCode() + ", getClass()=" + getClass() + ", toString()="
 				+ super.toString() + "]";
 	}
-
-	
-
 	
 	}
