@@ -1,9 +1,5 @@
 /**
- *  Personalfragebogen 2.0. Revolutionize form data entry for taxation and
-=======
-/**
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
->>>>>>> 0982800290a8819221f5a74d19766e035b744572
  * other purposes.
  * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
  *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
