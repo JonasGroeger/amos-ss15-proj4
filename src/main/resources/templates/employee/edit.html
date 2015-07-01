@@ -116,7 +116,6 @@
                         <label for="bic" th:text="#{EMPLOYEE.bic} +#{employeeEdit.mandatory}"></label>
                         <input th:field="*{bic}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.bic}" />
                     </div>
-<<<<<<< HEAD
                     <div class="form-group">
                         <label for="iban" th:text="#{EMPLOYEE.iban} +#{employeeEdit.mandatory}"></label>
                         <input th:field="*{iban}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.iban}" />
@@ -151,8 +150,6 @@
                         <label for="contractConcludeDate" th:text="#{EMPLOYEE.contractConcludeDate}"></label>
                         <input th:field="*{contractConcludeDate}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.contractConcludeDate}"/>
                     </div>   
-=======
->>>>>>> 0982800290a8819221f5a74d19766e035b744572
                 </div>
             </div>
             <div class="row">
@@ -201,7 +198,63 @@
                             <option th:each="healthInsurance : ${allHealthInsurance}" th:value="${healthInsurance.name()}" th:text="${healthInsurance.getText()}"></option>
                         </select>
                     </div>
+                    
                 </div>
+            </div>
+            <div class="row">
+                <h2 th:text="#{employeeEdit.RemunerationSection}"></h2>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="description1" th:text="#{EMPLOYEE.description1}"></label>
+                        <input th:field="*{description1}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.description1}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="description2" th:text="#{EMPLOYEE.description2}"></label>
+                        <input th:field="*{description2}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.description2}"/>
+                    </div>
+                    </div>
+                    <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="amount1" th:text="#{EMPLOYEE.amount1}"></label>
+                        <input th:field="*{amount1}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.amount1}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount2" th:text="#{EMPLOYEE.amount2}"></label>
+                        <input th:field="*{amount2}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.amount2}"/>
+                    </div>
+                    </div>
+                    <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="validFrom1" th:text="#{EMPLOYEE.validFrom1}"></label>
+                        <input th:field="*{validFrom1}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.validFrom1}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="validFrom2" th:text="#{EMPLOYEE.validFrom2}"></label>
+                        <input th:field="*{validFrom2}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.validFrom2}"/>
+                    </div>
+                    </div>
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="hourlyWage1" th:text="#{EMPLOYEE.hourlyWage1}"></label>
+                        <input th:field="*{hourlyWage1}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.hourlyWage1}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="hourlyWage2" th:text="#{EMPLOYEE.hourlyWage2}"></label>
+                        <input th:field="*{hourlyWage2}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.hourlyWage2}"/>
+                    </div>
+                    </div>
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="validFrom3" th:text="#{EMPLOYEE.validFrom3}"></label>
+                        <input th:field="*{validFrom3}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.validFrom3}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="validFrom4" th:text="#{EMPLOYEE.validFrom4}"></label>
+                        <input th:field="*{validFrom4}" type="text" class="form-control" th:placeholder="#{EMPLOYEE.placeholder.validFrom4}"/>
+                    </div>
+                    </div>
+                    
+                
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">

@@ -1,3 +1,4 @@
+   
 /**
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
@@ -54,7 +55,7 @@ import de.fau.amos4.model.fields.MaritalStatus;
 import de.fau.amos4.model.fields.PersonGroup;
 import de.fau.amos4.model.fields.ProfessionalTraining;
 import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.TypeOfContract1;
+import de.fau.amos4.model.fields.TypeOfContract;
 import de.fau.amos4.model.fields.TypeOfEmployment;
 import de.fau.amos4.model.fields.YesNo;
 
@@ -168,7 +169,6 @@ public class Employee
     @Column
     String additionToAddress;
     
-
     /*
     Employment
      */
@@ -234,7 +234,7 @@ public class Employee
     
     @Column
     @Enumerated(EnumType.STRING)
-    private TypeOfContract1 typeOfContract;
+    private TypeOfContract typeOfContract;
     
     //Distribution of Weekly Working Hours
     @Column
@@ -273,7 +273,6 @@ public class Employee
     @Enumerated(EnumType.STRING)
     private PersonGroup personGroup;
     
-
     /*
     Taxes
      */
@@ -326,17 +325,48 @@ public class Employee
     @Column
     String accidentInsuranceRiskTariff; //12 chars
 
-    
+    /* Temporary Employment*/
     @Column
     @Enumerated(EnumType.STRING)
     TypeOfContract1 typeOfContract1;
     
     @Column
     Date contractFixedDate;
-    
+    	
     @Column
     Date contractConcludeDate;
     
+    /* Remuneration*/
+    @Column
+    String description1;
+    
+    @Column
+    String description2;
+    
+    @Column
+    float amount1;
+ 
+    @Column
+    float amount2;
+    
+    @Column
+    Date validFrom1;
+    
+    @Column
+    Date validFrom2;
+    
+    @Column
+    float hourlyWage1;
+    
+    @Column
+    float hourlyWage2;
+    
+    @Column
+    Date validFrom3;
+    
+    @Column
+    Date validFrom4;   
+
     public Employee()
     {
 
@@ -390,7 +420,7 @@ public class Employee
         } else {
             df = new SimpleDateFormat("dd/MM/yyyy");
         }
-        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.typeOfContract1", null, locale), getTypeOfContract().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.typeOfContract1", null, locale), getTypeOfContract1().toString());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.contractFixedDate", null, locale), format.format(getContractFixedDate()));
         allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.contractConcludeDate", null, locale), format.format(getContractFixedDate()));
         return allFields;
@@ -405,6 +435,30 @@ public class Employee
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.factor", null, locale), Float.toString(getFactor()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.numberOfExemptionsForChildren", null, locale), Float.toString(getNumberOfExemptionsForChildren()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.denomination", null, locale), getDenomination().toString());
+        return allFields;
+    }
+    
+    public Map<String,String> getRemunerationFields() {
+        Map<String,String> allFields = new LinkedHashMap<String, String>();
+        Locale locale = LocaleContextHolder.getLocale();
+        DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
+        DateFormat df;
+        if(locale.getLanguage().equals("de")) {
+            df = new SimpleDateFormat("dd.MM.yyyy");
+        } else {
+            df = new SimpleDateFormat("dd/MM/yyyy");
+        }
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.description1", null, locale), getDescription1().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.description2", null, locale), getDescription2().toString());
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.amount1", null, locale), Float.toString(getAmount1()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.amount2", null, locale), Float.toString(getAmount2()));
+        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.validFrom1", null, locale), format.format(getValidFrom1()));
+        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.validFrom2", null, locale), format.format(getValidFrom2()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.hourlyWage1", null, locale), Float.toString(getHourlyWage1()));
+        allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.hourlyWage1", null, locale), Float.toString(getHourlyWage1()));
+        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.validFrom3", null, locale), format.format(getValidFrom3()));
+        allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.validFrom4", null, locale), format.format(getValidFrom4()));
+
         return allFields;
     }
     
@@ -699,39 +753,7 @@ public class Employee
     {
         this.denomination = denomination;
     }
-    
-    /*Temporary Employment
-      */
-    
-    public TypeOfContract1 getTypeOfContract1()
-    {
-        return typeOfContract1;
-    }
 
-    public void setTypeOfContract1(TypeOfContract1 typeOfContract1)
-    {
-        this.typeOfContract1 = typeOfContract1;
-    }
-
-    public Date getContractFixedDate()
-    {
-        return contractFixedDate;
-    }
-
-    public void setContractFixedDate(Date contractFixedDate)
-    {
-        this.contractFixedDate = contractFixedDate;
-    }
-    
-    public Date getContractConcludeDate()
-    {
-        return contractConcludeDate;
-    }
-
-    public void setContractConcludeDate(Date contractConcludeDate)
-    {
-        this.contractConcludeDate = contractConcludeDate;
-    }
     /*
     Social insurance
      */
@@ -899,155 +921,6 @@ public class Employee
 		this.planedDateApprenticeshipEnds = planedDateApprenticeshipBegins;
 	}
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employee employee = (Employee) o;
-
-        if (id != employee.id) return false;
-        if (personnelNumber != employee.personnelNumber) return false;
-        if (taxOfficeNumber != employee.taxOfficeNumber) return false;
-        if (identificationNumber != employee.identificationNumber) return false;
-        if (taxClass != employee.taxClass) return false;
-        if (Float.compare(employee.factor, factor) != 0) return false;
-        if (Float.compare(employee.numberOfExemptionsForChildren, numberOfExemptionsForChildren) != 0) return false;
-        if (statutoryHealthInsurance != employee.statutoryHealthInsurance) return false;
-        if (token != null ? !token.equals(employee.token) : employee.token != null) return false;
-        if (client != null ? !client.equals(employee.client) : employee.client != null) return false;
-        if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
-        if (maidenName != null ? !maidenName.equals(employee.maidenName) : employee.maidenName != null) return false;
-        if (familyName != null ? !familyName.equals(employee.familyName) : employee.familyName != null) return false;
-        if (birthDate != null ? !birthDate.equals(employee.birthDate) : employee.birthDate != null) return false;
-        if (placeOfBirth != null ? !placeOfBirth.equals(employee.placeOfBirth) : employee.placeOfBirth != null)
-            return false;
-        if (countryOfBirth != null ? !countryOfBirth.equals(employee.countryOfBirth) : employee.countryOfBirth != null)
-            return false;
-        if (street != null ? !street.equals(employee.street) : employee.street != null) return false;
-        if (zipCode != null ? !zipCode.equals(employee.zipCode) : employee.zipCode != null) return false;
-        if (houseNumber != null ? !houseNumber.equals(employee.houseNumber) : employee.houseNumber != null)
-            return false;
-        if (city != null ? !city.equals(employee.city) : employee.city != null) return false;
-        if (socialInsuranceNumber != null ? !socialInsuranceNumber.equals(employee.socialInsuranceNumber) : employee.socialInsuranceNumber != null)
-            return false;
-        if (sex != employee.sex) return false;
-        if (maritalStatus != employee.maritalStatus) return false;
-        if (disabled != employee.disabled) return false;
-        if (citizenship != null ? !citizenship.equals(employee.citizenship) : employee.citizenship != null)
-            return false;
-        if (employerSocialSavingsNumber != null ? !employerSocialSavingsNumber.equals(employee.employerSocialSavingsNumber) : employee.employerSocialSavingsNumber != null)
-            return false;
-        if (iban != null ? !iban.equals(employee.iban) : employee.iban != null) return false;
-        if (bic != null ? !bic.equals(employee.bic) : employee.bic != null) return false;
-        if (additionToAddress != null ? !additionToAddress.equals(employee.additionToAddress) : employee.additionToAddress != null)
-            return false;
-        if (typeOfContract1 != employee.typeOfContract1) return false;
-        if (contractFixedDate != null ? !contractFixedDate.equals(employee.contractFixedDate) : employee.contractFixedDate != null)
-            return false;
-        if (contractConcludeDate != null ? !contractConcludeDate.equals(employee.contractConcludeDate) : employee.contractConcludeDate != null)
-            return false;
-        if (denomination != employee.denomination) return false;
-        if (parenthood != employee.parenthood) return false;
-        if (healthInsurance != employee.healthInsurance) return false;
-        if (pensionInsurance != employee.pensionInsurance) return false;
-        if (unemploymentInsurance != employee.unemploymentInsurance) return false;
-        if (nursingCareInsurance != employee.nursingCareInsurance) return false;
-        return !(accidentInsuranceRiskTariff != null ? !accidentInsuranceRiskTariff.equals(employee.accidentInsuranceRiskTariff) : employee.accidentInsuranceRiskTariff != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (token != null ? token.hashCode() : 0);
-        result = 31 * result + (client != null ? client.hashCode() : 0);
-        result = 31 * result + personnelNumber;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (maidenName != null ? maidenName.hashCode() : 0);
-        result = 31 * result + (familyName != null ? familyName.hashCode() : 0);
-        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
-        result = 31 * result + (placeOfBirth != null ? placeOfBirth.hashCode() : 0);
-        result = 31 * result + (countryOfBirth != null ? countryOfBirth.hashCode() : 0);
-        result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
-        result = 31 * result + (houseNumber != null ? houseNumber.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (socialInsuranceNumber != null ? socialInsuranceNumber.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (maritalStatus != null ? maritalStatus.hashCode() : 0);
-        result = 31 * result + (disabled != null ? disabled.hashCode() : 0);
-        result = 31 * result + (citizenship != null ? citizenship.hashCode() : 0);
-        result = 31 * result + (employerSocialSavingsNumber != null ? employerSocialSavingsNumber.hashCode() : 0);
-        result = 31 * result + (iban != null ? iban.hashCode() : 0);
-        result = 31 * result + (bic != null ? bic.hashCode() : 0);
-        result = 31 * result + (additionToAddress != null ? additionToAddress.hashCode() : 0);
-        result = 31 * result + taxOfficeNumber;
-        result = 31 * result + (int) (identificationNumber ^ (identificationNumber >>> 32));
-        result = 31 * result + taxClass;
-        result = 31 * result + (factor != +0.0f ? Float.floatToIntBits(factor) : 0);
-        result = 31 * result + (numberOfExemptionsForChildren != +0.0f ? Float.floatToIntBits(numberOfExemptionsForChildren) : 0);
-        result = 31 * result + (denomination != null ? denomination.hashCode() : 0);
-        result = 31 * result + (contractFixedDate != null ? contractFixedDate.hashCode() : 0);
-        result = 31 * result + (contractConcludeDate != null ? contractConcludeDate.hashCode() : 0);
-        result = 31 * result + (typeOfContract1 != null ? typeOfContract1.hashCode() : 0);
-        result = 31 * result + (int) (statutoryHealthInsurance ^ (statutoryHealthInsurance >>> 32));
-        result = 31 * result + (parenthood != null ? parenthood.hashCode() : 0);
-        result = 31 * result + (healthInsurance != null ? healthInsurance.hashCode() : 0);
-        result = 31 * result + (pensionInsurance != null ? pensionInsurance.hashCode() : 0);
-        result = 31 * result + (unemploymentInsurance != null ? unemploymentInsurance.hashCode() : 0);
-        result = 31 * result + (nursingCareInsurance != null ? nursingCareInsurance.hashCode() : 0);
-        result = 31 * result + (accidentInsuranceRiskTariff != null ? accidentInsuranceRiskTariff.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", token='" + token + '\'' +
-                ", client=" + client +
-                ", personnelNumber=" + personnelNumber +
-                ", firstName='" + firstName + '\'' +
-                ", maidenName='" + maidenName + '\'' +
-                ", familyName='" + familyName + '\'' +
-                ", birthDate=" + birthDate +
-                ", placeOfBirth='" + placeOfBirth + '\'' +
-                ", countryOfBirth='" + countryOfBirth + '\'' +
-                ", street='" + street + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", houseNumber='" + houseNumber + '\'' +
-                ", city='" + city + '\'' +
-                ", socialInsuranceNumber='" + socialInsuranceNumber + '\'' +
-                ", sex=" + sex +
-                ", maritalStatus=" + maritalStatus +
-                ", disabled=" + disabled +
-                ", citizenship='" + citizenship + '\'' +
-                ", employerSocialSavingsNumber='" + employerSocialSavingsNumber + '\'' +
-                ", iban='" + iban + '\'' +
-                ", bic='" + bic + '\'' +
-                ", additionToAddress='" + additionToAddress + '\'' +
-                ", taxOfficeNumber=" + taxOfficeNumber +
-                ", identificationNumber=" + identificationNumber +
-                ", taxClass=" + taxClass +
-                ", factor=" + factor +
-                ", numberOfExemptionsForChildren=" + numberOfExemptionsForChildren +
-                ", denomination=" + denomination +
-                ", typeOfContract1=" + typeOfContract1 +
-                ", contractFixedDate=" + contractFixedDate +
-                ", contractConcludeDate=" + contractConcludeDate +
-                ", statutoryHealthInsurance=" + statutoryHealthInsurance +
-                ", parenthood=" + parenthood +
-                ", healthInsurance=" + healthInsurance +
-                ", pensionInsurance=" + pensionInsurance +
-                ", unemploymentInsurance=" + unemploymentInsurance +
-                ", nursingCareInsurance=" + nursingCareInsurance +
-                ", accidentInsuranceRiskTariff='" + accidentInsuranceRiskTariff + '\'' +
-                '}';
-    }
-
-
 	public int getWeeklyWorkingHours() {
 		return weeklyWorkingHours;
 	}
@@ -1064,11 +937,11 @@ public class Employee
 		this.holidayEntitlement = holidayEntitlement;
 	}
 
-	public TypeOfContract1 getTypeOfContract() {
+	public TypeOfContract getTypeOfContract() {
 		return typeOfContract;
 	}
 
-	public void setTypeOfContract(TypeOfContract1 typeOfContract) {
+	public void setTypeOfContract(TypeOfContract typeOfContract) {
 		this.typeOfContract = typeOfContract;
 	}
 
@@ -1160,7 +1033,593 @@ public class Employee
 	public void setPersonGroup(PersonGroup personGroup) {
 		this.personGroup = personGroup;
 	}
+	
+	/*Temporary Employment
+     */
+   
+   public TypeOfContract1 getTypeOfContract1()
+   {
+       return typeOfContract1;
+   }
 
+   public void setTypeOfContract1(TypeOfContract1 typeOfContract1)
+   {
+       this.typeOfContract1 = typeOfContract1;
+   }
+
+   public Date getContractFixedDate()
+   {
+       return contractFixedDate;
+   }
+
+   public void setContractFixedDate(Date contractFixedDate)
+   {
+       this.contractFixedDate = contractFixedDate;
+   }
+   
+   public Date getContractConcludeDate()
+   {
+       return contractConcludeDate;
+   }
+
+   public void setContractConcludeDate(Date contractConcludeDate)
+   {
+       this.contractConcludeDate = contractConcludeDate;
+   }
+/*Remuneration*/
+   public String getDescription1()
+   {
+       return description1;
+   }
+
+   public void setDescription1(String description1)
+   {
+       this.description1 = description1;
+   }
+   
+   public String getDescription2()
+   {
+       return description2;
+   }
+
+   public void setDescription2(String description1)
+   {
+       this.description2 = description2;
+   }
+   
+   public float getAmount1()
+   {
+       return amount1;
+   }
+
+   public void setAmount1(float amount1)
+   {
+       this.amount1 = amount1;
+   }
+   
+   public float getAmount2()
+   {
+       return amount2;
+   }
+
+   public void setAmount2(float amount2)
+   {
+       this.amount2 = amount2;
+   }
+   
+   public Date getValidFrom1()
+   {
+       return validFrom1;
+   }
+
+   public void setValidFrom1(Date ValidFrom1)
+   {
+       this.validFrom1 = validFrom1;
+   }
+   
+   public Date getValidFrom2()
+   {
+       return validFrom2;
+   }
+
+   public void setValidFrom2(Date ValidFrom2)
+   {
+       this.validFrom2= validFrom2;
+   }
+   
+   public float getHourlyWage1()
+   {
+       return hourlyWage1;
+   }
+
+   public void setHourlyWage1(float hourlyWage1)
+   {
+       this.hourlyWage1 = hourlyWage1;
+   }
+   
+   public float getHourlyWage2()
+   {
+       return hourlyWage2;
+   }
+
+   public void setHourlyWage2(float hourlyWage2)
+   {
+       this.hourlyWage2 = hourlyWage2;
+   }
+   
+   public Date getValidFrom3()
+   {
+       return validFrom3;
+   }
+
+   public void setValidFrom3(Date ValidFrom3)
+   {
+       this.validFrom3 = validFrom3;
+   }
+   
+   public Date getValidFrom4()
+   {
+       return validFrom4;
+   }
+
+   public void setValidFrom4(Date ValidFrom4)
+   {
+       this.validFrom4 = validFrom4;
+   }
+
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accidentInsuranceRiskTariff == null) ? 0
+						: accidentInsuranceRiskTariff.hashCode());
+		result = prime * result + ((additionToAddress == null) ? 0 : additionToAddress.hashCode());
+		result = prime * result + ((bic == null) ? 0 : bic.hashCode());
+		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
+		result = prime * result + ((citizenship == null) ? 0 : citizenship.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result + ((costCentre == null) ? 0 : costCentre.hashCode());
+		result = prime * result + ((countryOfBirth == null) ? 0 : countryOfBirth.hashCode());
+		result = prime * result + ((dateApprenticeshipBegins == null) ? 0 : dateApprenticeshipBegins.hashCode());
+		result = prime * result + ((denomination == null) ? 0 : denomination.hashCode());
+		result = prime * result + ((departmentNumber == null) ? 0 : departmentNumber.hashCode());
+		result = prime * result + ((descriptionOfProfession == null) ? 0 : descriptionOfProfession.hashCode());
+		result = prime * result + ((disabled == null) ? 0 : disabled.hashCode());
+		result = prime * result + ((employedInConstructionIndustrySince == null) ? 0 : employedInConstructionIndustrySince.hashCode());
+		result = prime * result + ((employerSocialSavingsNumber == null) ? 0 : employerSocialSavingsNumber.hashCode());
+		result = prime * result + ((entryDate == null) ? 0 : entryDate.hashCode());
+		result = prime * result + Float.floatToIntBits(factor);
+		result = prime * result + ((familyName == null) ? 0 : familyName.hashCode());
+		result = prime * result + ((firstDay == null) ? 0 : firstDay.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + fri;
+		result = prime * result + ((healthInsurance == null) ? 0 : healthInsurance.hashCode());
+		result = prime * result + ((holidayEntitlement == null) ? 0 : holidayEntitlement.hashCode());
+		result = prime * result + ((houseNumber == null) ? 0 : houseNumber.hashCode());
+		result = prime * result + ((iban == null) ? 0 : iban.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + (int) (identificationNumber ^ (identificationNumber >>> 32));
+		result = prime * result + ((jobPerformed == null) ? 0 : jobPerformed.hashCode());
+		result = prime * result + ((levelOfEducation == null) ? 0 : levelOfEducation.hashCode());
+		result = prime * result + ((lowIncomeEmployment == null) ? 0 : lowIncomeEmployment.hashCode());
+		result = prime * result + ((maidenName == null) ? 0 : maidenName.hashCode());
+		result = prime * result + ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
+		result = prime * result + mon;
+		result = prime * result + Float.floatToIntBits(numberOfExemptionsForChildren);
+		result = prime * result + ((nursingCareInsurance == null) ? 0 : nursingCareInsurance.hashCode());
+		result = prime * result + ((otherJobs == null) ? 0 : otherJobs.hashCode());
+		result = prime * result + ((parenthood == null) ? 0 : parenthood.hashCode());
+		result = prime * result + ((pensionInsurance == null) ? 0 : pensionInsurance.hashCode());
+		result = prime * result + ((personGroup == null) ? 0 : personGroup.hashCode());
+		result = prime * result + personnelNumber;
+		result = prime * result + ((placeOfBirth == null) ? 0 : placeOfBirth.hashCode());
+		result = prime * result + ((placeOfEmployment == null) ? 0 : placeOfEmployment.hashCode());
+		result = prime * result + ((planedDateApprenticeshipEnds == null) ? 0 : planedDateApprenticeshipEnds.hashCode());
+		result = prime * result + ((probationPeriod == null) ? 0 : probationPeriod.hashCode());
+		result = prime * result  + ((professionalTraining == null) ? 0 : professionalTraining.hashCode());
+		result = prime * result + sat;
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		result = prime * result + ((socialInsuranceNumber == null) ? 0 : socialInsuranceNumber.hashCode());
+		result = prime * result + (int) (statutoryHealthInsurance ^ (statutoryHealthInsurance >>> 32));
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		result = prime * result + sun;
+		result = prime * result + taxClass;
+		result = prime * result + taxOfficeNumber;
+		result = prime * result + thu;
+		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + tue;
+		result = prime * result + ((typeOfContract == null) ? 0 : typeOfContract.hashCode());
+		result = prime * result + ((typeOfEmployment == null) ? 0 : typeOfEmployment.hashCode());
+		result = prime * result + ((unemploymentInsurance == null) ? 0 : unemploymentInsurance.hashCode());
+		result = prime * result + wed;
+		result = prime * result + weeklyWorkingHours;
+		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+		result = 31 * result + (description1 != null ? description1.hashCode() : 0);
+        result = 31 * result + (description2 != null ? description2.hashCode() : 0);
+        result = 31 * result + (validFrom1 != null ? validFrom1.hashCode() : 0);
+        result = 31 * result + (validFrom2 != null ? validFrom2.hashCode() : 0);
+        result = 31 * result + (validFrom3 != null ? validFrom3.hashCode() : 0);
+        result = 31 * result + (validFrom4 != null ? validFrom4.hashCode() : 0);
+        result = 31 * result + (contractFixedDate != null ? contractFixedDate.hashCode() : 0);
+        result = 31 * result + (contractConcludeDate != null ? contractConcludeDate.hashCode() : 0);
+        result = 31 * result + (typeOfContract1 != null ? typeOfContract1.hashCode() : 0);
+
+		return result;
+		
+	}
+    @Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (accidentInsuranceRiskTariff == null) {
+		if (other.accidentInsuranceRiskTariff != null)return false;
+		} 
+		else if (!accidentInsuranceRiskTariff.equals(other.accidentInsuranceRiskTariff))return false;
+		if (additionToAddress == null) {
+		if (other.additionToAddress != null)return false;
+		} 
+		else if (!additionToAddress.equals(other.additionToAddress))return false;
+		if (bic == null) {
+			if (other.bic != null)
+				return false;
+		} else if (!bic.equals(other.bic))
+			return false;
+		if (birthDate == null) {
+			if (other.birthDate != null)
+				return false;
+		} else if (!birthDate.equals(other.birthDate))
+			return false;
+		if (citizenship == null) {
+			if (other.citizenship != null)
+				return false;
+		} else if (!citizenship.equals(other.citizenship))
+			return false;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
+		if (client == null) {
+			if (other.client != null)
+				return false;
+		} else if (!client.equals(other.client))
+			return false;
+		if (costCentre == null) {
+			if (other.costCentre != null)
+				return false;
+		} else if (!costCentre.equals(other.costCentre))
+			return false;
+		if (countryOfBirth == null) {
+			if (other.countryOfBirth != null)
+				return false;
+		} else if (!countryOfBirth.equals(other.countryOfBirth))
+			return false;
+		if (dateApprenticeshipBegins == null) {
+			if (other.dateApprenticeshipBegins != null)
+				return false;
+		} else if (!dateApprenticeshipBegins
+				.equals(other.dateApprenticeshipBegins))
+			return false;
+		if (denomination != other.denomination)
+			return false;
+		if (departmentNumber == null) {
+			if (other.departmentNumber != null)
+				return false;
+		} else if (!departmentNumber.equals(other.departmentNumber))
+			return false;
+		if (descriptionOfProfession == null) {
+			if (other.descriptionOfProfession != null)
+				return false;
+		} else if (!descriptionOfProfession
+				.equals(other.descriptionOfProfession))
+			return false;
+		if (disabled != other.disabled)
+			return false;
+		if (employedInConstructionIndustrySince == null) {
+			if (other.employedInConstructionIndustrySince != null)
+				return false;
+		} else if (!employedInConstructionIndustrySince
+				.equals(other.employedInConstructionIndustrySince))
+			return false;
+		if (employerSocialSavingsNumber == null) {
+			if (other.employerSocialSavingsNumber != null)
+				return false;
+		} else if (!employerSocialSavingsNumber
+				.equals(other.employerSocialSavingsNumber))
+			return false;
+		if (entryDate == null) {
+			if (other.entryDate != null)
+				return false;
+		} else if (!entryDate.equals(other.entryDate))
+			return false;
+		if (Float.floatToIntBits(factor) != Float.floatToIntBits(other.factor))
+			return false;
+		if (familyName == null) {
+			if (other.familyName != null)
+				return false;
+		} else if (!familyName.equals(other.familyName))
+			return false;
+		if (firstDay == null) {
+			if (other.firstDay != null)
+				return false;
+		} else if (!firstDay.equals(other.firstDay))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (fri != other.fri)
+			return false;
+		if (healthInsurance != other.healthInsurance)
+			return false;
+		if (holidayEntitlement == null) {
+			if (other.holidayEntitlement != null)
+				return false;
+		} else if (!holidayEntitlement.equals(other.holidayEntitlement))
+			return false;
+		if (houseNumber == null) {
+			if (other.houseNumber != null)
+				return false;
+		} else if (!houseNumber.equals(other.houseNumber))
+			return false;
+		if (iban == null) {
+			if (other.iban != null)
+				return false;
+		} else if (!iban.equals(other.iban))
+			return false;
+		if (id != other.id)
+			return false;
+		if (identificationNumber != other.identificationNumber)
+			return false;
+		if (jobPerformed == null) {
+			if (other.jobPerformed != null)
+				return false;
+		} else if (!jobPerformed.equals(other.jobPerformed))
+			return false;
+		if (levelOfEducation != other.levelOfEducation)
+			return false;
+		if (lowIncomeEmployment != other.lowIncomeEmployment)
+			return false;
+		if (maidenName == null) {
+			if (other.maidenName != null)
+				return false;
+		} else if (!maidenName.equals(other.maidenName))
+			return false;
+		if (maritalStatus != other.maritalStatus)
+			return false;
+		if (mon != other.mon)
+			return false;
+		if (Float.floatToIntBits(numberOfExemptionsForChildren) != Float
+				.floatToIntBits(other.numberOfExemptionsForChildren))
+			return false;
+		if (nursingCareInsurance != other.nursingCareInsurance)
+			return false;
+		if (otherJobs != other.otherJobs)
+			return false;
+		if (parenthood != other.parenthood)
+			return false;
+		if (pensionInsurance != other.pensionInsurance)
+			return false;
+		if (personGroup != other.personGroup)
+			return false;
+		if (personnelNumber != other.personnelNumber)
+			return false;
+		if (placeOfBirth == null) {
+			if (other.placeOfBirth != null)
+				return false;
+		} else if (!placeOfBirth.equals(other.placeOfBirth))
+			return false;
+		if (placeOfEmployment == null) {
+			if (other.placeOfEmployment != null)return false;
+		}else if (!placeOfEmployment.equals(other.placeOfEmployment))return false;
+		if (planedDateApprenticeshipEnds == null) {
+			if (other.planedDateApprenticeshipEnds != null)
+				return false;
+		} else if (!planedDateApprenticeshipEnds
+				.equals(other.planedDateApprenticeshipEnds))
+			return false;
+		if (probationPeriod != other.probationPeriod)
+			return false;
+		if (professionalTraining != other.professionalTraining)
+			return false;
+		if (sat != other.sat)
+			return false;
+		if (sex != other.sex)
+			return false;
+		if (socialInsuranceNumber == null) {
+			if (other.socialInsuranceNumber != null)
+				return false;
+		} else if (!socialInsuranceNumber.equals(other.socialInsuranceNumber))
+			return false;
+		if (typeOfContract1 != other.typeOfContract1) return false;
+        if (contractFixedDate != null ? !contractFixedDate.equals(other.contractFixedDate) : other.contractFixedDate != null)
+            return false;
+        if (contractConcludeDate != null ? !contractConcludeDate.equals(other.contractConcludeDate) : other.contractConcludeDate != null)
+            return false;
+        if (description1 != null ? !description1.equals(other.description1) : other.description1 != null) return false;
+        if (description2 != null ? !description2.equals(other.description2) : other.description2 != null) return false;
+        if (validFrom1 != null ? !validFrom1.equals(other.validFrom1) : other.validFrom1 != null) return false;
+        if (validFrom2 != null ? !validFrom2.equals(other.validFrom2) : other.validFrom2 != null) return false;
+        if (amount1 != other.amount1) return false;
+        if (amount2 != other.amount2) return false;
+        if (hourlyWage1 != other.hourlyWage1) return false;
+        if (hourlyWage2 != other.hourlyWage2) return false;
+        if (validFrom3 != null ? !validFrom3.equals(other.validFrom3) : other.validFrom3 != null) return false;
+        if (validFrom4 != null ? !validFrom4.equals(other.validFrom4) : other.validFrom4 != null) return false;
+		if (statutoryHealthInsurance != other.statutoryHealthInsurance)
+			return false;
+		if (street == null) {
+			if (other.street != null)
+				return false;
+		} else if (!street.equals(other.street))
+			return false;
+		if (sun != other.sun)
+			return false;
+		if (taxClass != other.taxClass)
+			return false;
+		if (taxOfficeNumber != other.taxOfficeNumber)
+			return false;
+		if (thu != other.thu)
+			return false;
+		if (token == null) {
+			if (other.token != null)
+				return false;
+		} else if (!token.equals(other.token))
+			return false;
+		if (tue != other.tue)
+			return false;
+		if (typeOfContract != other.typeOfContract)
+			return false;
+		if (typeOfEmployment != other.typeOfEmployment)
+			return false;
+		if (unemploymentInsurance != other.unemploymentInsurance)
+			return false;
+		if (wed != other.wed)
+			return false;
+		if (weeklyWorkingHours != other.weeklyWorkingHours)
+			return false;
+		if (zipCode == null) {
+			if (other.zipCode != null)
+				return false;
+		} else if (!zipCode.equals(other.zipCode))
+			return false;
+		return true;
+		
+    }
+    
+
+    @Override
+	public String toString() {
+		return "Employee [id=" + id + ", token=" + token + ", client=" + client
+				+ ", personnelNumber=" + personnelNumber + ", firstName="
+				+ firstName + ", maidenName=" + maidenName + ", familyName="
+				+ familyName + ", birthDate=" + birthDate + ", placeOfBirth="
+				+ placeOfBirth + ", countryOfBirth=" + countryOfBirth
+				+ ", street=" + street + ", zipCode=" + zipCode
+				+ ", houseNumber=" + houseNumber + ", city=" + city
+				+ ", socialInsuranceNumber=" + socialInsuranceNumber + ", sex="
+				+ sex + ", maritalStatus=" + maritalStatus + ", disabled="
+				+ disabled + ", citizenship=" + citizenship
+				+ ", employerSocialSavingsNumber="
+				+ employerSocialSavingsNumber + ", iban=" + iban + ", bic="
+				+ bic + ", additionToAddress=" + additionToAddress
+				+ ", entryDate=" + entryDate + ", firstDay=" + firstDay
+				+ ", placeOfEmployment=" + placeOfEmployment
+				+ ", descriptionOfProfession=" + descriptionOfProfession
+				+ ", jobPerformed=" + jobPerformed + ", typeOfEmployment="
+				+ typeOfEmployment + ", probationPeriod=" + probationPeriod
+				+ ", otherJobs=" + otherJobs + ", lowIncomeEmployment="
+				+ lowIncomeEmployment + ", levelOfEducation="
+				+ levelOfEducation + ", professionalTraining="
+				+ professionalTraining + ", dateApprenticeshipBegins="
+				+ dateApprenticeshipBegins
+				+ ", planedDateApprenticeshipBegins="
+				+ planedDateApprenticeshipEnds + ", weeklyWorkingHours="
+				+ weeklyWorkingHours + ", holidayEntitlement="
+				+ holidayEntitlement + ", typeOfContract=" + typeOfContract
+				+ ", mon=" + mon + ", tue=" + tue + ", wed=" + wed + ", thu="
+				+ thu + ", fri=" + fri + ", sat=" + sat + ", sun=" + sun
+				+ ", costCentre=" + costCentre + ", departmentNumber="
+				+ departmentNumber + ", employedInConstructionIndustrySince="
+				+ employedInConstructionIndustrySince + ", personGroup="
+				+ personGroup + ", taxOfficeNumber=" + taxOfficeNumber
+				+ ", identificationNumber=" + identificationNumber
+				+ ", taxClass=" + taxClass + ", factor=" + factor
+				+ ", numberOfExemptionsForChildren="
+				+ numberOfExemptionsForChildren + ", denomination="
+				+ denomination + ", statutoryHealthInsurance="
+				+ ", description1=" + description1 
+				+", description1=" + description1 
+                +", description2=" + description2 
+                +", amount1=" + amount1 
+                +", amount2=" + amount2 
+                +", validFrom1=" + validFrom1 
+                +", validFrom2=" + validFrom2 
+                +", hourlyWage1=" + hourlyWage1 
+                +", hourlyWage2=" + hourlyWage2 
+                +", validFrom3=" + validFrom3 
+                +", validFrom4=" + validFrom4 
+                +", typeOfContract1=" + typeOfContract1 
+                +", contractFixedDate=" + contractFixedDate 
+                +", contractConcludeDate=" + contractConcludeDate 
+				+ statutoryHealthInsurance + ", parenthood=" + parenthood
+				+ ", healthInsurance=" + healthInsurance
+				+ ", pensionInsurance=" + pensionInsurance
+				+ ", unemploymentInsurance=" + unemploymentInsurance
+				+ ", nursingCareInsurance=" + nursingCareInsurance
+				+ ", accidentInsuranceRiskTariff="
+				+ accidentInsuranceRiskTariff + ", getPersonalDataFields()="
+				+ getPersonalDataFields() + ", getTaxesFields()="
+				+ getTaxesFields() + ", getAdditionToAddress()="
+				+ getAdditionToAddress() + ", getId()=" + getId()
+				+ ", getClient()=" + getClient() + ", getPersonnelNumber()="
+				+ getPersonnelNumber() + ", getFirstName()=" + getFirstName()
+				+ ", getMaidenName()=" + getMaidenName() + ", getFamilyName()="
+				+ getFamilyName() + ", getBirthDate()=" + getBirthDate()
+				+ ", getPlaceOfBirth()=" + getPlaceOfBirth()
+				+ ", getCountryOfBirth()=" + getCountryOfBirth()
+				+ ", getStreet()=" + getStreet() + ", getZipCode()="
+				+ getZipCode() + ", getHouseNumber()=" + getHouseNumber()
+				+ ", getCity()=" + getCity() + ", getSocialInsuranceNumber()="
+				+ getSocialInsuranceNumber() + ", getSex()=" + getSex()
+				+ ", getMaritalStatus()=" + getMaritalStatus()
+				+ ", getDisabled()=" + getDisabled() + ", getCitizenship()="
+				+ getCitizenship() + ", getEmployerSocialSavingsNumber()="
+				+ getEmployerSocialSavingsNumber() + ", getIban()=" + getIban()
+				+ ", getBic()=" + getBic() + ", getToken()=" + getToken()
+				+ ", getTaxOfficeNumber()=" + getTaxOfficeNumber()
+				+ ", getIdentificationNumber()=" + getIdentificationNumber()
+				+ ", getTaxClass()=" + getTaxClass() + ", getFactor()="
+				+ getFactor() + ", getNumberOfExemptionsForChildren()="
+				+ getNumberOfExemptionsForChildren() + ", getDenomination()="
+				+ getDenomination() + ", getHealthInsurance()="
+				+ getHealthInsurance() + ", getPensionInsurance()="
+				+ getPensionInsurance() + ", getStatutoryHealthInsurance()="
+				+ getStatutoryHealthInsurance()
+				+ ", getUnemploymentInsurance()=" + getUnemploymentInsurance()
+				+ ", getParenthood()=" + getParenthood()
+				+ ", getNursingCareInsurance()=" + getNursingCareInsurance()
+				+ ", getAccidentInsuranceRiskTariff()="
+				+ getAccidentInsuranceRiskTariff() + ", getEntryDate()="
+				+ getEntryDate() + ", getFirstDay()=" + getFirstDay()
+				+ ", getPlaceOfEmployment()=" + getPlaceOfEmployment()
+				+ ", getDescriptionOfProfession()="
+				+ getDescriptionOfProfession() + ", getJobPerformed()="
+				+ getJobPerformed() + ", getTypeOfEmployment()="
+				+ getTypeOfEmployment() + ", getProbationPeriod()="
+				+ getProbationPeriod() + ", getOtherJobs()=" + getOtherJobs()
+				+ ", getLowIncomeEmployment()=" + getLowIncomeEmployment()
+				+ ", getLevelOfEducation()=" + getLevelOfEducation()
+				+ ", getProfessionalTraining()=" + getProfessionalTraining()
+				+ ", getDateApprenticeshipBegins()="
+				+ getDateApprenticeshipBegins()
+				+ ", getPlanedDateApprenticeshipBegins()="
+				+ getPlanedDateApprenticeshipBegins()
+				+ ", getWeeklyWorkingHours()=" + getWeeklyWorkingHours()
+				+ ", getHolidayEntitlement()=" + getHolidayEntitlement()
+				+ ", getTypeOfContract()=" + getTypeOfContract()
+				+ ", getMon()=" + getMon() + ", getTue()=" + getTue()
+				+ ", getWed()=" + getWed() + ", getThu()=" + getThu()
+				+ ", getFri()=" + getFri() + ", getSat()=" + getSat()
+				+ ", getSun()=" + getSun() + ", getCostCentre()="
+				+ getCostCentre() + ", getDepartmentNumber()="
+				+ getDepartmentNumber()
+				+ ", getEmployedInConstructionIndustrySince()="
+				+ getEmployedInConstructionIndustrySince()
+				+ ", getPersonGroup()=" + getPersonGroup() + ", hashCode()="
+				+ hashCode() + ", getClass()=" + getClass() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+	
 
 	
 	}

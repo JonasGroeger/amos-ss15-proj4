@@ -34,7 +34,7 @@ import de.fau.amos4.configuration.AppContext;
 
     //From .properties files
 
-public enum TypeOfContract1
+public enum TypeOfContract
 {
     //From .properties files
     PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
@@ -44,7 +44,7 @@ public enum TypeOfContract1
 
     private String text;
 
-    TypeOfContract1(String text)
+    TypeOfContract(String text)
     {
         this.text = text;
     }
