@@ -4,9 +4,9 @@
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost/prod-pfb
-    username: prod-postgres
-    password: prod-postgres
+    url: jdbc:postgresql://localhost/<PRODUCTION_DATABASE>
+    username: <PRODUCTION_USERNAME>
+    password: <PRODUCTION_PASSWORD>
   jpa:
     database: POSTGRESQL
     hibernate:
