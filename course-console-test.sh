@@ -3,7 +3,7 @@
 usage()
 {
     echo "You have to provide a valid JSESSIONID. Preferably using the browser."
-	echo -e "\tUsage: ./course-console-test.sh JSESSIONID"
+    echo -e "\tUsage: ./course-console-test.sh JSESSIONID"
 }
 
 ###############################################################################

@@ -3,7 +3,7 @@
 usage()
 {
     echo "You have to provide a database name, username and password."
-	echo -e "\tUsage: ./setup-production.sh DATABASE USERNAME PASSWORD"
+    echo -e "\tUsage: ./setup-production.sh DATABASE USERNAME PASSWORD"
 }
 
 ###############################################################################
@@ -13,8 +13,8 @@ PROD_FILE="src/main/resources/config/application-production.yml"
 
 if [ -f "$PROD_FILE" ]
 then
-	echo "Script has already been executed."
-	exit 1
+    echo "Script has already been executed."
+    exit 1
 fi
 
 if [ $# -le 2 ]
