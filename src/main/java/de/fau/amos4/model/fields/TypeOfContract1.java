@@ -37,10 +37,9 @@ import de.fau.amos4.configuration.AppContext;
 public enum TypeOfContract1
 {
     //From .properties files
-    PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
-    PERMANENTPART("EMPLOYEE.contract.permanentPart"),
-    FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
-    FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
+	FIXEDTERM("EMPLOYEE.contract.fixedTerm"),
+    PERMANENT("EMPLOYEE.contract.permanent"),
+    FIXEDTERMEND("EMPLOYEE.contract.fixedTermEnd");
 
     private String text;
 

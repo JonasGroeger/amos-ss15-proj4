@@ -331,9 +331,13 @@ public class Employee
     TypeOfContract1 typeOfContract1;
     
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     Date contractFixedDate;
     	
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     Date contractConcludeDate;
     
     /* Remuneration*/
@@ -350,9 +354,13 @@ public class Employee
     float amount2;
     
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     Date validFrom1;
     
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     Date validFrom2;
     
     @Column
@@ -362,9 +370,13 @@ public class Employee
     float hourlyWage2;
     
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     Date validFrom3;
     
     @Column
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     Date validFrom4;   
 
     public Employee()
