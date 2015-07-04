@@ -1,4 +1,4 @@
-# [amos-ss15-proj4](https://osr-amos.cs.fau.de/)
+# [Personalfragebogen 2.0](https://osr-amos.cs.fau.de/)
 
 [![Build Status](https://travis-ci.org/JOBAA/amos-ss15-proj4.svg?branch=master)](https://travis-ci.org/JOBAA/amos-ss15-proj4)
 [![Join the chat at https://gitter.im/JOBAA/amos-ss15-proj4](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JOBAA/amos-ss15-proj4)
