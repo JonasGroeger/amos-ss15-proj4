@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class EmployeeTest extends BaseIntegrationTest
 {
+    // Make sure that employee/token page works and properly mapped to the view.
     @Test
     public void testThatTokenPageIsWorking() throws Exception
     {
@@ -40,6 +41,7 @@ public class EmployeeTest extends BaseIntegrationTest
                 .andExpect(view().name("employee/token"));
     }
 
+    // Make sure that download employee data as text file feature works as expected. (A text file should be downloaded.)
     @Test
     @WithUserDetails("datev@example.com")
     public void testEmployeeAsLodasFileDownload() throws Exception
