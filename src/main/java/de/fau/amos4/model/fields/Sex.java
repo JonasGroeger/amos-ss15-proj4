@@ -20,6 +20,7 @@
 package de.fau.amos4.model.fields;
 
 import de.fau.amos4.configuration.AppContext;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -55,9 +56,5 @@ public enum Sex
         }
         return -1;
     }
-
-    public String toString()
-    {
-        return getText();
-    }
+    
 }

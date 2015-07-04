@@ -24,6 +24,7 @@ package de.fau.amos4.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,32 +34,16 @@ import de.fau.amos4.model.*;
 
 // Class used to load form data from class description. 
 public class FormGenerator {
-    //Stores forms for previously inspected classes  
-    Map<Class, Form> FormHistory = new HashMap();
-    private static Object lock = new Object();
-    
     // Generate form for given class
-    public Form Generate(Class clazz)
+    public Form Generate(Class clazz, Object instance)
     {
-        synchronized(lock)
-        {
-            // Use previously generated form when it was already made before.
-            if(FormHistory.containsKey(clazz))
-            {
-                return FormHistory.get(clazz);
-            }
-            
             // Really generate form data if it is not available yet.
-            Form form = ProcessObject(clazz);
-            
-            // Add the newly generated form data to the available form descriptions.
-            FormHistory.put(clazz, form);
+            Form form = ProcessObject(clazz, instance);
             
             return form;
-        }
     }
     
-    private Form ProcessObject(Class clazz) {
+    private Form ProcessObject(Class clazz, Object instance) {
         Form form = new Form();
         
         // Process each field
@@ -67,10 +52,33 @@ public class FormGenerator {
         
         for(Field field : fields)
         {
+            Boolean IsAnnotated = false;
             Annotation[] annotations = field.getAnnotations();
+            for(Annotation annotation : annotations)
+            {
+                if(annotation instanceof GroupName)
+                {
+                    IsAnnotated = true;
+                }
+            }
+            
+            if(!IsAnnotated)
+            {
+                continue;
+            }
             
             String GroupName = null;
             String FieldName = field.getName();
+            String FieldValue = "";
+            
+            
+            try {
+                Object Value = clazz.getMethod("get" + FieldName.substring(0,1).toUpperCase() + FieldName.substring(1)).invoke(instance);
+                FieldValue = (Value == null) ? "" : Value.toString();
+            } catch (Exception e) {
+                continue;
+            }
+            
             float FieldOrder = 999;
             FormGroup group = null;
             
@@ -103,6 +111,7 @@ public class FormGenerator {
                 // New group - must be created
                 group = new FormGroup();
                 group.setName(GroupName);
+                Groups.put(GroupName, group);
                 form.getGroups().add(group);
             }
             
@@ -110,6 +119,7 @@ public class FormGenerator {
             // Add current field to the group
             FormField formField = new FormField();
             formField.setName(FieldName);
+            formField.setValue(FieldValue);
             formField.setGroup(group);
             formField.setFormOrder(FieldOrder);
 

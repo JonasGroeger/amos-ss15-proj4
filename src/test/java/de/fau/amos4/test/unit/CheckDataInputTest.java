@@ -101,8 +101,6 @@ public class CheckDataInputTest
         InvalidFields = cdi.listInvalidFields(e);
         IsFieldInvalid = InvalidFields.contains("familyName");
         Assert.assertTrue(IsFieldInvalid);
-        IsFieldInvalid = InvalidFields.contains("personnelNumber");
-        Assert.assertTrue(IsFieldInvalid);
         IsFieldInvalid = InvalidFields.contains("firstName");
         Assert.assertTrue(IsFieldInvalid);
         IsFieldInvalid = InvalidFields.contains("maidenName");

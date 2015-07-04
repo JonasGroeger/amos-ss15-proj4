@@ -35,16 +35,43 @@ import de.fau.amos4.util.*;
 public class FormGeneratorTest {
     
     // Dummy class - used to test FormGenerator class
-    class DummyClass
+    public class DummyClass
     {
         @GroupName("Integers")
-        int data;
-        
+        @FieldOrder(1.0f)
+        int data = 1;
+
         @GroupName("Strings")
-        String name;
+        @FieldOrder(1.0f)
+        String name = "DummyName";
 
         @GroupName("Enums")
+        @FieldOrder(1.0f)
         MaritalStatus marital;
+        
+        public int getData() {
+            return data;
+        }
+
+        public void setData(int data) {
+            this.data = data;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public MaritalStatus getMarital() {
+            return marital;
+        }
+
+        public void setMarital(MaritalStatus marital) {
+            this.marital = marital;
+        }
     }
 
     // Make sure that both 'Integers' and 'Strings' groups are found in the dummy class
@@ -54,7 +81,7 @@ public class FormGeneratorTest {
         FormGenerator generator = new FormGenerator();
         
         // Generate form data from class description
-        Form form = generator.Generate(DummyClass.class);
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
         
         // Collect all the group names found
         List<String> groupsFound = new ArrayList<String>();
@@ -74,7 +101,7 @@ public class FormGeneratorTest {
         FormGenerator generator = new FormGenerator();
         
         // Generate form data from class description
-        Form form = generator.Generate(DummyClass.class);
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
         
         // Collect all the field names found
         List<String> fieldsFound = new ArrayList<String>();
@@ -97,7 +124,7 @@ public class FormGeneratorTest {
         FormGenerator generator = new FormGenerator();
         
         // Generate form data from class description
-        Form form = generator.Generate(DummyClass.class);
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
         
         // Collect all the field names found
         List<String> enumOptionsFound = new ArrayList<String>();

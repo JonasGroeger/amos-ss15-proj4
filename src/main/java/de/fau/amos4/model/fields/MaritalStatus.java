@@ -58,9 +58,4 @@ public enum MaritalStatus
         }
         return -1;
     }
-    
-    public String toString()
-    {
-       return text;
-    }
 }

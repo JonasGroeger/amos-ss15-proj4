@@ -28,7 +28,9 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.EmployeeService;
 import de.fau.amos4.util.CheckDataInput;
+import de.fau.amos4.util.FormGenerator;
 import de.fau.amos4.util.TokenGenerator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -41,6 +43,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
@@ -77,6 +80,8 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
+        FormGenerator generator = new FormGenerator();
+        mav.addObject("formInfo", generator.Generate(Employee.class, employee));
         mav.addObject("id", employeeId);
         mav.addObject("employee", employee);
         // TODO: Move these 'enum' fields to a method with @ModelAttribute so that its available in the whole controller
@@ -98,9 +103,11 @@ public class EmployeeFormController
     Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
      */
     @RequestMapping("/employee/edit/submit")
-    public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
+    public ModelAndView EmployeeEditSubmit(@ModelAttribute Employee employee, Principal principal)
     {
         ModelAndView mav = new ModelAndView();
+        FormGenerator generator = new FormGenerator();
+        mav.addObject("formInfo", generator.Generate(Employee.class, employee));
         
         CheckDataInput cdi = new CheckDataInput();
         
@@ -120,6 +127,7 @@ public class EmployeeFormController
         {
             mav.addObject("invalidFieldErrorMessages", invalidNonEmptyFields);
             mav.setViewName("employee/edit");
+            mav.addObject("preview", false);
             return mav; // Display "/employee/edit" with error messages
         }
         else
@@ -138,8 +146,9 @@ public class EmployeeFormController
                 mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
                 mav.addObject("allPensionInsurance", PensionInsurance.values());
                 mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
-                mav.addObject("allParenthood", Parenthood.values());
-                mav.setViewName("employee/preview");
+                mav.addObject("allParenthood", Parenthood.values());;
+                mav.addObject("preview", true);
+                mav.setViewName("employee/edit");
                 return mav;
             } else {
                 final String currentUser = principal.getName();
@@ -180,8 +189,11 @@ public class EmployeeFormController
         
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
+            mav.addObject("preview", false);
             mav.setViewName("employee/edit");
             Employee employee = employeeRepository.findOne(employeeId);
+            FormGenerator generator = new FormGenerator();
+            mav.addObject("formInfo", generator.Generate(Employee.class, employee));
             mav.addObject("id", employeeId);
             mav.addObject("employee", employee);
             mav.addObject("allDisabled", YesNo.values());

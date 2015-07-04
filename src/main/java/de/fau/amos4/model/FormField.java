@@ -22,13 +22,21 @@
 
 package de.fau.amos4.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormField {
     FormGroup group;
-    List<String> options;
+    List<String> options = new ArrayList<String>();
     String name;
-    float FormOrder = 0;
+    String value;
+    public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	float FormOrder = 0;
     
     public float getFormOrder() {
         return FormOrder;
@@ -42,6 +50,12 @@ public class FormField {
     public void setGroup(FormGroup group) {
         this.group = group;
     }
+    
+    public Boolean isMultiChoice()
+    {
+        return getOptions().size() > 0;
+    }
+    
     public List<String> getOptions() {
         return options;
     }
