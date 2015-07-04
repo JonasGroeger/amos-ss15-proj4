@@ -169,17 +169,15 @@ public class EmployeeFormController
     @RequestMapping("/employee/token/submit")
     public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
-    long employeeId = 0;
-    Iterable<Employee> allEmployees = employeeRepository.findAll();
+        long employeeId = 0;
+        Iterable<Employee> allEmployees = employeeRepository.findAll();
         for (Iterator<Employee> i = allEmployees.iterator(); i.hasNext(); ) {
         Employee currEmployee = i.next();
         if( currEmployee.getToken().equals(token)) {
         employeeId = currEmployee.getId();
         }
         }
-
-
-
+        
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
             mav.setViewName("employee/edit");
@@ -196,12 +194,12 @@ public class EmployeeFormController
             mav.addObject("allPensionInsurance", PensionInsurance.values());
             mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
             mav.addObject("allParenthood", Parenthood.values());
-        } else {
+        }
+        else {
             mav.addObject("m", "invalid");
-        mav.setViewName("employee/token");
+            mav.setViewName("employee/token");
         }
         return mav;
-        
     }
 
     
@@ -293,7 +291,6 @@ public class EmployeeFormController
 
         employeeRepository.save(employee);
         clientRepository.save(client);
-
 
         // Redirect to AccountPage page
         return "redirect:/client/dashboard";
