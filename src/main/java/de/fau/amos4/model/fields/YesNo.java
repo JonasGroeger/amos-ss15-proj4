@@ -55,8 +55,4 @@ public enum YesNo
         return -1;
     }
 
-    public String toString()
-    {
-        return getText();
-    }
 }

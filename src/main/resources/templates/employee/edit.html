@@ -23,8 +23,12 @@
                 <div th:each="field : ${formGroup.getFields()}" class="col-sm-6">
                     <div th:if="${__${field.getOptions().size()}__ &gt; 0}" class="form-group">
                         <label th:text="#{'EMPLOYEE.' + ${field.getName()}}"></label>
-                        <label th:text="${field.getName()}"></label>
-                        TODO: Implement dropdown list
+                        <div>
+                            <select th:name="${field.getName()}" th:id="${field.getName()}">
+                                <option value="" th:text="#{EMPLOYEE.select}"></option>
+                                <option th:each="option : ${field.getOptions()}" th:value="${option}" th:text="#{${option}}" th:selected="${field.getValue() == option}"></option>
+                            </select>
+                        </div>
                     </div>
                     <div th:unless="${__${field.getOptions().size()}__ &gt; 0}" class="form-group">
                         <label th:text="#{'EMPLOYEE.' + ${field.getName()}}"></label>
