@@ -26,7 +26,7 @@
                         <div>
                             <select th:name="${field.getName()}" th:id="${field.getName()}">
                                 <option value="" th:text="#{EMPLOYEE.select}"></option>
-                                <option th:each="option : ${field.getOptions()}" th:value="${option}" th:text="#{${option}}" th:selected="${field.getValue() == option}"></option>
+                                <option th:each="option : ${field.getOptions()}" th:value="${option}" th:text="#{'EMPLOYEE.' + ${field.getName()} + '.' + ${option}}" th:selected="${field.getValue() == option}"></option>
                             </select>
                         </div>
                     </div>
