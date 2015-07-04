@@ -37,6 +37,7 @@ import de.fau.amos4.util.TokenGenerator;
 public class EmployeeTest extends BaseWebApplicationContextTests
 {
 
+    // Make sure that the generated Token matches the format expectation. Should be a 6 chars long alphanumeric string.
     @Test
     public void generatedTokenIsInCorrectFormat() throws Exception
     {
@@ -55,6 +56,7 @@ public class EmployeeTest extends BaseWebApplicationContextTests
         Assert.assertTrue(hasCorrectFormat);
     }
 
+    // Generates a few tokens and makes sure that each of them are unique.
     @Test
     public void generatedTokensAreUnique() throws Exception
     {
