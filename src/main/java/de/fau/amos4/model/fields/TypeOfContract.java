@@ -21,16 +21,13 @@
 package de.fau.amos4.model.fields;
 
 
-import java.util.Locale;
-
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Lodasize;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import de.fau.amos4.configuration.AppContext;
+import java.util.Locale;
 
-
-    //From .properties files
-
-public enum TypeOfContract
+public enum TypeOfContract implements Lodasize
 {
     //From .properties files
     PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
@@ -54,5 +51,26 @@ public enum TypeOfContract
     public String toString()
     {
         return getText();
+    }
+
+    public String getLodas()
+    {
+        String result = "@@ DUMMY @@";
+        switch (this)
+        {
+            case PERMANENTFULL:
+                result = "1";
+                break;
+            case PERMANENTPART:
+                result = "2";
+                break;
+            case FIXEDTERMFULL:
+                result = "3";
+                break;
+            case FIXEDTERMPART:
+                result = "4";
+                break;
+        }
+        return result;
     }
 }

@@ -186,111 +186,146 @@ public class Employee
     @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String additionToAddress;
-    
-    /*
-    Employment
-     */
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Start section: Beschäftigung / Employment
+    //
 
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     Date entryDate;
-    
+
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     Date firstDay;
-    
+
     @Column
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     String placeOfEmployment;
-    
+
     @Column
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     String descriptionOfProfession;
-    
+
     @Column
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     String jobPerformed;
-    
+
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     private TypeOfEmployment typeOfEmployment;
-    
+
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     private YesNo probationPeriod;
-    
+
+    @Column
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private String durationOfProbationPeriod;
+
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     private YesNo otherJobs;
-    
+
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     private YesNo lowIncomeEmployment;
-    
+
     @Column
     @Enumerated(EnumType.STRING)
-    private LevelOfEducation levelOfEducation;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private LevelOfEducation levelOfEducation;  // Schulabschluss
+
     @Column
     @Enumerated(EnumType.STRING)
-    private ProfessionalTraining professionalTraining;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private ProfessionalTraining professionalTraining;  // Berufsausbildung
+
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
-    Date dateApprenticeshipBegins;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private Date dateApprenticeshipBegins;
+
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
-    Date planedDateApprenticeshipEnds;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private Date planedDateApprenticeshipEnds;
+
     @Column
-    int weeklyWorkingHours;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int weeklyWorkingHours;
+
     @Column
-    String holidayEntitlement;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private float holidayEntitlement;
+
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     private TypeOfContract typeOfContract;
-    
-    //Distribution of Weekly Working Hours
+
     @Column
-    int mon;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeMonday;
+
     @Column
-    int tue;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeTuesday;
+
     @Column
-    int wed;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeWednesday;
+
     @Column
-    int thu;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeThursday;
+
     @Column
-    int fri;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeFriday;
+
     @Column
-    int sat;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeSaturday;
+
     @Column
-    int sun;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private int workingTimeSunday;
+
     @Column
-    String costCentre;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private String costCentre;
+
     @Column
-    String departmentNumber;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private String departmentNumber;
+
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
-    Date employedInConstructionIndustrySince;
-    
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
+    private Date employedInConstructionIndustrySince;
+
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     private PersonGroup personGroup;
-    
+
+    //
+    // End section: Beschäftigung / Employment
+    ///////////////////////////////////////////////////////////////////////////
+
     /*
     Taxes
      */
@@ -877,6 +912,16 @@ public class Employee
         this.statutoryHealthInsurance = statutoryHealthInsurance;
     }
 
+    public String getDurationOfProbationPeriod()
+    {
+        return durationOfProbationPeriod;
+    }
+
+    public void setDurationOfProbationPeriod(String durationOfProbationPeriod)
+    {
+        this.durationOfProbationPeriod = durationOfProbationPeriod;
+    }
+
 
     public UnemploymentInsurance getUnemploymentInsurance() {
         return unemploymentInsurance;
@@ -1015,19 +1060,21 @@ public class Employee
 		this.planedDateApprenticeshipEnds = planedDateApprenticeshipBegins;
 	}
 
-	public int getWeeklyWorkingHours() {
-		return weeklyWorkingHours;
-	}
+    public int getWeeklyWorkingHours()
+    {
+        return weeklyWorkingHours;
+    }
 
-	public void setWeeklyWorkingHours(int weeklyWorkingHours) {
-		this.weeklyWorkingHours = weeklyWorkingHours;
-	}
+    public void setWeeklyWorkingHours(int weeklyWorkingHours)
+    {
+        this.weeklyWorkingHours = weeklyWorkingHours;
+    }
 
-	public String getHolidayEntitlement() {
+    public float getHolidayEntitlement() {
 		return holidayEntitlement;
 	}
 
-	public void setHolidayEntitlement(String holidayEntitlement) {
+	public void setHolidayEntitlement(float holidayEntitlement) {
 		this.holidayEntitlement = holidayEntitlement;
 	}
 
@@ -1039,60 +1086,60 @@ public class Employee
 		this.typeOfContract = typeOfContract;
 	}
 
-	public int getMon() {
-		return mon;
+	public int getWorkingTimeMonday() {
+		return workingTimeMonday;
 	}
 
-	public void setMon(int mon) {
-		this.mon = mon;
+	public void setWorkingTimeMonday(int workingTimeMonday) {
+		this.workingTimeMonday = workingTimeMonday;
 	}
 
-	public int getTue() {
-		return tue;
+	public int getWorkingTimeTuesday() {
+		return workingTimeTuesday;
 	}
 
-	public void setTue(int tue) {
-		this.tue = tue;
+	public void setWorkingTimeTuesday(int workingTimeTuesday) {
+		this.workingTimeTuesday = workingTimeTuesday;
 	}
 
-	public int getWed() {
-		return wed;
+	public int getWorkingTimeWednesday() {
+		return workingTimeWednesday;
 	}
 
-	public void setWed(int wed) {
-		this.wed = wed;
+	public void setWorkingTimeWednesday(int workingTimeWednesday) {
+		this.workingTimeWednesday = workingTimeWednesday;
 	}
 
-	public int getThu() {
-		return thu;
+	public int getWorkingTimeThursday() {
+		return workingTimeThursday;
 	}
 
-	public void setThu(int thu) {
-		this.thu = thu;
+	public void setWorkingTimeThursday(int workingTimeThursday) {
+		this.workingTimeThursday = workingTimeThursday;
 	}
 
-	public int getFri() {
-		return fri;
+	public int getWorkingTimeFriday() {
+		return workingTimeFriday;
 	}
 
-	public void setFri(int fri) {
-		this.fri = fri;
+	public void setWorkingTimeFriday(int workingTimeFriday) {
+		this.workingTimeFriday = workingTimeFriday;
 	}
 
-	public int getSat() {
-		return sat;
+	public int getWorkingTimeSaturday() {
+		return workingTimeSaturday;
 	}
 
-	public void setSat(int sat) {
-		this.sat = sat;
+	public void setWorkingTimeSaturday(int workingTimeSaturday) {
+		this.workingTimeSaturday = workingTimeSaturday;
 	}
 
-	public int getSun() {
-		return sun;
+	public int getWorkingTimeSunday() {
+		return workingTimeSunday;
 	}
 
-	public void setSun(int sun) {
-		this.sun = sun;
+	public void setWorkingTimeSunday(int workingTimeSunday) {
+		this.workingTimeSunday = workingTimeSunday;
 	}
 
 	public String getCostCentre() {
@@ -1274,13 +1321,14 @@ public class Employee
                 .append(id, employee.id)
                 .append(personnelNumber, employee.personnelNumber)
                 .append(weeklyWorkingHours, employee.weeklyWorkingHours)
-                .append(mon, employee.mon)
-                .append(tue, employee.tue)
-                .append(wed, employee.wed)
-                .append(thu, employee.thu)
-                .append(fri, employee.fri)
-                .append(sat, employee.sat)
-                .append(sun, employee.sun)
+                .append(holidayEntitlement, employee.holidayEntitlement)
+                .append(workingTimeMonday, employee.workingTimeMonday)
+                .append(workingTimeTuesday, employee.workingTimeTuesday)
+                .append(workingTimeWednesday, employee.workingTimeWednesday)
+                .append(workingTimeThursday, employee.workingTimeThursday)
+                .append(workingTimeFriday, employee.workingTimeFriday)
+                .append(workingTimeSaturday, employee.workingTimeSaturday)
+                .append(workingTimeSunday, employee.workingTimeSunday)
                 .append(taxOfficeNumber, employee.taxOfficeNumber)
                 .append(identificationNumber, employee.identificationNumber)
                 .append(taxClass, employee.taxClass)
@@ -1319,13 +1367,13 @@ public class Employee
                 .append(jobPerformed, employee.jobPerformed)
                 .append(typeOfEmployment, employee.typeOfEmployment)
                 .append(probationPeriod, employee.probationPeriod)
+                .append(durationOfProbationPeriod, employee.durationOfProbationPeriod)
                 .append(otherJobs, employee.otherJobs)
                 .append(lowIncomeEmployment, employee.lowIncomeEmployment)
                 .append(levelOfEducation, employee.levelOfEducation)
                 .append(professionalTraining, employee.professionalTraining)
                 .append(dateApprenticeshipBegins, employee.dateApprenticeshipBegins)
                 .append(planedDateApprenticeshipEnds, employee.planedDateApprenticeshipEnds)
-                .append(holidayEntitlement, employee.holidayEntitlement)
                 .append(typeOfContract, employee.typeOfContract)
                 .append(costCentre, employee.costCentre)
                 .append(departmentNumber, employee.departmentNumber)
@@ -1384,6 +1432,7 @@ public class Employee
                 .append(jobPerformed)
                 .append(typeOfEmployment)
                 .append(probationPeriod)
+                .append(durationOfProbationPeriod)
                 .append(otherJobs)
                 .append(lowIncomeEmployment)
                 .append(levelOfEducation)
@@ -1393,13 +1442,13 @@ public class Employee
                 .append(weeklyWorkingHours)
                 .append(holidayEntitlement)
                 .append(typeOfContract)
-                .append(mon)
-                .append(tue)
-                .append(wed)
-                .append(thu)
-                .append(fri)
-                .append(sat)
-                .append(sun)
+                .append(workingTimeMonday)
+                .append(workingTimeTuesday)
+                .append(workingTimeWednesday)
+                .append(workingTimeThursday)
+                .append(workingTimeFriday)
+                .append(workingTimeSaturday)
+                .append(workingTimeSunday)
                 .append(costCentre)
                 .append(departmentNumber)
                 .append(employedInConstructionIndustrySince)
@@ -1467,6 +1516,7 @@ public class Employee
                 .append("jobPerformed", jobPerformed)
                 .append("typeOfEmployment", typeOfEmployment)
                 .append("probationPeriod", probationPeriod)
+                .append("durationOfProbationPeriod", durationOfProbationPeriod)
                 .append("otherJobs", otherJobs)
                 .append("lowIncomeEmployment", lowIncomeEmployment)
                 .append("levelOfEducation", levelOfEducation)
@@ -1476,13 +1526,13 @@ public class Employee
                 .append("weeklyWorkingHours", weeklyWorkingHours)
                 .append("holidayEntitlement", holidayEntitlement)
                 .append("typeOfContract", typeOfContract)
-                .append("mon", mon)
-                .append("tue", tue)
-                .append("wed", wed)
-                .append("thu", thu)
-                .append("fri", fri)
-                .append("sat", sat)
-                .append("sun", sun)
+                .append("workingTimeMonday", workingTimeMonday)
+                .append("workingTimeTuesday", workingTimeTuesday)
+                .append("workingTimeWednesday", workingTimeWednesday)
+                .append("workingTimeThursday", workingTimeThursday)
+                .append("workingTimeFriday", workingTimeFriday)
+                .append("workingTimeSaturday", workingTimeSaturday)
+                .append("workingTimeSunday", workingTimeSunday)
                 .append("costCentre", costCentre)
                 .append("departmentNumber", departmentNumber)
                 .append("employedInConstructionIndustrySince", employedInConstructionIndustrySince)
