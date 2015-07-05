@@ -6,6 +6,24 @@
 <body>
 
 <div layout:fragment="content">
+    <!-- Start: Language selectors -->
+        <span style="float: right">
+            <a href="?lang=en">
+                <button type="button" th:with="lang=${en}">
+                    <img th:src="@{/images/uk.gif}" src="../../static/images/uk.gif"
+                         class="img-responsive" alt="Flag of the UK"
+                         style="width: 32px; height: 24px;" />
+                </button>
+            </a>
+            <a href="?lang=de">
+                <button th:with="lang=${de}">
+                    <img th:src="@{/images/deutschlandflagge.jpg}" src="../../static/images/uk.gif"
+                         class="img-responsive" alt="Flag of Germany"
+                         style="width: 32px; height: 24px;" />
+                </button>
+            </a>
+        </span>
+    <!-- End: Language selectors-->
     <form th:action="@{/}" method="POST">
         <h1 th:text="#{ClientLogin.header}"></h1>
         <div class="col-sm-6 col-sm-offset-3">

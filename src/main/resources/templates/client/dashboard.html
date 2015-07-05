@@ -9,6 +9,25 @@
 <body>
 
 <div layout:fragment="content">
+    <!-- Start: Language selectors -->
+        <span style="float: right">
+            <a href="?lang=en">
+                <button type="button" th:with="lang=${en}">
+                    <img th:src="@{/images/uk.gif}" src="../../static/images/uk.gif"
+                         class="img-responsive" alt="Flag of the UK"
+                         style="width: 32px; height: 24px;" />
+                </button>
+            </a>
+            <a href="?lang=de">
+                <button th:with="lang=${de}">
+                    <img th:src="@{/images/deutschlandflagge.jpg}" src="../../static/images/uk.gif"
+                         class="img-responsive" alt="Flag of Germany"
+                         style="width: 32px; height: 24px;" />
+                </button>
+            </a>
+        </span>
+    <!-- End: Language selectors-->
+
         <h1 th:text="#{HEADER}"></h1>
         <div th:if="${param.m} != null" th:switch="${param.m[0]}">
 	        <p th:case="'profileChanged'" th:text="#{clientDashboard.profileChanged}" style='color:green;font-weight:bold;' />
