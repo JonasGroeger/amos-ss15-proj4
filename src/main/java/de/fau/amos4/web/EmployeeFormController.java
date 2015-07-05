@@ -189,7 +189,7 @@ public class EmployeeFormController
         
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
-            mav.addObject("preview", false);
+            
             mav.setViewName("employee/edit");
             Employee employee = employeeRepository.findOne(employeeId);
             FormGenerator generator = new FormGenerator();
