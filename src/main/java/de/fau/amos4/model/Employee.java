@@ -93,7 +93,7 @@ public class Employee
 
     @GroupName("PersonalData")
     @FieldOrder(1.0f)
-    @ValidFormat("^[a-zA-Z ]*$")
+    @ValidFormat("^.*$")
     @Column
     String firstName;
 
@@ -210,7 +210,7 @@ public class Employee
     /*
     Employment
      */
-    
+
     @Column
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
@@ -314,23 +314,39 @@ public class Employee
     /*
     Taxes
      */
-    
+    @GroupName("Taxes")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     int taxOfficeNumber; //4 digits
 
+    @GroupName("Taxes")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     long identificationNumber; //11 digits
 
+    @GroupName("Taxes")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     int taxClass; //1 digit
 
-
+    @GroupName("Taxes")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float factor; //0.001 - 0.999
 
+    @GroupName("Taxes")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float numberOfExemptionsForChildren; //0 - 99.5, only .0 and .5 are allowed
 
+    @GroupName("Taxes")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     Denomination denomination;
@@ -338,70 +354,130 @@ public class Employee
     /*
     Social insurance
      */
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     long statutoryHealthInsurance; //8 digits
 
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Parenthood parenthood;
 
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     HealthInsurance healthInsurance;
 
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     PensionInsurance pensionInsurance;
 
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     UnemploymentInsurance unemploymentInsurance;
 
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     NursingCareInsurance nursingCareInsurance;
 
+    @GroupName("Social insurance")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String accidentInsuranceRiskTariff; //12 chars
 
     /* Temporary Employment*/
+    @GroupName("Temporary Employment")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
     TypeOfContract1 typeOfContract1;
-    
+
+    @GroupName("Temporary Employment")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Date contractFixedDate;
-    	
+
+    @GroupName("Temporary Employment")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Date contractConcludeDate;
     
     /* Remuneration*/
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String description1;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String description2;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float amount1;
- 
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float amount2;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Date validFrom1;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Date validFrom2;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float hourlyWage1;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float hourlyWage2;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Date validFrom3;
-    
+
+    @GroupName("Remuneration")
+    @FieldOrder(1.0f)
+    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     Date validFrom4;   
 
