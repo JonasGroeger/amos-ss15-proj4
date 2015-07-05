@@ -2,7 +2,7 @@
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
  * Copyright (C) 2015 Attila Bujaki, Werner Sembach, Jonas Gröger, Oswaldo
- * Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
+ *     Bejarano, Ardhi Sutadi, Nikitha Mohan, Benedikt Rauh
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,16 +19,13 @@
  */
 package de.fau.amos4.test.integration;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
+import de.fau.amos4.test.BaseIntegrationTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.test.context.support.WithUserDetails;
 
-import de.fau.amos4.test.BaseIntegrationTest;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class ClientTest extends BaseIntegrationTest
 {
@@ -37,7 +34,7 @@ public class ClientTest extends BaseIntegrationTest
     {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("client/login"));
+                .andExpect(view().name("/client/login"));
     }
 
     @Test
@@ -96,7 +93,7 @@ public class ClientTest extends BaseIntegrationTest
     {
         mockMvc.perform(get("/client/dashboard"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("client/dashboard"));
+                .andExpect(view().name("/client/dashboard"));
     }
 
     @Test
@@ -113,6 +110,6 @@ public class ClientTest extends BaseIntegrationTest
     {
         mockMvc.perform(get("/client/edit"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("client/edit"));
+                .andExpect(view().name("/client/edit"));
     }
 }

@@ -17,7 +17,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package de.fau.amos4.model.fields;
+
 
 import java.util.Locale;
 
@@ -25,15 +27,20 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-public enum OutputFormat
+
+    //From .properties files
+
+public enum TypeOfContract
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
+    PERMANENTPART("EMPLOYEE.contract.permanentPart"),
+    FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
+    FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
 
     private String text;
 
-    OutputFormat(String text)
+    TypeOfContract(String text)
     {
         this.text = text;
     }

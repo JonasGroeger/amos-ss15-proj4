@@ -16,36 +16,28 @@
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Created by Yao Bochao on 29/06/2015.
  */
-package de.fau.amos4.model.fields;
 
-import java.util.Locale;
+package de.fau.amos4.model;
 
-import org.springframework.context.i18n.LocaleContextHolder;
+import java.util.ArrayList;
+import java.util.List;
 
-import de.fau.amos4.configuration.AppContext;
-
-public enum OutputFormat
-{
-    //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
-
-    private String text;
-
-    OutputFormat(String text)
-    {
-        this.text = text;
+public class FormGroup {
+    public String getName() {
+        return name;
     }
-
-    public String getText()
-    {
-        Locale locale = LocaleContextHolder.getLocale();
-        return AppContext.getApplicationContext().getMessage(text, null, locale);
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public String toString()
-    {
-        return getText();
+    public List<FormField> getFields() {
+        return fields;
     }
+    public void setFields(List<FormField> fields) {
+        this.fields = fields;
+    }
+    String name;
+    List<FormField> fields = new ArrayList<FormField>(); 
 }

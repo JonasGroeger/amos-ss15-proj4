@@ -25,15 +25,18 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-public enum OutputFormat
+public enum LevelOfEducation
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    NOTHING("EMPLOYEE.education.nothing"),
+    SCHOOL("EMPLOYEE.education.school"),
+    HIGHSCHOOL("EMPLOYEE.education.highschool"),
+    ALEVELS("EMPLOYEE.education.aLevels"),
+    UNKNOWN("EMPLOYEE.education.unknown");
 
     private String text;
 
-    OutputFormat(String text)
+    LevelOfEducation(String text)
     {
         this.text = text;
     }

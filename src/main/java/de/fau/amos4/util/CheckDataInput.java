@@ -51,7 +51,7 @@ public class CheckDataInput {
         
         for(Field field : fieldsWithFormat)
         {
-            if(this.isFieldMatching(field, object, "^$"))
+            if(this.isFieldMatching(field, object, "^(|0)$"))
             {
                 result.add(field.getName());
             }
@@ -97,12 +97,13 @@ public class CheckDataInput {
         String FieldContent = "";
         try {
             field.setAccessible(true);
-            FieldContent = field.get(object).toString();
+            Object fieldValue = field.get(object);
+            if(fieldValue != null)
+            {
+                FieldContent = field.get(object).toString();
+            }
             field.setAccessible(false);
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

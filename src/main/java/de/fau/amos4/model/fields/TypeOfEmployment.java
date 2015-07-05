@@ -25,15 +25,15 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import de.fau.amos4.configuration.AppContext;
 
-public enum OutputFormat
+public enum TypeOfEmployment
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    REGULAR("EMPLOYEE.typeOfEmployment.regular"),
+    ADDITIONAL("EMPLOYEE.typeOfEmployment.additional");
 
     private String text;
 
-    OutputFormat(String text)
+    TypeOfEmployment(String text)
     {
         this.text = text;
     }

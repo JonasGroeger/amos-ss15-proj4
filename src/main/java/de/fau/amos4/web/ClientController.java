@@ -19,22 +19,24 @@
  */
 package de.fau.amos4.web;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Locale;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.validation.Valid;
-
+import de.fau.amos4.annotation.TheClient;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.CurrentClient;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Title;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.TranslatorService;
+import de.fau.amos4.util.EmailSender;
+import de.fau.amos4.util.ZipGenerator;
+import de.fau.amos4.web.form.ResetPasswordForm;
 import net.lingala.zip4j.exception.ZipException;
-
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,15 +45,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Title;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.TranslatorService;
-import de.fau.amos4.util.EmailSender;
-import de.fau.amos4.util.ZipGenerator;
-import de.fau.amos4.web.form.ResetPasswordForm;
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Handles client related requests.
@@ -60,13 +60,15 @@ import de.fau.amos4.web.form.ResetPasswordForm;
 public class ClientController
 {
     private final ClientService clientService;
+    private final ClientRepository clientRepository;
     private final EmployeeRepository employeeRepository;
     private final TranslatorService translatorService;
 
     @Autowired
-    public ClientController(ClientService clientService, EmployeeRepository employeeRepository, TranslatorService translatorService)
+    public ClientController(ClientService clientService, ClientRepository clientRepository, EmployeeRepository employeeRepository, TranslatorService translatorService)
     {
         this.clientService = clientService;
+        this.clientRepository = clientRepository;
         this.employeeRepository = employeeRepository;
         this.translatorService = translatorService;
     }
@@ -77,56 +79,84 @@ public class ClientController
      * @throws Exception
      */
     @RequestMapping(value =  "/", method = RequestMethod.GET)
-    public ModelAndView ClientLogin(@RequestParam(value = "m", required=false, defaultValue = "")String message) throws Exception
+    public ModelAndView ClientLogin(@RequestParam(value = "m", required = false, defaultValue = "") String message,
+                                    @TheClient CurrentClient client
+    ) throws Exception
     {
-        ModelAndView mav = new ModelAndView();
-        // Display the default login screen
-        mav.setViewName("client/login");
-        // Set the message to be displayed (invalid login, confirm success, confirm fail, registration done)
-        mav.addObject("message", message);
-    	
-        return mav;
+        if (client != null) {
+            return new ModelAndView("redirect:/client/dashboard");
+        }
+
+        return new ModelAndView("/client/login", "message", message);
     }
 
     @RequestMapping(value = "/client/dashboard")
-    public ModelAndView ClientDashboard(Principal principal)
+    public ModelAndView ClientDashboard(@TheClient CurrentClient client)
     {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("client/dashboard");
-        
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        Iterable<Employee> clientsEmployees = employeeRepository.findByClient(client);
+        final List<Employee> employees = employeeRepository.findByClient(client.getClient());
+        return new ModelAndView("/client/dashboard", "Employees", employees);
+    }
 
-        mav.addObject("Employees", clientsEmployees);
-        return mav;
-    }
-    
     @RequestMapping(value = "/client/profile")
-    public ModelAndView ClientProfile(Principal principal)
+    public ModelAndView ClientProfile(@TheClient CurrentClient client)
     {
-        ModelAndView mav = new ModelAndView();
-        
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        mav.addObject("Client", client);
-        
-        mav.setViewName("client/profile");
+        final Client clientFromDatabase = clientService.getClientByEmail(client.getUsername());
+        return new ModelAndView("/client/profile", "Client", clientFromDatabase);
+    }
+
+    @RequestMapping(value = "/client/edit")
+    public ModelAndView ClientEdit(@TheClient CurrentClient client)
+    {
+        final Client clientFromDatabase = clientService.getClientByEmail(client.getUsername());
+
+        ModelAndView mav = new ModelAndView("/client/edit");
+        mav.addObject("Client", clientFromDatabase);
+        mav.addObject("allTitles", Title.values());
         return mav;
     }
     
-    @RequestMapping(value = "/client/edit")
-    public ModelAndView ClientEdit(Principal principal)
+    @RequestMapping("/client/edit/submit")
+    public String ClientEditSubmit(HttpServletRequest request, @ModelAttribute(value = "client") Client client, @RequestParam("NewPassword") String NewPassword, @RequestParam("ConfirmPassword") String ConfirmPassword, @RequestParam("OldPassword") String OldPassword)
+            throws MessagingException
     {
-        ModelAndView mav = new ModelAndView();
+    	//get database object
+        Client tmp = clientService.getClientByEmail(client.getEmail());
         
-        final String currentUser = principal.getName();
-        Client client = clientService.getClientByEmail(currentUser);
-        mav.addObject("Client", client);
-        mav.addObject("allTitles", Title.values());
+        //update password
+        if (NewPassword.equals("") == false) {
+        	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	        if (NewPassword.equals(ConfirmPassword) && encoder.matches(OldPassword, tmp.getPasswordHash())) {
+	        	//store as hash
+	        	tmp.setPasswordHash(encoder.encode(NewPassword));
+	        }
+	        else {
+	        	return "redirect:/client/edit?m=newPasswordFailed";
+	        }
+        }
         
-        mav.setViewName("client/edit");
-        return mav;
+        if (client.getZipPassword() != null) {
+            tmp.setZipPassword(client.getZipPassword());
+        }
+        
+        //update client information
+        tmp.setOutputFormat(client.getOutputFormat());
+        tmp.setTitle(client.getTitle());
+        tmp.setFirstName(client.getFirstName());
+        tmp.setFamilyName(client.getFamilyName());
+        tmp.setBirthDate(client.getBirthDate()); //FIXME outputs null at the moment
+        tmp.setOfficePhoneNumber(client.getOfficePhoneNumber());
+        tmp.setMobilePhoneNumber(client.getMobilePhoneNumber());
+        tmp.setCompanyName(client.getCompanyName());
+        tmp.setCompanyType(client.getCompanyType());
+        tmp.setCountry(client.getCountry());
+        tmp.setAddress(client.getAddress());
+        tmp.setZipCode(client.getZipCode());
+        tmp.setBirthDate(client.getBirthDate());
+        
+        //write back to database
+        clientRepository.save(tmp);
+        
+        return "redirect:/client/dashboard?m=profileChanged";
     }
 
     /**
@@ -147,13 +177,12 @@ public class ClientController
      */
     @RequestMapping(value = "/client/forgotPassword", method = RequestMethod.POST)
     public ModelAndView postForgotPasswordPage(@Valid @ModelAttribute final ResetPasswordForm resetPasswordForm,
-                                              final BindingResult errors)
+                                               final BindingResult errors)
     {
         if(errors.hasErrors()) {
             final ModelAndView mav = new ModelAndView("/client/forgotPassword");
             mav.addObject("error", translatorService.translate("client.resetpassword.error"));
             return mav;
-
         }
 
         final Client client = clientService.getClientByEmail(resetPasswordForm.getEmail());
@@ -168,35 +197,38 @@ public class ClientController
 
         return new ModelAndView("/client/login");
     }
-    
+
     @RequestMapping(value = "/employee/email/send")
-    public ModelAndView EmployeeEmailSend(Principal principal, @RequestParam(value="id")long id, @RequestParam(value="to")String to) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException, AddressException, MessagingException
+    public ModelAndView EmployeeEmailSend(@RequestParam(value = "id") long id,
+                                          @RequestParam(value = "to") String to,
+                                          @TheClient CurrentClient client
+    ) throws NoSuchMessageException, COSVisitorException, ZipException, IOException, CloneNotSupportedException,
+                     MessagingException
     {
         ModelAndView mav = new ModelAndView();
-        
+
         Employee employee = employeeRepository.findOne(id);
 
-        final String currentUser = principal.getName();
-        Client currentClient = clientService.getClientByEmail(currentUser);
-        
+        Client currentClient = clientService.getClientByEmail(client.getUsername());
+
         int fontSize=12;
         float height= 1;
         height = height*fontSize*1.05f;
-        
+
         Locale locale = LocaleContextHolder.getLocale();
-        
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        
+
         ZipGenerator zipGenerator = new ZipGenerator();
 
         zipGenerator.generate(out, locale, height, employee, fontSize, currentClient.getZipPassword());
-        
+
         String filename = "employee.zip";
         String subject = filename + "_" + currentClient.getCompanyName() + "_" + employee.getFirstName() + "," + employee.getFamilyName();
         String emailContent = "This email is sent by " + currentClient.getEmail() + " via Personalfragebogen 2.0";
         EmailSender sender = new EmailSender();
         sender.SendEmail(to, subject, emailContent, out.toByteArray(), filename);
-        
+
         mav.setViewName("redirect:/client/dashboard");
         return mav;
     }

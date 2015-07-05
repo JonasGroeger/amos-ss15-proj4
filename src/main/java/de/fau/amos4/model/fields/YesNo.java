@@ -19,21 +19,20 @@
  */
 package de.fau.amos4.model.fields;
 
-import java.util.Locale;
-
+import de.fau.amos4.configuration.AppContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import de.fau.amos4.configuration.AppContext;
+import java.util.Locale;
 
-public enum OutputFormat
+public enum YesNo
 {
     //From .properties files
-    LODAS("OUTPUTFORMAT.lodas"),
-    LuG("OUTPUTFORMAT.lug");
+    YES("KEYWORD.yes"),
+    NO("KEYWORD.no");
 
     private String text;
 
-    OutputFormat(String text)
+    YesNo(String text)
     {
         this.text = text;
     }
@@ -44,8 +43,16 @@ public enum OutputFormat
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 
-    public String toString()
+    public int getLodas()
     {
-        return getText();
+        switch (this)
+        {
+            case NO:
+                return 0;
+            case YES:
+                return 1;
+        }
+        return -1;
     }
+
 }
