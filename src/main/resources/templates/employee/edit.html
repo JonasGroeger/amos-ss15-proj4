@@ -24,7 +24,7 @@
                     <div th:if="${__${field.getOptions().size()}__ &gt; 0}" class="form-group">
                         <label th:text="#{'EMPLOYEE.' + ${field.getName()}}"></label>
                         <div>
-                            <select th:name="${field.getName()}" th:id="${field.getName()}" th:disabled="${preview}">
+                            <select class="form-control" th:name="${field.getName()}" th:id="${field.getName()}" th:disabled="${preview}">
                                 <option value="" th:text="#{EMPLOYEE.select}"></option>
                                 <option th:each="option : ${field.getOptions()}" th:value="${option}" th:text="#{'EMPLOYEE.' + ${field.getName()} + '.' + ${option}}" th:selected="${field.getValue() == option}"></option>
                             </select>
