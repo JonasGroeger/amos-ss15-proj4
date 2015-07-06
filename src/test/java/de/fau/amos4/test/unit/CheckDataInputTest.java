@@ -173,7 +173,7 @@ public class CheckDataInputTest
         List<String> listInvalidFields = cdi.listInvalidFields(e);
         List<String> listEmptyFields = cdi.listEmptyFields(e);
         listInvalidFields.removeAll(listEmptyFields);
-		Boolean isObjectValid = listInvalidFields.size() == 0;
+        Boolean isObjectValid = listInvalidFields.size() == 0;
         Assert.assertTrue(isObjectValid);
     }
     

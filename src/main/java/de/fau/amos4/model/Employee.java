@@ -73,7 +73,7 @@ public class Employee
 
     @GroupName("PersonalData")
     @FieldOrder(1.0f)
-    @ValidFormat("^.*$")
+    @ValidFormat("^[\\p{L} ']*$")
     @Column
     String firstName;
 

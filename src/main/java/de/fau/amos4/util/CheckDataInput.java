@@ -51,7 +51,7 @@ public class CheckDataInput {
         
         for(Field field : fieldsWithFormat)
         {
-            if(this.isFieldMatching(field, object, "^(|0)$"))
+            if(this.isFieldMatching(field, object, "^(|0|0.0)$"))
             {
                 result.add(field.getName());
             }
