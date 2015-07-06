@@ -110,7 +110,7 @@ public class Employee
 
     @GroupName("PersonalData")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^.{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     String street;
 
@@ -316,13 +316,13 @@ public class Employee
 
     @GroupName("Taxes")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^.{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float factor; //0.001 - 0.999
 
     @GroupName("Taxes")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^.{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float numberOfExemptionsForChildren; //0 - 99.5, only .0 and .5 are allowed
 
@@ -417,13 +417,13 @@ public class Employee
 
     @GroupName("Remuneration")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^[0-9.]{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float amount1;
 
     @GroupName("Remuneration")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^[0-9.]{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float amount2;
 
@@ -441,13 +441,13 @@ public class Employee
 
     @GroupName("Remuneration")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^[0-9.]{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float hourlyWage1;
 
     @GroupName("Remuneration")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^[0-9.]{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     float hourlyWage2;
 
