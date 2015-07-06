@@ -50,9 +50,4 @@ public enum TypeOfContract1
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
-
-    public String toString()
-    {
-        return getText();
-    }
 }

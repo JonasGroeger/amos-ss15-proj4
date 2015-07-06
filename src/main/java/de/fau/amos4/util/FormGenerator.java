@@ -25,11 +25,14 @@ package de.fau.amos4.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sun.tools.jar.resources.jar;
 import de.fau.amos4.model.*;
 
 // Class used to load form data from class description. 
@@ -74,7 +77,16 @@ public class FormGenerator {
             
             try {
                 Object Value = clazz.getMethod("get" + FieldName.substring(0,1).toUpperCase() + FieldName.substring(1)).invoke(instance);
-                FieldValue = (Value == null) ? "" : Value.toString();
+                Class cl = field.getClass();
+                if(Value instanceof java.util.Date)
+                {
+                    FieldValue = (Value == null) ? "" : new SimpleDateFormat("dd/MM/yyyy").format((java.util.Date)Value).toString();
+                }
+                else
+                {
+                    FieldValue = (Value == null) ? "" : Value.toString();
+                }
+                
             } catch (Exception e) {
                 continue;
             }

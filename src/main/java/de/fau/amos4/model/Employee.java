@@ -90,6 +90,8 @@ public class Employee
     String familyName;
 
     @Column
+    @GroupName("PersonalData")    
+    @FieldOrder(1.0f)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     Date birthDate;

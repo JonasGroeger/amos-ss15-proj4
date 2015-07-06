@@ -53,8 +53,4 @@ public enum NursingCareInsurance {
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 
-    public String toString()
-    {
-        return getText();
-    }
 }
