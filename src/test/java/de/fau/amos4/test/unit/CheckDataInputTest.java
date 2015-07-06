@@ -74,7 +74,7 @@ public class CheckDataInputTest
         e.setFamilyName("ThisFamilyWithNumber30!");
         e.setPlaceOfBirth("asdf(<&");
         //e.setCountryOfBirth("");
-        e.setStreet("This?*!@#$");
+        e.setStreet("This?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#$");
         e.setZipCode("123456%");
         e.setHouseNumber("1010101010!!");
         e.setCity("ThisCity<>()@");

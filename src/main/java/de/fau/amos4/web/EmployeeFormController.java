@@ -189,7 +189,6 @@ public class EmployeeFormController
         
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
-
             mav.setViewName("employee/edit");
             Employee employee = employeeRepository.findOne(employeeId);
             FormGenerator generator = new FormGenerator();
@@ -234,19 +233,30 @@ public class EmployeeFormController
                                  BindingResult result, Model model) throws Exception
     {
         Employee e = employeeService.getEmployeeByToken(employee.getToken());
+        try
+        {
         Client client = e.getClient();
-        employee.setClient(client);
+        if(client != null)
+        {
+            employee.setClient(client);
+            client.getEmployees().add(employee);
+            clientRepository.save(client);
+        }
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
-        client.getEmployees().add(employee);
-        clientRepository.save(client);
 
         // If the employee is new: Create
         // If the employee already has a primary key: Update
-        Employee newOrUpdatedEmployee = employeeRepository.save(employee);
+        employeeRepository.save(employee);
 
         // Setup model and return view
-        model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
+        model.addAttribute("EmployeeId", employee.getId());
         return "employee/confirm";
     }
 

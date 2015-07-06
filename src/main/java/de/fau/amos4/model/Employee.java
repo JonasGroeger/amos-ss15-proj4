@@ -46,14 +46,11 @@ public class Employee
     /*
     General Attributes
      */
-    @GroupName("General")
-    @FieldOrder(1.0f)
-    @ValidFormat("^[0-9]*$")
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
+    
     @Column
     String token;
 
