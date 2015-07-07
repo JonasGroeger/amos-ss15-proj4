@@ -33,7 +33,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -46,6 +45,7 @@ public class Employee
     /*
     General Attributes
      */
+	
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +63,8 @@ public class Employee
     @ValidFormat("^[0-9]*$")
     @Column
     int personnelNumber;
-
+    
+    
     /*
     Personal Data
      */
@@ -186,6 +187,7 @@ public class Employee
     @Column
     String additionToAddress;
     
+    
     /*
     Employment
      */
@@ -290,9 +292,11 @@ public class Employee
     @Enumerated(EnumType.STRING)
     private PersonGroup personGroup;
     
+    
     /*
     Taxes
      */
+    
     @GroupName("Taxes")
     @FieldOrder(1.0f)
     @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -329,10 +333,12 @@ public class Employee
     @Column
     @Enumerated(EnumType.STRING)
     Denomination denomination;
-
+    
+    
     /*
     Social insurance
      */
+    
     @GroupName("Social insurance")
     @FieldOrder(1.0f)
     @ValidFormat("^\\w{1,30}$") // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -462,20 +468,14 @@ public class Employee
 
     public Employee()
     {
-
+    	
     }
 
     public Map<String,String> getPersonalDataFields() {
         Map<String,String> allFields = new LinkedHashMap<String, String>();
         Locale locale = LocaleContextHolder.getLocale();
         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
-        DateFormat df;
-        if(locale.getLanguage().equals("de")) {
-            df = new SimpleDateFormat("dd.MM.yyyy");
-        } else {
-            df = new SimpleDateFormat("dd/MM/yyyy");
-        }
-
+        
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.id", null, locale), Long.toString(getId()));
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.companyName", null, locale), getClient().getCompanyName());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.personnelNumber", null, locale), Long.toString(getPersonnelNumber()));
@@ -507,12 +507,7 @@ public class Employee
         Map<String,String> allFields = new LinkedHashMap<String, String>();
         Locale locale = LocaleContextHolder.getLocale();
         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
-        DateFormat df;
-        if(locale.getLanguage().equals("de")) {
-            df = new SimpleDateFormat("dd.MM.yyyy");
-        } else {
-            df = new SimpleDateFormat("dd/MM/yyyy");
-        }
+        
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.typeOfContract1", null, locale), getTypeOfContract1().toString());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.contractFixedDate", null, locale), format.format(getContractFixedDate()));
         allFields.put(AppContext.getApplicationContext().getMessage("EMPLOYEE.contractConcludeDate", null, locale), format.format(getContractFixedDate()));
@@ -535,12 +530,7 @@ public class Employee
         Map<String,String> allFields = new LinkedHashMap<String, String>();
         Locale locale = LocaleContextHolder.getLocale();
         DateFormat format = DateFormat.getDateInstance(DateFormat.LONG, locale);
-        DateFormat df;
-        if(locale.getLanguage().equals("de")) {
-            df = new SimpleDateFormat("dd.MM.yyyy");
-        } else {
-            df = new SimpleDateFormat("dd/MM/yyyy");
-        }
+        
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.description1", null, locale), getDescription1().toString());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.description2", null, locale), getDescription2().toString());
         allFields.put( AppContext.getApplicationContext().getMessage("EMPLOYEE.amount1", null, locale), Float.toString(getAmount1()));
@@ -1159,7 +1149,8 @@ public class Employee
    {
        this.contractConcludeDate = contractConcludeDate;
    }
-/*Remuneration*/
+   
+   /*Remuneration*/
    public String getDescription1()
    {
        return description1;
@@ -1175,7 +1166,7 @@ public class Employee
        return description2;
    }
 
-   public void setDescription2(String description1)
+   public void setDescription2(String description2)
    {
        this.description2 = description2;
    }
@@ -1205,7 +1196,7 @@ public class Employee
        return validFrom1;
    }
 
-   public void setValidFrom1(Date ValidFrom1)
+   public void setValidFrom1(Date validFrom1)
    {
        this.validFrom1 = validFrom1;
    }
@@ -1215,7 +1206,7 @@ public class Employee
        return validFrom2;
    }
 
-   public void setValidFrom2(Date ValidFrom2)
+   public void setValidFrom2(Date validFrom2)
    {
        this.validFrom2= validFrom2;
    }
@@ -1245,7 +1236,7 @@ public class Employee
        return validFrom3;
    }
 
-   public void setValidFrom3(Date ValidFrom3)
+   public void setValidFrom3(Date validFrom3)
    {
        this.validFrom3 = validFrom3;
    }
@@ -1255,7 +1246,7 @@ public class Employee
        return validFrom4;
    }
 
-   public void setValidFrom4(Date ValidFrom4)
+   public void setValidFrom4(Date validFrom4)
    {
        this.validFrom4 = validFrom4;
    }
