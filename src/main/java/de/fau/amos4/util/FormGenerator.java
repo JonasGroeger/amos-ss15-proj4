@@ -28,6 +28,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,7 +152,22 @@ public class FormGenerator {
             group.getFields().add(formField);
         }
         
-        
+        // Order group elements based on Order annotations
+        for(FormGroup group : form.getGroups())
+        {
+            List<FormField> fieldsInGroup = group.getFields();
+            fieldsInGroup.sort(new Comparator<FormField>(){
+                   @Override
+                   public int compare(final FormField lhs,FormField rhs) {
+                     if(lhs.getFormOrder() < rhs.getFormOrder())
+                     {
+                         return -1;
+                     }
+                     
+                     return 1;
+                     }
+                 });
+        }
         
         return form;
     }
