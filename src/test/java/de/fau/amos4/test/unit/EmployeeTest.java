@@ -20,6 +20,10 @@
 
 package de.fau.amos4.test.unit;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,11 +36,194 @@ import org.junit.Test;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.test.BaseWebApplicationContextTests;
+import de.fau.amos4.util.CheckDataInput;
 import de.fau.amos4.util.TokenGenerator;
 
 public class EmployeeTest extends BaseWebApplicationContextTests
 {
+    // Make sure that a valid house number is accepted (34b)
+    @Test
+    public void test_ValidHouseNumber_Accepted() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setHouseNumber("34b");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("houseNumber"));
+    }
 
+    // Make sure that an invalid house number is rejected (34b !!!)
+    @Test
+    public void test_InvalidHouseNumber_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setHouseNumber("34b !!!");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("houseNumber"));
+    }
+    
+    // Make sure that a too long street value is not valid
+    @Test
+    public void test_TooLongStreeName_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setStreet("Arnold-von-Maximilian-Straße 193434/b 1. OG 23");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("street"));
+    }
+
+    // Make sure that a valid street is accepted
+    @Test
+    public void test_ValidStreet_Accepted() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setStreet("Werner-von-Siemens-Str. 2.");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("street"));
+    }
+
+    // Make sure that a street name with special chars is rejected
+    @Test
+    public void test_StreetWithKoreanChars_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setStreet("Werner-von-Siemens-Str.˘˘");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("street"));
+    }
+    
+
+    // Make sure that a too long first name is not valid
+    @Test
+    public void testTooLongFirstNameIsInvalid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("Alexander Anderson Anthony Benjamin Broderick Cameron Christopher Demetrius DeAndre Emerson");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("firstName"));
+    }
+    
+    // Make sure that a fake, but correct name is accepted (Hans ßéáűőúöüóÖOÜÓÚŐŐÁÄä)
+    @Test
+    public void testCorrectFirstNameIsAccepted_2() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("Hans ßéáűőúöüóÖOÜÓÚŐŐÁÄä");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("firstName"));
+    }
+    
+    // Make sure that a first name containing invalid characters is rejected
+    @Test
+    public void test_IncorrectFirstName_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("Jan +!");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("firstName"));
+    }
+    
+    // Make sure that a first name containing numbers is rejected
+    @Test
+    public void test_FirstNameWithNumbers_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("Jan 314");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("firstName"));
+    }
+    
+    // Make sure that a correct name is accepted 
+    @Test
+    public void testCorrectFirstNameIsAccepted() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("Zoé");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("firstName"));
+    }
+
+    // Make sure that a correct city is accepted 
+    @Test
+    public void test_CorrectCity_Accepted_1() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setCity("Auerbach in der Oberpfalz");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("city"));
+    }
+    
+    // Make sure that a correct city is accepted 
+    @Test
+    public void test_CorrectCity_Accepted_2() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setCity("Aßlar");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("city"));
+    }
+    
+    // Make sure that a correct city is accepted 
+    @Test
+    public void test_CorrectCity_Accepted_3() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setCity("Bad Frankenhausen/Kyffhäuser");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("city"));
+    }
+    
+    // Make sure that a correct city is accepted 
+    @Test
+    public void test_CorrectCity_Accepted_4() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setCity("Bitterfeld-Wolfen");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("city"));
+    }
+    
     // Make sure that the generated Token matches the format expectation. Should be a 6 chars long alphanumeric string.
     @Test
     public void generatedTokenIsInCorrectFormat() throws Exception

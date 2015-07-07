@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class EmployeeTest extends BaseIntegrationTest
 {
+
     // Make sure that employee/token page works and properly mapped to the view.
     @Test
     public void testThatTokenPageIsWorking() throws Exception

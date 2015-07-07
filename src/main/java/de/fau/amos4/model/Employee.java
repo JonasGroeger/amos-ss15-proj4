@@ -44,6 +44,11 @@ public class Employee {
 	 * General Attributes
 	 */
 
+	private final static String LatinCharsAndSomeCharsMax30 = "^[\\p{L} ']{0,30}$";
+	private final static String LatinCharsAndCharsCommonInAddresses = "^[\\p{L}0-9 _\\-\\.']{0,30}$";
+	private final static String LatinCharsAndCharsCommonCityNames = "^[\\p{L} \\-'/]{0,30}$";
+	private final static String HouseNumberRegex = "^\\d+[a-zA-Z]*$";
+	
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,20 +73,20 @@ public class Employee {
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^[\\p{L} ']*$")
+	@ValidFormat(LatinCharsAndSomeCharsMax30)
 	@Column
 	String firstName;
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^\\w{1,30}$")
+	@ValidFormat(LatinCharsAndSomeCharsMax30)
 	@Column
 	String maidenName;
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
 	@Column
-	@ValidFormat("^\\w{1,30}$")
+	@ValidFormat(LatinCharsAndSomeCharsMax30)
 	String familyName;
 
 	@Column
@@ -93,22 +98,19 @@ public class Employee {
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^\\w{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+	@ValidFormat(LatinCharsAndSomeCharsMax30)
 	@Column
 	String placeOfBirth;
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^\\w{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+	@ValidFormat(LatinCharsAndSomeCharsMax30)
 	@Column
 	String countryOfBirth;
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^.{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+	@ValidFormat(LatinCharsAndCharsCommonInAddresses)
 	@Column
 	String street;
 
@@ -121,15 +123,13 @@ public class Employee {
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^\\w{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+	@ValidFormat(HouseNumberRegex)
 	@Column
 	String houseNumber;
 
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
-	@ValidFormat("^\\w{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+	@ValidFormat(LatinCharsAndCharsCommonCityNames)
 	@Column
 	String city;
 
@@ -151,7 +151,6 @@ public class Employee {
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
 	@Column
 	@Enumerated(EnumType.STRING)
 	MaritalStatus maritalStatus;
@@ -159,7 +158,6 @@ public class Employee {
 	@GroupName("PersonalData")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
-	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
 	@Column
 	@Enumerated(EnumType.STRING)
 	YesNo disabled;
