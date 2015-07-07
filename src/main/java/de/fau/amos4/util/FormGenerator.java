@@ -156,7 +156,7 @@ public class FormGenerator {
         for(FormGroup group : form.getGroups())
         {
             List<FormField> fieldsInGroup = group.getFields();
-            fieldsInGroup.sort(new Comparator<FormField>(){
+            java.util.Collections.sort(fieldsInGroup ,new Comparator<FormField>(){
                    @Override
                    public int compare(final FormField lhs,FormField rhs) {
                      if(lhs.getFormOrder() < rhs.getFormOrder())
