@@ -306,8 +306,34 @@ public class Lodas
 
         // Section 103
         sb.append(indent()).append("103; ")
+                .append(field(personnelNumber))
                 .append(field(employee.getDisabled().getLodas()))
-                .append(field(personnelNumber));
+        		.append("\n");
+        
+        // Section 200
+        sb.append(indent()).append("200; ")
+        		.append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getEntryDate())))
+                .append("\n");
+        
+        // Section 201
+        sb.append(indent()).append("201; ")
+        		.append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getFirstDay())))
+                .append("\n");
+        
+        // Section 300
+        sb.append(indent()).append("300; ")
+        		.append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getPersonGroup().getLodas())))
+                .append("\n");
+        
+        // Section 301
+        sb.append(indent()).append("301; ")
+        		.append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getDateApprenticeshipBegins())))
+                .append(field(dateFormat.format(employee.getPlanedDateApprenticeshipEnds())))
+                .append("\n");
 
         return sb.toString();
     }
