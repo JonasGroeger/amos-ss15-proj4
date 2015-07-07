@@ -42,8 +42,16 @@ public class FormGeneratorTest {
         int data = 1;
 
         @GroupName("Strings")
+        @FieldOrder(2.0f)
+        String name2 = "DummyName";
+        
+        @GroupName("Strings")
         @FieldOrder(1.0f)
         String name = "DummyName";
+
+        @GroupName("Strings")
+        @FieldOrder(3.0f)
+        String name3 = "DummyName";
 
         @GroupName("Enums")
         @FieldOrder(1.0f)
@@ -57,6 +65,20 @@ public class FormGeneratorTest {
             this.data = data;
         }
 
+        public String getName2() {
+            return name;
+        }
+
+        public void setName2(String name) {
+            this.name = name;
+        }
+        public String getName3() {
+            return name;
+        }
+
+        public void setName3(String name) {
+            this.name = name;
+        }
         public String getName() {
             return name;
         }
@@ -74,6 +96,33 @@ public class FormGeneratorTest {
         }
     }
 
+    // Make sure that the String fields are ordered based on their Order Annotation
+    @Test
+    public void DummyClass_StringsFieldsAreInTheCorrectOrder() throws Exception
+    {
+        FormGenerator generator = new FormGenerator();
+        
+        // Generate form data from class description
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
+        
+        FormGroup stringGroup = null;
+        for(FormGroup f : form.getGroups())
+        {
+            if(f.getName().equals("Strings"))
+            {
+            stringGroup = f;
+            }
+        }
+        
+        String FirstFieldName = stringGroup.getFields().get(0).getName();
+        String SecondFieldName = stringGroup.getFields().get(1).getName();
+        String ThirdFieldName = stringGroup.getFields().get(2).getName();
+
+        Assert.assertEquals("name", FirstFieldName);
+        Assert.assertEquals("name2", SecondFieldName);
+        Assert.assertEquals("name3", ThirdFieldName);
+    }
+ 
     // Make sure that both 'Integers' and 'Strings' groups are found in the dummy class
     @Test
     public void DummyClass_HasTwoGroups() throws Exception
