@@ -29,8 +29,7 @@ public enum Sex
 {
     //From .properties files
     MALE("EMPLOYEE.sex.male"),
-    FEMALE("EMPLOYEE.sex.female"),
-    UNKNOWN("EMPLOYEE.sex.unknown");
+    FEMALE("EMPLOYEE.sex.female");
 
     private String text;
 
