@@ -257,10 +257,10 @@ public class Employee {
 	Date planedDateApprenticeshipEnds;
 
 	@Column
-	int weeklyWorkingHours;
+	float weeklyWorkingHours;
 
 	@Column
-	String holidayEntitlement;
+	float holidayEntitlement;
 
 	@Column
 	@Enumerated(EnumType.STRING)
@@ -268,25 +268,25 @@ public class Employee {
 
 	// Distribution of Weekly Working Hours
 	@Column
-	int mon;
+	float mon;
 
 	@Column
-	int tue;
+	float tue;
 
 	@Column
-	int wed;
+	float wed;
 
 	@Column
-	int thu;
+	float thu;
 
 	@Column
-	int fri;
+	float fri;
 
 	@Column
-	int sat;
+	float sat;
 
 	@Column
-	int sun;
+	float sun;
 
 	@Column
 	String costCentre;
@@ -1145,22 +1145,6 @@ public class Employee {
 		this.planedDateApprenticeshipEnds = planedDateApprenticeshipBegins;
 	}
 
-	public int getWeeklyWorkingHours() {
-		return weeklyWorkingHours;
-	}
-
-	public void setWeeklyWorkingHours(int weeklyWorkingHours) {
-		this.weeklyWorkingHours = weeklyWorkingHours;
-	}
-
-	public String getHolidayEntitlement() {
-		return holidayEntitlement;
-	}
-
-	public void setHolidayEntitlement(String holidayEntitlement) {
-		this.holidayEntitlement = holidayEntitlement;
-	}
-
 	public TypeOfContract getTypeOfContract() {
 		return typeOfContract;
 	}
@@ -1169,59 +1153,75 @@ public class Employee {
 		this.typeOfContract = typeOfContract;
 	}
 
-	public int getMon() {
+	public float getWeeklyWorkingHours() {
+		return weeklyWorkingHours;
+	}
+
+	public float getHolidayEntitlement() {
+		return holidayEntitlement;
+	}
+
+	public float getMon() {
 		return mon;
 	}
 
-	public void setMon(int mon) {
-		this.mon = mon;
-	}
-
-	public int getTue() {
+	public float getTue() {
 		return tue;
 	}
 
-	public void setTue(int tue) {
-		this.tue = tue;
-	}
-
-	public int getWed() {
+	public float getWed() {
 		return wed;
 	}
 
-	public void setWed(int wed) {
-		this.wed = wed;
-	}
-
-	public int getThu() {
+	public float getThu() {
 		return thu;
 	}
 
-	public void setThu(int thu) {
-		this.thu = thu;
-	}
-
-	public int getFri() {
+	public float getFri() {
 		return fri;
 	}
 
-	public void setFri(int fri) {
-		this.fri = fri;
-	}
-
-	public int getSat() {
+	public float getSat() {
 		return sat;
 	}
 
-	public void setSat(int sat) {
-		this.sat = sat;
-	}
-
-	public int getSun() {
+	public float getSun() {
 		return sun;
 	}
 
-	public void setSun(int sun) {
+	public void setWeeklyWorkingHours(float weeklyWorkingHours) {
+		this.weeklyWorkingHours = weeklyWorkingHours;
+	}
+
+	public void setHolidayEntitlement(float holidayEntitlement) {
+		this.holidayEntitlement = holidayEntitlement;
+	}
+
+	public void setMon(float mon) {
+		this.mon = mon;
+	}
+
+	public void setTue(float tue) {
+		this.tue = tue;
+	}
+
+	public void setWed(float wed) {
+		this.wed = wed;
+	}
+
+	public void setThu(float thu) {
+		this.thu = thu;
+	}
+
+	public void setFri(float fri) {
+		this.fri = fri;
+	}
+
+	public void setSat(float sat) {
+		this.sat = sat;
+	}
+
+	public void setSun(float sun) {
 		this.sun = sun;
 	}
 
@@ -1554,7 +1554,7 @@ public class Employee {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (fri != other.fri)
+		if (Float.floatToIntBits(fri) != Float.floatToIntBits(other.fri))
 			return false;
 		if (from1 == null) {
 			if (other.from1 != null)
@@ -1568,10 +1568,8 @@ public class Employee {
 			return false;
 		if (healthInsurance != other.healthInsurance)
 			return false;
-		if (holidayEntitlement == null) {
-			if (other.holidayEntitlement != null)
-				return false;
-		} else if (!holidayEntitlement.equals(other.holidayEntitlement))
+		if (Float.floatToIntBits(holidayEntitlement) != Float
+				.floatToIntBits(other.holidayEntitlement))
 			return false;
 		if (Float.floatToIntBits(hourlyWage1) != Float
 				.floatToIntBits(other.hourlyWage1))
@@ -1609,7 +1607,7 @@ public class Employee {
 			return false;
 		if (maritalStatus != other.maritalStatus)
 			return false;
-		if (mon != other.mon)
+		if (Float.floatToIntBits(mon) != Float.floatToIntBits(other.mon))
 			return false;
 		if (Float.floatToIntBits(numberOfExemptionsForChildren) != Float
 				.floatToIntBits(other.numberOfExemptionsForChildren))
@@ -1646,7 +1644,7 @@ public class Employee {
 			return false;
 		if (professionalTraining != other.professionalTraining)
 			return false;
-		if (sat != other.sat)
+		if (Float.floatToIntBits(sat) != Float.floatToIntBits(other.sat))
 			return false;
 		if (sex != other.sex)
 			return false;
@@ -1662,13 +1660,13 @@ public class Employee {
 				return false;
 		} else if (!street.equals(other.street))
 			return false;
-		if (sun != other.sun)
+		if (Float.floatToIntBits(sun) != Float.floatToIntBits(other.sun))
 			return false;
 		if (taxClass != other.taxClass)
 			return false;
 		if (taxOfficeNumber != other.taxOfficeNumber)
 			return false;
-		if (thu != other.thu)
+		if (Float.floatToIntBits(thu) != Float.floatToIntBits(other.thu))
 			return false;
 		if (to1 == null) {
 			if (other.to1 != null)
@@ -1685,7 +1683,7 @@ public class Employee {
 				return false;
 		} else if (!token.equals(other.token))
 			return false;
-		if (tue != other.tue)
+		if (Float.floatToIntBits(tue) != Float.floatToIntBits(other.tue))
 			return false;
 		if (typeOfContract != other.typeOfContract)
 			return false;
@@ -1727,9 +1725,10 @@ public class Employee {
 				return false;
 		} else if (!validFrom4.equals(other.validFrom4))
 			return false;
-		if (wed != other.wed)
+		if (Float.floatToIntBits(wed) != Float.floatToIntBits(other.wed))
 			return false;
-		if (weeklyWorkingHours != other.weeklyWorkingHours)
+		if (Float.floatToIntBits(weeklyWorkingHours) != Float
+				.floatToIntBits(other.weeklyWorkingHours))
 			return false;
 		if (zipCode == null) {
 			if (other.zipCode != null)
@@ -1808,15 +1807,12 @@ public class Employee {
 				+ ((firstDay == null) ? 0 : firstDay.hashCode());
 		result = prime * result
 				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + fri;
+		result = prime * result + Float.floatToIntBits(fri);
 		result = prime * result + ((from1 == null) ? 0 : from1.hashCode());
 		result = prime * result + ((from2 == null) ? 0 : from2.hashCode());
 		result = prime * result
 				+ ((healthInsurance == null) ? 0 : healthInsurance.hashCode());
-		result = prime
-				* result
-				+ ((holidayEntitlement == null) ? 0 : holidayEntitlement
-						.hashCode());
+		result = prime * result + Float.floatToIntBits(holidayEntitlement);
 		result = prime * result + Float.floatToIntBits(hourlyWage1);
 		result = prime * result + Float.floatToIntBits(hourlyWage2);
 		result = prime * result
@@ -1838,7 +1834,7 @@ public class Employee {
 				+ ((maidenName == null) ? 0 : maidenName.hashCode());
 		result = prime * result
 				+ ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
-		result = prime * result + mon;
+		result = prime * result + Float.floatToIntBits(mon);
 		result = prime * result
 				+ Float.floatToIntBits(numberOfExemptionsForChildren);
 		result = prime
@@ -1871,7 +1867,7 @@ public class Employee {
 				* result
 				+ ((professionalTraining == null) ? 0 : professionalTraining
 						.hashCode());
-		result = prime * result + sat;
+		result = prime * result + Float.floatToIntBits(sat);
 		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
 		result = prime
 				* result
@@ -1881,14 +1877,14 @@ public class Employee {
 				* result
 				+ (int) (statutoryHealthInsurance ^ (statutoryHealthInsurance >>> 32));
 		result = prime * result + ((street == null) ? 0 : street.hashCode());
-		result = prime * result + sun;
+		result = prime * result + Float.floatToIntBits(sun);
 		result = prime * result + taxClass;
 		result = prime * result + taxOfficeNumber;
-		result = prime * result + thu;
+		result = prime * result + Float.floatToIntBits(thu);
 		result = prime * result + ((to1 == null) ? 0 : to1.hashCode());
 		result = prime * result + ((to2 == null) ? 0 : to2.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
-		result = prime * result + tue;
+		result = prime * result + Float.floatToIntBits(tue);
 		result = prime * result
 				+ ((typeOfContract == null) ? 0 : typeOfContract.hashCode());
 		result = prime * result
@@ -1916,8 +1912,8 @@ public class Employee {
 				+ ((validFrom3 == null) ? 0 : validFrom3.hashCode());
 		result = prime * result
 				+ ((validFrom4 == null) ? 0 : validFrom4.hashCode());
-		result = prime * result + wed;
-		result = prime * result + weeklyWorkingHours;
+		result = prime * result + Float.floatToIntBits(wed);
+		result = prime * result + Float.floatToIntBits(weeklyWorkingHours);
 		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
 		return result;
 	}

@@ -310,6 +310,7 @@ public class Lodas
                 .append(field(employee.getDisabled().getLodas()))
         		.append("\n");
         
+        //FIXME what to do if field is empty?
         // Section 200
         sb.append(indent()).append("200; ")
         		.append(field(personnelNumber))
@@ -325,7 +326,7 @@ public class Lodas
         // Section 300
         sb.append(indent()).append("300; ")
         		.append(field(personnelNumber))
-                .append(field(dateFormat.format(employee.getPersonGroup().getLodas())))
+                .append(field(employee.getPersonGroup().getLodas()))
                 .append("\n");
         
         // Section 301
@@ -334,6 +335,46 @@ public class Lodas
                 .append(field(dateFormat.format(employee.getDateApprenticeshipBegins())))
                 .append(field(dateFormat.format(employee.getPlanedDateApprenticeshipEnds())))
                 .append("\n");
+        
+        // Section 400
+        sb.append(indent()).append("400; ")
+        		.append(field(personnelNumber))
+                .append(field(employee.getDescriptionOfProfession()))
+                .append(field(employee.getJobPerformed()))
+                .append(field(employee.getLevelOfEducation().getLodas()))
+                .append(field(employee.getProfessionalTraining().getLodas()))
+                .append(field(0)) //TODO find out what really goes here
+                .append(field(employee.getTypeOfContract().getLodas()))
+                .append("\n");
+        
+        // Section 502
+        sb.append(indent()).append("502; ")
+        		.append(field(personnelNumber))
+                .append(field(employee.getDepartmentNumber()))
+                .append("\n");
+        
+        // Section 503
+        sb.append(indent()).append("503; ")
+        		.append(field(personnelNumber))
+                .append(field(employee.getCostCentre()))
+                .append("\n");
+        
+        // Section 800
+        sb.append(indent()).append("800; ")
+        		.append(field(personnelNumber))
+        		.append(field(String.format("%.2f", employee.getWeeklyWorkingHours())))
+                .append(field(String.format("%.2f", employee.getMon())))
+                .append(field(String.format("%.2f", employee.getTue())))
+                .append(field(String.format("%.2f", employee.getWed())))
+                .append(field(String.format("%.2f", employee.getThu())))
+                .append(field(String.format("%.2f", employee.getFri())))
+                .append(field(String.format("%.2f", employee.getSat())))
+                .append("\n");
+        
+        // Section 801
+        sb.append(indent()).append("801; ")
+        		.append(field(personnelNumber))
+        		.append(field(String.format("%.1f", employee.getHolidayEntitlement())));
 
         return sb.toString();
     }

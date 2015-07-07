@@ -67,5 +67,4 @@ public enum Denomination {
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
-
 }
