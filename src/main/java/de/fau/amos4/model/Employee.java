@@ -354,21 +354,21 @@ public class Employee {
 	 * Social insurance
 	 */
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
 	@Column
 	long statutoryHealthInsurance; // 8 digits
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
 	@Column
 	Parenthood parenthood;
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -376,7 +376,7 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	HealthInsurance healthInsurance;
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -384,7 +384,7 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	PensionInsurance pensionInsurance;
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -392,7 +392,7 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	UnemploymentInsurance unemploymentInsurance;
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -400,7 +400,7 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	NursingCareInsurance nursingCareInsurance;
 
-	@GroupName("Social insurance")
+	@GroupName("SocialInsurance")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -411,7 +411,7 @@ public class Employee {
 	 * Temporary Employment
 	 */
 
-	@GroupName("Temporary Employment")
+	@GroupName("TemporaryEmployment")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -419,14 +419,14 @@ public class Employee {
 	@Enumerated(EnumType.STRING)
 	TypeOfContract1 typeOfContract1;
 
-	@GroupName("Temporary Employment")
+	@GroupName("TemporaryEmployment")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
 	@Column
 	Date contractFixedDate;
 
-	@GroupName("Temporary Employment")
+	@GroupName("TemporaryEmployment")
 	@FieldOrder(1.0f)
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
@@ -512,40 +512,40 @@ public class Employee {
 	 */
 
 	@Column
-	@GroupName("PerviousEmployment")
+	@GroupName("PreviousEmployment")
 	@FieldOrder(1.0f)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	Date from1;
 
 	@Column
-	@GroupName("PerviousEmployment")
+	@GroupName("PreviousEmployment")
 	@FieldOrder(1.0f)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	Date to1;
 
-	@GroupName("PerviousEmployment")
+	@GroupName("PreviousEmployment")
 	@FieldOrder(1.0f)
 	@ValidFormat("^[\\p{L} ']*$")
 	@Column
 	String typeOfPreviousEmployment1;
 
 	@Column
-	@GroupName("PerviousEmployment")
+	@GroupName("PreviousEmployment")
 	@FieldOrder(1.0f)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	Date from2;
 
 	@Column
-	@GroupName("PerviousEmployment")
+	@GroupName("PreviousEmployment")
 	@FieldOrder(1.0f)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	Date to2;
 
-	@GroupName("PerviousEmployment")
+	@GroupName("PreviousEmployment")
 	@FieldOrder(1.0f)
 	@ValidFormat("^[\\p{L} ']*$")
 	@Column
