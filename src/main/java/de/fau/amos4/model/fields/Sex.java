@@ -20,6 +20,7 @@
 package de.fau.amos4.model.fields;
 
 import de.fau.amos4.configuration.AppContext;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -28,8 +29,7 @@ public enum Sex
 {
     //From .properties files
     MALE("EMPLOYEE.sex.male"),
-    FEMALE("EMPLOYEE.sex.female"),
-    UNKNOWN("EMPLOYEE.sex.unknown");
+    FEMALE("EMPLOYEE.sex.female");
 
     private String text;
 
@@ -55,9 +55,5 @@ public enum Sex
         }
         return -1;
     }
-
-    public String toString()
-    {
-        return getText();
-    }
+    
 }

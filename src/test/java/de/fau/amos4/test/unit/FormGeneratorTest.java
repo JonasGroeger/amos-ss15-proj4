@@ -35,18 +35,94 @@ import de.fau.amos4.util.*;
 public class FormGeneratorTest {
     
     // Dummy class - used to test FormGenerator class
-    class DummyClass
+    public class DummyClass
     {
         @GroupName("Integers")
-        int data;
+        @FieldOrder(1.0f)
+        int data = 1;
+
+        @GroupName("Strings")
+        @FieldOrder(2.0f)
+        String name2 = "DummyName";
         
         @GroupName("Strings")
-        String name;
+        @FieldOrder(1.0f)
+        String name = "DummyName";
+
+        @GroupName("Strings")
+        @FieldOrder(3.0f)
+        String name3 = "DummyName";
 
         @GroupName("Enums")
+        @FieldOrder(1.0f)
         MaritalStatus marital;
+        
+        public int getData() {
+            return data;
+        }
+
+        public void setData(int data) {
+            this.data = data;
+        }
+
+        public String getName2() {
+            return name;
+        }
+
+        public void setName2(String name) {
+            this.name = name;
+        }
+        public String getName3() {
+            return name;
+        }
+
+        public void setName3(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public MaritalStatus getMarital() {
+            return marital;
+        }
+
+        public void setMarital(MaritalStatus marital) {
+            this.marital = marital;
+        }
     }
 
+    // Make sure that the String fields are ordered based on their Order Annotation
+    @Test
+    public void DummyClass_StringsFieldsAreInTheCorrectOrder() throws Exception
+    {
+        FormGenerator generator = new FormGenerator();
+        
+        // Generate form data from class description
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
+        
+        FormGroup stringGroup = null;
+        for(FormGroup f : form.getGroups())
+        {
+            if(f.getName().equals("Strings"))
+            {
+            stringGroup = f;
+            }
+        }
+        
+        String FirstFieldName = stringGroup.getFields().get(0).getName();
+        String SecondFieldName = stringGroup.getFields().get(1).getName();
+        String ThirdFieldName = stringGroup.getFields().get(2).getName();
+
+        Assert.assertEquals("name", FirstFieldName);
+        Assert.assertEquals("name2", SecondFieldName);
+        Assert.assertEquals("name3", ThirdFieldName);
+    }
+ 
     // Make sure that both 'Integers' and 'Strings' groups are found in the dummy class
     @Test
     public void DummyClass_HasTwoGroups() throws Exception
@@ -54,7 +130,7 @@ public class FormGeneratorTest {
         FormGenerator generator = new FormGenerator();
         
         // Generate form data from class description
-        Form form = generator.Generate(DummyClass.class);
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
         
         // Collect all the group names found
         List<String> groupsFound = new ArrayList<String>();
@@ -74,7 +150,7 @@ public class FormGeneratorTest {
         FormGenerator generator = new FormGenerator();
         
         // Generate form data from class description
-        Form form = generator.Generate(DummyClass.class);
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
         
         // Collect all the field names found
         List<String> fieldsFound = new ArrayList<String>();
@@ -97,7 +173,7 @@ public class FormGeneratorTest {
         FormGenerator generator = new FormGenerator();
         
         // Generate form data from class description
-        Form form = generator.Generate(DummyClass.class);
+        Form form = generator.Generate(DummyClass.class, new DummyClass());
         
         // Collect all the field names found
         List<String> enumOptionsFound = new ArrayList<String>();

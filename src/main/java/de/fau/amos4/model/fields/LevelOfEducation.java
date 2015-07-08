@@ -47,8 +47,21 @@ public enum LevelOfEducation
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
 
-    public String toString()
+    public int getLodas()
     {
-        return getText();
+        switch (this)
+        {
+            case NOTHING:
+                return 1;
+            case SCHOOL:
+                return 2;
+            case HIGHSCHOOL:
+                return 3;
+            case ALEVELS:
+                return 4;
+            case UNKNOWN:
+                return 9;
+        }
+        return -1;
     }
 }

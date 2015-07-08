@@ -19,30 +19,25 @@
  */
 package de.fau.amos4.web;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.fields.Title;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.util.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.fields.Title;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.util.EmailSender;
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginFormController
 {
-	@Autowired
     private final ClientRepository clientRepository;
-	
-	@Autowired
     private final ClientService clientService;
 
     @Autowired

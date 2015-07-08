@@ -62,9 +62,54 @@ public enum PersonGroup
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
-
-    public String toString()
+    
+    public int getLodas()
     {
-        return getText();
+        switch (this)
+        {
+            case G101:
+                return 101;
+            case G102:
+                return 102;
+            case G103:
+                return 103;
+            case G104:
+                return 104;
+            case G105:
+                return 105;
+            case G106:
+                return 106;
+            case G107:
+                return 107;
+            case G108:
+                return 108;
+            case G109:
+                return 109;
+            case G110:
+                return 110;
+            case G111:
+                return 111;
+            case G112:
+                return 112;
+            case G113:
+                return 113;
+            case G114:
+                return 114;
+            case G115:
+                return 115;
+            case G116:
+                return 116;
+            case G117:
+                return 117;
+            case G118:
+                return 118;
+            case G119:
+                return 119;
+            case G190:
+                return 190;
+            case G900:
+                return 900;
+        }
+        return -1;
     }
 }

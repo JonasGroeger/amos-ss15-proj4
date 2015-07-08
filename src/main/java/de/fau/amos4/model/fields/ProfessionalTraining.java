@@ -48,9 +48,26 @@ public enum ProfessionalTraining
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
-
-    public String toString()
+    
+    public int getLodas()
     {
-        return getText();
+        switch (this)
+        {
+            case NOTHING:
+                return 1;
+            case VOCATIONAL:
+                return 2;
+            case MASTERCRAFTSMAN:
+                return 3;
+            case BACHLOR:
+                return 4;
+            case MASTER:
+                return 5;
+            case PHD:
+                return 6;
+            case UNKNOWN:
+                return 9;
+        }
+        return -1;
     }
 }

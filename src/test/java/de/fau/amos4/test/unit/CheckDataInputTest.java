@@ -74,7 +74,7 @@ public class CheckDataInputTest
         e.setFamilyName("ThisFamilyWithNumber30!");
         e.setPlaceOfBirth("asdf(<&");
         //e.setCountryOfBirth("");
-        e.setStreet("This?*!@#$");
+        e.setStreet("This?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#$");
         e.setZipCode("123456%");
         e.setHouseNumber("1010101010!!");
         e.setCity("ThisCity<>()@");
@@ -100,8 +100,6 @@ public class CheckDataInputTest
         Boolean IsFieldInvalid;
         InvalidFields = cdi.listInvalidFields(e);
         IsFieldInvalid = InvalidFields.contains("familyName");
-        Assert.assertTrue(IsFieldInvalid);
-        IsFieldInvalid = InvalidFields.contains("personnelNumber");
         Assert.assertTrue(IsFieldInvalid);
         IsFieldInvalid = InvalidFields.contains("firstName");
         Assert.assertTrue(IsFieldInvalid);
@@ -175,7 +173,7 @@ public class CheckDataInputTest
         List<String> listInvalidFields = cdi.listInvalidFields(e);
         List<String> listEmptyFields = cdi.listEmptyFields(e);
         listInvalidFields.removeAll(listEmptyFields);
-		Boolean isObjectValid = listInvalidFields.size() == 0;
+        Boolean isObjectValid = listInvalidFields.size() == 0;
         Assert.assertTrue(isObjectValid);
     }
     

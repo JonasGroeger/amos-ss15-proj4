@@ -19,19 +19,18 @@
  */
 package de.fau.amos4.web;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.*;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
+import de.fau.amos4.util.CheckDataInput;
+import de.fau.amos4.util.FormGenerator;
+import de.fau.amos4.util.TokenGenerator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -39,26 +38,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Denomination;
-import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.YesNo;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.EmployeeService;
-import de.fau.amos4.util.TokenGenerator;
-import de.fau.amos4.util.CheckDataInput;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class EmployeeFormController
@@ -74,7 +63,7 @@ public class EmployeeFormController
     @Autowired
     public EmployeeFormController(EmployeeRepository employeeRepository, ClientRepository clientRepository, ClientService clientService, EmployeeService employeeService)
     {
-    this.clientService = clientService;
+        this.clientService = clientService;
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
         this.employeeService = employeeService;
@@ -91,8 +80,12 @@ public class EmployeeFormController
         ModelAndView mav = new ModelAndView();
         mav.setViewName("employee/edit");
         Employee employee = employeeRepository.findOne(employeeId);
+        FormGenerator generator = new FormGenerator();
+        mav.addObject("formInfo", generator.Generate(Employee.class, employee));
         mav.addObject("id", employeeId);
         mav.addObject("employee", employee);
+        // TODO: Move these 'enum' fields to a method with @ModelAttribute so that its available in the whole controller
+        // TODO: Consider if it makes sense to add that as an advice so that its available to all controllers application-wide
         mav.addObject("allDisabled", YesNo.values());
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
@@ -110,9 +103,11 @@ public class EmployeeFormController
     Changes made there are stored in the database and the client gets redirected to client/dashboard.html.
      */
     @RequestMapping("/employee/edit/submit")
-    public ModelAndView EmployeeEditSubmit(Employee employee,Principal principal, Model model)
+    public ModelAndView EmployeeEditSubmit(@ModelAttribute Employee employee, Principal principal)
     {
         ModelAndView mav = new ModelAndView();
+        FormGenerator generator = new FormGenerator();
+        mav.addObject("formInfo", generator.Generate(Employee.class, employee));
         
         CheckDataInput cdi = new CheckDataInput();
         
@@ -132,6 +127,7 @@ public class EmployeeFormController
         {
             mav.addObject("invalidFieldErrorMessages", invalidNonEmptyFields);
             mav.setViewName("employee/edit");
+            mav.addObject("preview", false);
             return mav; // Display "/employee/edit" with error messages
         }
         else
@@ -150,8 +146,9 @@ public class EmployeeFormController
                 mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
                 mav.addObject("allPensionInsurance", PensionInsurance.values());
                 mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
-                mav.addObject("allParenthood", Parenthood.values());
-                mav.setViewName("employee/preview");
+                mav.addObject("allParenthood", Parenthood.values());;
+                mav.addObject("preview", true);
+                mav.setViewName("employee/edit");
                 return mav;
             } else {
                 final String currentUser = principal.getName();
@@ -181,21 +178,21 @@ public class EmployeeFormController
     @RequestMapping("/employee/token/submit")
     public ModelAndView EmployeeTokenSubmit(HttpServletResponse response, @RequestParam(value = "token", required = true) String token, Model model) throws IOException
     {
-    long employeeId = 0;
-    Iterable<Employee> allEmployees = employeeRepository.findAll();
+        long employeeId = 0;
+        Iterable<Employee> allEmployees = employeeRepository.findAll();
         for (Iterator<Employee> i = allEmployees.iterator(); i.hasNext(); ) {
         Employee currEmployee = i.next();
         if( currEmployee.getToken().equals(token)) {
         employeeId = currEmployee.getId();
         }
         }
-
-
-
+        
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
             mav.setViewName("employee/edit");
             Employee employee = employeeRepository.findOne(employeeId);
+            FormGenerator generator = new FormGenerator();
+            mav.addObject("formInfo", generator.Generate(Employee.class, employee));
             mav.addObject("id", employeeId);
             mav.addObject("employee", employee);
             mav.addObject("allDisabled", YesNo.values());
@@ -208,12 +205,12 @@ public class EmployeeFormController
             mav.addObject("allPensionInsurance", PensionInsurance.values());
             mav.addObject("addUnemploymentInsurance", UnemploymentInsurance.values());
             mav.addObject("allParenthood", Parenthood.values());
-        } else {
+        }
+        else {
             mav.addObject("m", "invalid");
-        mav.setViewName("employee/token");
+            mav.setViewName("employee/token");
         }
         return mav;
-        
     }
 
     
@@ -236,19 +233,30 @@ public class EmployeeFormController
                                  BindingResult result, Model model) throws Exception
     {
         Employee e = employeeService.getEmployeeByToken(employee.getToken());
+        try
+        {
         Client client = e.getClient();
-        employee.setClient(client);
+        if(client != null)
+        {
+            employee.setClient(client);
+            client.getEmployees().add(employee);
+            clientRepository.save(client);
+        }
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
-        client.getEmployees().add(employee);
-        clientRepository.save(client);
 
         // If the employee is new: Create
         // If the employee already has a primary key: Update
-        Employee newOrUpdatedEmployee = employeeRepository.save(employee);
+        employeeRepository.save(employee);
 
         // Setup model and return view
-        model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
+        model.addAttribute("EmployeeId", employee.getId());
         return "employee/confirm";
     }
 
@@ -305,7 +313,6 @@ public class EmployeeFormController
 
         employeeRepository.save(employee);
         clientRepository.save(client);
-
 
         // Redirect to AccountPage page
         return "redirect:/client/dashboard";

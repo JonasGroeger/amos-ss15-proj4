@@ -19,21 +19,12 @@
  */
 package de.fau.amos4.web;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Locale;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import de.fau.amos4.annotation.TheClient;
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.CurrentClient;
 import de.fau.amos4.model.Employee;
 import de.fau.amos4.model.fields.Title;
+import de.fau.amos4.service.ClientRepository;
 import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.EmployeeRepository;
 import de.fau.amos4.service.TranslatorService;
@@ -45,7 +36,6 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -55,9 +45,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import de.fau.amos4.service.ClientRepository;
-
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Handles client related requests.
@@ -65,16 +59,9 @@ import java.util.List;
 @Controller
 public class ClientController
 {
-	@Autowired
     private final ClientService clientService;
-	
-	@Autowired
     private final ClientRepository clientRepository;
-	
-	@Autowired
     private final EmployeeRepository employeeRepository;
-	
-	@Autowired
     private final TranslatorService translatorService;
 
     @Autowired

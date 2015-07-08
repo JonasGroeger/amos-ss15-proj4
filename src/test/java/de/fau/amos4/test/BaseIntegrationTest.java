@@ -36,6 +36,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import de.fau.amos4.Application;
+import de.fau.amos4.service.EmployeeRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class)
@@ -48,6 +49,9 @@ public abstract class BaseIntegrationTest
 
     protected MockMvc mockMvc;
 
+    @Autowired
+    protected EmployeeRepository employeeRepository;
+    
     @Before
     public void setUp() throws Exception
     {
