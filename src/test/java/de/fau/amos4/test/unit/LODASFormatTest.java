@@ -44,28 +44,25 @@ import de.fau.amos4.model.fields.UnemploymentInsurance;
 import de.fau.amos4.model.fields.YesNo;
 import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.util.Lodas;
-import de.fau.amos4.model.fields.*;
 
 public class LODASFormatTest extends BaseWebApplicationContextTests {
 	Client client = new Client();
 	Date date = new Date(969660000000L);
 	Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
-			"Mustermann", "Mustermann", new Date(110, 6, 5), "Berlin",
+			"Mustermann", "Mustermann", new Date(1275688800000L), "Berlin",
 			"Deutschland", "Musterstraße", "1000", "24", "Berlin", "89234978",
 			Sex.MALE, MaritalStatus.SINGLE, YesNo.NO, "Deutsch",
 			"ARBEITNEHMERNUMMER23", "DE892347289348", "BIC2389402", "",
-			new Date(111, 7, 4), new Date(114, 5, 5), "Burger King",
+			new Date(1312408800000L), new Date(1307224800000L), "Burger King",
 			"Burger Brater", "Brat Burger", TypeOfEmployment.REGULAR,
 			YesNo.YES, YesNo.YES, YesNo.YES, LevelOfEducation.NOTHING,
-			ProfessionalTraining.PHD, new Date(114, 5, 5), new Date(114, 11,
-					5), 40.0F, 12.0F, TypeOfContract.PERMANENTFULL, 6.0F, 6.0F,
-			6.0F, 6.0F, 6.0F, 5.0F, 5.0F, "Gunsenhausen", "b13", new Date(114, 11,
-					5), PersonGroup.G101, 1922, 11111111111L, 3, 0.123F, 50.5F,
+			ProfessionalTraining.PHD, new Date(1401919200000L), new Date(1417734000000L), 40.0F, 12.0F, TypeOfContract.PERMANENTFULL, 6.0F, 6.0F,
+			6.0F, 6.0F, 6.0F, 5.0F, 5.0F, "Gunsenhausen", "b13", new Date(1417734000000L), PersonGroup.G101, 1922, 11111111111L, 3, 0.123F, 50.5F,
 			Denomination.RK, 23487623, Parenthood.J, HealthInsurance._0,
 			PensionInsurance._0, UnemploymentInsurance._0,
 			NursingCareInsurance._0, "Coscom", TypeOfContract1.PERMANENTFULL,
 			null, null, "", "", 3000, 4000, null, null, 20, 20, null, null,
-			new Date(114, 5, 5), new Date(114, 5, 5), "", new Date(114, 5, 5), new Date(114, 5, 5), "");
+			new Date(1401919200000L), new Date(1401919200000L), "", new Date(1401919200000L), new Date(1401919200000L), "");
 
 	//test if string is not empty
 	@Test
@@ -84,7 +81,7 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
 		test = lodas.generate();
 		System.out.println(test);
 		Assert.assertTrue(test.contains(" 200; 12345;04.08.2011;\n"));
-		Assert.assertTrue(test.contains(" 201; 12345;05.06.2014;\n"));
+		Assert.assertTrue(test.contains(" 201; 12345;05.06.2011;\n"));
 		Assert.assertTrue(test.contains(" 300; 12345;101;\n"));
 		Assert.assertTrue(test.contains(" 301; 12345;05.06.2014;05.12.2014;\n"));
 		Assert.assertTrue(test.contains(" 400; 12345;Burger Brater;Brat Burger;1;6;0;1;\n"));
