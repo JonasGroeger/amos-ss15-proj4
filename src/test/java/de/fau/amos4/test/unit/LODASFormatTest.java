@@ -50,29 +50,47 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
 	Client client = new Client();
 	Date date = new Date(969660000000L);
 	Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
-			"Mustermann", "Mustermann", new Date(2010, 6, 5), "Berlin",
+			"Mustermann", "Mustermann", new Date(110, 6, 5), "Berlin",
 			"Deutschland", "Musterstraße", "1000", "24", "Berlin", "89234978",
 			Sex.MALE, MaritalStatus.SINGLE, YesNo.NO, "Deutsch",
 			"ARBEITNEHMERNUMMER23", "DE892347289348", "BIC2389402", "",
-			new Date(2011, 8, 4), new Date(2014, 6, 5), "Burger King",
+			new Date(111, 7, 4), new Date(114, 5, 5), "Burger King",
 			"Burger Brater", "Brat Burger", TypeOfEmployment.REGULAR,
 			YesNo.YES, YesNo.YES, YesNo.YES, LevelOfEducation.NOTHING,
-			ProfessionalTraining.PHD, new Date(2014, 6, 5), new Date(2014, 12,
+			ProfessionalTraining.PHD, new Date(114, 5, 5), new Date(114, 11,
 					5), 40.0F, 12.0F, TypeOfContract.PERMANENTFULL, 6.0F, 6.0F,
-			6.0F, 6.0F, 6.0F, 5.0F, 5.0F, "Gunsenhausen", "b13", new Date(2014, 12,
+			6.0F, 6.0F, 6.0F, 5.0F, 5.0F, "Gunsenhausen", "b13", new Date(114, 11,
 					5), PersonGroup.G101, 1922, 11111111111L, 3, 0.123F, 50.5F,
 			Denomination.RK, 23487623, Parenthood.J, HealthInsurance._0,
 			PensionInsurance._0, UnemploymentInsurance._0,
 			NursingCareInsurance._0, "Coscom", TypeOfContract1.PERMANENTFULL,
 			null, null, "", "", 3000, 4000, null, null, 20, 20, null, null,
-			new Date(2014, 6, 5), new Date(2014, 6, 5), "", new Date(2014, 6, 5), new Date(2014, 6, 5), "");
+			new Date(114, 5, 5), new Date(114, 5, 5), "", new Date(114, 5, 5), new Date(114, 5, 5), "");
 
 	//test if string is not empty
 	@Test
-	public void test_ValidHouseNumber_Accepted() throws Exception {
+	public void test_LodasString_notEmpty() throws Exception {
 		String test = "";
 		Lodas lodas = new Lodas(employee);
 		test = lodas.generate();
 		Assert.assertFalse(test.equals(""));
+	}
+	
+	//test if string is not empty
+	@Test
+	public void test_LodasString_ContainsEmployeeData() throws Exception {
+		String test = "";
+		Lodas lodas = new Lodas(employee);
+		test = lodas.generate();
+		System.out.println(test);
+		Assert.assertTrue(test.contains(" 200; 12345;04.08.2011;\n"));
+		Assert.assertTrue(test.contains(" 201; 12345;05.06.2014;\n"));
+		Assert.assertTrue(test.contains(" 300; 12345;101;\n"));
+		Assert.assertTrue(test.contains(" 301; 12345;05.06.2014;05.12.2014;\n"));
+		Assert.assertTrue(test.contains(" 400; 12345;Burger Brater;Brat Burger;1;6;0;1;\n"));
+		Assert.assertTrue(test.contains(" 502; 12345;b13;\n"));
+		Assert.assertTrue(test.contains(" 503; 12345;Gunsenhausen;\n"));
+		Assert.assertTrue(test.contains(" 800; 12345;40,00;6,00;6,00;6,00;6,00;6,00;5,00;\n"));
+		Assert.assertTrue(test.contains(" 801; 12345;12,0;"));
 	}
 }
