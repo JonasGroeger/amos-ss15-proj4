@@ -40,15 +40,138 @@ import java.util.Map;
 @Entity
 @Table
 public class Employee {
-	/*
-	 * General Attributes
-	 */
+
+	public Employee() {
+
+	}
+	
+	public Employee(long id, String token, Client client, int personnelNumber,
+			String firstName, String maidenName, String familyName,
+			Date birthDate, String placeOfBirth, String countryOfBirth,
+			String street, String zipCode, String houseNumber, String city,
+			String socialInsuranceNumber, Sex sex, MaritalStatus maritalStatus,
+			YesNo disabled, String citizenship,
+			String employerSocialSavingsNumber, String iban, String bic,
+			String additionToAddress, Date entryDate, Date firstDay,
+			String placeOfEmployment, String descriptionOfProfession,
+			String jobPerformed, TypeOfEmployment typeOfEmployment,
+			YesNo probationPeriod, YesNo otherJobs, YesNo lowIncomeEmployment,
+			LevelOfEducation levelOfEducation,
+			ProfessionalTraining professionalTraining,
+			Date dateApprenticeshipBegins, Date planedDateApprenticeshipEnds,
+			float weeklyWorkingHours, float holidayEntitlement,
+			TypeOfContract typeOfContract, float mon, float tue, float wed,
+			float thu, float fri, float sat, float sun, String costCentre,
+			String departmentNumber, Date employedInConstructionIndustrySince,
+			PersonGroup personGroup, int taxOfficeNumber,
+			long identificationNumber, int taxClass, float factor,
+			float numberOfExemptionsForChildren, Denomination denomination,
+			long statutoryHealthInsurance, Parenthood parenthood,
+			HealthInsurance healthInsurance, PensionInsurance pensionInsurance,
+			UnemploymentInsurance unemploymentInsurance,
+			NursingCareInsurance nursingCareInsurance,
+			String accidentInsuranceRiskTariff,
+			TypeOfContract1 typeOfContract1, Date contractFixedDate,
+			Date contractConcludeDate, String description1,
+			String description2, float amount1, float amount2, Date validFrom1,
+			Date validFrom2, float hourlyWage1, float hourlyWage2,
+			Date validFrom3, Date validFrom4, Date from1, Date to1,
+			String typeOfPreviousEmployment1, Date from2, Date to2,
+			String typeOfPreviousEmployment2) {
+		super();
+		this.id = id;
+		this.token = token;
+		this.client = client;
+		this.personnelNumber = personnelNumber;
+		this.firstName = firstName;
+		this.maidenName = maidenName;
+		this.familyName = familyName;
+		this.birthDate = birthDate;
+		this.placeOfBirth = placeOfBirth;
+		this.countryOfBirth = countryOfBirth;
+		this.street = street;
+		this.zipCode = zipCode;
+		this.houseNumber = houseNumber;
+		this.city = city;
+		this.socialInsuranceNumber = socialInsuranceNumber;
+		this.sex = sex;
+		this.maritalStatus = maritalStatus;
+		this.disabled = disabled;
+		this.citizenship = citizenship;
+		this.employerSocialSavingsNumber = employerSocialSavingsNumber;
+		this.iban = iban;
+		this.bic = bic;
+		this.additionToAddress = additionToAddress;
+		this.entryDate = entryDate;
+		this.firstDay = firstDay;
+		this.placeOfEmployment = placeOfEmployment;
+		this.descriptionOfProfession = descriptionOfProfession;
+		this.jobPerformed = jobPerformed;
+		this.typeOfEmployment = typeOfEmployment;
+		this.probationPeriod = probationPeriod;
+		this.otherJobs = otherJobs;
+		this.lowIncomeEmployment = lowIncomeEmployment;
+		this.levelOfEducation = levelOfEducation;
+		this.professionalTraining = professionalTraining;
+		this.dateApprenticeshipBegins = dateApprenticeshipBegins;
+		this.planedDateApprenticeshipEnds = planedDateApprenticeshipEnds;
+		this.weeklyWorkingHours = weeklyWorkingHours;
+		this.holidayEntitlement = holidayEntitlement;
+		this.typeOfContract = typeOfContract;
+		this.mon = mon;
+		this.tue = tue;
+		this.wed = wed;
+		this.thu = thu;
+		this.fri = fri;
+		this.sat = sat;
+		this.sun = sun;
+		this.costCentre = costCentre;
+		this.departmentNumber = departmentNumber;
+		this.employedInConstructionIndustrySince = employedInConstructionIndustrySince;
+		this.personGroup = personGroup;
+		this.taxOfficeNumber = taxOfficeNumber;
+		this.identificationNumber = identificationNumber;
+		this.taxClass = taxClass;
+		this.factor = factor;
+		this.numberOfExemptionsForChildren = numberOfExemptionsForChildren;
+		this.denomination = denomination;
+		this.statutoryHealthInsurance = statutoryHealthInsurance;
+		this.parenthood = parenthood;
+		this.healthInsurance = healthInsurance;
+		this.pensionInsurance = pensionInsurance;
+		this.unemploymentInsurance = unemploymentInsurance;
+		this.nursingCareInsurance = nursingCareInsurance;
+		this.accidentInsuranceRiskTariff = accidentInsuranceRiskTariff;
+		this.typeOfContract1 = typeOfContract1;
+		this.contractFixedDate = contractFixedDate;
+		this.contractConcludeDate = contractConcludeDate;
+		this.description1 = description1;
+		this.description2 = description2;
+		this.amount1 = amount1;
+		this.amount2 = amount2;
+		this.validFrom1 = validFrom1;
+		this.validFrom2 = validFrom2;
+		this.hourlyWage1 = hourlyWage1;
+		this.hourlyWage2 = hourlyWage2;
+		this.validFrom3 = validFrom3;
+		this.validFrom4 = validFrom4;
+		this.from1 = from1;
+		this.to1 = to1;
+		this.typeOfPreviousEmployment1 = typeOfPreviousEmployment1;
+		this.from2 = from2;
+		this.to2 = to2;
+		this.typeOfPreviousEmployment2 = typeOfPreviousEmployment2;
+	}
 
 	private final static String LatinCharsAndSomeCharsMax30 = "^[\\p{L} ']{0,30}$";
 	private final static String LatinCharsAndCharsCommonInAddresses = "^[\\p{L}0-9 _\\-\\.']{0,30}$";
 	private final static String LatinCharsAndCharsCommonCityNames = "^[\\p{L} \\-'/]{0,30}$";
 	private final static String HouseNumberRegex = "^\\d+[a-zA-Z]*$";
-	
+
+	/*
+	 * General Attributes
+	 */
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -364,6 +487,7 @@ public class Employee {
 	@ValidFormat("^\\w{1,30}$")
 	// TODO: implement real expectation as RegEx (This is just a dummy RegEx)
 	@Column
+	@Enumerated(EnumType.STRING)
 	Parenthood parenthood;
 
 	@GroupName("SocialInsurance")
@@ -548,10 +672,6 @@ public class Employee {
 	@ValidFormat("^[\\p{L} ']*$")
 	@Column
 	String typeOfPreviousEmployment2;
-
-	public Employee() {
-
-	}
 
 	public Map<String, String> getPersonalDataFields() {
 		Map<String, String> allFields = new LinkedHashMap<String, String>();
