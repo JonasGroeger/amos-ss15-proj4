@@ -41,6 +41,32 @@ import de.fau.amos4.util.TokenGenerator;
 
 public class EmployeeTest extends BaseWebApplicationContextTests
 {
+    // Too long insurance number is rejected
+    @Test
+    public void test_TooLongInsuranceID_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setSocialInsuranceNumber("0123456789123");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("socialInsuranceNumber"));
+    }
+
+    // Correct insurance number is accepted
+    @Test
+    public void test_CorrectInsuranceID_Accepted() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setSocialInsuranceNumber("012345678912");
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("socialInsuranceNumber"));
+    }
+    
     // Make sure that a valid house number is accepted (34b)
     @Test
     public void test_ValidHouseNumber_Accepted() throws Exception
@@ -118,6 +144,84 @@ public class EmployeeTest extends BaseWebApplicationContextTests
         List<String> InvalidFields = cdi.listInvalidFields(emp);
         
         Assert.assertTrue(InvalidFields.contains("firstName"));
+    }
+
+    // Valid ZIP code is accepted
+    @Test
+    public void test_ValidZipCode_IsValid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setZipCode("91052"); // A valid ZIP code in Germany (Erlangen)
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("zipCode"));
+    }
+
+    // Too long ZIP code is rejected
+    @Test
+    public void test_TooLongZipCode_IsInvalid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setZipCode("191052"); // A too long ZIP code.
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("zipCode"));
+    }
+
+    // Too short ZIP code is rejected
+    @Test
+    public void test_TooShortZipCode_IsInvalid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setZipCode("9105"); // A too short ZIP code.
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("zipCode"));
+    }
+    
+    // ZIP code with letters is rejected
+    @Test
+    public void test_ZipCodeWithLeters_IsInvalid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setZipCode("91o52"); // A ZIP code with letter (o)
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("zipCode"));
+    }
+    
+    // Make sure that a 31 char long first name is not valid
+    @Test
+    public void test_31CharsLongName_IsInvalid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("abcdefghijabcdefghijabcdefghija"); // 31 chars
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(InvalidFields.contains("firstName"));
+    }
+
+    // Make sure that a 30 char long, valid first name is still valid
+    @Test
+    public void test_30CharsLongName_IsValid() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setFirstName("abcdefghijabcdefghijabcdefghij"); // 30 chars
+        
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+        
+        Assert.assertTrue(!InvalidFields.contains("firstName"));
     }
     
     // Make sure that a fake, but correct name is accepted (Hans ßéáűőúöüóÖOÜÓÚŐŐÁÄä)
