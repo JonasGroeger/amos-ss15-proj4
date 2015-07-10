@@ -79,6 +79,11 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
         String test = "";
         Lodas lodas = new Lodas(employee);
         test = lodas.generate();
+
+        System.out.print("-------------------------");
+        System.out.print(test);
+        System.out.print("-------------------------");
+        
         Assert.assertTrue(test.contains(" 200; 12345;04.08.2011;\n"));
         Assert.assertTrue(test.contains(" 201; 12345;05.06.2011;\n"));
         Assert.assertTrue(test.contains(" 300; 12345;101;\n"));
