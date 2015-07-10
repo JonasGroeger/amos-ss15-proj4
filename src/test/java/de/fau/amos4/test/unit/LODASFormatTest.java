@@ -46,9 +46,9 @@ import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.util.Lodas;
 
 public class LODASFormatTest extends BaseWebApplicationContextTests {
-    Client client = new Client();
-    Date date = new Date(969660000000L);
-    Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
+    static Client client = new Client();
+    static Date date = new Date(969660000000L);
+    static Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
             "Mustermann", "Mustermann", new Date(1275688800000L), "Berlin",
             "Deutschland", "Musterstraße", "1000", "24", "Berlin", "89234978",
             Sex.MALE, MaritalStatus.SINGLE, YesNo.NO, "Deutsch",
