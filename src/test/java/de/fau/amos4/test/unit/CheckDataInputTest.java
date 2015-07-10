@@ -135,46 +135,6 @@ public class CheckDataInputTest
         IsFieldInvalid = InvalidFields.contains("identificationNumber");
         Assert.assertTrue(IsFieldInvalid);
         */
-    }@Test
-    
-    // Employee has only valid non empty fields. All the non empty fields should be accepted by the validity check.
-    public void employeeIsValid() throws Exception
-    {
-        List<String> InvalidFields;
-        CheckDataInput cdi = new CheckDataInput();
-        Employee e = new Employee();
-        
-        e.setFirstName("John");
-        e.setFamilyName("Small");
-        e.setPlaceOfBirth("Erlangen");
-        //e.setCountryOfBirth("");
-        e.setZipCode("90521");
-        e.setHouseNumber("2");
-        e.setCity("Erlangen");
-        e.setSocialInsuranceNumber("12345678910"); //12-stellig
-        e.setCitizenship("German"); //?
-        e.setEmployerSocialSavingsNumber("123452"); //?
-        /*
-         * 
-         Not yet implemented (RegExes are missing from class.)
-         e.setIban("4444!");
-         
-         e.setBic("123456789102_"); //5 or 11
-         e.setAdditionToAddress(""); //?
-         e.setTaxOfficeNumber(123); //4
-         e.setIdentificationNumber(123456789011l); //11
-         e.setTaxClass(13); //1
-         e.setFactor(0.0f);
-         e.setNumberOfExemptionsForChildren(100);
-         e.setBirthDate(new Date(2011, 2, 31));
-        
-        */
-
-        List<String> listInvalidFields = cdi.listInvalidFields(e);
-        List<String> listEmptyFields = cdi.listEmptyFields(e);
-        listInvalidFields.removeAll(listEmptyFields);
-        Boolean isObjectValid = listInvalidFields.size() == 0;
-        Assert.assertTrue(isObjectValid);
     }
     
     // When a data field is empty, and has the ValidFormat annotation, it should be detected by the listEmptyFields method.
