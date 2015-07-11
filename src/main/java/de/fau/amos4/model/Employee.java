@@ -170,6 +170,7 @@ public class Employee {
     private final static String HouseNumberRegex = "^\\d+[a-zA-Z]*$";
     private final static String ZipCodeRegex = "^[1-9][0-9]{4}$";
     private final static String AlphanumericMax12 = "^[a-zA-Z0-9']{0,12}$";
+    private final static String AlphanumericMax30 = "^[a-zA-Z0-9']{0,12}$";
 
     /*
      * General Attributes
@@ -293,7 +294,7 @@ public class Employee {
 
     @GroupName("PersonalData")
     @FieldOrder(1.0f)
-    @ValidFormat(LatinCharsAndSomeCharsMax30) // ??? - No such field in reference document.
+    @ValidFormat(AlphanumericMax30) // ??? - No such field in reference document.
     @Column
     String employerSocialSavingsNumber;
 
