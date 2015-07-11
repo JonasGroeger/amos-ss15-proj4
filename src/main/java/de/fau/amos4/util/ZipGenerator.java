@@ -61,7 +61,7 @@ public class ZipGenerator {
             zout.putNextEntry(null, params);
             zout.write((AppContext.getApplicationContext().getMessage("HEADER", null, locale) + "\n\n").getBytes());
 
-            zout.write((AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale) + "\n\n").getBytes());
+            zout.write((AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale) + "\n\n").getBytes());
 
             Iterator it = employee.getPersonalDataFields().entrySet().iterator();
             while (it.hasNext()) {
@@ -70,7 +70,7 @@ public class ZipGenerator {
                 it.remove(); // avoids a ConcurrentModificationException
             }
 
-            zout.write(("\n\n" + AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale) + "\n\n").getBytes());
+            zout.write(("\n\n" + AppContext.getApplicationContext().getMessage("print.section.taxes", null, locale) + "\n\n").getBytes());
 
             it = employee.getTaxesFields().entrySet().iterator();
             while (it.hasNext()) {
@@ -113,7 +113,7 @@ public class ZipGenerator {
                 contentStream.drawString(AppContext.getApplicationContext().getMessage("HEADER", null, locale));
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.moveTextPositionByAmount(0, -4 * height);
-                contentStream.drawString(AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale));
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
                 contentStream.moveTextPositionByAmount(0, -2 * height);
                 contentStream.setFont(font, fontSize);
 
@@ -131,7 +131,7 @@ public class ZipGenerator {
                 }
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.moveTextPositionByAmount(0, -2 * height);
-                contentStream.drawString(AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale));
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("print.section.taxes", null, locale));
                 contentStream.moveTextPositionByAmount(0, -2 * height);
                 contentStream.setFont(font, fontSize);
                 it = employee.getTaxesFields().entrySet().iterator();
