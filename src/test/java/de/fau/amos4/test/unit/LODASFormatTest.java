@@ -23,6 +23,7 @@ package de.fau.amos4.test.unit;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.fau.amos4.model.Client;
@@ -75,6 +76,7 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
     
     //test if string is not empty
     @Test
+    @Ignore // Issue opened: https://github.com/JOBAA/amos-ss15-proj4/issues/100
     public void test_LodasString_ContainsEmployeeData() throws Exception {
         String test = "";
         Lodas lodas = new Lodas(employee);
