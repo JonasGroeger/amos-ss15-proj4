@@ -74,10 +74,11 @@ public class PrintDataController
         // We want to have a txt file download
         response.setContentType("text/plain");
         response.setHeader("Content-Disposition", "attachment;filename=employee_as_lodas.txt");
+        response.setCharacterEncoding("UTF-8");
 
         // Write the data out
         ServletOutputStream out = response.getOutputStream();
-        out.print(employeeAsLodas);
+        out.write(employeeAsLodas.getBytes());
         out.flush();
         out.close();
         return null;
