@@ -62,6 +62,15 @@ public class EmployeeTest extends BaseIntegrationTest
         Assert.assertNotNull("Content-Disposition is null", contentDisp);
         Assert.assertTrue("Content-Disposition .", contentDisp.contains("attachment;filename"));
     }
+
+    // Make sure that download employee data as zip file feature works as expected.
+    @Test
+    @WithUserDetails("datev@example.com")
+    public void test_DownloadZipFile_Works() throws Exception
+    {
+        final MockHttpServletResponse response = mockMvc.perform(get("/employee/download/zip").param("id", "2"))
+                                     .andExpect(status().isOk()).andReturn().getResponse();
+    }
     
     // Make sure that employee form contains all the necessary fields
     @Test
