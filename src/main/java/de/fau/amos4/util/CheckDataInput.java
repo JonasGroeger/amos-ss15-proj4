@@ -20,7 +20,7 @@
 package de.fau.amos4.util;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 

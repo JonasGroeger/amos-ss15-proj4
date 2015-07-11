@@ -20,15 +20,15 @@
 
 package de.fau.amos4.test.unit;
 
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.util.CheckDataInput;
-import de.fau.amos4.util.ValidFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Date;
-import java.util.List;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.util.CheckDataInput;
+import de.fau.amos4.util.ValidFormat;
 
 public class CheckDataInputTest
 {

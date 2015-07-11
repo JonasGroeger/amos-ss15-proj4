@@ -19,11 +19,11 @@
  */
 package de.fau.amos4.service;
 
-import de.fau.amos4.util.Lodas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.fau.amos4.model.Employee;
+import de.fau.amos4.util.Lodas;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {

@@ -28,9 +28,13 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import de.fau.amos4.model.*;
+import de.fau.amos4.model.Form;
+import de.fau.amos4.model.FormField;
+import de.fau.amos4.model.FormGroup;
 import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.util.*;
+import de.fau.amos4.util.FieldOrder;
+import de.fau.amos4.util.FormGenerator;
+import de.fau.amos4.util.GroupName;
 
 public class FormGeneratorTest {
     

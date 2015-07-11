@@ -19,19 +19,22 @@
  */
 package de.fau.amos4.test.integration;
 
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.test.BaseIntegrationTest;
-import de.fau.amos4.util.CheckDataInput;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithUserDetails;
 
-import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseIntegrationTest;
+import de.fau.amos4.util.CheckDataInput;
 
 
 public class EmployeeTest extends BaseIntegrationTest

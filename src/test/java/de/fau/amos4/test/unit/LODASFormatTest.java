@@ -20,25 +20,35 @@
 
 package de.fau.amos4.test.unit;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.*;
-import de.fau.amos4.test.BaseWebApplicationContextTests;
-import de.fau.amos4.util.EmailSender;
-import de.fau.amos4.util.Lodas;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration;
-
-import sun.nio.cs.MS1250;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Denomination;
+import de.fau.amos4.model.fields.HealthInsurance;
+import de.fau.amos4.model.fields.LevelOfEducation;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.NursingCareInsurance;
+import de.fau.amos4.model.fields.Parenthood;
+import de.fau.amos4.model.fields.PensionInsurance;
+import de.fau.amos4.model.fields.PersonGroup;
+import de.fau.amos4.model.fields.ProfessionalTraining;
+import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.model.fields.TypeOfContract;
+import de.fau.amos4.model.fields.TypeOfContract1;
+import de.fau.amos4.model.fields.TypeOfEmployment;
+import de.fau.amos4.model.fields.UnemploymentInsurance;
+import de.fau.amos4.model.fields.YesNo;
+import de.fau.amos4.test.BaseWebApplicationContextTests;
+import de.fau.amos4.util.Lodas;
 
 public class LODASFormatTest extends BaseWebApplicationContextTests {
     Client client = new Client();

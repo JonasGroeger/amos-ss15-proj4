@@ -19,13 +19,15 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.EmployeeService;
-import de.fau.amos4.util.ZipGenerator;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Locale;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import net.lingala.zip4j.exception.ZipException;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
@@ -35,11 +37,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Locale;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
+import de.fau.amos4.util.ZipGenerator;
 
 @Controller
 public class PrintDataController
