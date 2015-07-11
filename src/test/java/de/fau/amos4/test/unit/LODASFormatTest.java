@@ -20,35 +20,18 @@
 
 package de.fau.amos4.test.unit;
 
-import java.util.Date;
-
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Denomination;
-import de.fau.amos4.model.fields.HealthInsurance;
-import de.fau.amos4.model.fields.LevelOfEducation;
-import de.fau.amos4.model.fields.MaritalStatus;
-import de.fau.amos4.model.fields.NursingCareInsurance;
-import de.fau.amos4.model.fields.Parenthood;
-import de.fau.amos4.model.fields.PensionInsurance;
-import de.fau.amos4.model.fields.PersonGroup;
-import de.fau.amos4.model.fields.ProfessionalTraining;
-import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.TypeOfContract;
-import de.fau.amos4.model.fields.TypeOfContract1;
-import de.fau.amos4.model.fields.TypeOfEmployment;
-import de.fau.amos4.model.fields.UnemploymentInsurance;
-import de.fau.amos4.model.fields.YesNo;
+import de.fau.amos4.model.fields.*;
 import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.util.Lodas;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.util.Date;
 
 public class LODASFormatTest extends BaseWebApplicationContextTests {
     Client client = new Client();
-    Date date = new Date(969660000000L);
     Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
             "Mustermann", "Mustermann", new Date(1275688800000L), "Berlin",
             "Deutschland", "Musterstraße", "1000", "24", "Berlin", "89234978",
@@ -65,22 +48,17 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
             null, null, "", "", 3000, 4000, null, null, 20, 20, null, null,
             new Date(1401919200000L), new Date(1401919200000L), "", new Date(1401919200000L), new Date(1401919200000L), "");
 
-    //test if string is not empty
     @Test
     public void test_LodasString_notEmpty() throws Exception {
-        String test = "";
         Lodas lodas = new Lodas(employee);
-        test = lodas.generate();
+        String test = lodas.generate();
         Assert.assertFalse(test.equals(""));
     }
-    
-    //test if string is not empty
+
     @Test
-    @Ignore // Issue opened: https://github.com/JOBAA/amos-ss15-proj4/issues/100
     public void test_LodasString_ContainsEmployeeData() throws Exception {
-        String test = "";
         Lodas lodas = new Lodas(employee);
-        test = lodas.generate();
+        String test = lodas.generate();
         Assert.assertTrue(test.contains(" 200; 12345;04.08.2011;\n"));
         Assert.assertTrue(test.contains(" 201; 12345;05.06.2011;\n"));
         Assert.assertTrue(test.contains(" 300; 12345;101;\n"));
@@ -88,7 +66,7 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
         Assert.assertTrue(test.contains(" 400; 12345;Burger Brater;Brat Burger;1;6;0;1;\n"));
         Assert.assertTrue(test.contains(" 502; 12345;b13;\n"));
         Assert.assertTrue(test.contains(" 503; 12345;Gunsenhausen;\n"));
-        Assert.assertTrue(test.contains(" 800; 12345;40,00;6,00;6,00;6,00;6,00;6,00;5,00;\n"));
-        Assert.assertTrue(test.contains(" 801; 12345;12,0;"));
+        Assert.assertTrue(test.contains(" 800; 12345;40.00;6.00;6.00;6.00;6.00;6.00;5.00;\n"));
+        Assert.assertTrue(test.contains(" 801; 12345;12.0;"));
     }
 }
