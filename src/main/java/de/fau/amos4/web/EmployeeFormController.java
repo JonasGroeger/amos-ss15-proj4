@@ -19,17 +19,17 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.*;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.EmployeeService;
-import de.fau.amos4.util.CheckDataInput;
-import de.fau.amos4.util.FormGenerator;
-import de.fau.amos4.util.TokenGenerator;
+import java.io.IOException;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -38,16 +38,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Denomination;
+import de.fau.amos4.model.fields.HealthInsurance;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.NursingCareInsurance;
+import de.fau.amos4.model.fields.Parenthood;
+import de.fau.amos4.model.fields.PensionInsurance;
+import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.model.fields.TypeOfContract1;
+import de.fau.amos4.model.fields.UnemploymentInsurance;
+import de.fau.amos4.model.fields.YesNo;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
+import de.fau.amos4.util.CheckDataInput;
+import de.fau.amos4.util.FormGenerator;
+import de.fau.amos4.util.TokenGenerator;
 
 @Controller
 public class EmployeeFormController

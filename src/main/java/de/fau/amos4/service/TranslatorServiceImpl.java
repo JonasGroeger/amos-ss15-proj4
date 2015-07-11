@@ -19,13 +19,13 @@
  */
 package de.fau.amos4.service;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Translates message specifiers into readable text using the current locale.

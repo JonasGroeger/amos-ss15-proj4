@@ -19,11 +19,11 @@
  */
 package de.fau.amos4.util;
 
-import de.fau.amos4.model.Employee;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import de.fau.amos4.model.Employee;
 
 public class Lodas
 {

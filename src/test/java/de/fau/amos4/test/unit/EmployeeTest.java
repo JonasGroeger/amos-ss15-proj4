@@ -20,10 +20,6 @@
 
 package de.fau.amos4.test.unit;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
