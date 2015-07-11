@@ -23,6 +23,7 @@ import de.fau.amos4.model.Employee;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class Lodas
 {
@@ -66,9 +67,9 @@ public class Lodas
 
     public String generate()
     {
-    	try
-    	{
-    	        StringBuilder sb = new StringBuilder();
+        try
+        {
+                StringBuilder sb = new StringBuilder();
                 sb
                 .append(title("Allgemein"))
                 .append(sectionAllgemein())
@@ -80,11 +81,11 @@ public class Lodas
                 .append(sectionStammdaten());
                 
                 return sb.toString();
-    	}
-    	catch(Exception ex)
-    	{
-    		return "Export failed. \nMessage:\n" + ex.getMessage() + "\nType:\n" + ex.toString() + "\nStack:\n" + ex.getStackTrace();
-    	}        
+        }
+        catch(Exception ex)
+        {
+            return "Export failed. \nMessage:\n" + ex.getMessage() + "\nType:\n" + ex.toString() + "\nStack:\n" + ex.getStackTrace();
+        }        
     }
 
     private String sectionSatzbeschreibung()
@@ -315,37 +316,37 @@ public class Lodas
         sb.append(indent()).append("103; ")
                 .append(field(personnelNumber))
                 .append(field(employee.getDisabled().getLodas()))
-        		.append("\n");
+                .append("\n");
         
         //FIXME what to do if field is empty?
         // Section 200
         sb.append(indent()).append("200; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(dateFormat.format(employee.getEntryDate())))
                 .append("\n");
         
         // Section 201
         sb.append(indent()).append("201; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(dateFormat.format(employee.getFirstDay())))
                 .append("\n");
         
         // Section 300
         sb.append(indent()).append("300; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(employee.getPersonGroup().getLodas()))
                 .append("\n");
         
         // Section 301
         sb.append(indent()).append("301; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(dateFormat.format(employee.getDateApprenticeshipBegins())))
                 .append(field(dateFormat.format(employee.getPlanedDateApprenticeshipEnds())))
                 .append("\n");
         
         // Section 400
         sb.append(indent()).append("400; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(employee.getDescriptionOfProfession()))
                 .append(field(employee.getJobPerformed()))
                 .append(field(employee.getLevelOfEducation().getLodas()))
@@ -356,32 +357,32 @@ public class Lodas
         
         // Section 502
         sb.append(indent()).append("502; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(employee.getDepartmentNumber()))
                 .append("\n");
         
         // Section 503
         sb.append(indent()).append("503; ")
-        		.append(field(personnelNumber))
+                .append(field(personnelNumber))
                 .append(field(employee.getCostCentre()))
                 .append("\n");
         
         // Section 800
         sb.append(indent()).append("800; ")
-        		.append(field(personnelNumber))
-        		.append(field(String.format("%.2f", employee.getWeeklyWorkingHours())))
-                .append(field(String.format("%.2f", employee.getMon())))
-                .append(field(String.format("%.2f", employee.getTue())))
-                .append(field(String.format("%.2f", employee.getWed())))
-                .append(field(String.format("%.2f", employee.getThu())))
-                .append(field(String.format("%.2f", employee.getFri())))
-                .append(field(String.format("%.2f", employee.getSat())))
+                .append(field(personnelNumber))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getWeeklyWorkingHours())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getMon())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getTue())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getWed())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getThu())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getFri())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getSat())))
                 .append("\n");
         
         // Section 801
         sb.append(indent()).append("801; ")
-        		.append(field(personnelNumber))
-        		.append(field(String.format("%.1f", employee.getHolidayEntitlement())));
+                .append(field(personnelNumber))
+                .append(field(String.format(Locale.GERMAN, "%.1f", employee.getHolidayEntitlement())));
 
         return sb.toString();
     }
