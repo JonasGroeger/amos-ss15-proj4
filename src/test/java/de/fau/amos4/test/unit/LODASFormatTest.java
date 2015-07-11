@@ -46,9 +46,9 @@ import de.fau.amos4.test.BaseWebApplicationContextTests;
 import de.fau.amos4.util.Lodas;
 
 public class LODASFormatTest extends BaseWebApplicationContextTests {
-    Client client = new Client();
-    Date date = new Date(969660000000L);
-    Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
+    static Client client = new Client();
+    static Date date = new Date(969660000000L);
+    static Employee employee = new Employee(2L, "UUVXGD", client, 12345, "Max",
             "Mustermann", "Mustermann", new Date(1275688800000L), "Berlin",
             "Deutschland", "Musterstraße", "1000", "24", "Berlin", "89234978",
             Sex.MALE, MaritalStatus.SINGLE, YesNo.NO, "Deutsch",
@@ -79,6 +79,11 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
         String test = "";
         Lodas lodas = new Lodas(employee);
         test = lodas.generate();
+
+        System.out.print("-------------------------");
+        System.out.print(test);
+        System.out.print("-------------------------");
+        
         Assert.assertTrue(test.contains(" 200; 12345;04.08.2011;\n"));
         Assert.assertTrue(test.contains(" 201; 12345;05.06.2011;\n"));
         Assert.assertTrue(test.contains(" 300; 12345;101;\n"));
