@@ -66,7 +66,7 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
         Assert.assertTrue(test.contains(" 400; 12345;Burger Brater;Brat Burger;1;6;0;1;\n"));
         Assert.assertTrue(test.contains(" 502; 12345;b13;\n"));
         Assert.assertTrue(test.contains(" 503; 12345;Gunsenhausen;\n"));
-        Assert.assertTrue(test.contains(" 800; 12345;40.00;6.00;6.00;6.00;6.00;6.00;5.00;\n"));
-        Assert.assertTrue(test.contains(" 801; 12345;12.0;"));
+        Assert.assertTrue(test.contains(" 800; 12345;40,00;6,00;6,00;6,00;6,00;6,00;5,00;\n"));
+        Assert.assertTrue(test.contains(" 801; 12345;12,0;"));
     }
 }
