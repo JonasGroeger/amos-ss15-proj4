@@ -66,8 +66,10 @@ public class Lodas
 
     public String generate()
     {
-        StringBuilder sb = new StringBuilder();
-        sb
+    	try
+    	{
+    	        StringBuilder sb = new StringBuilder();
+                sb
                 .append(title("Allgemein"))
                 .append(sectionAllgemein())
                 .append(divider())
@@ -76,8 +78,13 @@ public class Lodas
                 .append(divider())
                 .append(title("Stammdaten"))
                 .append(sectionStammdaten());
-
-        return sb.toString();
+                
+                return sb.toString();
+    	}
+    	catch(Exception ex)
+    	{
+    		return "Export failed. \nMessage:\n" + ex.getMessage() + "\nType:\n" + ex.toString() + "\nStack:\n" + ex.getStackTrace();
+    	}        
     }
 
     private String sectionSatzbeschreibung()
