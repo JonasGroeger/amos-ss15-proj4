@@ -52,7 +52,6 @@ public class EmployeeTest extends BaseIntegrationTest
     // Make sure that download employee data as text file feature works as expected. (A text file should be downloaded.)
     @Test
     @WithUserDetails("datev@example.com")
-    @Ignore // TODO: FIXME - Issue opened: https://github.com/JOBAA/amos-ss15-proj4/issues/101
     public void testEmployeeAsLodasFileDownload() throws Exception
     {
         final MockHttpServletResponse response = mockMvc.perform(get("/employee/download/text").param("id", "2"))
