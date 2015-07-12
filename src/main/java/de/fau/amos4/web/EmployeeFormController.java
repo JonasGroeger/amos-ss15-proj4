@@ -151,7 +151,7 @@ public class EmployeeFormController
         {
             // There is no invalid and non empty field. -> Accept input.
             // Display warnings because of empty fields:
-            mav.addObject("emptyFieldWaringMessages", emptyFields);
+            mav.addObject("emptyFields", emptyFields);
             
             if (principal == null) {
                 mav.addObject("allDisabled", YesNo.values());

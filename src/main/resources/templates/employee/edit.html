@@ -16,8 +16,8 @@
             <div th:each="invalidFieldErrorMessage : ${invalidFieldErrorMessages}">
                     <div th:text="#{'EMPLOYEE.InvalidField.' + ${invalidFieldErrorMessage}}" style='text-align:center;color:red;font-weight:bold;'>Error message.</div>
             </div>
-            <div th:each="emptyFieldWaringMessage : ${emptyFieldWaringMessages}">
-                <div th:text="#{'EMPLOYEE.EmptyFieldWarning.' + ${emptyFieldWaringMessage}}" style='text-align:center;color:orange;font-weight:bold;'>Warning message.</div>
+            <div th:each="emptyField : ${emptyFields}">
+                <div th:text="#{employeeEdit.empty} + ' ' + #{'EMPLOYEE.' +${emptyField}}" style='text-align:center;color:orange;font-weight:bold;'>Warning message.</div>
             </div>
             
             <div th:each="formGroup : ${formInfo.getGroups()}" class="row">
