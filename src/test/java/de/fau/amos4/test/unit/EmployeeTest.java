@@ -144,54 +144,54 @@ public class EmployeeTest extends BaseWebApplicationContextTests
 
     // Valid ZIP code is accepted
     @Test
-    public void test_ValidZipCode_IsValid() throws Exception
+    public void test_ValidPostcode_IsValid() throws Exception
     {
         Employee emp = new Employee();
-        emp.setZipCode("91052"); // A valid ZIP code in Germany (Erlangen)
+        emp.setPostcode("91052"); // A valid ZIP code in Germany (Erlangen)
         
         CheckDataInput cdi = new CheckDataInput();
         List<String> InvalidFields = cdi.listInvalidFields(emp);
         
-        Assert.assertTrue(!InvalidFields.contains("zipCode"));
+        Assert.assertTrue(!InvalidFields.contains("postcode"));
     }
 
     // Too long ZIP code is rejected
     @Test
-    public void test_TooLongZipCode_IsInvalid() throws Exception
+    public void test_TooLongPostcode_IsInvalid() throws Exception
     {
         Employee emp = new Employee();
-        emp.setZipCode("191052"); // A too long ZIP code.
+        emp.setPostcode("191052"); // A too long ZIP code.
         
         CheckDataInput cdi = new CheckDataInput();
         List<String> InvalidFields = cdi.listInvalidFields(emp);
         
-        Assert.assertTrue(InvalidFields.contains("zipCode"));
+        Assert.assertTrue(InvalidFields.contains("postcode"));
     }
 
     // Too short ZIP code is rejected
     @Test
-    public void test_TooShortZipCode_IsInvalid() throws Exception
+    public void test_TooShortPostcode_IsInvalid() throws Exception
     {
         Employee emp = new Employee();
-        emp.setZipCode("9105"); // A too short ZIP code.
+        emp.setPostcode("9105"); // A too short ZIP code.
         
         CheckDataInput cdi = new CheckDataInput();
         List<String> InvalidFields = cdi.listInvalidFields(emp);
         
-        Assert.assertTrue(InvalidFields.contains("zipCode"));
+        Assert.assertTrue(InvalidFields.contains("postcode"));
     }
     
     // ZIP code with letters is rejected
     @Test
-    public void test_ZipCodeWithLeters_IsInvalid() throws Exception
+    public void test_PostcodeWithLeters_IsInvalid() throws Exception
     {
         Employee emp = new Employee();
-        emp.setZipCode("91o52"); // A ZIP code with letter (o)
+        emp.setPostcode("91o52"); // A ZIP code with letter (o)
         
         CheckDataInput cdi = new CheckDataInput();
         List<String> InvalidFields = cdi.listInvalidFields(emp);
         
-        Assert.assertTrue(InvalidFields.contains("zipCode"));
+        Assert.assertTrue(InvalidFields.contains("postcode"));
     }
     
     // Make sure that a 31 char long first name is not valid
@@ -323,6 +323,74 @@ public class EmployeeTest extends BaseWebApplicationContextTests
         
         Assert.assertTrue(!InvalidFields.contains("city"));
     }
+
+    // Make sure that too long statutory health insurance is rejected
+    @Test
+    public void test_StatutoryHealthInsuranceTooLong_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setStatutoryHealthInsurance(123456789);
+
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+
+        Assert.assertTrue(InvalidFields.contains("statutoryHealthInsurance"));
+    }
+
+    // Make sure that too short statutory health insurance is rejected
+    @Test
+    public void test_StatutoryHealthInsuranceTooShort_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setStatutoryHealthInsurance(1234567);
+
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+
+        Assert.assertTrue(InvalidFields.contains("statutoryHealthInsurance"));
+    }
+
+    /*
+    * Test Social insurance section
+    */
+    // Make sure that a correct statutory health insurance is accepted
+    @Test
+    public void test_CorrectStatutoryHealthInsurance_Accepted() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setStatutoryHealthInsurance(12345678);
+
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+
+        Assert.assertTrue(!InvalidFields.contains("statutoryHealthInsurance"));
+    }
+
+    // Make sure that too long accidentInsuranceRiskTariff is rejected
+    @Test
+    public void test_AccidentInsuranceRiskTariffTooLong_Rejected() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setAccidentInsuranceRiskTariff("1234567890abc");
+
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+
+        Assert.assertTrue(InvalidFields.contains("accidentInsuranceRiskTariff"));
+    }
+
+    // Make sure that a correct statutory health insurance is accepted
+    @Test
+    public void test_CorrectAccidentInsuranceRiskTariff_Accepted() throws Exception
+    {
+        Employee emp = new Employee();
+        emp.setAccidentInsuranceRiskTariff("ab0123456789");
+
+        CheckDataInput cdi = new CheckDataInput();
+        List<String> InvalidFields = cdi.listInvalidFields(emp);
+
+        Assert.assertTrue(!InvalidFields.contains("accidentInsuranceRiskTariff"));
+    }
     
     // Make sure that the generated Token matches the format expectation. Should be a 6 chars long alphanumeric string.
     @Test
@@ -382,4 +450,6 @@ public class EmployeeTest extends BaseWebApplicationContextTests
         // Make sure that at least one employee is returned. (One has just been added.)
         Assert.assertTrue(foundEmployees.size() > 0);
     }
+
+
 }

@@ -75,7 +75,7 @@ public class CheckDataInputTest
         e.setPlaceOfBirth("asdf(<&");
         //e.setCountryOfBirth("");
         e.setStreet("This?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#his?*!@#$");
-        e.setZipCode("123456%");
+        e.setPostcode("123456%");
         e.setHouseNumber("1010101010!!");
         e.setCity("ThisCity<>()@");
         e.setSocialInsuranceNumber("12345678910x!"); //12-stellig
@@ -109,7 +109,7 @@ public class CheckDataInputTest
         Assert.assertTrue(IsFieldInvalid);
         IsFieldInvalid = InvalidFields.contains("street");
         Assert.assertTrue(IsFieldInvalid);
-        IsFieldInvalid = InvalidFields.contains("zipCode");
+        IsFieldInvalid = InvalidFields.contains("postcode");
         Assert.assertTrue(IsFieldInvalid);
         IsFieldInvalid = InvalidFields.contains("houseNumber");
         Assert.assertTrue(IsFieldInvalid);

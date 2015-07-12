@@ -78,6 +78,7 @@ public class Employee {
     private final static String PostcodeRegex = "^[1-9][0-9]{4}$";
     private final static String AlphanumericMax12 = "^[a-zA-Z0-9']{0,12}$";
     private final static String AlphanumericMax30 = "^[a-zA-Z0-9']{0,30}$";
+    private final static String EightDigits = "^[0-9]{8}$";
 
     /*
      * General Attributes
@@ -383,55 +384,48 @@ public class Employee {
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat(EightDigits)
     @Column
     long statutoryHealthInsurance; // 8 digits
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^\\w{1,30}$") //DropDown
     @Column
     @Enumerated(EnumType.STRING)
     Parenthood parenthood;
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^\\w{1,30}$") //DropDown
     @Column
     @Enumerated(EnumType.STRING)
     HealthInsurance healthInsurance;
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^\\w{1,30}$") //DropDown
     @Column
     @Enumerated(EnumType.STRING)
     PensionInsurance pensionInsurance;
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^\\w{1,30}$") //DropDown
     @Column
     @Enumerated(EnumType.STRING)
     UnemploymentInsurance unemploymentInsurance;
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat("^\\w{1,30}$") //DropDown
     @Column
     @Enumerated(EnumType.STRING)
     NursingCareInsurance nursingCareInsurance;
 
     @GroupName("SocialInsurance")
     @FieldOrder(1.0f)
-    @ValidFormat("^\\w{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @ValidFormat(AlphanumericMax12)
     @Column
     String accidentInsuranceRiskTariff; // 12 chars
 
@@ -708,7 +702,7 @@ public class Employee {
                 Float.toString(getFactor()));
         allFields
                 .put(AppContext.getApplicationContext().getMessage(
-                        "EMPLOYEE.numberOfExemptionsForChildren", null, locale),
+                                "EMPLOYEE.numberOfExemptionsForChildren", null, locale),
                         Float.toString(getNumberOfExemptionsForChildren()));
         allFields.put(
                 AppContext.getApplicationContext().getMessage(

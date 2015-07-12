@@ -71,7 +71,7 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
         employee.setPlaceOfBirth("Ort");
         employee.setCountryOfBirth("Germany");
         employee.setStreet("Muster Straße");
-        employee.setZipCode("91052");
+        employee.setPostcode("91052");
         employee.setHouseNumber("2b");
         employee.setCity("Erlangen");
         employee.setSocialInsuranceNumber("123456");
