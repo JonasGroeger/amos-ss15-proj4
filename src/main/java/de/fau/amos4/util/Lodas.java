@@ -288,7 +288,7 @@ public class Lodas
                 .append(field(employee.getMaidenName()))
                 .append(field(employee.getStreet()))
                 .append(field(employee.getHouseNumber()))
-                .append(field(employee.getZipCode()))
+                .append(field(employee.getPostcode()))
                 .append(field(employee.getCity()))
                 .append(field(employee.getAdditionToAddress()))
                 .append("\n");

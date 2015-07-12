@@ -153,7 +153,7 @@ public class ClientController
         tmp.setCompanyType(client.getCompanyType());
         tmp.setCountry(client.getCountry());
         tmp.setAddress(client.getAddress());
-        tmp.setZipCode(client.getZipCode());
+        tmp.setPostcode(client.getPostcode());
         tmp.setBirthDate(client.getBirthDate());
         
         //write back to database

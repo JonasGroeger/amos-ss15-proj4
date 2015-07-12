@@ -75,7 +75,7 @@ public class Employee {
     private final static String LatinCharsAndCharsCommonInAddressesMax33 = "^[\\p{L}0-9 _\\-\\.']{0,33}$";
     private final static String LatinCharsAndCharsCommonCityNamesMax34 = "^[\\p{L} \\-'/]{0,34}$";
     private final static String HouseNumberRegex = "^\\d+[a-zA-Z]*$";
-    private final static String ZipCodeRegex = "^[1-9][0-9]{4}$";
+    private final static String PostcodeRegex = "^[1-9][0-9]{4}$";
     private final static String AlphanumericMax12 = "^[a-zA-Z0-9']{0,12}$";
     private final static String AlphanumericMax30 = "^[a-zA-Z0-9']{0,12}$";
 
@@ -150,9 +150,9 @@ public class Employee {
 
     @GroupName("PersonalData")
     @FieldOrder(1.0f)
-    @ValidFormat(ZipCodeRegex) // Numeric - Interval: 10000 - 99999
+    @ValidFormat(PostcodeRegex) // Numeric - Interval: 10000 - 99999
     @Column
-    String zipCode;
+    String postcode;
 
     @GroupName("PersonalData")
     @FieldOrder(1.0f)
@@ -631,7 +631,7 @@ public class Employee {
                         null, locale), getCity());
         allFields.put(
                 AppContext.getApplicationContext().getMessage(
-                        "EMPLOYEE.zipCode", null, locale), getZipCode());
+                        "EMPLOYEE.postcode", null, locale), getPostcode());
         allFields.put(
                 AppContext.getApplicationContext().getMessage("EMPLOYEE.sex",
                         null, locale), getSex().toString());
@@ -854,12 +854,12 @@ public class Employee {
         this.street = street;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
     public String getHouseNumber() {
@@ -1754,10 +1754,10 @@ public class Employee {
         if (Float.floatToIntBits(weeklyWorkingHours) != Float
                 .floatToIntBits(other.weeklyWorkingHours))
             return false;
-        if (zipCode == null) {
-            if (other.zipCode != null)
+        if (postcode == null) {
+            if (other.postcode != null)
                 return false;
-        } else if (!zipCode.equals(other.zipCode))
+        } else if (!postcode.equals(other.postcode))
             return false;
         return true;
     }
@@ -1938,7 +1938,7 @@ public class Employee {
                 + ((validFrom4 == null) ? 0 : validFrom4.hashCode());
         result = prime * result + Float.floatToIntBits(wed);
         result = prime * result + Float.floatToIntBits(weeklyWorkingHours);
-        result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+        result = prime * result + ((postcode == null) ? 0 : postcode.hashCode());
         return result;
     }
 
@@ -1949,7 +1949,7 @@ public class Employee {
                 + firstName + ", maidenName=" + maidenName + ", familyName="
                 + familyName + ", birthDate=" + birthDate + ", placeOfBirth="
                 + placeOfBirth + ", countryOfBirth=" + countryOfBirth
-                + ", street=" + street + ", zipCode=" + zipCode
+                + ", street=" + street + ", postcode=" + postcode
                 + ", houseNumber=" + houseNumber + ", city=" + city
                 + ", socialInsuranceNumber=" + socialInsuranceNumber + ", sex="
                 + sex + ", maritalStatus=" + maritalStatus + ", disabled="

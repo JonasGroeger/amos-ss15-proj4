@@ -31,7 +31,7 @@ public enum ProfessionalTraining
     NOTHING("EMPLOYEE.professionalTraining.nothing"),
     VOCATIONAL("EMPLOYEE.professionalTraining.vocational"),
     MASTERCRAFTSMAN("EMPLOYEE.professionalTraining.masterCraftsman"),
-    BACHLOR("EMPLOYEE.professionalTraining.bachlor"),
+    BACHELOR("EMPLOYEE.professionalTraining.bachelor"),
     MASTER("EMPLOYEE.professionalTraining.master"),
     PHD("EMPLOYEE.professionalTraining.phd"),
     UNKNOWN("EMPLOYEE.professionalTraining.unknown");
@@ -59,7 +59,7 @@ public enum ProfessionalTraining
                 return 2;
             case MASTERCRAFTSMAN:
                 return 3;
-            case BACHLOR:
+            case BACHELOR:
                 return 4;
             case MASTER:
                 return 5;
