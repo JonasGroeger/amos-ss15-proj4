@@ -437,6 +437,30 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private PersonGroup personGroup;
 
+        /*
+     * Temporary Employment
+     */
+
+    @GroupName("TemporaryEmployment")
+    @FieldOrder(1.0f)
+    @ValidFormat("^[\\w ]{1,30}$")
+    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
+    @Column
+    @Enumerated(EnumType.STRING)
+    TypeOfFixedTermContract typeOfFixedTermContract;
+
+    @GroupName("TemporaryEmployment")
+    @FieldOrder(1.0f)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Column
+    Date contractFixedDate;
+
+    @GroupName("TemporaryEmployment")
+    @FieldOrder(1.0f)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Column
+    Date contractConcludeDate;
+
     /*
      * Taxes
      */
@@ -535,29 +559,6 @@ public class Employee {
     @Column
     String accidentInsuranceRiskTariff; // 12 chars
 
-    /*
-     * Temporary Employment
-     */
-
-    @GroupName("TemporaryEmployment")
-    @FieldOrder(1.0f)
-    @ValidFormat("^[\\w ]{1,30}$")
-    // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
-    @Column
-    @Enumerated(EnumType.STRING)
-    TypeOfFixedTermContract typeOfFixedTermContract;
-
-    @GroupName("TemporaryEmployment")
-    @FieldOrder(1.0f)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column
-    Date contractFixedDate;
-
-    @GroupName("TemporaryEmployment")
-    @FieldOrder(1.0f)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column
-    Date contractConcludeDate;
 
     /*
      * Remuneration
@@ -653,6 +654,12 @@ public class Employee {
     @Column
     String typeOfPreviousEmployment1;
 
+    @GroupName("PreviousEmployment")
+    @FieldOrder(1.0f)
+    @ValidFormat("^[\\p{L} ']*$")
+    @Column
+    int numberOfEmploymentDays1;
+
     @Column
     @GroupName("PreviousEmployment")
     @FieldOrder(1.0f)
@@ -672,6 +679,12 @@ public class Employee {
     @ValidFormat("^[\\p{L} ']*$")
     @Column
     String typeOfPreviousEmployment2;
+
+    @GroupName("PreviousEmployment")
+    @FieldOrder(1.0f)
+    @ValidFormat("^[\\p{L} ']*$")
+    @Column
+    int numberOfEmploymentDays2;
 
     public Map<String, String> getPersonalDataFields() {
         Map<String, String> allFields = new LinkedHashMap<String, String>();
@@ -1520,6 +1533,14 @@ public class Employee {
         this.typeOfPreviousEmployment1 = typeOfPreviousEmployment1;
     }
 
+    public int getNumberOfEmploymentDays1() {
+        return numberOfEmploymentDays1;
+    }
+
+    public void setNumberOfEmploymentDays1(int numberOfEmploymentDays1) {
+        this.numberOfEmploymentDays1 = numberOfEmploymentDays1;
+    }
+
     public Date getFrom2() {
         return from2;
     }
@@ -1542,6 +1563,14 @@ public class Employee {
 
     public void setTypeOfPreviousEmployment2(String typeOfPreviousEmployment2) {
         this.typeOfPreviousEmployment2 = typeOfPreviousEmployment2;
+    }
+
+    public int getNumberOfEmploymentDays2() {
+        return numberOfEmploymentDays2;
+    }
+
+    public void setNumberOfEmploymentDays2(int numberOfEmploymentDays2) {
+        this.numberOfEmploymentDays2 = numberOfEmploymentDays2;
     }
 
     @Override
@@ -1598,6 +1627,9 @@ public class Employee {
                 ", departmentNumber='" + departmentNumber + '\'' +
                 ", employedInConstructionIndustrySince=" + employedInConstructionIndustrySince +
                 ", personGroup=" + personGroup +
+                ", typeOfFixedTermContract=" + typeOfFixedTermContract +
+                ", contractFixedDate=" + contractFixedDate +
+                ", contractConcludeDate=" + contractConcludeDate +
                 ", taxOfficeNumber=" + taxOfficeNumber +
                 ", identificationNumber=" + identificationNumber +
                 ", taxClass=" + taxClass +
@@ -1611,9 +1643,6 @@ public class Employee {
                 ", unemploymentInsurance=" + unemploymentInsurance +
                 ", nursingCareInsurance=" + nursingCareInsurance +
                 ", accidentInsuranceRiskTariff='" + accidentInsuranceRiskTariff + '\'' +
-                ", typeOfFixedTermContract=" + typeOfFixedTermContract +
-                ", contractFixedDate=" + contractFixedDate +
-                ", contractConcludeDate=" + contractConcludeDate +
                 ", description1='" + description1 + '\'' +
                 ", description2='" + description2 + '\'' +
                 ", amount1=" + amount1 +
@@ -1627,9 +1656,11 @@ public class Employee {
                 ", from1=" + from1 +
                 ", to1=" + to1 +
                 ", typeOfPreviousEmployment1='" + typeOfPreviousEmployment1 + '\'' +
+                ", numberOfEmploymentDays1=" + numberOfEmploymentDays1 +
                 ", from2=" + from2 +
                 ", to2=" + to2 +
                 ", typeOfPreviousEmployment2='" + typeOfPreviousEmployment2 + '\'' +
+                ", numberOfEmploymentDays2=" + numberOfEmploymentDays2 +
                 '}';
     }
 
@@ -1661,6 +1692,8 @@ public class Employee {
         if (Float.compare(employee.amount2, amount2) != 0) return false;
         if (Float.compare(employee.hourlyWage1, hourlyWage1) != 0) return false;
         if (Float.compare(employee.hourlyWage2, hourlyWage2) != 0) return false;
+        if (numberOfEmploymentDays1 != employee.numberOfEmploymentDays1) return false;
+        if (numberOfEmploymentDays2 != employee.numberOfEmploymentDays2) return false;
         if (token != null ? !token.equals(employee.token) : employee.token != null) return false;
         if (client != null ? !client.equals(employee.client) : employee.client != null) return false;
         if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
@@ -1716,6 +1749,11 @@ public class Employee {
         if (employedInConstructionIndustrySince != null ? !employedInConstructionIndustrySince.equals(employee.employedInConstructionIndustrySince) : employee.employedInConstructionIndustrySince != null)
             return false;
         if (personGroup != employee.personGroup) return false;
+        if (typeOfFixedTermContract != employee.typeOfFixedTermContract) return false;
+        if (contractFixedDate != null ? !contractFixedDate.equals(employee.contractFixedDate) : employee.contractFixedDate != null)
+            return false;
+        if (contractConcludeDate != null ? !contractConcludeDate.equals(employee.contractConcludeDate) : employee.contractConcludeDate != null)
+            return false;
         if (denomination != employee.denomination) return false;
         if (parenthood != employee.parenthood) return false;
         if (healthInsurance != employee.healthInsurance) return false;
@@ -1723,11 +1761,6 @@ public class Employee {
         if (unemploymentInsurance != employee.unemploymentInsurance) return false;
         if (nursingCareInsurance != employee.nursingCareInsurance) return false;
         if (accidentInsuranceRiskTariff != null ? !accidentInsuranceRiskTariff.equals(employee.accidentInsuranceRiskTariff) : employee.accidentInsuranceRiskTariff != null)
-            return false;
-        if (typeOfFixedTermContract != employee.typeOfFixedTermContract) return false;
-        if (contractFixedDate != null ? !contractFixedDate.equals(employee.contractFixedDate) : employee.contractFixedDate != null)
-            return false;
-        if (contractConcludeDate != null ? !contractConcludeDate.equals(employee.contractConcludeDate) : employee.contractConcludeDate != null)
             return false;
         if (description1 != null ? !description1.equals(employee.description1) : employee.description1 != null)
             return false;
@@ -1800,6 +1833,9 @@ public class Employee {
         result = 31 * result + (departmentNumber != null ? departmentNumber.hashCode() : 0);
         result = 31 * result + (employedInConstructionIndustrySince != null ? employedInConstructionIndustrySince.hashCode() : 0);
         result = 31 * result + (personGroup != null ? personGroup.hashCode() : 0);
+        result = 31 * result + (typeOfFixedTermContract != null ? typeOfFixedTermContract.hashCode() : 0);
+        result = 31 * result + (contractFixedDate != null ? contractFixedDate.hashCode() : 0);
+        result = 31 * result + (contractConcludeDate != null ? contractConcludeDate.hashCode() : 0);
         result = 31 * result + taxOfficeNumber;
         result = 31 * result + (int) (identificationNumber ^ (identificationNumber >>> 32));
         result = 31 * result + taxClass;
@@ -1813,9 +1849,6 @@ public class Employee {
         result = 31 * result + (unemploymentInsurance != null ? unemploymentInsurance.hashCode() : 0);
         result = 31 * result + (nursingCareInsurance != null ? nursingCareInsurance.hashCode() : 0);
         result = 31 * result + (accidentInsuranceRiskTariff != null ? accidentInsuranceRiskTariff.hashCode() : 0);
-        result = 31 * result + (typeOfFixedTermContract != null ? typeOfFixedTermContract.hashCode() : 0);
-        result = 31 * result + (contractFixedDate != null ? contractFixedDate.hashCode() : 0);
-        result = 31 * result + (contractConcludeDate != null ? contractConcludeDate.hashCode() : 0);
         result = 31 * result + (description1 != null ? description1.hashCode() : 0);
         result = 31 * result + (description2 != null ? description2.hashCode() : 0);
         result = 31 * result + (amount1 != +0.0f ? Float.floatToIntBits(amount1) : 0);
@@ -1829,9 +1862,11 @@ public class Employee {
         result = 31 * result + (from1 != null ? from1.hashCode() : 0);
         result = 31 * result + (to1 != null ? to1.hashCode() : 0);
         result = 31 * result + (typeOfPreviousEmployment1 != null ? typeOfPreviousEmployment1.hashCode() : 0);
+        result = 31 * result + numberOfEmploymentDays1;
         result = 31 * result + (from2 != null ? from2.hashCode() : 0);
         result = 31 * result + (to2 != null ? to2.hashCode() : 0);
         result = 31 * result + (typeOfPreviousEmployment2 != null ? typeOfPreviousEmployment2.hashCode() : 0);
+        result = 31 * result + numberOfEmploymentDays2;
         return result;
     }
 }
