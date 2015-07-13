@@ -30,17 +30,17 @@ import de.fau.amos4.configuration.AppContext;
 
     //From .properties files
 
-public enum TypeOfContract1
+public enum TypeOfFixedTermContract
 {
     //From .properties files
-    PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
-    PERMANENTPART("EMPLOYEE.contract.permanentPart"),
-    FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
-    FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
+    PERMANENTFULL("EMPLOYEE.typeOfFixedTermContract.PERMANENTFULL"),
+    PERMANENTPART("EMPLOYEE.typeOfFixedTermContract.PERMANENTPART"),
+    FIXEDTERMFULL("EMPLOYEE.typeOfFixedTermContract.FIXEDTERMFULL"),
+    FIXEDTERMPART("EMPLOYEE.typeOfFixedTermContract.FIXEDTERMPART");
 
     private String text;
 
-    TypeOfContract1(String text)
+    TypeOfFixedTermContract(String text)
     {
         this.text = text;
     }

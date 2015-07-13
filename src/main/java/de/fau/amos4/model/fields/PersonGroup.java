@@ -28,27 +28,29 @@ import de.fau.amos4.configuration.AppContext;
 public enum PersonGroup
 {
     //From .properties files
-    G101("EMPLOYEE.personGroup.101"),
-    G102("EMPLOYEE.personGroup.102"),
-    G103("EMPLOYEE.personGroup.103"),
-    G104("EMPLOYEE.personGroup.104"),
-    G105("EMPLOYEE.personGroup.105"),
-    G106("EMPLOYEE.personGroup.106"),
-    G107("EMPLOYEE.personGroup.107"),
-    G108("EMPLOYEE.personGroup.108"),
-    G109("EMPLOYEE.personGroup.109"),
-    G110("EMPLOYEE.personGroup.110"),
-    G111("EMPLOYEE.personGroup.111"),
-    G112("EMPLOYEE.personGroup.112"),
-    G113("EMPLOYEE.personGroup.113"),
-    G114("EMPLOYEE.personGroup.114"),
-    G115("EMPLOYEE.personGroup.115"),
-    G116("EMPLOYEE.personGroup.116"),
-    G117("EMPLOYEE.personGroup.117"),
-    G118("EMPLOYEE.personGroup.118"),
-    G119("EMPLOYEE.personGroup.119"),
-    G190("EMPLOYEE.personGroup.190"),
-    G900("EMPLOYEE.personGroup.900");
+    G101("EMPLOYEE.personGroup.G101"),
+    G102("EMPLOYEE.personGroup.G102"),
+    G103("EMPLOYEE.personGroup.G103"),
+    G104("EMPLOYEE.personGroup.G104"),
+    G105("EMPLOYEE.personGroup.G105"),
+    G106("EMPLOYEE.personGroup.G106"),
+    G107("EMPLOYEE.personGroup.G107"),
+    G108("EMPLOYEE.personGroup.G108"),
+    G109("EMPLOYEE.personGroup.G109"),
+    G110("EMPLOYEE.personGroup.G110"),
+    G111("EMPLOYEE.personGroup.G111"),
+    G112("EMPLOYEE.personGroup.G112"),
+    G113("EMPLOYEE.personGroup.G113"),
+    G114("EMPLOYEE.personGroup.G114"),
+    G116("EMPLOYEE.personGroup.G116"),
+    G118("EMPLOYEE.personGroup.G118"),
+    G119("EMPLOYEE.personGroup.G119"),
+    G121("EMPLOYEE.personGroup.G121"),
+    G122("EMPLOYEE.personGroup.G122"),
+    G123("EMPLOYEE.personGroup.G123"),
+    G124("EMPLOYEE.personGroup.G124"),
+    G190("EMPLOYEE.personGroup.G190"),
+    G900("EMPLOYEE.personGroup.G900");
 
     private String text;
 
@@ -95,16 +97,20 @@ public enum PersonGroup
                 return 113;
             case G114:
                 return 114;
-            case G115:
-                return 115;
             case G116:
                 return 116;
-            case G117:
-                return 117;
             case G118:
                 return 118;
             case G119:
                 return 119;
+            case G121:
+                return 121;
+            case G122:
+                return 122;
+            case G123:
+                return 123;
+            case G124:
+                return 124;
             case G190:
                 return 190;
             case G900:

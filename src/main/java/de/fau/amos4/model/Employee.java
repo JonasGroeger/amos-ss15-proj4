@@ -54,7 +54,7 @@ import de.fau.amos4.model.fields.PersonGroup;
 import de.fau.amos4.model.fields.ProfessionalTraining;
 import de.fau.amos4.model.fields.Sex;
 import de.fau.amos4.model.fields.TypeOfContract;
-import de.fau.amos4.model.fields.TypeOfContract1;
+import de.fau.amos4.model.fields.TypeOfFixedTermContract;
 import de.fau.amos4.model.fields.TypeOfEmployment;
 import de.fau.amos4.model.fields.UnemploymentInsurance;
 import de.fau.amos4.model.fields.YesNo;
@@ -545,7 +545,7 @@ public class Employee {
     // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
-    TypeOfContract1 typeOfContract1;
+    TypeOfFixedTermContract typeOfFixedTermContract;
 
     @GroupName("TemporaryEmployment")
     @FieldOrder(1.0f)
@@ -768,8 +768,8 @@ public class Employee {
 
         allFields.put(
                 AppContext.getApplicationContext().getMessage(
-                        "EMPLOYEE.typeOfContract1", null, locale),
-                getTypeOfContract1().toString());
+                        "EMPLOYEE.typeOfFixedTermContract", null, locale),
+                getTypeOfFixedTermContract().toString());
         allFields.put(
                 AppContext.getApplicationContext().getMessage(
                         "EMPLOYEE.contractFixedDate", null, locale),
@@ -1388,12 +1388,12 @@ public class Employee {
      * Temporary Employment
      */
 
-    public TypeOfContract1 getTypeOfContract1() {
-        return typeOfContract1;
+    public TypeOfFixedTermContract getTypeOfFixedTermContract() {
+        return typeOfFixedTermContract;
     }
 
-    public void setTypeOfContract1(TypeOfContract1 typeOfContract1) {
-        this.typeOfContract1 = typeOfContract1;
+    public void setTypeOfFixedTermContract(TypeOfFixedTermContract typeOfFixedTermContract) {
+        this.typeOfFixedTermContract = typeOfFixedTermContract;
     }
 
     public Date getContractFixedDate() {
@@ -1611,7 +1611,7 @@ public class Employee {
                 ", unemploymentInsurance=" + unemploymentInsurance +
                 ", nursingCareInsurance=" + nursingCareInsurance +
                 ", accidentInsuranceRiskTariff='" + accidentInsuranceRiskTariff + '\'' +
-                ", typeOfContract1=" + typeOfContract1 +
+                ", typeOfFixedTermContract=" + typeOfFixedTermContract +
                 ", contractFixedDate=" + contractFixedDate +
                 ", contractConcludeDate=" + contractConcludeDate +
                 ", description1='" + description1 + '\'' +
@@ -1724,7 +1724,7 @@ public class Employee {
         if (nursingCareInsurance != employee.nursingCareInsurance) return false;
         if (accidentInsuranceRiskTariff != null ? !accidentInsuranceRiskTariff.equals(employee.accidentInsuranceRiskTariff) : employee.accidentInsuranceRiskTariff != null)
             return false;
-        if (typeOfContract1 != employee.typeOfContract1) return false;
+        if (typeOfFixedTermContract != employee.typeOfFixedTermContract) return false;
         if (contractFixedDate != null ? !contractFixedDate.equals(employee.contractFixedDate) : employee.contractFixedDate != null)
             return false;
         if (contractConcludeDate != null ? !contractConcludeDate.equals(employee.contractConcludeDate) : employee.contractConcludeDate != null)
@@ -1813,7 +1813,7 @@ public class Employee {
         result = 31 * result + (unemploymentInsurance != null ? unemploymentInsurance.hashCode() : 0);
         result = 31 * result + (nursingCareInsurance != null ? nursingCareInsurance.hashCode() : 0);
         result = 31 * result + (accidentInsuranceRiskTariff != null ? accidentInsuranceRiskTariff.hashCode() : 0);
-        result = 31 * result + (typeOfContract1 != null ? typeOfContract1.hashCode() : 0);
+        result = 31 * result + (typeOfFixedTermContract != null ? typeOfFixedTermContract.hashCode() : 0);
         result = 31 * result + (contractFixedDate != null ? contractFixedDate.hashCode() : 0);
         result = 31 * result + (contractConcludeDate != null ? contractConcludeDate.hashCode() : 0);
         result = 31 * result + (description1 != null ? description1.hashCode() : 0);

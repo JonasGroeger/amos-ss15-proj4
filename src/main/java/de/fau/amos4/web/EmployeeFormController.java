@@ -55,7 +55,7 @@ import de.fau.amos4.model.fields.NursingCareInsurance;
 import de.fau.amos4.model.fields.Parenthood;
 import de.fau.amos4.model.fields.PensionInsurance;
 import de.fau.amos4.model.fields.Sex;
-import de.fau.amos4.model.fields.TypeOfContract1;
+import de.fau.amos4.model.fields.TypeOfFixedTermContract;
 import de.fau.amos4.model.fields.UnemploymentInsurance;
 import de.fau.amos4.model.fields.YesNo;
 import de.fau.amos4.service.ClientRepository;
@@ -107,7 +107,7 @@ public class EmployeeFormController
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
         mav.addObject("allDenomination", Denomination.values());
-        mav.addObject("allTypeOfContract", TypeOfContract1.values());
+        mav.addObject("allTypeOfContract", TypeOfFixedTermContract.values());
         mav.addObject("allHealthInsurance", HealthInsurance.values());
         mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
         mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -158,7 +158,7 @@ public class EmployeeFormController
                 mav.addObject("allMarital", MaritalStatus.values());
                 mav.addObject("allSex", Sex.values());
                 mav.addObject("allDenomination", Denomination.values());
-                mav.addObject("allTypeOfContract", TypeOfContract1.values());
+                mav.addObject("allTypeOfContract", TypeOfFixedTermContract.values());
                 mav.addObject("allHealthInsurance", HealthInsurance.values());
                 mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
                 mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -216,7 +216,7 @@ public class EmployeeFormController
             mav.addObject("allMarital", MaritalStatus.values());
             mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
-            mav.addObject("allTypeOfContract", TypeOfContract1.values());
+            mav.addObject("allTypeOfContract", TypeOfFixedTermContract.values());
             mav.addObject("allHealthInsurance", HealthInsurance.values());
             mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
             mav.addObject("allPensionInsurance", PensionInsurance.values());
