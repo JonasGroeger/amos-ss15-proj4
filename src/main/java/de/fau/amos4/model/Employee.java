@@ -433,6 +433,7 @@ public class Employee {
     // TODO: implement real expectation as RegEx (This is just a dummy RegEx)
     @Column
     @Enumerated(EnumType.STRING)
+    @GroupName("Employment")  // FIXME: Mixes form generation responsibilities with persistance
     PersonGroup personGroup;
 
     /*
