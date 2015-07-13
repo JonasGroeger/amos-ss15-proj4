@@ -86,7 +86,12 @@ public abstract class BaseWebApplicationContextTests {
     public void initDispatcherServlet() throws Exception{
         servlet = new DispatcherServlet() {
 
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             protected WebApplicationContext createWebApplicationContext(
                     WebApplicationContext parent) throws BeansException {
 

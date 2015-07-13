@@ -39,13 +39,11 @@ import de.fau.amos4.util.EmailSender;
 public class LoginFormController
 {
     private final ClientRepository clientRepository;
-    private final ClientService clientService;
 
     @Autowired
     public LoginFormController(ClientRepository clientRepository, ClientService clientService)
     {
         this.clientRepository = clientRepository;
-        this.clientService = clientService;
     }
 
     @RequestMapping("/client/register")

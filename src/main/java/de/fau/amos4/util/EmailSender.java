@@ -46,7 +46,6 @@ public class EmailSender {
 	private String Pass = "dqwi23je34AS456Dasu";
 	
 	private Properties properties = System.getProperties();
-	private Session session;
 	
 	public EmailSender()
 	{

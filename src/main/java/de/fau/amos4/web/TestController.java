@@ -24,21 +24,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.EmployeeRepository;
-
-
 @RestController
 public class TestController
 {
-    private final EmployeeRepository employeeRepository;
-    private final ClientRepository clientRepository;
 
     @Autowired
-    public TestController(EmployeeRepository employeeRepository, ClientRepository clientRepository)
+    public TestController()
     {
-        this.employeeRepository = employeeRepository;
-        this.clientRepository = clientRepository;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

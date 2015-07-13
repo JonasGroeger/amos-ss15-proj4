@@ -19,13 +19,9 @@
  */
 package de.fau.amos4.test.unit;
 
-import java.security.Principal;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.sun.security.auth.UserPrincipal;
 
 import de.fau.amos4.model.Client;
 import de.fau.amos4.model.CurrentClient;
@@ -68,10 +64,8 @@ public class ClientControllerUnitTest extends BaseWebApplicationContextTests
         ClientController clientController = new ClientController(this.clientService, this.clientRepository, this.employeeRepository, translatorService);
         // Get a client's username
         Client client = this.clientService.getClientById(1l);
-        String UserName = client.getEmail();
         
         // Get the List
-        Principal principal = new UserPrincipal(UserName);
         ModelAndView mav = clientController.ClientDashboard(new CurrentClient(client));
         
         // Model should contain only employees with this client.

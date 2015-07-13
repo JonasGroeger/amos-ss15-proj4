@@ -68,8 +68,8 @@ public class EmployeeTest extends BaseIntegrationTest
     @WithUserDetails("datev@example.com")
     public void test_DownloadZipFile_Works() throws Exception
     {
-        final MockHttpServletResponse response = mockMvc.perform(get("/employee/download/zip").param("id", "2"))
-                                     .andExpect(status().isOk()).andReturn().getResponse();
+        mockMvc.perform(get("/employee/download/zip").param("id", "2"))
+        	.andExpect(status().isOk());
     }
     
     // Make sure that employee form contains all the necessary fields

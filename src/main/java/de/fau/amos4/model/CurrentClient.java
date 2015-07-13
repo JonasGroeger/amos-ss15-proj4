@@ -28,7 +28,11 @@ import org.springframework.security.core.userdetails.User;
  */
 public class CurrentClient extends User
 {
-    private Client client;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Client client;
 
     public CurrentClient(Client client)
     {

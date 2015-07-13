@@ -1230,7 +1230,7 @@ public class Employee {
     }
 
     public void setDurationOfProbationPeriod(String durationOfProbationPeriod) {
-        durationOfProbationPeriod = durationOfProbationPeriod;
+        this.durationOfProbationPeriod = durationOfProbationPeriod;
     }
 
     public YesNo getOtherJobs() {

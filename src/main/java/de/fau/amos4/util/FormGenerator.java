@@ -77,7 +77,6 @@ public class FormGenerator {
             
             try {
                 Object Value = clazz.getMethod("get" + FieldName.substring(0,1).toUpperCase() + FieldName.substring(1)).invoke(instance);
-                Class cl = field.getClass();
                 if(Value instanceof java.util.Date)
                 {
                     FieldValue = (Value == null) ? "" : new SimpleDateFormat("dd/MM/yyyy").format((java.util.Date)Value).toString();

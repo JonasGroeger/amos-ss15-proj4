@@ -91,7 +91,6 @@ public class ZipGenerator {
                 document.addPage(page);
                 float y = -1;
                 int margin = 100;
-                float maxStringLength = page.getMediaBox().getWidth() - 2*margin;
 
                 // Create a new font object selecting one of the PDF base fonts
                 PDFont font = PDType1Font.TIMES_ROMAN;
