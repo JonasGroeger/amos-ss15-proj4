@@ -67,3 +67,17 @@ probably do not need them.*
 ### Manually
 Take the license from one of the existing files and copy-paste it over to the new file. Make sure that there is no
 newline between the license and the `package ...` part.
+
+##Used Technologies, Libraries and Frameworks
+
+Name  | Comments | License
+----- | -------- | -------
+[Spring Framework (4.1.6)](http://projects.spring.io/spring-framework/) | Java based Web Framework  |  [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0)
+[Java SE (7u79)](http://www.oracle.com/technetwork/java/javase/downloads/index.html) | Fundamental Platform | [Oracle Binary Code License](http://www.oracle.com/technetwork/java/javase/terms/license/index.html)
+[jQuery (2.1.3)](https://jquery.com/) | JavaScript library | [MIT license](http://opensource.org/licenses/MIT)
+[Selenium (2.45.0)](http://www.seleniumhq.org/) | UI Testing | [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0)
+[JUnit (4.12)](http://junit.org/) | Java Unit Testing Framework | [Eclipse Public License 1.0](http://junit.org/license.html)
+[Hibernate ORM (4.3.9)](http://hibernate.org/orm/) | ORM System for persistence | [LGPL V2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
+[PostgreSQL (9.4.1)](http://www.postgresql.org/) | Database Management System | [PostgreSQL Licence](http://opensource.org/licenses/postgresql)
+[Tomcat 7.0.61](https://tomcat.apache.org/) | For deployment | [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
