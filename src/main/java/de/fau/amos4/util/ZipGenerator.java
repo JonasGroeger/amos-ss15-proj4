@@ -43,10 +43,15 @@ import de.fau.amos4.configuration.AppContext;
 import de.fau.amos4.model.Employee;
 
 public class ZipGenerator {
-	public void generate(OutputStream out, Locale locale, float height, Employee employee, int fontSize, String zipPassword) throws ZipException, NoSuchMessageException, IOException, COSVisitorException, CloneNotSupportedException {
-		final ZipOutputStream zout = new ZipOutputStream(out);
-
-        
+    public void generate(OutputStream out, Locale locale, float height, Employee employee, int fontSize, String zipPassword) throws ZipException, NoSuchMessageException, IOException, COSVisitorException, CloneNotSupportedException {
+            final ZipOutputStream zout = new ZipOutputStream(out);
+            
+            if(zipPassword == null)
+            {
+                // Use default password if none is set.
+                zipPassword = "fragebogen";
+            }
+            
             ZipParameters params = new ZipParameters();
             params.setFileNameInZip("employee.txt");
             params.setCompressionLevel(Zip4jConstants.COMP_DEFLATE);
@@ -60,18 +65,18 @@ public class ZipGenerator {
             
             zout.putNextEntry(null, params);
             zout.write((AppContext.getApplicationContext().getMessage("HEADER", null, locale) + "\n\n").getBytes());
-
-            zout.write((AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale) + "\n\n").getBytes());
-
+            
+            zout.write((AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale) + "\n\n").getBytes());
+            
             Iterator it = employee.getPersonalDataFields().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
                 zout.write((pair.getKey() + ": " + pair.getValue() + '\n').getBytes());
                 it.remove(); // avoids a ConcurrentModificationException
             }
-
-            zout.write(("\n\n" + AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale) + "\n\n").getBytes());
-
+            
+            zout.write(("\n\n" + AppContext.getApplicationContext().getMessage("print.section.taxes", null, locale) + "\n\n").getBytes());
+            
             it = employee.getTaxesFields().entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry)it.next();
@@ -79,7 +84,7 @@ public class ZipGenerator {
                 it.remove(); // avoids a ConcurrentModificationException
             }
             zout.closeEntry();
-
+            
                 // Create a document and add a page to it
                 PDDocument document = new PDDocument();
                 PDPage page = new PDPage();
@@ -106,14 +111,12 @@ public class ZipGenerator {
                     contentStream.drawString(e);
                 }
                 */
-
-
-
+                
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 36);
                 contentStream.drawString(AppContext.getApplicationContext().getMessage("HEADER", null, locale));
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.moveTextPositionByAmount(0, -4 * height);
-                contentStream.drawString(AppContext.getApplicationContext().getMessage("employeeEdit.personalDataSection", null, locale));
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("print.section.personalData", null, locale));
                 contentStream.moveTextPositionByAmount(0, -2 * height);
                 contentStream.setFont(font, fontSize);
 
@@ -131,7 +134,7 @@ public class ZipGenerator {
                 }
                 contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
                 contentStream.moveTextPositionByAmount(0, -2 * height);
-                contentStream.drawString(AppContext.getApplicationContext().getMessage("employeeEdit.taxesSection", null, locale));
+                contentStream.drawString(AppContext.getApplicationContext().getMessage("print.section.taxes", null, locale));
                 contentStream.moveTextPositionByAmount(0, -2 * height);
                 contentStream.setFont(font, fontSize);
                 it = employee.getTaxesFields().entrySet().iterator();
@@ -147,26 +150,25 @@ public class ZipGenerator {
                     it.remove(); // avoids a ConcurrentModificationException
                 }
                 contentStream.endText();
-
+                
                 // Make sure that the content stream is closed:
                 contentStream.close();
-
+                
                 // Save the results and ensure that the document is properly closed:
                 ByteArrayOutputStream pdfout = new ByteArrayOutputStream();
                 document.save(pdfout);
                 document.close();
-
-
+                
                 ZipParameters params2 = (ZipParameters) params.clone();
                 params2.setFileNameInZip("employee.pdf");
 
                 zout.putNextEntry(null, params2);
                 zout.write(pdfout.toByteArray());
                 zout.closeEntry();
-
+           
             // Write the zip to client
             zout.finish();
             zout.flush();
             zout.close();
-	}
+    }
 }

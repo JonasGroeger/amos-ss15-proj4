@@ -19,13 +19,15 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.EmployeeService;
-import de.fau.amos4.util.ZipGenerator;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Locale;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import net.lingala.zip4j.exception.ZipException;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
@@ -35,11 +37,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Locale;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
+import de.fau.amos4.util.ZipGenerator;
 
 @Controller
 public class PrintDataController
@@ -74,10 +77,11 @@ public class PrintDataController
         // We want to have a txt file download
         response.setContentType("text/plain");
         response.setHeader("Content-Disposition", "attachment;filename=employee_as_lodas.txt");
+        response.setCharacterEncoding("UTF-8");
 
         // Write the data out
         ServletOutputStream out = response.getOutputStream();
-        out.print(employeeAsLodas);
+        out.write(employeeAsLodas.getBytes());
         out.flush();
         out.close();
         return null;

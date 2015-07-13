@@ -23,10 +23,11 @@
 
 package de.fau.amos4.model.fields;
 
-import de.fau.amos4.configuration.AppContext;
+import java.util.Locale;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.Locale;
+import de.fau.amos4.configuration.AppContext;
 
 
 public enum Parenthood {
@@ -45,10 +46,5 @@ public enum Parenthood {
     {
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
-    }
-
-    public String toString()
-    {
-        return getText();
     }
 }

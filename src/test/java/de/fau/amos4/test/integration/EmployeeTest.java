@@ -19,12 +19,12 @@
  */
 package de.fau.amos4.test.integration;
 
-import java.util.List;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.test.BaseIntegrationTest;
-import de.fau.amos4.util.CheckDataInput;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,12 +32,14 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithUserDetails;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.test.BaseIntegrationTest;
+import de.fau.amos4.util.CheckDataInput;
 
 
 public class EmployeeTest extends BaseIntegrationTest
 {
+
     // Make sure that employee/token page works and properly mapped to the view.
     @Test
     public void testThatTokenPageIsWorking() throws Exception
@@ -59,6 +61,15 @@ public class EmployeeTest extends BaseIntegrationTest
         final String contentDisp = response.getHeader("Content-Disposition");
         Assert.assertNotNull("Content-Disposition is null", contentDisp);
         Assert.assertTrue("Content-Disposition .", contentDisp.contains("attachment;filename"));
+    }
+
+    // Make sure that download employee data as zip file feature works as expected.
+    @Test
+    @WithUserDetails("datev@example.com")
+    public void test_DownloadZipFile_Works() throws Exception
+    {
+        final MockHttpServletResponse response = mockMvc.perform(get("/employee/download/zip").param("id", "2"))
+                                     .andExpect(status().isOk()).andReturn().getResponse();
     }
     
     // Make sure that employee form contains all the necessary fields

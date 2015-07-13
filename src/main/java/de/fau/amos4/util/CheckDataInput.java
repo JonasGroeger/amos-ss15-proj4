@@ -20,7 +20,7 @@
 package de.fau.amos4.util;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class CheckDataInput {
         
         for(Field field : fieldsWithFormat)
         {
-            if(this.isFieldMatching(field, object, "^(|0)$"))
+            if(this.isFieldMatching(field, object, "^(|0|0.0)$"))
             {
                 result.add(field.getName());
             }

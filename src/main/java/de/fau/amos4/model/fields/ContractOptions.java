@@ -1,3 +1,4 @@
+
 /**
  * Personalfragebogen 2.0. Revolutionize form data entry for taxation and
  * other purposes.
@@ -30,17 +31,16 @@ import de.fau.amos4.configuration.AppContext;
 
     //From .properties files
 
-public enum TypeOfContract1
+public enum ContractOptions
 {
     //From .properties files
-    PERMANENTFULL("EMPLOYEE.contract.permanentFull"),
-    PERMANENTPART("EMPLOYEE.contract.permanentPart"),
-    FIXEDTERMFULL("EMPLOYEE.contract.fixedtermFull"),
-    FIXEDTERMPART("EMPLOYEE.contract.fixedtermPart");
-
+    FIXEDTERM("EMPLOYEE.contract.fixedTerm"),
+    PERMANENT("EMPLOYEE.contract.permanent"),
+    FIXEDTERMEND("EMPLOYEE.contract.fixedTermEnd");
+    
     private String text;
 
-    TypeOfContract1(String text)
+    ContractOptions(String text)
     {
         this.text = text;
     }

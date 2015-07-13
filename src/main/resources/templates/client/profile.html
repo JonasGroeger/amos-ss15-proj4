@@ -29,19 +29,19 @@
 	<h1 th:text="#{Client.header}"></h1>
 	
     <div th:object="${Client}">
-    	<p th:text="#{Client.id} + ': ' + *{id}" />
-    	<p th:text="#{Client.email} + ': ' + *{email}" />
-    	<p th:text="#{Client.title} + ': ' + *{title}" />
-    	<p th:text="#{Client.firstname} + ': ' + *{firstName}" />
-    	<p th:text="#{Client.familyname} + ': ' + *{familyName}" />
-    	<p th:text="#{Client.birthdate} + ': ' + *{birthDate}" />
-    	<p th:text="#{Client.officePhoneNumber} + ': ' + *{officePhoneNumber}" />
-    	<p th:text="#{Client.mobilePhoneNumber} + ': ' + *{mobilePhoneNumber}" />
-    	<p th:text="#{Client.companyName} + ': ' + *{companyName}" />
-    	<p th:text="#{Client.companyType} + ': ' + *{companyType}" />
-    	<p th:text="#{Client.country} + ': ' + *{country}" />
-    	<p th:text="#{Client.address} + ': ' + *{address}" />
-    	<p th:text="#{Client.zipCode} + ': ' + *{zipCode}" />
+    	<p th:text="#{CLIENT.id} + ': ' + *{id}" />
+    	<p th:text="#{CLIENT.email} + ': ' + *{email}" />
+    	<p th:text="#{CLIENT.title} + ': ' + *{title}" />
+    	<p th:text="#{CLIENT.firstName} + ': ' + *{firstName}" />
+    	<p th:text="#{CLIENT.familyName} + ': ' + *{familyName}" />
+    	<p th:text="#{CLIENT.birthDate} + ': ' + *{birthDate}" />
+    	<p th:text="#{CLIENT.officePhoneNumber} + ': ' + *{officePhoneNumber}" />
+    	<p th:text="#{CLIENT.mobilePhoneNumber} + ': ' + *{mobilePhoneNumber}" />
+    	<p th:text="#{CLIENT.companyName} + ': ' + *{companyName}" />
+    	<p th:text="#{CLIENT.companyType} + ': ' + *{companyType}" />
+    	<p th:text="#{CLIENT.country} + ': ' + *{country}" />
+    	<p th:text="#{CLIENT.address} + ': ' + *{address}" />
+    	<p th:text="#{CLIENT.postcode} + ': ' + *{postcode}" />
     </div>
     
     <a th:href="@{/client/edit}" th:text="#{KEYWORD.edit}"></a>

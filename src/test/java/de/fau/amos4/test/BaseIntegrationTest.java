@@ -19,7 +19,7 @@
  */
 package de.fau.amos4.test;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.security.test.web.servlet.setup   .SecurityMockMvcConfigurers.springSecurity;
 
 import java.net.MalformedURLException;
 import java.net.URL;

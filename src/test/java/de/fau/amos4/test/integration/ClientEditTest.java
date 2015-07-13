@@ -44,7 +44,6 @@ import de.fau.amos4.service.ClientService;
 import de.fau.amos4.service.ClientServiceImpl;
 import de.fau.amos4.test.BaseIntegrationTest;
 import de.fau.amos4.web.ClientController;
-import de.fau.amos4.web.LoginFormController;
 
 public class ClientEditTest extends BaseIntegrationTest {
 	@Mock

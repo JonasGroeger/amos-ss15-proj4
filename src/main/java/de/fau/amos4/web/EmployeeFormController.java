@@ -19,17 +19,17 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.configuration.AppContext;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.*;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.EmployeeService;
-import de.fau.amos4.util.CheckDataInput;
-import de.fau.amos4.util.FormGenerator;
-import de.fau.amos4.util.TokenGenerator;
+import java.io.IOException;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -38,16 +38,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import de.fau.amos4.configuration.AppContext;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Denomination;
+import de.fau.amos4.model.fields.HealthInsurance;
+import de.fau.amos4.model.fields.MaritalStatus;
+import de.fau.amos4.model.fields.NursingCareInsurance;
+import de.fau.amos4.model.fields.Parenthood;
+import de.fau.amos4.model.fields.PensionInsurance;
+import de.fau.amos4.model.fields.Sex;
+import de.fau.amos4.model.fields.TypeOfFixedTermContract;
+import de.fau.amos4.model.fields.UnemploymentInsurance;
+import de.fau.amos4.model.fields.YesNo;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.EmployeeService;
+import de.fau.amos4.util.CheckDataInput;
+import de.fau.amos4.util.FormGenerator;
+import de.fau.amos4.util.TokenGenerator;
 
 @Controller
 public class EmployeeFormController
@@ -90,7 +107,7 @@ public class EmployeeFormController
         mav.addObject("allMarital", MaritalStatus.values());
         mav.addObject("allSex", Sex.values());
         mav.addObject("allDenomination", Denomination.values());
-        mav.addObject("allTypeOfContract", TypeOfContract1.values());
+        mav.addObject("allTypeOfContract", TypeOfFixedTermContract.values());
         mav.addObject("allHealthInsurance", HealthInsurance.values());
         mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
         mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -134,14 +151,14 @@ public class EmployeeFormController
         {
             // There is no invalid and non empty field. -> Accept input.
             // Display warnings because of empty fields:
-            mav.addObject("emptyFieldWaringMessages", emptyFields);
+            mav.addObject("emptyFields", emptyFields);
             
             if (principal == null) {
                 mav.addObject("allDisabled", YesNo.values());
                 mav.addObject("allMarital", MaritalStatus.values());
                 mav.addObject("allSex", Sex.values());
                 mav.addObject("allDenomination", Denomination.values());
-                mav.addObject("allTypeOfContract", TypeOfContract1.values());
+                mav.addObject("allTypeOfContract", TypeOfFixedTermContract.values());
                 mav.addObject("allHealthInsurance", HealthInsurance.values());
                 mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
                 mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -189,7 +206,6 @@ public class EmployeeFormController
         
         ModelAndView mav = new ModelAndView();
         if (employeeId != 0) {
-
             mav.setViewName("employee/edit");
             Employee employee = employeeRepository.findOne(employeeId);
             FormGenerator generator = new FormGenerator();
@@ -200,7 +216,7 @@ public class EmployeeFormController
             mav.addObject("allMarital", MaritalStatus.values());
             mav.addObject("allSex", Sex.values());
             mav.addObject("allDenomination", Denomination.values());
-            mav.addObject("allTypeOfContract", TypeOfContract1.values());
+            mav.addObject("allTypeOfContract", TypeOfFixedTermContract.values());
             mav.addObject("allHealthInsurance", HealthInsurance.values());
             mav.addObject("allNursingCareInsurance", NursingCareInsurance.values());
             mav.addObject("allPensionInsurance", PensionInsurance.values());
@@ -234,19 +250,30 @@ public class EmployeeFormController
                                  BindingResult result, Model model) throws Exception
     {
         Employee e = employeeService.getEmployeeByToken(employee.getToken());
+        try
+        {
         Client client = e.getClient();
-        employee.setClient(client);
+        if(client != null)
+        {
+            employee.setClient(client);
+            client.getEmployees().add(employee);
+            clientRepository.save(client);
+        }
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        
         String token = TokenGenerator.getInstance().createUniqueToken(employeeRepository);
         employee.setToken(token);
-        client.getEmployees().add(employee);
-        clientRepository.save(client);
 
         // If the employee is new: Create
         // If the employee already has a primary key: Update
-        Employee newOrUpdatedEmployee = employeeRepository.save(employee);
+        employeeRepository.save(employee);
 
         // Setup model and return view
-        model.addAttribute("EmployeeId", newOrUpdatedEmployee.getId());
+        model.addAttribute("EmployeeId", employee.getId());
         return "employee/confirm";
     }
 

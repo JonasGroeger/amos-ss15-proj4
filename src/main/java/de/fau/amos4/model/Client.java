@@ -121,7 +121,7 @@ public class Client
     private String address;
     
     @Column
-    private String zipCode;
+    private String postcode;
     
     public OutputFormat getOutputFormat()
     {
@@ -313,14 +313,14 @@ public class Client
         this.address = address;
     }
     
-    public String getZipCode()
+    public String getPostcode()
     {
-        return zipCode;
+        return postcode;
     }
 
-    public void setZipCode(String zipCode)
+    public void setPostcode(String postcode)
     {
-        this.zipCode = zipCode;
+        this.postcode = postcode;
     }
 
     public void generateConfirmationString() {
@@ -367,7 +367,7 @@ public class Client
                 .append(companyType, client.companyType)
                 .append(country, client.country)
                 .append(address, client.address)
-                .append(zipCode, client.zipCode)
+                .append(postcode, client.postcode)
                 .isEquals();
     }
 
@@ -394,7 +394,7 @@ public class Client
                 .append(companyType)
                 .append(country)
                 .append(address)
-                .append(zipCode)
+                .append(postcode)
                 .toHashCode();
     }
 
@@ -421,7 +421,7 @@ public class Client
                 .append("companyType", companyType)
                 .append("country", country)
                 .append("address", address)
-                .append("zipCode", zipCode)
+                .append("postcode", postcode)
                 .toString();
     }
 }

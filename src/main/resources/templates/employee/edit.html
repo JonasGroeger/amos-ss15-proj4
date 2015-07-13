@@ -10,21 +10,23 @@
 <body>
 <div layout:fragment="content">
         <form th:action="(${preview}) ? @{/employee/confirm} : @{/employee/edit/submit}" th:object="${employee}">
+            <input type='hidden' name='token' id ='token' th:value="*{token}" />
+            <input type='hidden' name='id' id ='id' th:value="*{id}" />
             <h1 th:text="#{HEADER}"></h1>
             <div th:each="invalidFieldErrorMessage : ${invalidFieldErrorMessages}">
-                    <div th:text="#{'EMPLOYEE.InvalidField.' + ${invalidFieldErrorMessage}}" style='color:red;font-weight:bold;'>Error message.</div>
+                    <div th:text="#{employeeEdit.invalid} + ' ' + #{'EMPLOYEE.invalidField.' + ${invalidFieldErrorMessage}}" style='text-align:center;color:red;font-weight:bold;'>Error message.</div>
             </div>
-            <div th:each="emptyFieldWaringMessage : ${emptyFieldWaringMessages}">
-                <div th:text="#{'EMPLOYEE.EmptyFieldWarning.' + ${emptyFieldWaringMessage}}" style='color:orange;font-weight:bold;'>Warning message.</div>
+            <div th:each="emptyField : ${emptyFields}">
+                <div th:text="#{employeeEdit.empty} + ' ' + #{'EMPLOYEE.' +${emptyField}}" style='text-align:center;color:orange;font-weight:bold;'>Warning message.</div>
             </div>
             
             <div th:each="formGroup : ${formInfo.getGroups()}" class="row">
-                <h2 th:text="${formGroup.getName()}"></h2>
+                <h2 th:text="#{'employeeEdit.' + ${formGroup.getName()}}"></h2>
                 <div th:each="field : ${formGroup.getFields()}" class="col-sm-6">
                     <div th:if="${__${field.getOptions().size()}__ &gt; 0}" class="form-group">
                         <label th:text="#{'EMPLOYEE.' + ${field.getName()}}"></label>
                         <div>
-                            <select th:name="${field.getName()}" th:id="${field.getName()}" th:disabled="${preview}">
+                            <select class="form-control" th:name="${field.getName()}" th:id="${field.getName()}" th:disabled="${preview}">
                                 <option value="" th:text="#{EMPLOYEE.select}"></option>
                                 <option th:each="option : ${field.getOptions()}" th:value="${option}" th:text="#{'EMPLOYEE.' + ${field.getName()} + '.' + ${option}}" th:selected="${field.getValue() == option}"></option>
                             </select>

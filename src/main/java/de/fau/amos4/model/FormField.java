@@ -31,12 +31,12 @@ public class FormField {
     String name;
     String value;
     public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
-	float FormOrder = 0;
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+    float FormOrder = 0;
     
     public float getFormOrder() {
         return FormOrder;

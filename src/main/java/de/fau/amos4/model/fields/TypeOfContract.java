@@ -47,10 +47,21 @@ public enum TypeOfContract implements Lodasize
         Locale locale = LocaleContextHolder.getLocale();
         return AppContext.getApplicationContext().getMessage(text, null, locale);
     }
-
-    public String toString()
+    
+    public int getLodas()
     {
-        return getText();
+        switch (this)
+        {
+            case PERMANENTFULL:
+                return 1;
+            case PERMANENTPART:
+                return 2;
+            case FIXEDTERMFULL:
+                return 3;
+            case FIXEDTERMPART:
+                return 4;
+        }
+        return -1;
     }
 
     public String getLodas()

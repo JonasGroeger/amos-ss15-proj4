@@ -26,8 +26,9 @@ VALUES
    'UUVXGD', '1000', 3, '2011-08-04', '2014-06-05', 'Burger King', 'Burger Brater', 'Brat Burger', 'REGULAR', 'YES',
    'too long',
    'YES', 'YES', 'NOTHING', 'PHD', '2014-06-05', '2014-12-05', 40, 5.4, 'PERMANENTFULL', 6, 6, 6, 6, 6, 5, 5,
-   'Gunsenhausen', 'b13', '2014-12-05', 'G101', 1922, 11111111111, 3, 0.123, 50.5, 'RK', 23487623, NULL, '_0', '_0',
-   '_0', '_0', 'Coscom', 'PERMANENTFULL', NULL, NULL, '', '', 3000, 4000, NULL, NULL, 20, 20, NULL, NULL),
+   'Gunsenhausen', 'b13', '2014-12-05', 'G101', 1922, 11111111111, 3, 0.123, 50.5, 'RK', 23487623, 'J', '_0', '_0',
+   '_0', '_0', 'Coscom', 'PERMANENTFULL', NULL, NULL, '', '', 3000, 4000, NULL, NULL, 20, 20, NULL, NULL,
+   '2014-06-05', '2014-06-05', '', 0, '2014-06-05', '2014-06-05', '', 0),
   (3, '42424', 'Seitengasse', 'THEBIGBIC8989', '1951-07-02', 'Polisch', 'Zabalistadt', 'Dänemark', 'YES',
    'a09sda9sd0u', 'Anders', 'Thomas', '33', 'MX89234729834', 'Eberlein', 'MARRIED', 'Habala', 'FEMALE',
    'VERSNR982034', 'Schwarzstraße', 'WVRNB9', '71818', 1, '2011-08-04', '2014-06-05', 'Burger King', 'Burger Brater',
@@ -35,5 +36,5 @@ VALUES
    'way too long',
    'YES', 'YES', 'NOTHING', 'PHD', '2014-06-05', '2014-12-05', 40, 4.5,
    'PERMANENTFULL', 6, 6, 6, 6, 6, 5, 5, 'Gunsenhausen', 'b13', '2014-12-05', 'G101', 4132, 22222222222, 2, 0.95,
-   15.0, 'EV', 49857362, NULL, '_0', '_0', '_0', '_0', 'Barmenia', 'PERMANENTFULL', NULL, NULL, '', '', 2000, 6000,
-   NULL, NULL, 10, 10, NULL, NULL);
+   15.0, 'EV', 49857362, 'N', '_0', '_0', '_0', '_0', 'Barmenia', 'PERMANENTFULL', NULL, NULL, '', '', 2000, 6000,
+   NULL, NULL, 10, 10, NULL, NULL, '2013-06-05', '2014-06-05', '', 200, '2014-06-05', '2015-06-05', '', 242);

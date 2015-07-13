@@ -19,10 +19,11 @@
  */
 package de.fau.amos4.util;
 
-import de.fau.amos4.model.Employee;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import de.fau.amos4.model.Employee;
 
 public class Lodas
 {
@@ -66,8 +67,10 @@ public class Lodas
 
     public String generate()
     {
-        StringBuilder sb = new StringBuilder();
-        sb
+        try
+        {
+                StringBuilder sb = new StringBuilder();
+                sb
                 .append(title("Allgemein"))
                 .append(sectionAllgemein())
                 .append(divider())
@@ -76,8 +79,13 @@ public class Lodas
                 .append(divider())
                 .append(title("Stammdaten"))
                 .append(sectionStammdaten());
-
-        return sb.toString();
+                
+                return sb.toString();
+        }
+        catch(Exception ex)
+        {
+            return "Export failed. \nMessage:\n" + ex.getMessage() + "\nType:\n" + ex.toString() + "\nStack:\n" + ex.getStackTrace();
+        }        
     }
 
     private String sectionSatzbeschreibung()
@@ -118,7 +126,135 @@ public class Lodas
 
         // Section 103
         sb.append(indent()).append("103; u_lod_psd_mitarbeiter;");
+        sb.append("pnr").append(SEPARATOR);
         sb.append("schwerbeschaedigt").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 200
+        sb.append(indent()).append("200; u_lod_psd_mitarbeiter;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("ersteintrittsdatum").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 201
+        sb.append(indent()).append("201; u_lod_psd_beschaeftigung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("eintrittdatum").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 300
+        sb.append(indent()).append("300; u_lod_psd_taetigkeit;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("persgrs").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 301
+        sb.append(indent()).append("301; u_lod_psd_taetigkeit;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("ausbildungsbeginn").append(SEPARATOR);
+        sb.append("vorr_ausbildungsende").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 400
+        sb.append(indent()).append("400; u_lod_psd_taetigkeit;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("berufsbezeichnung").append(SEPARATOR);
+        sb.append("ausg_taetigkeit").append(SEPARATOR);
+        sb.append("schulabschluss").append(SEPARATOR);
+        sb.append("ausbildungsabschluss").append(SEPARATOR);
+        sb.append("arbeitnehmerueberlassung").append(SEPARATOR);
+        sb.append("vertragsform").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 502
+        sb.append(indent()).append("502; u_lod_psd_taetigkeit;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("kst_abteilungs_nr").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 503
+        sb.append(indent()).append("503; u_lod_psd_taetigkeit;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("stammkostenstelle").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 600
+        sb.append(indent()).append("600; u_lod_psd_sozialversicherung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("kv_schluessel").append(SEPARATOR);
+        sb.append("rv_schluessel").append(SEPARATOR);
+        sb.append("av_schluessel").append(SEPARATOR);
+        sb.append("pv_schluessel").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 700
+        sb.append(indent()).append("700; u_lod_psd_steuer;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("fa_nr").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 701
+        sb.append(indent()).append("701; u_lod_psd_steuer;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("st_klasse").append(SEPARATOR);
+        sb.append("kfb_anzahl").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 702
+        sb.append(indent()).append("700; u_lod_psd_steuer;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("identifikationsnummer").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 800
+        sb.append(indent()).append("800; u_lod_psd_arbeitszeit_regelm;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("az_wtl_indiv").append(SEPARATOR);
+        sb.append("regelm_az_mo").append(SEPARATOR);
+        sb.append("regelm_az_di").append(SEPARATOR);
+        sb.append("regelm_az_mi").append(SEPARATOR);
+        sb.append("regelm_az_do").append(SEPARATOR);
+        sb.append("regelm_az_fr").append(SEPARATOR);
+        sb.append("regelm_az_sa").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 801
+        sb.append(indent()).append("801; u_lod_psd_arbeitszeit_regelm;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("url_tage_jhrl").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 900
+        sb.append(indent()).append("900; u_lod_psd_vermoegensbildung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("vwl_institut_1").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 901
+        sb.append(indent()).append("901; u_lod_psd_vermoegensbildung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("vwl_1_netto_abz_1").append(SEPARATOR);
+        sb.append("vwl_ag_anteil_betrag_1").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 902
+        sb.append(indent()).append("902; u_lod_psd_vermoegensbildung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("vwl_1_beginn_mmjj").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 903
+        sb.append(indent()).append("903; u_lod_psd_vermoegensbildung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("vwl_vertrag_nr_1").append(SEPARATOR);
+        sb.append("\n");
+        
+        // Section 904
+        sb.append(indent()).append("904; u_lod_psd_vermoegensbildung;");
+        sb.append("pnr").append(SEPARATOR);
+        sb.append("vwl_1_iban").append(SEPARATOR);
+        sb.append("vwl_1_bic").append(SEPARATOR);
+        
         return sb.toString();
     }
 
@@ -152,7 +288,7 @@ public class Lodas
                 .append(field(employee.getMaidenName()))
                 .append(field(employee.getStreet()))
                 .append(field(employee.getHouseNumber()))
-                .append(field(employee.getZipCode()))
+                .append(field(employee.getPostcode()))
                 .append(field(employee.getCity()))
                 .append(field(employee.getAdditionToAddress()))
                 .append("\n");
@@ -178,8 +314,75 @@ public class Lodas
 
         // Section 103
         sb.append(indent()).append("103; ")
+                .append(field(personnelNumber))
                 .append(field(employee.getDisabled().getLodas()))
-                .append(field(personnelNumber));
+                .append("\n");
+        
+        //FIXME what to do if field is empty?
+        // Section 200
+        sb.append(indent()).append("200; ")
+                .append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getEntryDate())))
+                .append("\n");
+        
+        // Section 201
+        sb.append(indent()).append("201; ")
+                .append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getFirstDay())))
+                .append("\n");
+        
+        // Section 300
+        sb.append(indent()).append("300; ")
+                .append(field(personnelNumber))
+                .append(field(employee.getPersonGroup().getLodas()))
+                .append("\n");
+        
+        // Section 301
+        sb.append(indent()).append("301; ")
+                .append(field(personnelNumber))
+                .append(field(dateFormat.format(employee.getDateApprenticeshipBegins())))
+                .append(field(dateFormat.format(employee.getPlanedDateApprenticeshipEnds())))
+                .append("\n");
+        
+        // Section 400
+        sb.append(indent()).append("400; ")
+                .append(field(personnelNumber))
+                .append(field(employee.getDescriptionOfProfession()))
+                .append(field(employee.getJobPerformed()))
+                .append(field(employee.getLevelOfEducation().getLodas()))
+                .append(field(employee.getProfessionalTraining().getLodas()))
+                .append(field(0)) //TODO find out what really goes here
+                .append(field(employee.getTypeOfContract().getLodas()))
+                .append("\n");
+        
+        // Section 502
+        sb.append(indent()).append("502; ")
+                .append(field(personnelNumber))
+                .append(field(employee.getDepartmentNumber()))
+                .append("\n");
+        
+        // Section 503
+        sb.append(indent()).append("503; ")
+                .append(field(personnelNumber))
+                .append(field(employee.getCostCentre()))
+                .append("\n");
+        
+        // Section 800
+        sb.append(indent()).append("800; ")
+                .append(field(personnelNumber))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getWeeklyWorkingHours())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getMon())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getTue())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getWed())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getThu())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getFri())))
+                .append(field(String.format(Locale.GERMAN, "%.2f", employee.getSat())))
+                .append("\n");
+        
+        // Section 801
+        sb.append(indent()).append("801; ")
+                .append(field(personnelNumber))
+                .append(field(String.format(Locale.GERMAN, "%.1f", employee.getHolidayEntitlement())));
 
         return sb.toString();
     }

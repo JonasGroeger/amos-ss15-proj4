@@ -24,13 +24,16 @@ package de.fau.amos4.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.fau.amos4.model.*;
+import de.fau.amos4.model.Form;
+import de.fau.amos4.model.FormField;
+import de.fau.amos4.model.FormGroup;
 
 // Class used to load form data from class description. 
 public class FormGenerator {
@@ -74,7 +77,16 @@ public class FormGenerator {
             
             try {
                 Object Value = clazz.getMethod("get" + FieldName.substring(0,1).toUpperCase() + FieldName.substring(1)).invoke(instance);
-                FieldValue = (Value == null) ? "" : Value.toString();
+                Class cl = field.getClass();
+                if(Value instanceof java.util.Date)
+                {
+                    FieldValue = (Value == null) ? "" : new SimpleDateFormat("dd/MM/yyyy").format((java.util.Date)Value).toString();
+                }
+                else
+                {
+                    FieldValue = (Value == null) ? "" : Value.toString();
+                }
+                
             } catch (Exception e) {
                 continue;
             }
@@ -139,7 +151,22 @@ public class FormGenerator {
             group.getFields().add(formField);
         }
         
-        
+        // Order group elements based on Order annotations
+        for(FormGroup group : form.getGroups())
+        {
+            List<FormField> fieldsInGroup = group.getFields();
+            java.util.Collections.sort(fieldsInGroup ,new Comparator<FormField>(){
+                   @Override
+                   public int compare(final FormField lhs,FormField rhs) {
+                     if(lhs.getFormOrder() < rhs.getFormOrder())
+                     {
+                         return -1;
+                     }
+                     
+                     return 1;
+                     }
+                 });
+        }
         
         return form;
     }

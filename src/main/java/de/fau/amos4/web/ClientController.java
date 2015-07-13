@@ -19,19 +19,17 @@
  */
 package de.fau.amos4.web;
 
-import de.fau.amos4.annotation.TheClient;
-import de.fau.amos4.model.Client;
-import de.fau.amos4.model.CurrentClient;
-import de.fau.amos4.model.Employee;
-import de.fau.amos4.model.fields.Title;
-import de.fau.amos4.service.ClientRepository;
-import de.fau.amos4.service.ClientService;
-import de.fau.amos4.service.EmployeeRepository;
-import de.fau.amos4.service.TranslatorService;
-import de.fau.amos4.util.EmailSender;
-import de.fau.amos4.util.ZipGenerator;
-import de.fau.amos4.web.form.ResetPasswordForm;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import net.lingala.zip4j.exception.ZipException;
+
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.NoSuchMessageException;
@@ -45,13 +43,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import de.fau.amos4.annotation.TheClient;
+import de.fau.amos4.model.Client;
+import de.fau.amos4.model.CurrentClient;
+import de.fau.amos4.model.Employee;
+import de.fau.amos4.model.fields.Title;
+import de.fau.amos4.service.ClientRepository;
+import de.fau.amos4.service.ClientService;
+import de.fau.amos4.service.EmployeeRepository;
+import de.fau.amos4.service.TranslatorService;
+import de.fau.amos4.util.EmailSender;
+import de.fau.amos4.util.ZipGenerator;
+import de.fau.amos4.web.form.ResetPasswordForm;
 
 /**
  * Handles client related requests.
@@ -150,7 +153,7 @@ public class ClientController
         tmp.setCompanyType(client.getCompanyType());
         tmp.setCountry(client.getCountry());
         tmp.setAddress(client.getAddress());
-        tmp.setZipCode(client.getZipCode());
+        tmp.setPostcode(client.getPostcode());
         tmp.setBirthDate(client.getBirthDate());
         
         //write back to database

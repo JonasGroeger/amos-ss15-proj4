@@ -69,7 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-        	
+        
                 // Allow access to the front page.
                 .antMatchers("/").permitAll()
                 // Allow access to the register page.
