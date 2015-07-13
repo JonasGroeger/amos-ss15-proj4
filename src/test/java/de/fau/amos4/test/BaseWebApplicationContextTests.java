@@ -85,10 +85,6 @@ public abstract class BaseWebApplicationContextTests {
     @Before
     public void initDispatcherServlet() throws Exception{
         servlet = new DispatcherServlet() {
-
-            /**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
