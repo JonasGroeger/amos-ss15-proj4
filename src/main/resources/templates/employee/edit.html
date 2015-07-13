@@ -14,7 +14,7 @@
             <input type='hidden' name='id' id ='id' th:value="*{id}" />
             <h1 th:text="#{HEADER}"></h1>
             <div th:each="invalidFieldErrorMessage : ${invalidFieldErrorMessages}">
-                    <div th:text="#{'EMPLOYEE.InvalidField.' + ${invalidFieldErrorMessage}}" style='text-align:center;color:red;font-weight:bold;'>Error message.</div>
+                    <div th:text="#{employeeEdit.invalid} + ' ' + #{'EMPLOYEE.invalidField.' + ${invalidFieldErrorMessage}}" style='text-align:center;color:red;font-weight:bold;'>Error message.</div>
             </div>
             <div th:each="emptyField : ${emptyFields}">
                 <div th:text="#{employeeEdit.empty} + ' ' + #{'EMPLOYEE.' +${emptyField}}" style='text-align:center;color:orange;font-weight:bold;'>Warning message.</div>

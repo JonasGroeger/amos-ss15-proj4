@@ -43,7 +43,7 @@ import de.fau.amos4.model.fields.PersonGroup;
 import de.fau.amos4.model.fields.ProfessionalTraining;
 import de.fau.amos4.model.fields.Sex;
 import de.fau.amos4.model.fields.TypeOfContract;
-import de.fau.amos4.model.fields.TypeOfContract1;
+import de.fau.amos4.model.fields.TypeOfFixedTermContract;
 import de.fau.amos4.model.fields.TypeOfEmployment;
 import de.fau.amos4.model.fields.UnemploymentInsurance;
 import de.fau.amos4.model.fields.YesNo;
@@ -123,7 +123,7 @@ public class LODASFormatTest extends BaseWebApplicationContextTests {
         employee.setUnemploymentInsurance(UnemploymentInsurance._2);
         employee.setNursingCareInsurance(NursingCareInsurance._2);
         employee.setAccidentInsuranceRiskTariff("RistTariff");
-        employee.setTypeOfContract1(TypeOfContract1.FIXEDTERMPART);
+        employee.setTypeOfFixedTermContract(TypeOfFixedTermContract.FIXEDTERMPART);
         employee.setContractFixedDate(DummyDate);
         employee.setContractConcludeDate(DummyDate);
         employee.setDescription1("Desc1");
