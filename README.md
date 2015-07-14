@@ -68,7 +68,7 @@ probably do not need them.*
 Take the license from one of the existing files and copy-paste it over to the new file. Make sure that there is no
 newline between the license and the `package ...` part.
 
-##Used Technologies, Libraries and Frameworks
+## Bill of Materials
 
 Name  | Comments | License
 ----- | -------- | -------
